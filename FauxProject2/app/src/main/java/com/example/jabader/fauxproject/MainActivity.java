@@ -1,6 +1,7 @@
 package com.example.jabader.fauxproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -73,11 +74,7 @@ public class MainActivity extends AppCompatActivity
                                                                     public void onClick(View view8) {
                                                                         Snackbar.make(view8, "Receive message", Snackbar.LENGTH_LONG)
                                                                                 .setAction("Action", null).show();
-                                                                        Context context = getApplicationContext();
-                                                                        CharSequence message = "Congrats, you won!";
-                                                                        int duration = Toast.LENGTH_SHORT;
-                                                                        Toast toast = Toast.makeText(context, message, duration);
-                                                                        toast.show();
+                                                                        startActivity(new Intent(MainActivity.this, SecondActivity.class));
                                                                     }
                                                                 });
                                                             }
