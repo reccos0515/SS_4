@@ -7,3 +7,9 @@
 /build
 /captures
 .externalNativeBuild
+gradle/
+gradlew
+gradlew.bat
+settings.gradle
+build.gradle
+gradle.properties

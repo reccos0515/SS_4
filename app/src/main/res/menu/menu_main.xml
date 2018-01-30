@@ -3,8 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.maggie.percentager.MainActivity">
     <item
+        android:id="@+id/action_dog"
+        android:orderInCategory="102"
+        android:title="@string/action_dog"
+        android:onClick="getDogYearsScreen"
+        />
+    <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="105"
         android:title="@string/action_settings"
+        android:onClick="getSettingsScreen"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_percentages"
+        android:orderInCategory="100"
+        android:title="@string/action_percentage" />
+    <item
+        android:id="@+id/action_twos"
+        android:orderInCategory="103"
+        android:title="@string/action_twos" />
+    <item
+        android:id="@+id/action_info"
+        android:orderInCategory="106"
+        android:title="@string/action_info"
+        android:onClick="onInfo"
+        />
+    <item
+        android:id="@+id/action_toasts"
+        android:orderInCategory="104"
+        android:title="@string/action_toasts" />
 </menu>
