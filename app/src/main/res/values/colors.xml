@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //default colors
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    //selected colors
+    <color name="colorDarkLiver">#4B4237</color>
+    <color name="colorEggshell">#EDE7D9</color>
+    <color name="colorLemonCurry">#CCAF0E</color>
+    <color name="colorRichBlack">#04080F</color>
+</resources>
