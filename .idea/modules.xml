@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/SS_4.iml" filepath="$PROJECT_DIR$/SS_4.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/coNECTAR.iml" filepath="$PROJECT_DIR$/coNECTAR.iml" />
+      <module fileurl="file://C:\Users\Jessie\Documents\ComSci\309\SS_4\SS_4\coNECTAR.iml" filepath="C:\Users\Jessie\Documents\ComSci\309\SS_4\SS_4\coNECTAR.iml" />
     </modules>
   </component>
 </project>
