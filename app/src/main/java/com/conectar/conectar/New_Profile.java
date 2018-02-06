@@ -32,9 +32,8 @@ public class New_Profile extends AppCompatActivity {
                 Context context = getApplicationContext();
                 CharSequence text;
                 int duration = Toast.LENGTH_SHORT;
-                if(password.equals(confirmPassword)){
+                if(password.getText().toString().equals(confirmPassword.getText().toString())){
                     text = "Successfully submitted";
-                    Toast toast = Toast.makeText(context, text, duration);
                 }
                 else{
                     text = "Please match passwords";
