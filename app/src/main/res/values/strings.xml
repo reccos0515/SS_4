@@ -79,4 +79,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    
+    <string-array name="activityStatus">
+        <item>I want to hangout now!</item>
+        <item>I want to hangout sometime soon</item>
+        <item>I do not want to hangout now</item>
+    </string-array>
 </resources>
