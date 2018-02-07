@@ -7,7 +7,7 @@
         android:layout_height="wrap_content"
         android:hint="First Name: "
         android:id="@+id/firstName"
-        android:inputType="text"
+        android:inputType="textCapWords"
         android:layout_margin="7dp"
         />
     <EditText
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:hint="Last Name: "
         android:id="@+id/lastName"
-        android:inputType="text"
+        android:inputType="textCapWords"
         android:layout_margin="7dp"
         />
     <EditText
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:hint="Password: "
         android:id="@+id/password"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:layout_margin="7dp"
         />
     <EditText
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:hint="Confirm Password: "
         android:id="@+id/confirmPassword"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:layout_margin="7dp"
         />
     <Button
