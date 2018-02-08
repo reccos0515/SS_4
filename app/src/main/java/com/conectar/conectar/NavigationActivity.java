@@ -1,5 +1,6 @@
 package com.conectar.conectar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -80,22 +81,74 @@ public class NavigationActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_messages) { // Go to messages screen
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_settings) { //Go to settings screen
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_editProfile) { //Go to edit profile screen
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_report) { //Go to report screen
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_search) { //Go to search screen
+
+        } else if (id == R.id.nav_changeStatus) { //Go to change status screen
+
+        } else if (id == R.id.nav_login) { //Go to change login screen
+
+        } else if (id == R.id.nav_logout) { //Go to change logout screen
+
+        } else if (id == R.id.nav_newProfile) { //Go to change new profile screen
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //Grabs screens for the menu
+    public void getSettingsScreen(MenuItem item){ //Opens the settings activity screen
+        Intent getSettingsScreenIntent = new Intent(this, SettingsActivity.class);
+        startActivity(getSettingsScreenIntent);
+    }
+
+    public void getSearchScreen(MenuItem item){ // Opens the search activity screen
+        Intent getSearchScreenIntent = new Intent(this, SearchActivity.class);
+        startActivity(getSearchScreenIntent);
+    }
+
+    public void getEditProfileStatusScreen(MenuItem item){ // Opens the edit profile activity screen
+        Intent getEditProfileStatusScreenIntent = new Intent(this, EditProfileStatus.class);
+        startActivity(getEditProfileStatusScreenIntent);
+    }
+
+    public void getReportScreen(MenuItem item){ // Opens the report activity screen
+        Intent getReportScreenIntent = new Intent(this, ReportActivity.class);
+        startActivity(getReportScreenIntent);
+    }
+
+    public void getNewProfileScreen(MenuItem item){ // Opens the new profile activity screen
+        Intent getNewProfileScreenIntent = new Intent(this, New_Profile.class);
+        startActivity(getNewProfileScreenIntent);
+    }
+
+    public void getMessagesScreen(MenuItem item){
+        Intent getMessagesScreenIntent = new Intent(this, MessagesActivity.class);
+        startActivity(getMessagesScreenIntent);
+    }
+
+    public void getLogoutScreen(MenuItem item){
+        Intent getLogoutScreenIntent = new Intent(this, LogoutActivity.class);
+        startActivity(getLogoutScreenIntent);
+    }
+
+    public void getLoginScreen(MenuItem item){
+        Intent getLoginScreenIntent = new Intent(this, LoginActivity.class);
+        startActivity(getLoginScreenIntent);
+    }
+
+    public void getChangeStatusScreen(MenuItem item){
+        Intent getChangeStatusScreenIntent = new Intent(this, ChangeStatusActivity.class);
+        startActivity(getChangeStatusScreenIntent);
     }
 }

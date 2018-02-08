@@ -24,7 +24,13 @@
             android:label="@string/title_activity_navigation"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".New_Profile"></activity>
+        <activity android:name=".New_Profile" />
+        <activity android:name=".ReportActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".MessagesActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".LogoutActivity" />
+        <activity android:name=".ChangeStatusActivity"></activity>
     </application>
 
 </manifest>
