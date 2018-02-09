@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-@RestController
+@RestController //Classes with this annotation are treated like controllers (according to the API).
 @RequestMapping("/members")
 public class MemberController {
 
@@ -20,9 +20,14 @@ public class MemberController {
         return memberService.getallMembers();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
     public Member getMemberByID(@PathVariable("id") int id){
         return memberService.getMemberByID(id);
+    }
+
+    @RequestMapping(value = "/interest/{interest}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE)
+    public Member getMemberByInterest(@PathVariable("interest") String interest){
+        return memberService.getMemberByInterest(interest);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

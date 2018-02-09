@@ -22,6 +22,10 @@ public class MemberService {
         return this.memberDao.getMemberByID(id);
     }
 
+    public Member getMemberByInterest(String interest){
+        return this.memberDao.getMemberByInterest(interest);
+    }
+
     public void deleteMemberByID(int id) {
         this.memberDao.deleteMemberByID(id);
     }

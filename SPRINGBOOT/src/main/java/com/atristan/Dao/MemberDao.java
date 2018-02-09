@@ -33,6 +33,13 @@ public class MemberDao {
     public Member getMemberByID(int id){
         return this.members.get(id);
     }
+    public void allByInterest(String interest){
+
+    }
+
+    public Member getMemberByInterest(String interest){
+        return this.members.get(interest);
+    }
 
     public void deleteMemberByID(int id) {
         this.members.remove(id);
