@@ -19,25 +19,31 @@ public class New_Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new__profile);
+        //set all variables to take input from the UI
         firstName = findViewById(R.id.firstName);
         lastName = findViewById(R.id.lastName);
         email = findViewById(R.id.email);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         confirmPassword = findViewById(R.id.confirmPassword);
+        //create the submit button
         Button button = findViewById(R.id.submitButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //create a toast
                 Context context = getApplicationContext();
                 CharSequence text;
                 int duration = Toast.LENGTH_SHORT;
                 if(password.getText().toString().equals(confirmPassword.getText().toString())){
+                    //if confirmPassword and password are the same, submit
                     text = "Successfully submitted";
                 }
                 else{
+                    //if confirmPassword and password are different, do not submit
                     text = "Please match passwords";
                 }
+                //toast whether or not it was submitted
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
             }
