@@ -16,7 +16,8 @@ public class EditProfileStatus extends AppCompatActivity {
     private EditText bio;
     private EditText newInterest;
     private int numInterests;
-    private String[] interests = new String[5];
+    //TODO figure out how to use delete interest buttons with interests at size 5.  Extra space here is unideal
+    private String[] interests = new String[6];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +99,35 @@ public class EditProfileStatus extends AppCompatActivity {
                         interests[i] = interests[i + 1];
                     }
                     //decrement the number of interests
+                    numInterests--;
+                }
+            }
+        });
+        //button to delete interest 4
+        Button button4 = findViewById(R.id.interestFour);
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //check there are at least 4 interests
+                if(numInterests >= 4){
+                    //set each interest starting at the fourth to be the next interest
+                    for(int i = 3; i < numInterests; i++){
+                        interests[i] = interests[i+1];
+                    }
+                    //decrement number of interests
+                    numInterests--;
+                }
+            }
+        });
+        //button to delete interest 5
+        Button button5 = findViewById(R.id.interestFive);
+        button5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //check there are 5 interests
+                if(numInterests == 5) {
+                    //can set interest 5 directly to null
+                    interests[4] = null;
                     numInterests--;
                 }
             }
