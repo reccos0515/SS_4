@@ -103,7 +103,7 @@ public class EditProfileStatus extends AppCompatActivity {
             }
         });
         //for debugging, outputs all the current values in interests
-        Button debugButton = findViewById(R.id.interestFive);
+        Button debugButton = findViewById(R.id.debugButton);
         debugButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
