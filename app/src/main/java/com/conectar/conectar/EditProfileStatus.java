@@ -70,6 +70,39 @@ public class EditProfileStatus extends AppCompatActivity {
                 }
             }
         });
+        //button to delete interest 2
+        Button button2 = findViewById(R.id.interestTwo);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //check there are at least 2 interests
+                if(numInterests >= 2){
+                    //set each interest starting at the second to be the next interest
+                    for(int i = 1; i < numInterests; i++){
+                        interests[i] = interests[i+1];
+                    }
+                    //decrement the number of interests
+                    numInterests--;
+                }
+            }
+        });
+        //button to delete interest 3
+        Button button3 = findViewById(R.id.interestThree);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //check there are at least 3 interests
+                if(numInterests >= 3){
+                    //set each interest starting at the third to be the next interest
+                    for(int i = 2; i < numInterests; i++){
+                        interests[i] = interests[i + 1];
+                    }
+                    //decrement the number of interests
+                    numInterests--;
+                }
+            }
+        });
+        //for debugging, outputs all the current values in interests
         Button debugButton = findViewById(R.id.interestFive);
         debugButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,5 +114,6 @@ public class EditProfileStatus extends AppCompatActivity {
                 toast.show();
             }
         });
+
     }
 }
