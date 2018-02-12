@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class EditProfileStatus extends AppCompatActivity {
     private EditText bio;
     private EditText newInterest;
-    private String[] interests;
     private int numInterests;
+    private String[] interests = new String[5];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +29,11 @@ public class EditProfileStatus extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(numInterests < 5){
+                    Context context = getApplicationContext();
+                    CharSequence text = "Interests are not full";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                     interests[numInterests] = newInterest.getText().toString();
                     numInterests++;
                 }
