@@ -30,7 +30,8 @@
         <activity android:name=".MessagesActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".LogoutActivity" />
-        <activity android:name=".ChangeStatusActivity"></activity>
+        <activity android:name=".ChangeStatusActivity" />
+        <activity android:name=".ProfileView"></activity>
     </application>
 
 </manifest>
