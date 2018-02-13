@@ -18,7 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, LogoutFragment.OnFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener, LogoutFragment.OnFragmentInteractionListener,
+            EditProfileFragment.OnFragmentInteractionListener, ChangeStatusFragment.OnFragmentInteractionListener{
 
     @Override
     public void onFragmentInteraction(Uri uri){
@@ -84,14 +85,14 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_search) {
-
+            fragment = new SearchFragment();
         } else if (id == R.id.nav_messages) {
-
+            fragment = new MessagesFragment();
         } else if (id == R.id.nav_changeStatus) {
-
+            fragment = new ChangeStatusFragment();
         } else if (id == R.id.nav_editProfile) {
-
-        } else if (id == R.id.nav_settings) {
+            fragment = new EditProfileFragment();
+        } else if (id == R.id.nav_settings) { //needs fragment implementation
 
         } else if (id == R.id.nav_logout) {
             fragment = new LogoutFragment();

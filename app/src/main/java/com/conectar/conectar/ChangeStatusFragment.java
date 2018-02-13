@@ -3,18 +3,21 @@ package com.conectar.conectar;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ChangeStatusFragment.OnFragmentInteractionListener} interface
+ * {@link LogoutFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ChangeStatusFragment#newInstance} factory method to
+ * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ChangeStatusFragment extends Fragment {
@@ -39,7 +42,7 @@ public class ChangeStatusFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ChangeStatusFragment.
+     * @return A new instance of fragment LogoutFragment.
      */
     // TODO: Rename and change types and number of parameters
     public static ChangeStatusFragment newInstance(String param1, String param2) {
@@ -60,11 +63,25 @@ public class ChangeStatusFragment extends Fragment {
         }
     }
 
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_change_status, container, false);
+        return inflater.inflate(R.layout.fragment_change_status, null); //opens the change status screen
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        
+        /*
+        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "You are inside the logout fragment", Toast.LENGTH_LONG);
+            }
+        }); */
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,4 +122,6 @@ public class ChangeStatusFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

@@ -63,23 +63,31 @@ public class LogoutFragment extends Fragment {
         }
     }
 
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_logout, null);
+        return inflater.inflate(R.layout.fragment_logout, null); //opens the logout screen
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "You pressed logout", Toast.LENGTH_SHORT);
+            }
+        });
+        /*
         view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "You are inside the logout fragment", Toast.LENGTH_LONG);
             }
-        });
+        }); */
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -3,26 +3,21 @@ package com.conectar.conectar;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link LogoutFragment.OnFragmentInteractionListener} interface
+ * {@link SwipeFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link LogoutFragment#newInstance} factory method to
+ * Use the {@link SwipeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EditProfileFragment extends Fragment {
+public class SwipeFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,15 +26,10 @@ public class EditProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private EditText bio;
-    private EditText newInterest;
-    //TODO figure out how to use delete interest buttons with interests at size 5.  Extra space here is unideal
-    private String[] interests = new String[6];
-    private int numInterests;
 
     private OnFragmentInteractionListener mListener;
 
-    public EditProfileFragment() {
+    public SwipeFragment() {
         // Required empty public constructor
     }
 
@@ -49,11 +39,11 @@ public class EditProfileFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment LogoutFragment.
+     * @return A new instance of fragment SwipeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static EditProfileFragment newInstance(String param1, String param2) {
-        EditProfileFragment fragment = new EditProfileFragment();
+    public static SwipeFragment newInstance(String param1, String param2) {
+        SwipeFragment fragment = new SwipeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,50 +58,13 @@ public class EditProfileFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_profile, null);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        view.findViewById(R.id.interestOne).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Interest One", Toast.LENGTH_SHORT);
-            }
-        });
-        view.findViewById(R.id.interestTwo).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "Interest Two", Toast.LENGTH_LONG);
-            }
-        });
-        view.findViewById(R.id.interestThree).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "Interest Three", Toast.LENGTH_LONG);
-            }
-        });
-        view.findViewById(R.id.interestFour).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "Interest Four", Toast.LENGTH_LONG);
-            }
-        });
-        view.findViewById(R.id.interestFive).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "Interest Five", Toast.LENGTH_LONG);
-            }
-        });
+        return inflater.inflate(R.layout.fragment_swipe, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -152,7 +105,4 @@ public class EditProfileFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-
 }
-
