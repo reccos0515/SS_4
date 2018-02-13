@@ -20,7 +20,7 @@ import android.widget.Toast;
  * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LogoutFragment extends Fragment {
+public class FriendsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -32,7 +32,7 @@ public class LogoutFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public LogoutFragment() {
+    public FriendsFragment() {
         // Required empty public constructor
     }
 
@@ -45,8 +45,8 @@ public class LogoutFragment extends Fragment {
      * @return A new instance of fragment LogoutFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LogoutFragment newInstance(String param1, String param2) {
-        LogoutFragment fragment = new LogoutFragment();
+    public static FriendsFragment newInstance(String param1, String param2) {
+        FriendsFragment fragment = new FriendsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,7 +68,7 @@ public class LogoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_logout, null); //opens the logout screen
+        return inflater.inflate(R.layout.fragment_friends, null); //opens the logout screen
     }
 
     @Override
@@ -78,7 +78,7 @@ public class LogoutFragment extends Fragment {
         view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "You pressed logout", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "You pressed logout", Toast.LENGTH_SHORT);
             }
         });
         /*

@@ -19,8 +19,12 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LogoutFragment.OnFragmentInteractionListener,
-            EditProfileFragment.OnFragmentInteractionListener, ChangeStatusFragment.OnFragmentInteractionListener{
-
+            EditProfileFragment.OnFragmentInteractionListener, ChangeStatusFragment.OnFragmentInteractionListener,
+            FriendsFragment.OnFragmentInteractionListener, MessagesFragment.OnFragmentInteractionListener,
+            NewProfileFragment.OnFragmentInteractionListener, SearchFragment.OnFragmentInteractionListener,
+            SwipeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener{
+    /*Added Logout, Edit Profile, Change Status, Friends, Messages, New Profile, Search, Swipe Screen/Home, Login
+    to drawer navigation */
     @Override
     public void onFragmentInteraction(Uri uri){
         //empty
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item) { //tells the app to switch screens if certain menu buttons are pressed
         // Handle navigation view item clicks here.
         Fragment fragment = null;
 
@@ -93,9 +97,19 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_editProfile) {
             fragment = new EditProfileFragment();
         } else if (id == R.id.nav_settings) { //needs fragment implementation
-
+            //waiting for xml implementation
         } else if (id == R.id.nav_logout) {
             fragment = new LogoutFragment();
+        } else if (id == R.id.nav_login) {
+            fragment = new LoginFragment();
+        } else if (id == R.id.nav_swipe) {
+            fragment = new SwipeFragment();
+        } else if (id == R.id.nav_newProfile) {
+            fragment = new NewProfileFragment();
+        } else if (id == R.id.nav_about) {
+            //waiting for xml implementation
+        } else if (id == R.id.nav_report) {
+            //waiting for xml implementation
         }
 
         if(fragment != null){

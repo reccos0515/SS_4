@@ -20,7 +20,7 @@ import android.widget.Toast;
  * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LogoutFragment extends Fragment {
+public class NewProfileFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -32,7 +32,7 @@ public class LogoutFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public LogoutFragment() {
+    public NewProfileFragment() {
         // Required empty public constructor
     }
 
@@ -45,8 +45,8 @@ public class LogoutFragment extends Fragment {
      * @return A new instance of fragment LogoutFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LogoutFragment newInstance(String param1, String param2) {
-        LogoutFragment fragment = new LogoutFragment();
+    public static NewProfileFragment newInstance(String param1, String param2) {
+        NewProfileFragment fragment = new NewProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,26 +68,14 @@ public class LogoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_logout, null); //opens the logout screen
+        return inflater.inflate(R.layout.fragment_new_profile, null); //opens the logout screen
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "You pressed logout", Toast.LENGTH_SHORT).show();
-            }
-        });
-        /*
-        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "You are inside the logout fragment", Toast.LENGTH_LONG);
-            }
-        }); */
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

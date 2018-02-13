@@ -3,18 +3,21 @@ package com.conectar.conectar;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SwipeFragment.OnFragmentInteractionListener} interface
+ * {@link LogoutFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link SwipeFragment#newInstance} factory method to
+ * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class SwipeFragment extends Fragment {
@@ -39,7 +42,7 @@ public class SwipeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SwipeFragment.
+     * @return A new instance of fragment LogoutFragment.
      */
     // TODO: Rename and change types and number of parameters
     public static SwipeFragment newInstance(String param1, String param2) {
@@ -60,11 +63,18 @@ public class SwipeFragment extends Fragment {
         }
     }
 
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_swipe, container, false);
+        return inflater.inflate(R.layout.fragment_swipe, null); //opens the logout screen
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,4 +115,6 @@ public class SwipeFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }
