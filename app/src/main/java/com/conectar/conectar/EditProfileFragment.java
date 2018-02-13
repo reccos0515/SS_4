@@ -62,12 +62,14 @@ public class EditProfileFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) { //------------------------------------------------------------------------------onCreate
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
 
     }
 
@@ -82,34 +84,118 @@ public class EditProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //create variables that take input from UI
+        bio = view.findViewById(R.id.bio);
+        newInterest = view.findViewById(R.id.newInterest);
+        //int to keep track of the current number of interests
+        numInterests = 0;
+        //create a button to add an interest
+        view.findViewById(R.id.submitInterest).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                //if there are not yet 5 interests, it can be added
+                if(numInterests < 5){
+                    //toast to let the user know it worked
+                    Context context = getActivity().getApplicationContext();
+                    CharSequence text = "Interests are not full";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                    //add the interest
+                    interests[numInterests] = newInterest.getText().toString();
+                    //increment the number of interests
+                    numInterests++;
+                }
+                else{
+                    //let the user know there are too many interests to add another
+                    Context context = getActivity().getApplicationContext();
+                    CharSequence text = "Interests are full";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+            }
+        });
+
         view.findViewById(R.id.interestOne).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Interest One", Toast.LENGTH_SHORT);
+                if(numInterests >= 1){
+                    //move every interest down one place
+                    for(int i = 0; i < numInterests; i++){
+                        interests[i] = interests[i + 1];
+                        Toast.makeText(getActivity(), "Interest One Removed", Toast.LENGTH_SHORT).show();
+                    }
+                    //decrement number of interests
+                    numInterests--;
+                }
             }
         });
         view.findViewById(R.id.interestTwo).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Interest Two", Toast.LENGTH_LONG);
+                if(numInterests >= 2){
+                    //move every interest down one place
+                    for(int i = 1; i < numInterests; i++){
+                        interests[i] = interests[i + 1];
+                        Toast.makeText(getActivity(), "Interest Two Removed", Toast.LENGTH_SHORT).show();
+                    }
+                    //decrement number of interests
+                    numInterests--;
+                }
             }
         });
         view.findViewById(R.id.interestThree).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Interest Three", Toast.LENGTH_LONG);
+                if(numInterests >= 3){
+                    //move every interest down one place
+                    for(int i = 2; i < numInterests; i++){
+                        interests[i] = interests[i + 1];
+                        Toast.makeText(getActivity(), "Interest Three Removed", Toast.LENGTH_SHORT).show();
+                    }
+                    //decrement number of interests
+                    numInterests--;
+                }
             }
         });
         view.findViewById(R.id.interestFour).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Interest Four", Toast.LENGTH_LONG);
+                if(numInterests >= 4){
+                    //move every interest down one place
+                    for(int i = 3; i < numInterests; i++){
+                        interests[i] = interests[i + 1];
+                        Toast.makeText(getActivity(), "Interest Four Removed", Toast.LENGTH_SHORT).show();
+                    }
+                    //decrement number of interests
+                    numInterests--;
+                }
             }
         });
         view.findViewById(R.id.interestFive).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Interest Five", Toast.LENGTH_LONG);
+                if(numInterests >= 5){
+                    //move every interest down one place
+                    for(int i = 4; i < numInterests; i++){
+                        interests[i] = interests[i + 1];
+                        Toast.makeText(getActivity(), "Interest Five Removed", Toast.LENGTH_SHORT).show();
+                    }
+                    //decrement number of interests
+                    numInterests--;
+                }
+            }
+        });
+        //For debugging, outputs all the current values in interests
+        view.findViewById(R.id.debugButton).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Context context = getActivity().getApplicationContext();
+                CharSequence text = (CharSequence)(interests[0] + interests[1] + interests[2] + interests[3] + interests[4]);
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             }
         });
     }
