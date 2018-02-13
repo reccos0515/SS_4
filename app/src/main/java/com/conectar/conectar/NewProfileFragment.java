@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
@@ -29,6 +30,13 @@ public class NewProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private EditText firstName;
+    private EditText lastName;
+    private EditText email;
+    private EditText username;
+    private EditText password;
+    private EditText confirmPassword;
 
     private OnFragmentInteractionListener mListener;
 
@@ -75,6 +83,33 @@ public class NewProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        firstName = view.findViewById(R.id.firstName);
+        lastName = view.findViewById(R.id.lastName);
+        email = view.findViewById(R.id.email);
+        username = view.findViewById(R.id.username);
+        password = view.findViewById(R.id.password);
+        confirmPassword = view.findViewById(R.id.confirmPassword);
+
+        view.findViewById(R.id.submitButton).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                //create a toast
+                Context context = getActivity().getApplicationContext();
+                CharSequence text;
+                int duration = Toast.LENGTH_SHORT;
+                if(password.getText().toString().equals(confirmPassword.getText().toString())){
+                    //if confirmPassword and password are the same, submit
+                    text = "Successfully submitted";
+                }
+                else{
+                    //if confirmPassword and password are different, do not submit
+                    text = "Please match passwords";
+                }
+                //toast whether or not it was submitted
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+        });
 
     }
 
