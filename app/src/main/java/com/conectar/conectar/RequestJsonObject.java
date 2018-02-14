@@ -16,21 +16,31 @@ import static com.conectar.conectar.AppController.TAG;
 
 /**
  * Created by Jessie on 2/13/2018.
+ * Class to make a json request
  */
 
 public class RequestJsonObject {
+    //save a return value
+    JSONObject ret = null;
 
-    public static void makeRequest(String request, Context context) {
-        String tag_json_obj = "json_obj_req";
+    /**
+     * function to make a request
+     * @param request JSONObj with the request
+     * @param context current context (this)
+     */
+    public void makeRequest(JSONObject request, Context context) {
+        ret = null;
+        String tag_json_obj = "json_obj_req_cancel";
         String url = "http://proj-309-ss-4.cs.iastate.edu/";
         final ProgressDialog pDialog = new ProgressDialog(context);
         pDialog.setMessage("Loading...");
         pDialog.show();
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, request, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
+                saveRequest(response);
                 pDialog.hide();
             }
 
@@ -42,5 +52,26 @@ public class RequestJsonObject {
             }
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
+    /**
+     * Function to save a request to be returned later
+     * @param obj request to be saved
+     */
+    public void saveRequest(JSONObject obj){
+        ret = obj;
+    }
+
+    /**
+     * function to get the return value
+     * @return the JSONobj
+     */
+    public JSONObject getRequests(){
+        int i = 0;
+        //wait until it is set, or times out
+        while(ret == null && i < 100000000){
+            i++;
+        }
+        return ret;
     }
 }
