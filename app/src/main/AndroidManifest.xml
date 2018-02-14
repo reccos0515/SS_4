@@ -20,18 +20,6 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity
-            android:name=".NavigationActivity"
-            android:label="@string/title_activity_navigation"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".New_Profile" />
-        <activity android:name=".ReportActivity" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".MessagesActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".LogoutActivity" />
-        <activity android:name=".ChangeStatusActivity" />
-        <activity android:name=".EditProfileStatus" />
         <!-- <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
