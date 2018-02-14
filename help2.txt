@@ -1,4 +1,0 @@
-This project will not compile when I type gradle build in the cmd
-
-It says it can not find my java JDK folder. It seems to be looking in the wrong place and I cant figure out how to fix
-gradle will build in other projects like Gradle_EX that is also in this repo
