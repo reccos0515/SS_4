@@ -7,27 +7,23 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ProfileViewFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ProfileViewFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * This class is used to view a profile.  It retrieves the user information from the server and displays it in the UI
+ * The user can also interact with the user by adding them to the friend list
+ * The updated friend list is then sent back to the server
  */
 public class ProfileViewFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int[] friendList = new int[20]; //list of up to 20 friend's id numbers
+    private int numFriends; //number of friends in friendList
+    private String curUsername; //the username of the user to be viewed
+    private static int curIdNum; //id number of the user to be viewed
 
     private OnFragmentInteractionListener mListener;
 
@@ -37,29 +33,22 @@ public class ProfileViewFragment extends Fragment {
 
     /**
      * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * ProfileView by pulling up the profile of a user from
+     * their user ID
+     * @param idNum an int that represents the id number of the user to be viewed
      * @return A new instance of fragment ProfileViewFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ProfileViewFragment newInstance(String param1, String param2) {
+    public static ProfileViewFragment newInstance(int idNum) {
         ProfileViewFragment fragment = new ProfileViewFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+        curIdNum = idNum;
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -72,20 +61,24 @@ public class ProfileViewFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //text to be set to the username
-        String text = "trial";
-        //edit this to set the username
+        //TODO send JSON request to get the needed user information from the curIdNum
+        numFriends = 0; //set numFriends TODO will get numFriends from JSONobj
+        String text = "trial"; //text to be set to the curUsername.  TODO Will get username from returned JSONobj
+        final int curIdNum = 0; //set id of the user TODO will get id from JSONobj
+        //set the username on screen
         TextView username = view.findViewById(R.id.viewUsername);
         username.setText(text);
-
-    }
-
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        //when the button is pressed, will add friend if there is space in friendsList
+        view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if(numFriends < 20){
+                    friendList[numFriends] = curIdNum; //add friend
+                    numFriends++;
+                }
+            }
+        });
+        //TODO when moving to a new page, send back updated information
     }
 
     @Override

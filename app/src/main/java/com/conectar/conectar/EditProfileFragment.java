@@ -21,6 +21,7 @@ import android.widget.Toast;
  * to handle interaction events.
  * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
  */
 public class EditProfileFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
