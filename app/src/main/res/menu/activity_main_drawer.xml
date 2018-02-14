@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@android:drawable/ic_menu_search"
+            android:title="Search" />
+        <item
+            android:id="@+id/nav_swipe"
+            android:icon="@android:drawable/btn_star_big_on"
+            android:title="Home/Swiping screen" />
+        <item
+            android:id="@+id/nav_messages"
+            android:icon="@drawable/ic_action_messages"
+            android:title="Messages" />
+        <item
+            android:id="@+id/nav_changeStatus"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Change Status" />
+        <item
+            android:id="@+id/nav_editProfile"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Edit Profile" />
+        <item
+            android:id="@+id/nav_newProfile"
+            android:title="New Profile" />
+    </group>
+
+    <item
+        android:id="@+id/account"
+        android:title="Manage Account">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Settings" />
+            <item
+                android:id="@+id/nav_about"
+                android:title="About coNECTAR" />
+            <item
+                android:id="@+id/nav_report"
+                android:title="Report" />
+            <item
+                android:id="@+id/nav_login"
+                android:title="Login" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+</menu>
+
+<!-- This is main drawer xml -->

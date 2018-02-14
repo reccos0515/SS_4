@@ -23,3 +23,6 @@
         app:menu="@menu/activity_navigation_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
+
+<!-- TODO Look into whether this xml file is useless -->
+
