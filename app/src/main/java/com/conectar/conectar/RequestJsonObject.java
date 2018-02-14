@@ -3,6 +3,8 @@ package com.conectar.conectar;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -22,7 +24,7 @@ import static com.conectar.conectar.AppController.TAG;
 public class RequestJsonObject {
     //save a return value
     JSONObject ret = null;
-
+    //TODO implement JSONobject cancel
     /**
      * function to make a request
      * @param request JSONObj with the request
@@ -65,12 +67,19 @@ public class RequestJsonObject {
     /**
      * function to get the return value
      * @return the JSONobj
+     * TODO decide on wait time
      */
-    public JSONObject getRequests(){
+    public JSONObject getRequests(Context context){
         int i = 0;
         //wait until it is set, or times out
-        while(ret == null && i < 100000000){
+        while(ret == null && i < 1000000000){
             i++;
+        }
+        if(ret == null){
+            CharSequence text = "No response, try again";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         }
         return ret;
     }
