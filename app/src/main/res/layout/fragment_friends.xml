@@ -7,6 +7,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/friends_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -25,6 +26,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.86" />
+
+        <TextView
+            android:id="@+id/friendUsername"
+            android:layout_width="212dp"
+            android:layout_height="65dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/refreshButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.198" />
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

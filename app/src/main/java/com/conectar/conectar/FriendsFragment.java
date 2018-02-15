@@ -5,11 +5,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
+import util.FragmentUtil;
 
 import org.json.JSONObject;
 
@@ -77,6 +80,25 @@ public class FriendsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final FragmentManager fragmentManager = getFragmentManager(); //not support fragment manager b/c this is in a fragment
+        final View thisView = getView();
+
+        String text = "friendname"; //temp until can grab username from DB
+        TextView username = view.findViewById(R.id.friendUsername);
+        username.setText(text);
+
+        //Refresh Button
+        view.findViewById(R.id.refreshButton).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+            Fragment thisFragment= getActivity().getFragmentManager().findFragmentById(R.id.friends_container);
+            FragmentUtil.refreshFragment(thisFragment);
+            Toast.makeText(getActivity(), "Successful Refresh", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //sending request and receiving user profile from server
         /*
         JSONObject userObj = null;
         makeRequest(userObj, this);
