@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity
             EditProfileFragment.OnFragmentInteractionListener, ChangeStatusFragment.OnFragmentInteractionListener,
             FriendsFragment.OnFragmentInteractionListener, MessagesFragment.OnFragmentInteractionListener,
             NewProfileFragment.OnFragmentInteractionListener, SearchFragment.OnFragmentInteractionListener,
-            SwipeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener{
+            SwipeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener,
+            ProfileViewFragment.OnFragmentInteractionListener{
     /*Added Logout, Edit Profile, Change Status, Friends, Messages, New Profile, Search, Swipe Screen/Home, Login
     to drawer navigation */
     @Override
@@ -34,18 +35,35 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //sets the navigation drawer as initial layout
         setContentView(R.layout.activity_main);
+
+        //creates and sets the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //creates and sets the navigation drawer to toggle on the toolbar
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+
+        //sets default page to the profile view page
+        FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
+        tx.replace(R.id.screen_area, new ProfileViewFragment());
+        tx.commit();
+
+
+
+
     }
 
     @Override
@@ -88,6 +106,7 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
+        //if nav______ is clicked, switch to its corresponding fragment page
         if (id == R.id.nav_search) {
             fragment = new SearchFragment();
         } else if (id == R.id.nav_messages) {

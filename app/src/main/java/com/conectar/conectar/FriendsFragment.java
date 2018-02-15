@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,19 +77,13 @@ public class FriendsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "You pressed logout", Toast.LENGTH_SHORT);
-            }
-        });
         /*
-        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "You are inside the logout fragment", Toast.LENGTH_LONG);
-            }
-        }); */
+        JSONObject userObj = null;
+        makeRequest(userObj, this);
+        Context context = getContext();
+        userObj = getRequests(context);
+        */
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
