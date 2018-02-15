@@ -10,8 +10,12 @@
             android:title="Search" />
         <item
             android:id="@+id/nav_swipe"
-            android:icon="@android:drawable/btn_star_big_on"
+            android:icon="@drawable/ic_home_black_24dp"
             android:title="Home/Swiping screen" />
+        <item
+            android:id="@+id/nav_friends"
+            android:icon="@drawable/ic_people_black_24dp"
+            android:title="Friends" />
         <item
             android:id="@+id/nav_messages"
             android:icon="@drawable/ic_action_messages"
@@ -27,9 +31,6 @@
         <item
             android:id="@+id/nav_newProfile"
             android:title="New Profile" />
-        <item
-            android:id="@+id/nav_profileView"
-            android:title="Item" />
     </group>
 
     <item

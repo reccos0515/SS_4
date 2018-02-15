@@ -129,6 +129,8 @@ public class MainActivity extends AppCompatActivity
             //waiting for xml implementation
         } else if (id == R.id.nav_report) {
             //waiting for xml implementation
+        } else if (id == R.id.nav_friends) {
+            fragment = new FriendsFragment();
         }
 
         if(fragment != null){
