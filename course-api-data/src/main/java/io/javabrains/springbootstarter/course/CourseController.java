@@ -17,12 +17,12 @@ public class CourseController {
 	@Autowired
 	private CourseService courseService;
 
-	@RequestMapping("/topics/{id}/courses")
+	@RequestMapping(method=RequestMethod.GET, value ="/topics/{id}/courses")
 	public List<Course> getAllCourses(@PathVariable String id) {
 		return courseService.getAllCourses(id);
 	}
 	
-	@RequestMapping("/course/{tipicId}/courses/{courseId}") //can use("id") to denote other var name to arg vars
+	@RequestMapping(method=RequestMethod.GET, value ="/course/{topicId}/courses/{id}") //can use("id") to denote other var name to arg vars
 	public Course getCourse(@PathVariable String id) {
 		
 		return courseService.getCourse(id);
@@ -42,7 +42,7 @@ public class CourseController {
 	}
 	
 	
-	@RequestMapping(method=RequestMethod.DELETE, value = "/course/{id}")
+	@RequestMapping(method=RequestMethod.DELETE, value = "/topics/{topicId}/courses/{id}")
 	public void deleteCourse(@PathVariable String id) {
 		
 		courseService.deleteCourse(id);
