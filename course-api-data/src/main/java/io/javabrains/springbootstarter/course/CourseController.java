@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.javabrains.springbootstarter.topic.Topic;
@@ -22,7 +23,7 @@ public class CourseController {
 		return courseService.getAllCourses(id);
 	}
 	
-	@RequestMapping(method=RequestMethod.GET, value ="/course/{topicId}/courses/{id}") //can use("id") to denote other var name to arg vars
+	@RequestMapping(method=RequestMethod.GET, value ="/topics/{topicId}/courses/{id}") //can use("id") to denote other var name to arg vars
 	public Course getCourse(@PathVariable String id) {
 		
 		return courseService.getCourse(id);
