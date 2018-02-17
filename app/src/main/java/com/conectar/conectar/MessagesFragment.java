@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,12 +71,21 @@ public class MessagesFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_messages, container, false);
     }
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.addUserReq).setOnClickListener(new View.OnClickListener(){
+        view.findViewById(R.id.addUserReq);
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RequestJsonObject.postRequest(getContext(), "");
+                new Timer().schedule(
+                        new TimerTask() {
+                            @Override
+                            public void run() {
+                                RequestJsonObject.postProfileRequest(getContext(), "");
+                            }
+                        }, 20000
+                );
+                System.out.println(RequestJsonObject.getStringRequests(getContext()));
             }
         });
 

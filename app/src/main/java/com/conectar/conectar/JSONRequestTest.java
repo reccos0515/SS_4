@@ -59,7 +59,8 @@ public class JSONRequestTest extends Fragment {
         view.findViewById(R.id.addUserReq).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-               RequestJsonObject.postRequest(getContext(), "");
+               RequestJsonObject.postProfileRequest(getContext(), "");
+               RequestJsonObject.getStringRequests(getContext());
             }
         });
 

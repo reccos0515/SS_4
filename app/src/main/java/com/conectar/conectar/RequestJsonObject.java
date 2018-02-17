@@ -30,7 +30,8 @@ import static com.conectar.conectar.AppController.TAG;
 
 public class RequestJsonObject {
     //save a return value
-    JSONObject ret = null;
+    static JSONObject ret = null;
+    static String strRet = null;
     static RequestQueue queue; //request queue
     //TODO implement JSONobject cancel
     /**
@@ -53,7 +54,6 @@ public class RequestJsonObject {
                 saveRequest(response);
                 pDialog.hide();
             }
-
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -65,17 +65,19 @@ public class RequestJsonObject {
     }
 
     /**
-     * Used to post a request
+     * Used to post a new profile request
      * @param context
      * @param url
      */
-    public static void postRequest(Context context, String url){
+    public static void postProfileRequest(Context context, String url){
         //mPostCommentResponse.requestStarted();
         queue = Volley.newRequestQueue(context);
         StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 //mPostCommentResponse.requestCompleted();
+                saveStringRequest(response);
+                Log.d(TAG, response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
@@ -112,8 +114,12 @@ public class RequestJsonObject {
      * Function to save a request to be returned later
      * @param obj request to be saved
      */
-    public void saveRequest(JSONObject obj){
+    public static void saveRequest(JSONObject obj){
         ret = obj;
+    }
+
+    public static void saveStringRequest(String str){
+        strRet = str;
     }
 
     /**
@@ -122,11 +128,6 @@ public class RequestJsonObject {
      * TODO decide on wait time
      */
     public JSONObject getRequests(Context context){
-        int i = 0;
-        //wait until it is set, or times out
-        while(ret == null && i < 1000000000){
-            i++;
-        }
         if(ret == null){
             CharSequence text = "No response, try again";
             int duration = Toast.LENGTH_SHORT;
@@ -134,5 +135,15 @@ public class RequestJsonObject {
             toast.show();
         }
         return ret;
+    }
+
+    public static String getStringRequests(Context context){
+        if(strRet == null){
+            CharSequence text = "No response, try again";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+        return strRet;
     }
 }
