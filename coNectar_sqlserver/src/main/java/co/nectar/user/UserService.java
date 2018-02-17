@@ -12,23 +12,34 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
+	@Autowired
+	private UserRepository userRepo;
 	
-	private List<User> users = new ArrayList<User>(Arrays.asList(new User(1,"Ben","i am ben")));
+	//private List<User> users = new ArrayList<User>(Arrays.asList(new User(1,"Ben","i am ben")));
 	
-	public List<User> getAllUsers() {
-		return users;
+	public Iterable<User> getAllUsers() {
+		//return users;
+		return userRepo.findAll();
 	}
 
 	public User getUser(int userId) {
-		return users.stream().filter(t -> (t.getId() == userId)).findFirst().get();
+		return userRepo.findOne(userId);
 	}
 
 	public void addUser(User user) {
-		users.add(user);
+		userRepo.save(user);
+	}
+	
+	public String addUser(String userName, String bio) {
+		User user = new User();
+		user.setUserName(userName);
+		user.setBio(bio);
+		userRepo.save(user);
+		return "saved";
 	}
 
 	public void deleteUser(int userId) {
-		users.remove(userId);
+		userRepo.delete(userId);
 	}
 
 	public void updateBio(int userId) {
@@ -37,50 +48,52 @@ public class UserService {
 	}
 
 	public void updateUser(int userId, User user) {
-		for(int i = 0; i <users.size(); i++) {
-			User t =users.get(i);
-			if(t.getId() == (userId)) {
-				users.set(i, user);
-				return;
-			}
-		}
+		userRepo.save(user);
 		
 	}
 
 
 	public List<User> getFriendsTo(int userId) {
 		//reutrns friends to
-		List<User> users = new ArrayList<>();
-		List<Integer> friends = this.getUser(userId).getFriendsTo();
-		
-		//get user object of all friends
-		for(int friend : friends) {
-			users.add(getUser(friend));
-		}
-		return users;
+//		List<User> users = new ArrayList<>();
+//		List<Integer> friends = this.getUser(userId).getFriendsTo();
+//		
+//		//get user object of all friends
+//		for(int friend : friends) {
+//			users.add(getUser(friend));
+//		}
+//		return users;
+		return userRepo.findOne(userId).getFriendsTo();
 	}
 	
 	
 	public List<User> getFriendsOf(int userId) {
 		//returns friends of
-		List<User> users = new ArrayList<>();
-		List<Integer> friends = this.getUser(userId).getFriendsOf();
-		
-		//get user object of all friends
-		for(int friend : friends) {
-			users.add(getUser(friend));
-		}
-		return users;
+//		List<User> users = new ArrayList<>();
+//		List<Integer> friends = this.getUser(userId).getFriendsOf();
+//		
+//		//get user object of all friends
+//		for(int friend : friends) {
+//			users.add(getUser(friend));
+//		}
+//		return users;
+		return userRepo.findOne(userId).getFriendsOf();
 	}
 
 	public void addFriend(int userId, int friendId) {
-		this.getUser(userId).getFriendsTo().add(friendId);
-		this.getUser(friendId).getFriendsOf().add(userId);
+		User user = this.getUser(userId);
+		User friend = this.getUser(friendId);
+		
+		user.getFriendsTo().add(friend);
+		friend.getFriendsOf().add(user);
 	}
 	
 	public void removeFriend(int userId, int friendId) {
-		this.getUser(userId).getFriendsTo().remove(friendId);
-		this.getUser(friendId).getFriendsOf().remove(userId);
+		User user = this.getUser(userId);
+		User friend = this.getUser(friendId);
+		
+		user.getFriendsTo().remove(friend);
+		friend.getFriendsOf().remove(user);
 	}
 
 }

@@ -18,18 +18,35 @@ package co.nectar.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
+@Entity
 public class User {
 
 	//variables
-	private int id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
 	private String userName;
 	
 	private String bio;
 
-	private List<Integer> friendsTo;
-
-	private List<Integer> friendsOf;
+	@ManyToMany
+	@JoinTable(name="TBL_FRIENDS",
+			joinColumns={@JoinColumn(name="userId")},
+			inverseJoinColumns={@JoinColumn(name="friendId")})
+	private List<User> friendsTo;
+	@ManyToMany
+	@JoinTable(name="TBL_FRIENDS",
+		joinColumns={@JoinColumn(name="friendId")},
+		inverseJoinColumns={@JoinColumn(name="userId")})
+	private List<User> friendsOf;
 	
 
 
@@ -46,15 +63,15 @@ public class User {
 		this.friendsOf = new ArrayList<>();;
 	}
 	
-	public User(int id, String userName, String bio, List<Integer> friendsTo, List<Integer> friendsOf) {
+	public User(int id, String userName, String bio, List<User> friendsTo, List<User> friendsOf) {
 		super();
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
-		this.friendsTo = new ArrayList<>();
-		this.friendsOf = new ArrayList<>();
-//		this.friendsTo = friendsTo;
-//		this.friendsOf = friendsOf;
+//		this.friendsTo = new ArrayList<User>();
+//		this.friendsOf = new ArrayList<User>();
+		this.friendsTo = friendsTo;
+		this.friendsOf = friendsOf;
 	}
 
 	
@@ -73,19 +90,19 @@ public class User {
 	public void setBio(String bio) {
 		this.bio = bio;
 	}
-	public List<Integer> getFriendsTo() {
+	public List<User> getFriendsTo() {
 		return friendsTo;
 	}
 
-	public void setFriendsTo(List<Integer> friendsTo) {
+	public void setFriendsTo(List<User> friendsTo) {
 		this.friendsTo = friendsTo;
 	}
 
-	public List<Integer> getFriendsOf() {
+	public List<User> getFriendsOf() {
 		return friendsOf;
 	}
 
-	public void setFriendsOf(List<Integer> friendsOf) {
+	public void setFriendsOf(List<User> friendsOf) {
 		this.friendsOf = friendsOf;
 	}
 	public int getId() {

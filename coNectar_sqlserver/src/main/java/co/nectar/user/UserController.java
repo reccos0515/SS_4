@@ -1,16 +1,19 @@
 package co.nectar.user;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(path="/ben")
 public class UserController {
 
 		@Autowired
@@ -18,15 +21,18 @@ public class UserController {
 		
 		//test add
 		@RequestMapping("/test")
-		public List<User> getTest() {
-			User test = new User(2,"megan", "I am Megan");
+		public Iterable<User> getTest() {
+			User test = new User(0,"ben","hi",new ArrayList<User>(),new ArrayList<User>());
+			test.setId(0);
+			test.setUserName("ben");
+			test.setBio("hi");
 			userService.addUser(test);
 			return userService.getAllUsers();
 		}
 		
 		//get all users
 		@RequestMapping("/users")
-		public List<User> getAllTopics() {
+		public Iterable<User> getAllTopics() {
 			return userService.getAllUsers();
 		}
 		//get a user
@@ -34,13 +40,19 @@ public class UserController {
 		public User getUser(@PathVariable int userId) {
 			return userService.getUser(userId);
 		}
-		
+		@GetMapping(path="/add") // Map ONLY GET Requests
+		public @ResponseBody String addNewUser (@RequestParam String userName, @RequestParam String bio) {
+			return userService.addUser(userName,bio);
+		}
 		
 		//add a user
 		@RequestMapping(method=RequestMethod.POST, value = "/users")
 		public void addUser(@RequestBody User user) {
 			userService.addUser(user);
 		}
+		
+		//add user with username and bio
+		
 		
 		//update user
 		@RequestMapping(method=RequestMethod.PUT, value = "/users/{userId}")
