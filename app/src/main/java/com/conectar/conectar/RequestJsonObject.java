@@ -17,6 +17,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
@@ -102,21 +103,48 @@ public class RequestJsonObject {
     }
 
 
-    public static void postProfileRequestJSON(final Context context, String url, final TextView textview){
+    public static void postProfileRequestJSON(final Context context, String url, final View view){
         //mPostCommentResponse.requestStarted();
         queue = Volley.newRequestQueue(context);
-        JsonObjectRequest sr = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+        JSONObject testObj = new JSONObject();
+        try {
+            testObj.put("userName", "Jessie");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            testObj.put("bio", "Things");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            testObj.put("friendsTo", "person1");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            testObj.put("friendsOf", "person2");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest sr = new JsonObjectRequest(Request.Method.POST, url, testObj, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 //mPostCommentResponse.requestCompleted();
+
+                TextView jsonTestMsg;
+                jsonTestMsg = (TextView) view.findViewById(R.id.jsonTestMsg);
+                jsonTestMsg.setText("Things");
                 saveRequest(response);
-                textview.setText("Response: " + response.toString());
+                //jsonTestMsg.setText("Response: " + response.toString());
                 //Log.d(TAG, response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //mPostCommentResponse.requestEndedWithError(error);
+                error.printStackTrace();
             }
         }){
 
@@ -147,7 +175,7 @@ public class RequestJsonObject {
      * @return the JSONobj
      * TODO decide on wait time
      */
-    public JSONObject getRequests(Context context){
+    public static JSONObject getRequests(Context context){
         if(ret == null){
             CharSequence text = "No response, try again";
             int duration = Toast.LENGTH_SHORT;

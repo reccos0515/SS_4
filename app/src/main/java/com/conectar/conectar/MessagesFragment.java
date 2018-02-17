@@ -77,24 +77,20 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.addUserReq);
-        view.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.addUserReq).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 new Timer().schedule(
                         new TimerTask() {
                             @Override
                             public void run() {
                                 //RequestJsonObject.postProfileRequest(getContext(), "http://localhost/SS_4/echo.php");
-                                jsonTestMsg = (TextView) getView().findViewById(R.id.jsonTestMsg);
-                                RequestJsonObject.postProfileRequestJSON(getContext(), "http://localhost/SS_4/echo.php", jsonTestMsg);
-
-                                //Toast.makeText(getActivity(), "Thing Happened", Toast.LENGTH_SHORT).show();
-
+                                //jsonTestMsg = (TextView) getView().findViewById(R.id.jsonTestMsg);
+                                RequestJsonObject.postProfileRequestJSON(getContext(), "proj-309-ss-4.cs.iastate.edu:9001/", view);
                             }
                         }, 20000
                 );
-                System.out.println(RequestJsonObject.getStringRequests(getContext()));
+                System.out.println(RequestJsonObject.getRequests(getContext()));
             }
         });
 
