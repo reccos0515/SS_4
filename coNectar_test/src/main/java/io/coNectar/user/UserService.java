@@ -30,24 +30,11 @@ public class UserService {
 		userRepo.delete(userId);
 	}
 
-	public void updateBio(String userId) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public void updateUser(String userId, User user) {
 		userRepo.save(user);
 		
 	}
 
-//	public User getFriends(String userId) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	public void addFriend(String userId, String friendId) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 
 }
