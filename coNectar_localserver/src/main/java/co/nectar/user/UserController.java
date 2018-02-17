@@ -65,24 +65,33 @@ public class UserController {
 		
 		//get friends
 		
-		@RequestMapping("/users/{userId}/friends")
-		public String getFriends(@PathVariable String userId) {
-			return userService.getFriends(userId);
-		}
+//		@RequestMapping("/users/{userId}/friendsTo")
+//		public String getFriends(@PathVariable int userId) {
+//			return userService.getFriendsTo(userId);
+//		}
 		//request friend
 		
 		
 		//add a friend
 		@RequestMapping(method=RequestMethod.POST, value = "/users/{userId}/friends/{friendId}")
-		public void addFriend(@PathVariable String userId, @PathVariable String friendId) {
+		public void addFriend(@PathVariable int userId, @PathVariable int friendId) {
 			userService.addFriend(userId,friendId);
 		}
 		
-		//getfriends
+		//getfriends to
+		@RequestMapping(method=RequestMethod.POST, value = "/users/{userId}/friendsto")
+		public void getFriendsTo(@PathVariable int userId) {
+			userService.getFriendsTo(userId);
+		}
+		//get freinds of
+		@RequestMapping(method=RequestMethod.POST, value = "/users/{userId}/friendsof")
+		public void getFriendsOf(@PathVariable int userId) {
+			userService.getFriendsTo(userId);
+		}
 		
 		//remove friend
 		@RequestMapping(method=RequestMethod.DELETE, value = "/users/{userId}/friends/{friendId}")
-		public void deleteFriend(@PathVariable String userId, @PathVariable String friendId) {
+		public void deleteFriend(@PathVariable int userId, @PathVariable int friendId) {
 			userService.addFriend(userId,friendId);
 		}
 		
