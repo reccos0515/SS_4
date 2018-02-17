@@ -1,5 +1,6 @@
 package io.coNectar.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,14 @@ public class UserController {
 
 		@Autowired
 		UserService userService;
+		
+		//test add
+		@RequestMapping("/test")
+		public List<User> getTest() {
+			User test = new User("megan", "I am Megan");
+			userService.addUser(test);
+			return userService.getAllUsers();
+		}
 		
 		//get all users
 		@RequestMapping("/users")
@@ -33,7 +42,20 @@ public class UserController {
 			userService.addUser(user);
 		}
 		
-		//change a user ??
+		//update user
+		@RequestMapping(method=RequestMethod.PUT, value = "/users/{userId}")
+		public void updateBio(@PathVariable String userId,@RequestBody User user) {
+			userService.updateUser(userId, user);
+		}
+		
+		
+		//update bio
+//		@RequestMapping(method=RequestMethod.PUT, value = "/users/{userId}")
+//		public void updateBio(@PathVariable String userId) {
+//			userService.updateBio(userId);
+//		}
+//		
+		
 		
 		//delete a user
 		@RequestMapping(method=RequestMethod.DELETE, value = "/users/{userId}")
