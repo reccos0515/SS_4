@@ -6,13 +6,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.conectar.conectar.AppController.TAG;
 
@@ -24,6 +31,7 @@ import static com.conectar.conectar.AppController.TAG;
 public class RequestJsonObject {
     //save a return value
     JSONObject ret = null;
+    static RequestQueue queue; //request queue
     //TODO implement JSONobject cancel
     /**
      * function to make a request
@@ -55,6 +63,50 @@ public class RequestJsonObject {
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
+
+    /**
+     * Used to post a request
+     * @param context
+     * @param url
+     */
+    public static void postRequest(Context context, String url){
+        //mPostCommentResponse.requestStarted();
+        queue = Volley.newRequestQueue(context);
+        StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //mPostCommentResponse.requestCompleted();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //mPostCommentResponse.requestEndedWithError(error);
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String,String>();
+                params.put("userName", "jessie");
+                params.put("bio", "i am jessie");
+
+                return params;
+            }
+
+            @Override
+            public Map<String,String> getHeaders() throws AuthFailureError{
+                Map<String,String> params = new HashMap<String, String>();
+                return params;
+            }
+
+        };
+        queue.add(sr);
+    }
+//    public interface PostCommentResponseListener{
+//        public void requestStarted();
+//        public void requestCompleted();
+//        public void requestEndedWithError(VolleyError error);
+//    }
+
 
     /**
      * Function to save a request to be returned later

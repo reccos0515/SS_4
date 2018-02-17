@@ -3,6 +3,7 @@ package com.conectar.conectar;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +66,17 @@ public class MessagesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_messages, container, false);
+    }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.findViewById(R.id.addUserReq).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                RequestJsonObject.postRequest(getContext(), "");
+            }
+        });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

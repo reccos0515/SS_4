@@ -56,10 +56,10 @@ public class JSONRequestTest extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.JSONrequest).setOnClickListener(new View.OnClickListener(){
+        view.findViewById(R.id.addUserReq).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-               //TODO send request
+               RequestJsonObject.postRequest(getContext(), "");
             }
         });
 
