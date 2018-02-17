@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +26,7 @@ import org.json.JSONObject;
  * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FriendsFragment extends Fragment {
+public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -34,6 +35,8 @@ public class FriendsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private OnFragmentInteractionListener mListener;
 
@@ -73,7 +76,9 @@ public class FriendsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_friends, null); //opens the logout screen
+        return inflater.inflate(R.layout.fragment_friends, container, false); //opens the logout screen
+
+
     }
 
     @Override
@@ -82,21 +87,14 @@ public class FriendsFragment extends Fragment {
 
         final FragmentManager fragmentManager = getFragmentManager(); //not support fragment manager b/c this is in a fragment
         final View thisView = getView();
-
+        /*
         String text = "friendname"; //temp until can grab username from DB
         TextView username = view.findViewById(R.id.friendUsername);
         username.setText(text);
+        */
 
-        //Refresh Button
-        view.findViewById(R.id.refreshButton).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-
-            Fragment thisFragment= getActivity().getFragmentManager().findFragmentById(R.id.friends_container);
-            FragmentUtil.refreshFragment(thisFragment);
-            Toast.makeText(getActivity(), "Successful Refresh", Toast.LENGTH_SHORT).show();
-            }
-        });
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_friends);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
         //sending request and receiving user profile from server
         /*
@@ -130,6 +128,11 @@ public class FriendsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onRefresh() {
+        Toast.makeText(getActivity(), "Refreshed", Toast.LENGTH_SHORT).show();
     }
 
     /**

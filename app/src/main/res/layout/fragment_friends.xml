@@ -1,46 +1,18 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.conectar.conectar.FriendsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/friends_container"
+    <!-- TODO: Add user objects -->
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_friends"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        />
 
-        <Button
-            android:id="@+id/refreshButton"
-            android:layout_width="271dp"
-            android:layout_height="68dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/colorLemonCurry"
-            android:text="Refresh"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.86" />
 
-        <TextView
-            android:id="@+id/friendUsername"
-            android:layout_width="212dp"
-            android:layout_height="65dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/refreshButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.198" />
-    </android.support.constraint.ConstraintLayout>
 
-</FrameLayout>
+</LinearLayout>
