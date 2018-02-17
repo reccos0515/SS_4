@@ -1,6 +1,7 @@
 package co.nectar.user;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -92,13 +93,13 @@ public class UserController {
 		
 		//getfriends to
 		@RequestMapping(method=RequestMethod.GET, value = "/users/{userId}/friendsto")
-		public void getFriendsTo(@PathVariable int userId) {
-			userService.getFriendsTo(userId);
+		public List<User> getFriendsTo(@PathVariable int userId) {
+			return userService.getFriendsTo(userId);
 		}
 		//get freinds of
 		@RequestMapping(method=RequestMethod.GET, value = "/users/{userId}/friendsof")
-		public void getFriendsOf(@PathVariable int userId) {
-			userService.getFriendsTo(userId);
+		public List<User> getFriendsOf(@PathVariable int userId) {
+			return userService.getFriendsTo(userId);
 		}
 		
 		//remove friend
