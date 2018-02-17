@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -17,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,7 +71,7 @@ public class RequestJsonObject {
      * @param context
      * @param url
      */
-    public static void postProfileRequest(Context context, String url){
+    public static void postProfileRequest(final Context context, String url){
         //mPostCommentResponse.requestStarted();
         queue = Volley.newRequestQueue(context);
         StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -90,15 +92,33 @@ public class RequestJsonObject {
                 Map<String,String> params = new HashMap<String,String>();
                 params.put("userName", "jessie");
                 params.put("bio", "i am jessie");
-
                 return params;
             }
 
+
+
+        };
+        queue.add(sr);
+    }
+
+
+    public static void postProfileRequestJSON(final Context context, String url, final TextView textview){
+        //mPostCommentResponse.requestStarted();
+        queue = Volley.newRequestQueue(context);
+        JsonObjectRequest sr = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
-            public Map<String,String> getHeaders() throws AuthFailureError{
-                Map<String,String> params = new HashMap<String, String>();
-                return params;
+            public void onResponse(JSONObject response) {
+                //mPostCommentResponse.requestCompleted();
+                saveRequest(response);
+                textview.setText("Response: " + response.toString());
+                //Log.d(TAG, response.toString());
             }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //mPostCommentResponse.requestEndedWithError(error);
+            }
+        }){
 
         };
         queue.add(sr);

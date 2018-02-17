@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,6 +34,8 @@ public class MessagesFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    TextView jsonTestMsg;
 
     public MessagesFragment() {
         // Required empty public constructor
@@ -81,7 +85,12 @@ public class MessagesFragment extends Fragment {
                         new TimerTask() {
                             @Override
                             public void run() {
-                                RequestJsonObject.postProfileRequest(getContext(), "");
+                                //RequestJsonObject.postProfileRequest(getContext(), "http://localhost/SS_4/echo.php");
+                                jsonTestMsg = (TextView) getView().findViewById(R.id.jsonTestMsg);
+                                RequestJsonObject.postProfileRequestJSON(getContext(), "http://localhost/SS_4/echo.php", jsonTestMsg);
+
+                                //Toast.makeText(getActivity(), "Thing Happened", Toast.LENGTH_SHORT).show();
+
                             }
                         }, 20000
                 );
