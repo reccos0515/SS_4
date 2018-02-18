@@ -55,6 +55,7 @@ public class MessagesFragment extends Fragment {
     String serverUrl = "http://proj-309-ss-4.cs.iastate.edu:9001/test";
     String str = "didn't work";
     TextView jsonTestMsg;
+    String testString = "didn't do the thing";
 
 
     public MessagesFragment() {
@@ -214,6 +215,7 @@ public class MessagesFragment extends Fragment {
                                     JSONObject user = response.getJSONObject(0);
                                     String firstUser = user.getString("userName");
                                     saveString(firstUser);
+                                    testString = firstUser;
                                     Log.d("First User", firstUser);
                                     // Loop through the array elements
 //                                    for(int i=0;i<response.length();i++){
@@ -243,7 +245,7 @@ public class MessagesFragment extends Fragment {
                     }
                 });
                 Singleton.getmInstance(getContext()).addToRequestQueue(jsonArrayRequest); //add json to queue
-                jsonTestMsg.setText(str);
+                jsonTestMsg.setText(testString);
             }
         });
         //-----------------------------------------------------OLD CODE----------------------------------------------------------------------------------------//
