@@ -100,6 +100,8 @@ public class ChangeStatusFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //TODO Add a string request method to the util class for Volley things
         //------------------------------String Request--------------------------------------------------//
         textView = view.findViewById(R.id.txt); //Displays data from server
         button = view.findViewById(R.id.bn); //Button to get data from server
@@ -108,28 +110,28 @@ public class ChangeStatusFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                final RequestQueue requestQueue = Volley.newRequestQueue(getContext()); //creates a request queue, in method implementation will probably use a Singleton method for this
 
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, serverUrl,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
 
-                                textView.setText(response);
+                                textView.setText(response); //Send String received from server to the screen
                                 requestQueue.stop(); //closes the queue
 
                             }
                         }, new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onErrorResponse(VolleyError error) { //If the string we receive is weird or we don't get a string
 
-                        textView.setText("Something went wrong");
-                        error.printStackTrace();
-                        requestQueue.stop();
+                        textView.setText("Something went wrong"); //Set the text onscreen to show that something went wrong
+                        error.printStackTrace(); //print error to Run
+                        requestQueue.stop(); //closes the queue
 
                     }
                 });
-                requestQueue.add(stringRequest);
+                requestQueue.add(stringRequest); //put the request in the queue
             }
         });
         //---------------------------------------JSON VOLLEY------------------------------------------------//
@@ -144,7 +146,7 @@ public class ChangeStatusFragment extends Fragment {
             public void onClick(View view) {
 
                 //can use same request queue?
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, serverUrl2,  null, //may need typecasting to string on the null?
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, serverUrl2,  null,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {

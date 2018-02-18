@@ -106,29 +106,28 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         jsonTestMsg = view.findViewById(R.id.jsonTestMsg); //message that is viewed on screen
-        Button button = getView().findViewById(R.id.addUserReq);
+
+        //TODO make JSONObjectPost method in a util class
+        Button button = getView().findViewById(R.id.addUserReq); //The button for the POST request (sending a user to the server)
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                JSONObject js = new JSONObject();
-                try {
-                    js.put("id", "4");
+                JSONObject js = new JSONObject(); //Create the JSONObject
+                try { //block makes sure we are creating a valid JSONObject
+                    js.put("id", "4"); //information put in the JSONObject to be sent
                     js.put("userName","Ollie");
                     js.put("bio", "Ollie likes mangos");
-                    //js.put("friendsTo", "1");
-                    //js.put("friendsOf", "2");
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    e.printStackTrace(); //Will let us know if what we make is not a JSONObject
                 }
 
-
-                //can use same request queue?
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "http://proj-309-ss-4.cs.iastate.edu:9001/users",  js, //may need typecasting to string on the null?
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "http://proj-309-ss-4.cs.iastate.edu:9001/users",  js, //starts the POST request and sends our JSONObject
                         new Response.Listener<JSONObject>() {
                             @Override
-                            public void onResponse(JSONObject response) {
+                            public void onResponse(JSONObject response) { //Is currently not receiving a response?
                                 /*
                                 try { //will always give exception, is why need try catch
                                     jsonTestMsg.setText(response.getString("userName")); //not sure if case sensitive or not on the string input
@@ -138,12 +137,12 @@ public class MessagesFragment extends Fragment {
                                 */
 
                             }
-                        }, new Response.ErrorListener() {
+                        }, new Response.ErrorListener() { //If the response is weird
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                        error.printStackTrace();
+                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show(); //Send an error on screen
+                        error.printStackTrace(); //print out the error in Run
 
                     }
                 });
@@ -151,27 +150,14 @@ public class MessagesFragment extends Fragment {
             }
         });
 
-        //--------------------------------------------------GET REQUEST----------------------------------------------------------------------------------//
-
-        Button button2 = getView().findViewById(R.id.getUserBtn);
+        //--------------------------------------GET REQUEST (Doesn't currently work b/c server sends arrays)-------------------------------------------------------------------------//
+        //TODO make a JSONObjectGET method in a util class
+        Button button2 = getView().findViewById(R.id.getUserBtn); //Initializes the button for the JSON GET to be executed (grab info on a user)
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                JSONObject js = new JSONObject();
-                try {
-                    js.put("id", "4");
-                    js.put("userName","Ollie");
-                    js.put("bio", "Ollie likes mangos");
-                    //js.put("friendsTo", "1");
-                    //js.put("friendsOf", "2");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-                //can use same request queue?
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://proj-309-ss-4.cs.iastate.edu:9001/users",  null, //may need typecasting to string on the null?
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://proj-309-ss-4.cs.iastate.edu:9001/users",  null,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -179,13 +165,13 @@ public class MessagesFragment extends Fragment {
                                 try {
                                     JSONObject foundObject = response.getJSONObject("Ollie");
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    e.printStackTrace(); //Prints error to Run
                                 }
 
                                 try { //will always give exception, is why need try catch
-                                    jsonTestMsg.setText(response.getString("userName")); //not sure if case sensitive or not on the string input
+                                    jsonTestMsg.setText(response.getString("userName")); //should put the found string message in the textview
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    e.printStackTrace(); //Prints error to Run
                                 }
 
 
@@ -203,13 +189,12 @@ public class MessagesFragment extends Fragment {
             }
         });
         //----------------------------------------------------JSON ARRAY---------------------------------------------------------------//
+        //TODO Make a JSONArrayGET method in a util class
 
-        //Button to recieve the array of users
-        Button button3 = getView().findViewById(R.id.getUserArrayBtn);
+        Button button3 = getView().findViewById(R.id.getUserArrayBtn);//Button for GET JSONArray (gets all users)
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //can use same request queue?
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest("http://proj-309-ss-4.cs.iastate.edu:9001/users",  //may need typecasting to string on the null?
                         new Response.Listener<JSONArray>() {
                             @Override
@@ -260,26 +245,6 @@ public class MessagesFragment extends Fragment {
                 setText();
             }
         });
-
-        //-----------------------------------------------------OLD CODE----------------------------------------------------------------------------------------//
-        /*
-        view.findViewById(R.id.addUserReq).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                new Timer().schedule(
-                        new TimerTask() {
-                            @Override
-                            public void run() {
-                                //RequestJsonObject.postProfileRequest(getContext(), "http://localhost/SS_4/echo.php");
-                                //jsonTestMsg = (TextView) getView().findViewById(R.id.jsonTestMsg);
-                                RequestJsonObject.postProfileRequestJSON(getContext(), "proj-309-ss-4.cs.iastate.edu:9001/users", view);
-                            }
-                        }, 20000
-                );
-                System.out.println(RequestJsonObject.getRequests(getContext()));
-            }
-        });
-        */
     }
 
     // TODO: Rename method, update argument and hook method into UI event
