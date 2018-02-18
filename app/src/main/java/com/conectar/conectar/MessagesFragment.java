@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import util.RequestJsonObject;
 import util.Singleton;
@@ -46,9 +47,9 @@ public class MessagesFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     String serverUrl = "http://proj-309-ss-4.cs.iastate.edu:9001/test";
-    String str;
+    String str = "didn't work";
     TextView jsonTestMsg;
-    String testString;
+    String testString = "didn't work";
 
 
     public MessagesFragment() {
@@ -62,7 +63,6 @@ public class MessagesFragment extends Fragment {
 
      * @return A new instance of fragment MessagesFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static MessagesFragment newInstance(String param1, String param2) {
         MessagesFragment fragment = new MessagesFragment();
         return fragment;
@@ -79,15 +79,34 @@ public class MessagesFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_messages, container, false);
     }
+
+    /**
+     * Method to save the string taken from the response listener in a global variable that can be accessed elsewhere in the program
+     * This should be called within the onResponse listener, after the Array has been parsed
+     * @param str2
+     */
     public void saveString(String str2){
         str = str2;
         Log.d("Saved String", str);
         return;
     }
+
+    /**
+     * Method to set the text on the page to what was found in the JsonObject Array
+     * This should be called in a seperate button than the JsonObject was originally requested in to force it to happen in the correct order.
+     * Calling it within the same button where the JsonObject is recieved will cause setText() to be
+     * called BEFORE the object has been received and saved (potentially due to multi-threading?), even if it is placed AFTER within the code
+     * TODO figure out how to delay so setText can be called within the same onClick (aka force it to wait until the object is recieved, parsed, and saved)
+     */
+    public void setText(){
+        jsonTestMsg.setText(str);
+        Log.d("set text to", str);
+        return;
+    }
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        jsonTestMsg = view.findViewById(R.id.jsonTestMsg);
+        jsonTestMsg = view.findViewById(R.id.jsonTestMsg); //message that is viewed on screen
         Button button = getView().findViewById(R.id.addUserReq);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,21 +204,21 @@ public class MessagesFragment extends Fragment {
         });
         //----------------------------------------------------JSON ARRAY---------------------------------------------------------------//
 
+        //Button to recieve the array of users
         Button button3 = getView().findViewById(R.id.getUserArrayBtn);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //can use same request queue?
-                String firstUser;
-                String firstBio;
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest("http://proj-309-ss-4.cs.iastate.edu:9001/users",  //may need typecasting to string on the null?
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try{
-                                    JSONObject user = response.getJSONObject(0);
-                                    testString = user.getString("userName");
-                                    saveString(testString);
+                                    JSONObject user = response.getJSONObject(0); //get first JsonObject, this is the first user
+                                    testString = user.getString("userName"); //get the userName from the first user
+                                    saveString(testString); //save this in a global variable
+
                                     //testString = firstUser;
                                     Log.d("First User", testString);
                                     // Loop through the array elements
@@ -230,9 +249,18 @@ public class MessagesFragment extends Fragment {
                     }
                 });
                 Singleton.getmInstance(getContext()).addToRequestQueue(jsonArrayRequest); //add json to queue
-                jsonTestMsg.setText(str);
             }
         });
+
+        //Button to view the JsonArray that was recieved. This would need to be called after Button3
+        Button button4 =getView().findViewById(R.id.viewUserBtn);
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setText();
+            }
+        });
+
         //-----------------------------------------------------OLD CODE----------------------------------------------------------------------------------------//
         /*
         view.findViewById(R.id.addUserReq).setOnClickListener(new View.OnClickListener() {
