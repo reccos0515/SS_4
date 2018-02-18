@@ -114,12 +114,13 @@ public class MessagesFragment extends Fragment {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-
+                                /*
                                 try { //will always give exception, is why need try catch
                                     jsonTestMsg.setText(response.getString("userName")); //not sure if case sensitive or not on the string input
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
+                                */
 
                             }
                         }, new Response.ErrorListener() {
@@ -135,6 +136,54 @@ public class MessagesFragment extends Fragment {
             }
         });
 
+        //--------------------------------------------------GET REQUEST----------------------------------------------------------------------------------//
+
+        Button button2 = getView().findViewById(R.id.getUserBtn);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                JSONObject js = new JSONObject();
+                try {
+                    js.put("id", "4");
+                    js.put("userName","Ollie");
+                    js.put("bio", "Ollie likes mangos");
+                    //js.put("friendsTo", "1");
+                    //js.put("friendsOf", "2");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                //can use same request queue?
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://proj-309-ss-4.cs.iastate.edu:9001/users",  null, //may need typecasting to string on the null?
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                
+                                try { //will always give exception, is why need try catch
+                                    jsonTestMsg.setText(response.getString("userName")); //not sure if case sensitive or not on the string input
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+
+                    }
+                });
+                Singleton.getmInstance(getContext()).addToRequestQueue(jsonObjectRequest); //add json to queue
+            }
+        });
+
+
+        //-----------------------------------------------------OLD CODE----------------------------------------------------------------------------------------//
         /*
         view.findViewById(R.id.addUserReq).setOnClickListener(new View.OnClickListener() {
             @Override
