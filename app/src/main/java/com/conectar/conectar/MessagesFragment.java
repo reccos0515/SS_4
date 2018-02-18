@@ -213,10 +213,10 @@ public class MessagesFragment extends Fragment {
                             public void onResponse(JSONArray response) {
                                 try{
                                     JSONObject user = response.getJSONObject(0);
-                                    String firstUser = user.getString("userName");
-                                    saveString(firstUser);
-                                    testString = firstUser;
-                                    Log.d("First User", firstUser);
+                                    testString = user.getString("userName");
+                                    //saveString(firstUser);
+                                    //testString = firstUser;
+                                    Log.d("First User", testString);
                                     // Loop through the array elements
 //                                    for(int i=0;i<response.length();i++){
 //                                        // Get current json object
