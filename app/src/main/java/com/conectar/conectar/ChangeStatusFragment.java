@@ -9,7 +9,16 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 
 /**
@@ -29,6 +38,10 @@ public class ChangeStatusFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    Button button;
+    TextView textView;
+    String serverUrl = "http://104.145.103.160/greetings.php"; //Use IPv4 IP address
 
     private OnFragmentInteractionListener mListener;
 
@@ -75,13 +88,37 @@ public class ChangeStatusFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         
-        /*
-        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener(){
+        textView = view.findViewById(R.id.txt); //Displays data from server
+        button = view.findViewById(R.id.bn); //Button to get data from server
+
+        button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "You are inside the logout fragment", Toast.LENGTH_LONG);
+
+                final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, serverUrl,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                                textView.setText(response);
+                                requestQueue.stop(); //closes the queue
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        textView.setText("Something went wrong");
+                        error.printStackTrace();
+                        requestQueue.stop();
+
+                    }
+                });
+                requestQueue.add(stringRequest);
             }
-        }); */
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -9,10 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import util.RequestJsonObject;
 
 
 /**
@@ -86,7 +87,7 @@ public class MessagesFragment extends Fragment {
                             public void run() {
                                 //RequestJsonObject.postProfileRequest(getContext(), "http://localhost/SS_4/echo.php");
                                 //jsonTestMsg = (TextView) getView().findViewById(R.id.jsonTestMsg);
-                                RequestJsonObject.postProfileRequestJSON(getContext(), "proj-309-ss-4.cs.iastate.edu:9001/", view);
+                                RequestJsonObject.postProfileRequestJSON(getContext(), "proj-309-ss-4.cs.iastate.edu:9001/users", view);
                             }
                         }, 20000
                 );

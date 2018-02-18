@@ -1,4 +1,4 @@
-package com.conectar.conectar;
+package util;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -16,6 +16,8 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.conectar.conectar.AppController;
+import com.conectar.conectar.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -177,20 +179,14 @@ public class RequestJsonObject {
      */
     public static JSONObject getRequests(Context context){
         if(ret == null){
-            CharSequence text = "No response, try again";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            Toast.makeText(context, "No response, try again", Toast.LENGTH_SHORT).show();
         }
         return ret;
     }
 
     public static String getStringRequests(Context context){
         if(strRet == null){
-            CharSequence text = "No response, try again";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            Toast.makeText(context, "No response, try again", Toast.LENGTH_SHORT).show();
         }
         return strRet;
     }
