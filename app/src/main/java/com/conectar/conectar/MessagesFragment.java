@@ -15,8 +15,10 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -187,7 +189,34 @@ public class MessagesFragment extends Fragment {
                 Singleton.getmInstance(getContext()).addToRequestQueue(jsonObjectRequest); //add json to queue
             }
         });
+        //----------------------------------------------------JSON ARRAY---------------------------------------------------------------//
 
+        Button button3 = getView().findViewById(R.id.getUserArrayBtn);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                //can use same request queue?
+                JsonObjectRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, "http://proj-309-ss-4.cs.iastate.edu:9001/users",  null, //may need typecasting to string on the null?
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+
+                    }
+                });
+                Singleton.getmInstance(getContext()).addToRequestQueue(jsonObjectRequest); //add json to queue
+            }
+        });
 
         //-----------------------------------------------------OLD CODE----------------------------------------------------------------------------------------//
         /*
