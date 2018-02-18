@@ -30,6 +30,7 @@
             android:title="Edit Profile" />
         <item
             android:id="@+id/nav_newProfile"
+            android:icon="@android:drawable/ic_input_add"
             android:title="New Profile" />
     </group>
 

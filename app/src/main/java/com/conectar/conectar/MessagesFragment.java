@@ -97,8 +97,20 @@ public class MessagesFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                JSONObject js = new JSONObject();
+                try {
+                    js.put("id", "4");
+                    js.put("userName","Ollie");
+                    js.put("bio", "Ollie likes mangos");
+                    //js.put("friendsTo", "1");
+                    //js.put("friendsOf", "2");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
                 //can use same request queue?
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, serverUrl,  null, //may need typecasting to string on the null?
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "http://proj-309-ss-4.cs.iastate.edu:9001/users",  js, //may need typecasting to string on the null?
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
