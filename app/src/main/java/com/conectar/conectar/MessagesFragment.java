@@ -160,7 +160,13 @@ public class MessagesFragment extends Fragment {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                
+
+                                try {
+                                    JSONObject foundObject = response.getJSONObject("Ollie");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
                                 try { //will always give exception, is why need try catch
                                     jsonTestMsg.setText(response.getString("userName")); //not sure if case sensitive or not on the string input
                                 } catch (JSONException e) {
