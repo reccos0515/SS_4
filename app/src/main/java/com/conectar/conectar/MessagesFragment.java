@@ -8,12 +8,23 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import util.RequestJsonObject;
+import util.Singleton;
 
 
 /**
@@ -37,6 +48,8 @@ public class MessagesFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     TextView jsonTestMsg;
+    String serverUrl = "http://proj-309-ss-4.cs.iastate.edu:9001/test";
+
 
     public MessagesFragment() {
         // Required empty public constructor
@@ -78,6 +91,39 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Button button = getView().findViewById(R.id.addUserReq);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //can use same request queue?
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, serverUrl,  null, //may need typecasting to string on the null?
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+
+                                try { //will always give exception, is why need try catch
+                                    jsonTestMsg.setText(response.getString("userName")); //not sure if case sensitive or not on the string input
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+
+                    }
+                });
+                Singleton.getmInstance(getContext()).addToRequestQueue(jsonObjectRequest); //add json to queue
+            }
+        });
+
+        /*
         view.findViewById(R.id.addUserReq).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -94,7 +140,7 @@ public class MessagesFragment extends Fragment {
                 System.out.println(RequestJsonObject.getRequests(getContext()));
             }
         });
-
+        */
     }
 
     // TODO: Rename method, update argument and hook method into UI event
