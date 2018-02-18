@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +29,7 @@ import java.util.TimerTask;
 
 import util.RequestJsonObject;
 import util.Singleton;
+
 
 
 /**
@@ -49,8 +52,9 @@ public class MessagesFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    TextView jsonTestMsg;
     String serverUrl = "http://proj-309-ss-4.cs.iastate.edu:9001/test";
+    String str = "didn't work";
+    TextView jsonTestMsg;
 
 
     public MessagesFragment() {
@@ -90,10 +94,14 @@ public class MessagesFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_messages, container, false);
     }
+    public void saveString(String str2){
+        str = str2;
+        return;
+    }
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        jsonTestMsg = view.findViewById(R.id.jsonTestMsg);
         Button button = getView().findViewById(R.id.addUserReq);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,15 +203,35 @@ public class MessagesFragment extends Fragment {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 //can use same request queue?
-                JsonObjectRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, "http://proj-309-ss-4.cs.iastate.edu:9001/users",  null, //may need typecasting to string on the null?
-                        new Response.Listener<JSONObject>() {
+                String firstUser;
+                String firstBio;
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest("http://proj-309-ss-4.cs.iastate.edu:9001/users",  //may need typecasting to string on the null?
+                        new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
-
-
+                                try{
+                                    JSONObject user = response.getJSONObject(0);
+                                    String firstUser = user.getString("userName");
+                                    saveString(firstUser);
+                                    Log.d("First User", firstUser);
+                                    // Loop through the array elements
+//                                    for(int i=0;i<response.length();i++){
+//                                        // Get current json object
+//                                        JSONObject user = response.getJSONObject(i);
+//
+//                                        // Get the current student (json object) data
+//                                        //String userName = user.getString("userName");
+//                                        //String bio = user.getString("bio");
+//                                        if(i == 0){
+//                                            String firstUserName = user.getString("userName");
+//                                            jsonTestMsg.setText(firstUserName);
+//                                            Log.d("First Username", firstUserName);
+//                                        }
+//                                    }
+                                }catch (JSONException e){
+                                    e.printStackTrace();
+                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -214,10 +242,10 @@ public class MessagesFragment extends Fragment {
 
                     }
                 });
-                Singleton.getmInstance(getContext()).addToRequestQueue(jsonObjectRequest); //add json to queue
+                Singleton.getmInstance(getContext()).addToRequestQueue(jsonArrayRequest); //add json to queue
+                jsonTestMsg.setText(str);
             }
         });
-
         //-----------------------------------------------------OLD CODE----------------------------------------------------------------------------------------//
         /*
         view.findViewById(R.id.addUserReq).setOnClickListener(new View.OnClickListener() {

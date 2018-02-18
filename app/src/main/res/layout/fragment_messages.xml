@@ -46,9 +46,26 @@
             android:text="GET USER"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addUserReq"
-            app:layout_constraintVertical_bias="0.333" />
+            app:layout_constraintVertical_bias="0.143" />
+
+        <Button
+            android:id="@+id/getUserArrayBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Get User Array"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/getUserBtn"
+            app:layout_constraintVertical_bias="0.413" />
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>
