@@ -126,24 +126,23 @@ public class UserService {
 		List<User> from = user.getFriendsOf();
 		
 		for(User friend : from) {
-			if(!from.contains(to))
+			if(!from.contains(friend))
 				requests.add(friend);//add friend is not in to yet
 		}
 		return requests;
 	}
-	// a discovery user is in the list of all the users but not the current user friends list
+	// a discovery get all users not in current users friend list (except current user)
 	public List<User> getDiscovery(int userId) {
 		List<User> discovery = new ArrayList<User>();
 		User user = this.getUser(userId);
 		
-		
 		//get all users and current user's friends
 		List<User> users = (List<User>) this.getAllUsers();
-		List<User> friends = this.getFriends(user.getId());
+		List<User> friends = this.getFriends(userId);
 		
-		for(User friend : friends) {
-			if(!users.contains(friend))
-				discovery.add(friend);//add if in both to and from lists
+		for(User user_ele : users) {
+			if(!friends.contains(user_ele) && !user_ele.equals(user))
+				discovery.add(user_ele);//add if in both to and from lists
 		}
 		return discovery;
 	}

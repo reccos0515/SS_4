@@ -76,12 +76,6 @@ public class UserController {
 		
 		//get friends
 		
-//		@RequestMapping("/users/{userId}/friendsTo")
-//		public String getFriends(@PathVariable int userId) {
-//			return userService.getFriendsTo(userId);
-//		}
-		//request friend
-		
 		
 		//add a friend
 		@RequestMapping(method=RequestMethod.POST, value = "/users/{userId}/friends/{friendId}")
@@ -98,7 +92,7 @@ public class UserController {
 		//get freinds of
 		@RequestMapping(method=RequestMethod.GET, value = "/users/{userId}/friendsof")
 		public List<User> getFriendsOf(@PathVariable int userId) {
-			return userService.getFriendsTo(userId);
+			return userService.getFriendsOf(userId);
 		}
 		
 		//remove friend
@@ -108,25 +102,25 @@ public class UserController {
 		}
 		
 		//get friends
-		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/friends/}")
+		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/friends")
 		public List<User> getFriends(@PathVariable int userId) {
 			return userService.getFriends(userId);
 		}
 		
 		
 		//get friend requests to me
-		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/requests/}")
+		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/requests")
 		public List<User> getRequests(@PathVariable int userId) {
 			return userService.getRequests(userId);
 		}
 		
 		//get pending friend reuquest to others
-		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/pending/}")
+		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/pending")
 		public List<User> getPending(@PathVariable int userId) {
 			return userService.getPending(userId);
 		}
 		//get undiscovered people around me
-		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/discovery/}")
+		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/discovery")
 		public List<User> getDiscovery(@PathVariable int userId) {
 			return userService.getDiscovery(userId);
 		}
