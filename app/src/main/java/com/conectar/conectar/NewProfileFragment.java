@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +34,7 @@ public class NewProfileFragment extends Fragment {
     private EditText username;
     private EditText password;
     private EditText confirmPassword;
-    private String url = "http://proj-309-ss-4.cs.iastate.edu:9001/users";
+    private String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users";
 
     private OnFragmentInteractionListener mListener;
 
@@ -87,13 +88,17 @@ public class NewProfileFragment extends Fragment {
                 int duration = Toast.LENGTH_SHORT;
                 if(password.getText().toString().equals(confirmPassword.getText().toString())){
                     //create an array of what will go in the json object
-                    String[][] newUser = new String[2][1];
-                    newUser[0][0] = "userName";
-                    newUser[1][0] = username.getText().toString();
+                    String[][] newUser = new String[2][3];
+                    newUser[0][0] = "id";
+                    newUser[1][0] = "0";
+                    newUser[0][1] = "userName";
+                    newUser[1][1] = username.getText().toString();
+                    newUser[0][2] = "bio";
+                    newUser[1][2] = "no bio yet";
                     //create the json object
                     JSONObject js = JsonRequest.createJsonObject(newUser);
                     //make the post request
-                    JsonRequest.postRequest(js, getContext(), "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users");
+                    JsonRequest.postRequest(js, getContext(), url);
                     //if confirmPassword and password are the same, submit
                     text = "Successfully submitted";
                 }
