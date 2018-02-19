@@ -81,7 +81,7 @@ public class UserController {
 	}
 
 
-	//add a friend
+	//add a friend. I think this is backwards. userid got the request from friendid.
 	@RequestMapping(method = RequestMethod.POST, value = "/users/{userId}/friends/{friendId}")
 	public String addFriend(@PathVariable int userId, @PathVariable int friendId) {
 		userService.addFriend(userId, friendId);
@@ -127,7 +127,7 @@ public class UserController {
 	}
 
 
-	//get friend requests to me
+	//get friend requests to me 
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/requests")
 	public List<User> getRequests(@PathVariable int userId) {
 		return userService.getRequests(userId);
