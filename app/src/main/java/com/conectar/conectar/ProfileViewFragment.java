@@ -72,7 +72,8 @@ public class ProfileViewFragment extends Fragment {
         view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                //first id receives, second id sends
+                JsonRequest.postRequest(null, getContext(), "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/friends/2");
             }
         });
         //TODO when moving to a new page, send back updated information

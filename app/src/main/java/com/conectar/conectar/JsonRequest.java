@@ -91,7 +91,7 @@ public class JsonRequest {
     }
 
     /**
-     *
+     * Method to receive a json array
      * @param url
      * @return
      */
@@ -134,7 +134,7 @@ public class JsonRequest {
     }
 
     /**
-     *
+     * method to recieve a json object
      */
     public static void jsonObjectRequest(String url, Context context){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //may need typecasting to string on the null?
