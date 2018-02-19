@@ -88,7 +88,7 @@ public class UserController {
 		return "added friend";
 	}
 
-	//add a friend
+	//Force add a friend. Maybe delete this later? 
 	@RequestMapping(method = RequestMethod.POST, value = "/users/{userId}/friends/{friendId}/force")
 	public String addFriendWeird(@PathVariable int userId, @PathVariable int friendId) {
 		userService.addFriend(userId, friendId);
@@ -110,6 +110,13 @@ public class UserController {
 	//remove friend
 	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}/friends/{friendId}")
 	public void deleteFriend(@PathVariable int userId, @PathVariable int friendId) {
+		userService.removeFriend(userId, friendId);
+	}
+
+	//Force Remove Friend. Maybe delete this later.
+	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}/friends/{friendId}/force")
+	public void deleteFriend(@PathVariable int userId, @PathVariable int friendId) {
+		userService.removeFriend(userId, friendId);
 		userService.removeFriend(userId, friendId);
 	}
 
