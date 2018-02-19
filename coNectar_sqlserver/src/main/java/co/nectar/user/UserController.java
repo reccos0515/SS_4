@@ -1,6 +1,5 @@
 package co.nectar.user;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,12 +92,12 @@ public class UserController {
 		
 		//getfriends to
 		@RequestMapping(method=RequestMethod.GET, value = "/users/{userId}/friendsto")
-		public int getFriendsTo(@PathVariable int userId) {
+		public List<User> getFriendsTo(@PathVariable int userId) {
 			return userService.getFriendsTo(userId);
 		}
 		//get freinds of
 		@RequestMapping(method=RequestMethod.GET, value = "/users/{userId}/friendsof")
-		public int getFriendsOf(@PathVariable int userId) {
+		public List<User> getFriendsOf(@PathVariable int userId) {
 			return userService.getFriendsTo(userId);
 		}
 		
@@ -106,6 +105,30 @@ public class UserController {
 		@RequestMapping(method=RequestMethod.DELETE, value = "/users/{userId}/friends/{friendId}")
 		public void deleteFriend(@PathVariable int userId, @PathVariable int friendId) {
 			userService.addFriend(userId,friendId);
+		}
+		
+		//get friends
+		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/friends/}")
+		public List<User> getFriends(@PathVariable int userId) {
+			return userService.getFriends(userId);
+		}
+		
+		
+		//get friend requests to me
+		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/requests/}")
+		public List<User> getRequests(@PathVariable int userId) {
+			return userService.getRequests(userId);
+		}
+		
+		//get pending friend reuquest to others
+		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/pending/}")
+		public List<User> getPending(@PathVariable int userId) {
+			return userService.getPending(userId);
+		}
+		//get undiscovered people around me
+		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/discovery/}")
+		public List<User> getDiscovery(@PathVariable int userId) {
+			return userService.getDiscovery(userId);
 		}
 		
 		

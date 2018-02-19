@@ -26,6 +26,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class User {
 
@@ -38,36 +40,36 @@ public class User {
 	private String bio;
 
 	
-	private Integer friendOf;
 	
-	private Integer friendTo;
 	//ManyToMany Connecion having trouble with this
-//	@ManyToMany
-//	@JoinTable(name="TBL_FRIENDS",
-//			joinColumns={@JoinColumn(name="friendId",referencedColumnName = "id")},
-//			inverseJoinColumns={@JoinColumn(name="userId",referencedColumnName = "id")})
-//	private List<User> friendsTo;
-//	@ManyToMany
-//	@JoinTable(name="TBL_FRIENDS",
-//		joinColumns={@JoinColumn(name="friendId",referencedColumnName = "id")},
-//		inverseJoinColumns={@JoinColumn(name="userId",referencedColumnName = "id")})
-//	private List<User> friendsOf;
-//	
-//	public List<User> getFriendsTo() {
-//	return friendsTo;
-//}
-//
-//public void setFriendsTo(List<User> friendsTo) {
-//	this.friendsTo = friendsTo;
-//}
-//
-//public List<User> getFriendsOf() {
-//	return friendsOf;
-//}
-//
-//public void setFriendsOf(List<User> friendsOf) {
-//	this.friendsOf = friendsOf;
-//}
+	@ManyToMany
+	@JsonIgnore
+	@JoinTable(name="TBL_FRIENDS",
+			joinColumns={@JoinColumn(name="friendId",referencedColumnName = "id")},
+			inverseJoinColumns={@JoinColumn(name="userId",referencedColumnName = "id")})
+	private List<User> friendsTo;
+	@ManyToMany
+	@JsonIgnore
+	@JoinTable(name="TBL_FRIENDS",
+		joinColumns={@JoinColumn(name="friendId",referencedColumnName = "id")},
+		inverseJoinColumns={@JoinColumn(name="userId",referencedColumnName = "id")})
+	private List<User> friendsOf;
+	
+	public List<User> getFriendsTo() {
+	return friendsTo;
+	}
+	
+	public void setFriendsTo(List<User> friendsTo) {
+		this.friendsTo = friendsTo;
+	}
+	
+	public List<User> getFriendsOf() {
+		return friendsOf;
+	}
+	
+	public void setFriendsOf(List<User> friendsOf) {
+		this.friendsOf = friendsOf;
+	}
 
 
 
@@ -79,19 +81,19 @@ public class User {
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
-		this.friendTo = -1;
-		this.friendOf = -1;
+		this.friendsTo = new ArrayList<User>();
+		this.friendsOf = new ArrayList<User>();
 	}
 	
-	public User(int id, String userName, String bio, int friendTo, int friendOf) {
+	public User(int id, String userName, String bio, List<User> friendsTo, List<User> friendsOf) {
 		super();
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
 //		this.friendsTo = new ArrayList<User>();
 //		this.friendsOf = new ArrayList<User>();
-		this.friendTo = friendTo;
-		this.friendOf = friendOf;
+		this.friendsTo = friendsTo;
+		this.friendsOf = friendsOf;
 	}
 
 	
@@ -119,21 +121,25 @@ public class User {
 	}
 	
 	
-	//int frineds
-	public int getFriendOf() {
-		return friendOf;
-	}
-	public void setFriendOf(int friendOf) {
-		this.friendOf = friendOf;
-	}
-	public int getFriendTo() {
-		return friendTo;
-	}
-	public void setFriendTo(int friendTo) {
-		this.friendTo = friendTo;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
+//	//int friends
+//	private Integer friendOf;
+//	
+//	private Integer friendTo;
+//	//int frineds
+//	public int getFriendOf() {
+//		return friendOf;
+//	}
+//	public void setFriendOf(int friendOf) {
+//		this.friendOf = friendOf;
+//	}
+//	public int getFriendTo() {
+//		return friendTo;
+//	}
+//	public void setFriendTo(int friendTo) {
+//		this.friendTo = friendTo;
+//	}
+//	public void setId(Integer id) {
+//		this.id = id;
+//	}
 	
 }

@@ -52,22 +52,22 @@ public class UserService {
 	}
 
 
-	public int getFriendsTo(int userId) {
+	public List<User> getFriendsTo(int userId) {
 
-		return userRepo.findOne(userId).getFriendTo();
+		return userRepo.findOne(userId).getFriendsTo();
 	}
 	
 	
-	public int getFriendsOf(int userId) {
-		return userRepo.findOne(userId).getFriendOf();
+	public List<User> getFriendsOf(int userId) {
+		return userRepo.findOne(userId).getFriendsOf();
 	}
 
 	public void addFriend(int userId, int friendId) {
 		User user = this.getUser(userId);
 		User friend = this.getUser(friendId);
 		
-		user.setFriendTo(friendId);
-		friend.setFriendOf(userId);
+		user.getFriendsTo().add(friend);
+		friend.getFriendsOf().add(user);
 		
 		userRepo.save(user);
 		userRepo.save(friend);
@@ -78,10 +78,74 @@ public class UserService {
 		User friend = this.getUser(friendId);
 		
 		//clear friends
-		user.setFriendTo(-1);
-		friend.setFriendOf(-1);
+		user.getFriendsTo().remove(friend);
+		friend.getFriendsOf().remove(user);
 		userRepo.save(user);
 		userRepo.save(friend);
+	}
+
+	//friends are in both friendTo and friendFrom
+	public List<User> getFriends(int userId) {
+		List<User> friends = new ArrayList<User>();
+		User user = this.getUser(userId);
+		
+		//get to and from friend lists
+		List<User> to = user.getFriendsTo();
+		List<User> from = user.getFriendsOf();
+		
+		for(User friend : to) {
+			if(from.contains(friend))
+				friends.add(friend);//add if in both to and from lists
+		}
+		return friends;
+	}
+
+	//request are in friend to but not from
+	public List<User> getRequests(int userId) {
+		List<User> requests = new ArrayList<User>();
+		User user = this.getUser(userId);
+		
+		//get to and from friend lists
+		List<User> to = user.getFriendsTo();
+		List<User> from = user.getFriendsOf();
+		
+		for(User friend : to) {
+			if(!from.contains(friend))
+				requests.add(friend);//add friend is not in from
+		}
+		return requests;
+	}
+
+	//pending users are in from but not in to
+	public List<User> getPending(int userId) {
+		List<User> requests = new ArrayList<User>();
+		User user = this.getUser(userId);
+		
+		//get to and from friend lists
+		List<User> to = user.getFriendsTo();
+		List<User> from = user.getFriendsOf();
+		
+		for(User friend : from) {
+			if(!from.contains(to))
+				requests.add(friend);//add friend is not in to yet
+		}
+		return requests;
+	}
+	// a discovery user is in the list of all the users but not the current user friends list
+	public List<User> getDiscovery(int userId) {
+		List<User> discovery = new ArrayList<User>();
+		User user = this.getUser(userId);
+		
+		
+		//get all users and current user's friends
+		List<User> users = (List<User>) this.getAllUsers();
+		List<User> friends = this.getFriends(user.getId());
+		
+		for(User friend : friends) {
+			if(!users.contains(friend))
+				discovery.add(friend);//add if in both to and from lists
+		}
+		return discovery;
 	}
 
 }
