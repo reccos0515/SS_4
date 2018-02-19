@@ -22,7 +22,7 @@ import util.Singleton;
 
 public class JsonRequest {
     String serverUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/test";
-    String str;
+    static String str;
     //String for Json Array Req to server for all users "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
 
@@ -31,7 +31,7 @@ public class JsonRequest {
      * This should be called within the onResponse listener, after the Array has been parsed
      * @param str2
      */
-    public void saveString(String str2){
+    public static void saveString(String str2){
         str = str2;
         Log.d("Saved String", str);
         return;
@@ -41,7 +41,7 @@ public class JsonRequest {
      * method to get the first user's name
      * @return name of first user
      */
-   public String getString() {
+   public static String getString() {
        return str;
    }
 
@@ -133,4 +133,27 @@ public class JsonRequest {
         Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest); //add json to queue
     }
 
+    /**
+     *
+     */
+    public static void jsonObjectRequest(String url, Context context){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //may need typecasting to string on the null?
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try { //will always give exception, is why need try catch
+                            saveString(response.getString("userName")); //not sure if case sensitive or not on the string input
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+}
 }

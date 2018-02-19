@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_login) {
             fragment = new LoginFragment();
         } else if (id == R.id.nav_swipe) {
-            fragment = new SwipeFragment();
+            fragment = new ProfileViewFragment();
         } else if (id == R.id.nav_newProfile) {
             fragment = new NewProfileFragment();
         } else if (id == R.id.nav_about) {

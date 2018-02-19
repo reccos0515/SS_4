@@ -61,9 +61,9 @@ public class ProfileViewFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //TODO send JSON request to get the needed user information from the curIdNum
+        JsonRequest.jsonObjectRequest("http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1", getContext());
         numFriends = 0; //set numFriends TODO will get numFriends from JSONobj
-        String text = "trial"; //text to be set to the curUsername.  TODO Will get username from returned JSONobj
+        String text = JsonRequest.getString(); //text to be set to the curUsername.
         final int curIdNum = 0; //set id of the user TODO will get id from JSONobj
         //set the username on screen
         TextView username = view.findViewById(R.id.viewUsername);
@@ -72,10 +72,7 @@ public class ProfileViewFragment extends Fragment {
         view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if(numFriends < 20){
-                    friendList[numFriends] = curIdNum; //add friend
-                    numFriends++;
-                }
+
             }
         });
         //TODO when moving to a new page, send back updated information
