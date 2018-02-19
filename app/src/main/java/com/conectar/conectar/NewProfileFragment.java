@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +33,7 @@ public class NewProfileFragment extends Fragment {
     private EditText username;
     private EditText password;
     private EditText confirmPassword;
+    private String url = "http://proj-309-ss-4.cs.iastate.edu:9001/users";
 
     private OnFragmentInteractionListener mListener;
 
@@ -83,6 +86,14 @@ public class NewProfileFragment extends Fragment {
                 CharSequence text;
                 int duration = Toast.LENGTH_SHORT;
                 if(password.getText().toString().equals(confirmPassword.getText().toString())){
+                    //create an array of what will go in the json object
+                    String[][] newUser = new String[2][1];
+                    newUser[0][0] = "userName";
+                    newUser[1][0] = username.getText().toString();
+                    //create the json object
+                    JSONObject js = JsonRequest.createJsonObject(newUser);
+                    //make the post request
+                    JsonRequest.postRequest(js, getContext(), "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users");
                     //if confirmPassword and password are the same, submit
                     text = "Successfully submitted";
                 }
