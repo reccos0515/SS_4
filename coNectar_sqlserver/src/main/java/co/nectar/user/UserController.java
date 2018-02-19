@@ -24,8 +24,10 @@ public class UserController {
 		public Iterable<User> getTest() {
 			User test = new User(0,"test","hi");
 			User test2 = new User(0,"blah","hello");
+			User test3 = new User(0,"Maggie","I am Maggie");
 			userService.addUser(test);
 			userService.addUser(test2);
+			userService.addUser(test3);
 			return userService.getAllUsers();
 		}
 		
@@ -98,7 +100,7 @@ public class UserController {
 		//remove friend
 		@RequestMapping(method=RequestMethod.DELETE, value = "/users/{userId}/friends/{friendId}")
 		public void deleteFriend(@PathVariable int userId, @PathVariable int friendId) {
-			userService.addFriend(userId,friendId);
+			userService.removeFriend(userId,friendId);
 		}
 		
 		//get friends
