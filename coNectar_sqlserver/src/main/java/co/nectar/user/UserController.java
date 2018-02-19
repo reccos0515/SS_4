@@ -98,35 +98,42 @@ public class UserController {
 		//get freinds of
 		@RequestMapping(method=RequestMethod.GET, value = "/users/{userId}/friendsof")
 		public List<User> getFriendsOf(@PathVariable int userId) {
-			return userService.getFriendsTo(userId);
+			return userService.getFriendsOf(userId);
 		}
 		
 		//remove friend
 		@RequestMapping(method=RequestMethod.DELETE, value = "/users/{userId}/friends/{friendId}")
 		public void deleteFriend(@PathVariable int userId, @PathVariable int friendId) {
-			userService.addFriend(userId,friendId);
+			userService.removeFriend(userId,friendId);
 		}
 		
+		
+		//test2
+		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/test2")
+		public List<User> test2(@PathVariable int userId) {
+			//return "success";
+			return userService.getFriends(userId);
+		}
 		//get friends
-		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/friends/}")
+		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/friends")
 		public List<User> getFriends(@PathVariable int userId) {
 			return userService.getFriends(userId);
 		}
 		
 		
 		//get friend requests to me
-		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/requests/}")
+		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/requests")
 		public List<User> getRequests(@PathVariable int userId) {
 			return userService.getRequests(userId);
 		}
 		
 		//get pending friend reuquest to others
-		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/pending/}")
+		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/pending")
 		public List<User> getPending(@PathVariable int userId) {
 			return userService.getPending(userId);
 		}
 		//get undiscovered people around me
-		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/discovery/}")
+		@RequestMapping(method=RequestMethod.GET, value ="/users/{userId}/discovery")
 		public List<User> getDiscovery(@PathVariable int userId) {
 			return userService.getDiscovery(userId);
 		}
