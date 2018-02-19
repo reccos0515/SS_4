@@ -61,19 +61,24 @@ public class ProfileViewFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        JsonRequest.jsonObjectRequest("http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1", getContext());
-        numFriends = 0; //set numFriends TODO will get numFriends from JSONobj
-        String text = JsonRequest.getString(); //text to be set to the curUsername.
-        final int curIdNum = 0; //set id of the user TODO will get id from JSONobj
+        int thisUserId = 2;
+        int id = 1; //set id of user want to receive
+        String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/";
+        url += id + "";
+        //get user 1
+        JsonRequest.jsonObjectRequest(url, getContext());
+        String text = JsonRequest.getString(); //text to be set to the username from the user received
         //set the username on screen
         TextView username = view.findViewById(R.id.viewUsername);
         username.setText(text);
-        //when the button is pressed, will add friend if there is space in friendsList
+        url += "/friends/" + thisUserId + "";
+        final String requestUrl = url;
+        //when the button is pressed will add friend
         view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 //first id receives, second id sends
-                JsonRequest.postRequest(null, getContext(), "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/friends/2");
+                JsonRequest.postRequest(null, getContext(), requestUrl);
             }
         });
         //TODO when moving to a new page, send back updated information
