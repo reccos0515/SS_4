@@ -103,16 +103,17 @@ public class JsonRequest {
                     @Override
                     public void onResponse(JSONArray response) {
                         try{
-                            JSONObject user = response.getJSONObject(0); //get first JsonObject, this is the first user
-                            if(user.getString("userName") == null){
-                                saveString("null");
-                            }
-                            else {
-                                String firstUser = user.getString("userName"); //get the userName from the first user
-                                saveString(firstUser); //save this in a global variable
+                                if(response.length() <= 0){ //If the array is empty
+                                    Log.d("JSONArray Status: ","Empty List");
+                                    saveString("Empty");
+                                }
+                                else { //If the array isn't empty
+                                    JSONObject user = response.getJSONObject(0); //get first JsonObject, this is the first user
 
-                                Log.d("First User", firstUser);
-                            }
+                                    String firstUser = user.getString("userName"); //get the userName from the first user
+                                    Log.d("First User", firstUser);
+                                    saveString(firstUser); //save this in a global variable
+                                }
 
                             // Loop through the array elements
 //                                    for(int i=0;i<response.length();i++){
