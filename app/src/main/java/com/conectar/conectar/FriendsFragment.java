@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -85,16 +86,37 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final FragmentManager fragmentManager = getFragmentManager(); //not support fragment manager b/c this is in a fragment
-        final View thisView = getView();
-        /*
-        String text = "friendname"; //temp until can grab username from DB
-        TextView username = view.findViewById(R.id.friendUsername);
-        username.setText(text);
-        */
+        //Initialize the textviews on the friends page
+        TextView actualFriend = view.findViewById(R.id.friend1); //First full friend
+        TextView pendingFriend = view.findViewById(R.id.pendingFriend1); //First pending friend
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_friends);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        //JsonRequest.clearString(); //Make sure there isn't anything already saved?
+
+        //ask for friends array for user 1
+        Boolean wasRequested = false;
+        String friendsUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/friends";
+        JsonRequest.jsonArrayRequest(friendsUrl, getContext());
+        String thisFriend = JsonRequest.getString();
+        Log.d("Friend:", thisFriend);
+        actualFriend.setText(JsonRequest.getString()); //List the first friend in the friend list
+        //JsonRequest.clearString();
+
+
+
+        //ask for pending array for user 1
+        String pendingUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/pending";
+        JsonRequest.jsonArrayRequest(pendingUrl, getContext());
+        String thisPending = JsonRequest.getString();
+        Log.d("Pending:", thisPending);
+        pendingFriend.setText(JsonRequest.getString()); //List the first pending friend in the pending list
+        JsonRequest.clearString();
+
+
+        //set friends textview
+        //set pending textview
+
+
 
         //sending request and receiving user profile from server
         /*

@@ -3,13 +3,31 @@ package com.conectar.conectar;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import util.Singleton;
 
 
 /**
@@ -29,6 +47,14 @@ public class ChangeStatusFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    Button button;
+    TextView textView;
+    String serverUrl = "http://104.145.103.160/greetings.php"; //Use IPv4 IP address
+
+    Button button2;
+    TextView testName, testAge, testCity;
+    String serverUrl2 = "http://104.145.103.160/jsontest.php";
 
     private OnFragmentInteractionListener mListener;
 
@@ -74,14 +100,77 @@ public class ChangeStatusFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        
-        /*
-        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener(){
+        //------------------------------String Request--------------------------------------------------//
+        textView = view.findViewById(R.id.txt); //Displays data from server
+        button = view.findViewById(R.id.bn); //Button to get data from server
+
+        button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "You are inside the logout fragment", Toast.LENGTH_LONG);
+
+                final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, serverUrl,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                                textView.setText(response);
+                                requestQueue.stop(); //closes the queue
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        textView.setText("Something went wrong");
+                        error.printStackTrace();
+                        requestQueue.stop();
+
+                    }
+                });
+                requestQueue.add(stringRequest);
             }
-        }); */
+        });
+        //---------------------------------------JSON VOLLEY------------------------------------------------//
+
+        testName = view.findViewById(R.id.jsonName);
+        testAge = view.findViewById(R.id.jsonAge);
+        testCity = view.findViewById(R.id.jsonCity);
+        button2 = view.findViewById(R.id.bn2);
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //can use same request queue?
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, serverUrl2,  null, //may need typecasting to string on the null?
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+
+                                try { //will always give exception, is why need try catch
+                                    testName.setText(response.getString("name")); //not sure if case sensitive or not on the string input
+                                    testAge.setText(response.getString("age"));
+                                    testCity.setText(response.getString("city"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+
+                    }
+                });
+                Singleton.getmInstance(getContext()).addToRequestQueue(jsonObjectRequest); //add json to queue
+            }
+        });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

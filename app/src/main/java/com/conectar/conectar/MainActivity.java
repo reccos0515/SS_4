@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity
             FriendsFragment.OnFragmentInteractionListener, MessagesFragment.OnFragmentInteractionListener,
             NewProfileFragment.OnFragmentInteractionListener, SearchFragment.OnFragmentInteractionListener,
             SwipeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener,
-            ProfileViewFragment.OnFragmentInteractionListener{
+            ProfileViewFragment.OnFragmentInteractionListener, SecondProfileFragment.OnFragmentInteractionListener{ //TODO delete second profile after demo2
     /*Added Logout, Edit Profile, Change Status, Friends, Messages, New Profile, Search, Swipe Screen/Home, Login
     to drawer navigation */
     @Override
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_login) {
             fragment = new LoginFragment();
         } else if (id == R.id.nav_swipe) {
-            fragment = new SwipeFragment();
+            fragment = new ProfileViewFragment();
         } else if (id == R.id.nav_newProfile) {
             fragment = new NewProfileFragment();
         } else if (id == R.id.nav_about) {
@@ -131,6 +131,8 @@ public class MainActivity extends AppCompatActivity
             //waiting for xml implementation
         } else if (id == R.id.nav_friends) {
             fragment = new FriendsFragment();
+        } else if (id == R.id.nav_secondProfile) { //TODO needs to be deleted after demo2
+            fragment = new SecondProfileFragment();
         }
 
         if(fragment != null){

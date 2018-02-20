@@ -8,6 +8,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+import util.LruBitmapCache;
+
 public class AppController extends Application {
 
     public static final String TAG = AppController.class
