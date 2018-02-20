@@ -98,7 +98,7 @@ public class UserController {
 
 	//getfriends to
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/friendsto")
-	public List<User> getFriendsTo(@PathVariable int userId) {
+	public List<User> getFriendsTo(@PathVariable int userId) {	
 		return userService.getFriendsTo(userId);
 	}
 	//get freinds of
