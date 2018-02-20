@@ -87,14 +87,26 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         final FragmentManager fragmentManager = getFragmentManager(); //not support fragment manager b/c this is in a fragment
         final View thisView = getView();
-        /*
-        String text = "friendname"; //temp until can grab username from DB
-        TextView username = view.findViewById(R.id.friendUsername);
-        username.setText(text);
-        */
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_friends);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        //Initialize the textviews on the friends page
+        TextView actualFriend = view.findViewById(R.id.friend1); //First full friend
+        TextView pendingFriend = view.findViewById(R.id.pendingFriend1); //First pending friend
+
+        //ask for friends array for user 1
+        String friendsUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/friends";
+        JsonRequest.jsonArrayRequest(friendsUrl, getContext());
+        actualFriend.setText(JsonRequest.getString()); //List the first friend in the friend list
+
+
+        //ask for pending array for user 1
+        String pendingUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/requests";
+        JsonRequest.jsonArrayRequest(pendingUrl, getContext());
+        pendingFriend.setText(JsonRequest.getString()); //List the first pending friend in the pending list
+
+        //set friends textview
+        //set pending textview
+
+
 
         //sending request and receiving user profile from server
         /*

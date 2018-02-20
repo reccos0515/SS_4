@@ -95,17 +95,23 @@ public class JsonRequest {
      * @param url
      * @return
      */
-    public void jsonArrayRequest(String url, Context context){
+    public static void jsonArrayRequest(String url, Context context){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,  //may need typecasting to string on the null?
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         try{
                             JSONObject user = response.getJSONObject(0); //get first JsonObject, this is the first user
-                            String firstUser = user.getString("userName"); //get the userName from the first user
-                            saveString(firstUser); //save this in a global variable
+                            if(user.getString("userName") == null){
+                                saveString("null");
+                            }
+                            else {
+                                String firstUser = user.getString("userName"); //get the userName from the first user
+                                saveString(firstUser); //save this in a global variable
 
-                            Log.d("First User", firstUser);
+                                Log.d("First User", firstUser);
+                            }
+
                             // Loop through the array elements
 //                                    for(int i=0;i<response.length();i++){
 //                                        // Get current json object

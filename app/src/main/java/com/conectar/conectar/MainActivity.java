@@ -131,8 +131,6 @@ public class MainActivity extends AppCompatActivity
             //waiting for xml implementation
         } else if (id == R.id.nav_friends) {
             fragment = new FriendsFragment();
-        } else if (id == R.id.nav_profileView) {
-            fragment = new ProfileViewFragment();
         } else if (id == R.id.nav_secondProfile) { //TODO needs to be deleted after demo2
             fragment = new SecondProfileFragment();
         }
