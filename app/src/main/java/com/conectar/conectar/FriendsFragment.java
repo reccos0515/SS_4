@@ -96,12 +96,14 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         String friendsUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/friends";
         JsonRequest.jsonArrayRequest(friendsUrl, getContext());
         actualFriend.setText(JsonRequest.getString()); //List the first friend in the friend list
+        JsonRequest.clearString();
 
 
         //ask for pending array for user 1
         String pendingUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/requests";
         JsonRequest.jsonArrayRequest(pendingUrl, getContext());
         pendingFriend.setText(JsonRequest.getString()); //List the first pending friend in the pending list
+        JsonRequest.clearString();
 
         //set friends textview
         //set pending textview

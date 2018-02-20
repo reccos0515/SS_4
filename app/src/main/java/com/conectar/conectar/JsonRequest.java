@@ -45,6 +45,8 @@ public class JsonRequest {
        return str;
    }
 
+   public static void clearString(){ str = "Cleared";}
+
     /**
      * create a json object from a 2D array
      * @param obj 2D array of Strings, where obj[0] is the key and obj[1] is the value for each field. Will always be size obj[2][x] where x is the number of fields
