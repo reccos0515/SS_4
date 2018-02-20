@@ -20,8 +20,6 @@ import android.widget.Toast;
  */
 public class ProfileViewFragment extends Fragment {
 
-    private int[] friendList = new int[20]; //list of up to 20 friend's id numbers
-    private int numFriends; //number of friends in friendList
     private String curUsername; //the username of the user to be viewed
     private static int curIdNum; //id number of the user to be viewed
 
@@ -61,8 +59,8 @@ public class ProfileViewFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        int thisUserId = 2;
-        int id = 1; //set id of user want to receive
+        int thisUserId = 1;
+        int id = 2; //set id of user want to receive
         String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/";
         url += id + "";
         //get user 1
@@ -81,7 +79,6 @@ public class ProfileViewFragment extends Fragment {
                 JsonRequest.postRequest(null, getContext(), requestUrl);
             }
         });
-        //TODO when moving to a new page, send back updated information
     }
 
     @Override
