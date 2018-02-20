@@ -105,7 +105,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
         //ask for pending array for user 1
-        String pendingUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/requests";
+        String pendingUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/pending";
         JsonRequest.jsonArrayRequest(pendingUrl, getContext());
         String thisPending = JsonRequest.getString();
         Log.d("Pending:", thisPending);

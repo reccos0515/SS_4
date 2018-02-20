@@ -65,8 +65,8 @@ public class SecondProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        int thisUserId = 1;
-        int id = 2; //set id of user want to receive
+        int thisUserId = 2;
+        int id = 1; //set id of user want to receive
         String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/";
         url += id + "";
         //get user 1
