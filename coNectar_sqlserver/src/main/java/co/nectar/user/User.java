@@ -45,14 +45,14 @@ public class User {
 	@ManyToMany
 	@JsonIgnore
 	@JoinTable(name="TBL_FRIENDS",
-			joinColumns={@JoinColumn(name="friendId",referencedColumnName = "id")},
-			inverseJoinColumns={@JoinColumn(name="userId",referencedColumnName = "id")})
+			joinColumns={@JoinColumn(name="userId",referencedColumnName = "id")},
+			inverseJoinColumns={@JoinColumn(name="friendId",referencedColumnName = "id")})
 	private List<User> friendsTo;
-	@ManyToMany
+	@ManyToMany(mappedBy="friendsTo")
 	@JsonIgnore
-	@JoinTable(name="TBL_FRIENDS",
-		joinColumns={@JoinColumn(name="friendId",referencedColumnName = "id")},
-		inverseJoinColumns={@JoinColumn(name="userId",referencedColumnName = "id")})
+//	@JoinTable(name="TBL_FRIENDS",
+//		joinColumns={@JoinColumn(name="friendId",referencedColumnName = "id")},
+//		inverseJoinColumns={@JoinColumn(name="userId",referencedColumnName = "id")})
 	private List<User> friendsOf;
 	
 	public List<User> getFriendsTo() {

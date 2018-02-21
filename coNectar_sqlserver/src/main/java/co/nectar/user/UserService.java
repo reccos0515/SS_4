@@ -12,23 +12,40 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-	@Autowired
-	private UserRepository userRepo;
-	
-	
+	@Autowired //Automatically connects relevant beans.
+	private UserRepository userRepo; //Define a repository to use in this service.
+
+	/**
+	* Returns a list of all users stored in the repository.
+	* @return List of all users
+	*/
 	public Iterable<User> getAllUsers() {
-		//return users;
 		return userRepo.findAll();
 	}
 
+	/**
+	* Returns a user that has the given ID.
+	* @param userId The id of the user you wish to return.
+	* @return User with id = userId.
+	*/
 	public User getUser(int userId) {
 		return userRepo.findOne(userId);
 	}
 
+	/**
+	* Adds a user object to the repository.
+	* @param user The user object to be added
+	*/
 	public void addUser(User user) {
 		userRepo.save(user);
 	}
-	
+
+	/**
+	* What is this supposed to do? It seems wrong.
+	* @param userName The username of the user.
+	* @param bio The bio of the user.
+	* @return Reports that the user was saved.
+	*/
 	public String addUser(String userName, String bio) {
 		User user = new User();
 		user.setUserName(userName);
@@ -43,12 +60,12 @@ public class UserService {
 
 	public void updateBio(int userId) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void updateUser(int userId, User user) {
 		userRepo.save(user);
-		
+
 	}
 
 
@@ -56,8 +73,8 @@ public class UserService {
 
 		return userRepo.findOne(userId).getFriendsTo();
 	}
-	
-	
+
+
 	public List<User> getFriendsOf(int userId) {
 		return userRepo.findOne(userId).getFriendsOf();
 	}
@@ -65,18 +82,18 @@ public class UserService {
 	public void addFriend(int userId, int friendId) {
 		User user = this.getUser(userId);
 		User friend = this.getUser(friendId);
-		
+
 		user.getFriendsTo().add(friend);
 		friend.getFriendsOf().add(user);
-		
+
 		userRepo.save(user);
 		userRepo.save(friend);
 	}
-	
+
 	public void removeFriend(int userId, int friendId) {
 		User user = this.getUser(userId);
 		User friend = this.getUser(friendId);
-		
+
 		//clear friends
 		user.getFriendsTo().remove(friend);
 		friend.getFriendsOf().remove(user);
@@ -88,13 +105,13 @@ public class UserService {
 	public List<User> getFriends(int userId) {
 		List<User> friends = new ArrayList<User>();
 		User user = this.getUser(userId);
-		
+
 		//get to and from friend lists
 		List<User> to = user.getFriendsTo();
 		List<User> from = user.getFriendsOf();
-		
-		for(User friend : to) {
-			if(from.contains(friend))
+
+		for (User friend : to) {
+			if (from.contains(friend))
 				friends.add(friend);//add if in both to and from lists
 		}
 		return friends;
@@ -104,13 +121,13 @@ public class UserService {
 	public List<User> getRequests(int userId) {
 		List<User> requests = new ArrayList<User>();
 		User user = this.getUser(userId);
-		
+
 		//get to and from friend lists
 		List<User> to = user.getFriendsTo();
 		List<User> from = user.getFriendsOf();
-		
-		for(User friend : to) {
-			if(!from.contains(friend))
+
+		for (User friend : to) {
+			if (!from.contains(friend))
 				requests.add(friend);//add friend is not in from
 		}
 		return requests;
@@ -120,28 +137,28 @@ public class UserService {
 	public List<User> getPending(int userId) {
 		List<User> requests = new ArrayList<User>();
 		User user = this.getUser(userId);
-		
+
 		//get to and from friend lists
 		List<User> to = user.getFriendsTo();
 		List<User> from = user.getFriendsOf();
-		
-		for(User friend : from) {
-			if(!from.contains(friend))
+
+		for (User friend : from) {
+			if (!to.contains(friend))
 				requests.add(friend);//add friend is not in to yet
 		}
 		return requests;
 	}
-	// a discovery get all users not in current users friend list (except current user)
+	// a discovery get all users that the current user had not friended or requested
 	public List<User> getDiscovery(int userId) {
 		List<User> discovery = new ArrayList<User>();
 		User user = this.getUser(userId);
-		
+
 		//get all users and current user's friends
 		List<User> users = (List<User>) this.getAllUsers();
-		List<User> friends = this.getFriends(userId);
-		
-		for(User user_ele : users) {
-			if(!friends.contains(user_ele) && !user_ele.equals(user))
+		List<User> friends = this.getFriendsTo(userId);
+
+		for (User user_ele : users) {
+			if (!friends.contains(user_ele) && !user_ele.equals(user))
 				discovery.add(user_ele);//add if in both to and from lists
 		}
 		return discovery;
