@@ -1,4 +1,4 @@
-package com.conectar.conectar;
+package util;
 
 import android.content.Context;
 import android.util.Log;
