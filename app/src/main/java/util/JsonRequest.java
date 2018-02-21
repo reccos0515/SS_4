@@ -25,6 +25,7 @@ public class JsonRequest {
     static String str;
     static JSONObject jsObj;
     static JSONArray jsArr;
+    static boolean ready = false;
     //String for Json Array Req to server for all users "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"
     //String for Adding 10 users to the DB "http://projec-309-ss-4.cs.iastate.edu:9002/ben/test"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
@@ -36,6 +37,7 @@ public class JsonRequest {
      */
     public static void saveString(String str2){
         str = str2;
+        ready = true;
         Log.d("Saved String", str);
         return;
     }
@@ -45,6 +47,9 @@ public class JsonRequest {
      * @return name of first user
      */
     public static String getString() {
+        while(!ready){
+            //implement something here?
+        }
         return str;
     }
 
@@ -55,6 +60,7 @@ public class JsonRequest {
     public static void saveObj(JSONObject obj){
         Log.d("it made it to save", "that's good");
         jsObj = obj;
+        ready = true;
         Log.d("it even saved it", obj.toString());
         return;
     }
@@ -64,7 +70,10 @@ public class JsonRequest {
      * @return most recent json object received
      */
     public static JSONObject getObj(){
-        Log.d("Maybe it worked?", "8");
+        Log.d("Maybe it worked? 8", ready + "");
+        while(!ready){
+            //implement something here
+        }
         return jsObj;
     }
 
@@ -74,6 +83,7 @@ public class JsonRequest {
      */
     public static void saveArr(JSONArray arr){
         jsArr = arr;
+        ready = true;
         return;
     }
 
@@ -82,6 +92,9 @@ public class JsonRequest {
      * @return most recent json array received
      */
     public static JSONArray getArr(){
+        while(!ready){
+            //implement something here?
+        }
         return jsArr;
     }
 
@@ -112,6 +125,7 @@ public class JsonRequest {
      * @param url url of where this request should be sent
      */
     public static void postRequest(JSONObject js, Context context, String url){
+        ready = false;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  js, //may need typecasting to string on the null?
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -139,6 +153,7 @@ public class JsonRequest {
      * @return
      */
     public static void jsonArrayRequest(String url, Context context){
+        ready = false;
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,  //may need typecasting to string on the null?
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -169,6 +184,7 @@ public class JsonRequest {
      * method to recieve a json object
      */
     public static void jsonObjectRequest(String url, Context context){
+        ready = false;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //may need typecasting to string on the null?
                 new Response.Listener<JSONObject>() {
                     @Override

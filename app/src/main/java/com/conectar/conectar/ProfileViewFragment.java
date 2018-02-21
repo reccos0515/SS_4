@@ -26,6 +26,7 @@ public class ProfileViewFragment extends Fragment {
 
     private String curUsername; //the username of the user to be viewed
     private static int curIdNum; //id number of the user to be viewed
+    private static String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/";
 
     private OnFragmentInteractionListener mListener;
 
@@ -66,10 +67,9 @@ public class ProfileViewFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         int thisUserId = 1;
         int id = 2; //set id of user want to receive
-        String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/";
         url += id + "";
         Log.d("Maybe it worked?", "2");
-        JsonRequestThread thread = new JsonRequestThread(getContext(), url); //create the thread to make the request
+        JsonRequestThread thread; //= new JsonRequestThread(getContext(), url); //create the thread to make the request
         Log.d("Maybe it worked?", "3");
 //        JsonRequest.jsonObjectRequest(url, getContext()); //get user
 //        //String text = JsonRequest.getString(); //text to be set to the username from the user received
@@ -80,6 +80,7 @@ public class ProfileViewFragment extends Fragment {
             thread.join(); //wait for the thread to finish before continuing. can add millis as an arg
             Log.d("Maybe it worked?", "7");
         } catch(Exception e){
+            Log.d("ERROR", "ERROR");
             //Todo implement what will happen with an exception
         }
         Log.d("Maybe it worked?", "5");
@@ -109,7 +110,6 @@ public class ProfileViewFragment extends Fragment {
             }
         });
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
