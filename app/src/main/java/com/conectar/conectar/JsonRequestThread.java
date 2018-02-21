@@ -10,6 +10,7 @@ import util.JsonRequest;
  */
 
 //TODO figure out how to move this to util and still allow access from com.conectar.conectar
+    //Problem: it is creating a new thread, but that thread isn't waiting for the request to return either. Need to force it to wait for that request to return
 public class JsonRequestThread extends Thread {
     Context context; //context it was called from in the Fragment/Activity
     String url; //url will be sending request to

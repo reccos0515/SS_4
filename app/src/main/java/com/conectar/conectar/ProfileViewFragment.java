@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -61,22 +62,29 @@ public class ProfileViewFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Log.d("Maybe it worked?", "1");
         super.onViewCreated(view, savedInstanceState);
         int thisUserId = 1;
         int id = 2; //set id of user want to receive
         String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/";
         url += id + "";
-        Log.d("  ", "onViewCreated: ");
+        Log.d("Maybe it worked?", "2");
         JsonRequestThread thread = new JsonRequestThread(getContext(), url); //create the thread to make the request
+        Log.d("Maybe it worked?", "3");
 //        JsonRequest.jsonObjectRequest(url, getContext()); //get user
 //        //String text = JsonRequest.getString(); //text to be set to the username from the user received
         thread.start(); //start the thread
+        Log.d("Maybe it worked?", "4");
         try{
+            Log.d("Maybe it worked?", "6");
             thread.join(); //wait for the thread to finish before continuing. can add millis as an arg
+            Log.d("Maybe it worked?", "7");
         } catch(Exception e){
             //Todo implement what will happen with an exception
         }
+        Log.d("Maybe it worked?", "5");
         JSONObject user = JsonRequest.getObj();
+//        Log.d("json object", user.toString());
 //        if(user == null){
 //            Log.d("error is null", "");
 //        }
