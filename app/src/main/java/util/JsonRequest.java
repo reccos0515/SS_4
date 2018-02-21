@@ -22,12 +22,12 @@ import util.Singleton;
  */
 
 public class JsonRequest {
-    String serverUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/test";
     static String str;
     static JSONObject jsObj;
     static JSONArray jsArr;
     static boolean ready = false;
     //String for Json Array Req to server for all users "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"
+    //String for Adding 10 users to the DB "http://projec-309-ss-4.cs.iastate.edu:9002/ben/test"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
 
     /**

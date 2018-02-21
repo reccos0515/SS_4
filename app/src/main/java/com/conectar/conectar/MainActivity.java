@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity
             fragment = new FriendsFragment();
         }
 
-        if(fragment != null){
+        if(fragment != null){ //Changes the screens
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.screen_area, fragment);

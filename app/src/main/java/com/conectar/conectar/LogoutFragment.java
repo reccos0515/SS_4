@@ -81,13 +81,7 @@ public class LogoutFragment extends Fragment {
                 Toast.makeText(getActivity(), "You pressed logout", Toast.LENGTH_SHORT).show();
             }
         });
-        /*
-        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "You are inside the logout fragment", Toast.LENGTH_LONG);
-            }
-        }); */
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
