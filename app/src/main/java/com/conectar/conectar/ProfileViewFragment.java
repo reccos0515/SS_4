@@ -68,7 +68,7 @@ public class ProfileViewFragment extends Fragment {
         String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/";
         url += id + "";
         Log.d("  ", "onViewCreated: ");
-        JsonRequest.jsonObjectRequest(url, getContext()); //get user
+//        JsonRequest.jsonObjectRequest(url, getContext()); //get user
 //        //String text = JsonRequest.getString(); //text to be set to the username from the user received
 //        JSONObject user = JsonRequest.getObj();
 //        if(user == null){
