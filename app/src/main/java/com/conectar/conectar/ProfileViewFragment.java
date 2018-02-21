@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import util.JsonRequest;
@@ -68,9 +67,16 @@ public class ProfileViewFragment extends Fragment {
         String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/";
         url += id + "";
         Log.d("  ", "onViewCreated: ");
+        JsonRequestThread thread = new JsonRequestThread(getContext(), url); //create the thread to make the request
 //        JsonRequest.jsonObjectRequest(url, getContext()); //get user
 //        //String text = JsonRequest.getString(); //text to be set to the username from the user received
-//        JSONObject user = JsonRequest.getObj();
+        thread.start(); //start the thread
+        try{
+            thread.join(); //wait for the thread to finish before continuing. can add millis as an arg
+        } catch(Exception e){
+            //Todo implement what will happen with an exception
+        }
+        JSONObject user = JsonRequest.getObj();
 //        if(user == null){
 //            Log.d("error is null", "");
 //        }
