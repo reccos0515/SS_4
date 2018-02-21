@@ -25,6 +25,7 @@ public class JsonRequest {
     static String str;
     static JSONObject jsObj;
     static JSONArray jsArr;
+    static boolean ready = false;
     //String for Json Array Req to server for all users "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
 
@@ -52,7 +53,10 @@ public class JsonRequest {
      * @param obj most recent json object received
      */
     public static void saveObj(JSONObject obj){
+        Log.d("it made it to save", "that's good");
         jsObj = obj;
+        ready = true;
+        Log.d("it even saved it", obj.toString());
         return;
     }
 
@@ -61,6 +65,10 @@ public class JsonRequest {
      * @return most recent json object received
      */
     public static JSONObject getObj(){
+        while(!ready){
+            //TODO implement timeout and error handling
+        }
+        ready = false;
         return jsObj;
     }
 
@@ -70,6 +78,7 @@ public class JsonRequest {
      */
     public static void saveArr(JSONArray arr){
         jsArr = arr;
+        ready = true;
         return;
     }
 
@@ -78,6 +87,10 @@ public class JsonRequest {
      * @return most recent json array received
      */
     public static JSONArray getArr(){
+        while(!ready){
+            //TODO implement time out and error handling
+        }
+        ready = false;
         return jsArr;
     }
 
@@ -169,6 +182,7 @@ public class JsonRequest {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.d("Got a response", "it was cool");
 //                        try { //will always give exception, is why need try catch
                             saveObj(response); //not sure if case sensitive or not on the string input
 //                        } catch (JSONException e) {

@@ -5,10 +5,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import util.JsonRequest;
 
@@ -63,12 +67,23 @@ public class ProfileViewFragment extends Fragment {
         int id = 2; //set id of user want to receive
         String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/";
         url += id + "";
-        //get user 1
-        JsonRequest.jsonObjectRequest(url, getContext());
-        String text = JsonRequest.getString(); //text to be set to the username from the user received
+        Log.d("  ", "onViewCreated: ");
+        JsonRequest.jsonObjectRequest(url, getContext()); //get user
+//        //String text = JsonRequest.getString(); //text to be set to the username from the user received
+//        JSONObject user = JsonRequest.getObj();
+//        if(user == null){
+//            Log.d("error is null", "");
+//        }
+//        Log.d("Json Object", user.toString());
+//        String text = "error";
+//        try {
+//            text = user.getString("userName");
+//        }catch (JSONException e){
+//            e.printStackTrace();
+//        }
         //set the username on screen
         TextView username = view.findViewById(R.id.viewUsername);
-        username.setText(text);
+//        username.setText(text);
         url += "/friends/" + thisUserId + "";
         final String requestUrl = url;
         //when the button is pressed will add friend
