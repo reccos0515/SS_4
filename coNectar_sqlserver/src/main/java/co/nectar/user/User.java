@@ -47,29 +47,18 @@ public class User {
 	@JoinTable(name="TBL_FRIENDS",
 			joinColumns={@JoinColumn(name="userId",referencedColumnName = "id")},
 			inverseJoinColumns={@JoinColumn(name="friendId",referencedColumnName = "id")})
-	private List<User> friendsTo;
-	@ManyToMany(mappedBy="friendsTo")
+	private List<User> sentRequestTo;
+	
+	
+	@ManyToMany(mappedBy="sentRequestTo")
 	@JsonIgnore
 //	@JoinTable(name="TBL_FRIENDS",
 //		joinColumns={@JoinColumn(name="friendId",referencedColumnName = "id")},
 //		inverseJoinColumns={@JoinColumn(name="userId",referencedColumnName = "id")})
-	private List<User> friendsOf;
+	private List<User> recievedRequestFrom;
 	
-	public List<User> getFriendsTo() {
-	return friendsTo;
-	}
 	
-	public void setFriendsTo(List<User> friendsTo) {
-		this.friendsTo = friendsTo;
-	}
 	
-	public List<User> getFriendsOf() {
-		return friendsOf;
-	}
-	
-	public void setFriendsOf(List<User> friendsOf) {
-		this.friendsOf = friendsOf;
-	}
 
 
 
@@ -81,25 +70,28 @@ public class User {
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
-		this.friendsTo = new ArrayList<User>();
-		this.friendsOf = new ArrayList<User>();
+		this.sentRequestTo = new ArrayList<User>();
+		this.recievedRequestFrom = new ArrayList<User>();
 	}
 	
-	public User(int id, String userName, String bio, List<User> friendsTo, List<User> friendsOf) {
+	public User(Integer id, String userName, String bio, List<User> sentRequestTo, List<User> recievedRequestFrom) {
 		super();
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
-//		this.friendsTo = new ArrayList<User>();
-//		this.friendsOf = new ArrayList<User>();
-		this.friendsTo = friendsTo;
-		this.friendsOf = friendsOf;
+		this.sentRequestTo = sentRequestTo;
+		this.recievedRequestFrom = recievedRequestFrom;
 	}
-
 	
 	
-
+	
 	//getter/setter methods
+	public int getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getUserName() {
 		return userName;
 	}
@@ -113,12 +105,20 @@ public class User {
 		this.bio = bio;
 	}
 
-	public int getId() {
-		return id;
+	//friend list methods
+	public List<User> getSentRequestTo() {
+		return sentRequestTo;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setSentRequestTo(List<User> sentRequestTo) {
+		this.sentRequestTo = sentRequestTo;
 	}
+	public List<User> getRecievedRequestFrom() {
+		return recievedRequestFrom;
+	}
+	public void setRecievedRequestFrom(List<User> recievedRequestFrom) {
+		this.recievedRequestFrom = recievedRequestFrom;
+	}
+
 	
 	
 //	//int friends
