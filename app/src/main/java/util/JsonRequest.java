@@ -23,6 +23,8 @@ import util.Singleton;
 public class JsonRequest {
     String serverUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/test";
     static String str;
+    static JSONObject jsObj;
+    static JSONArray jsArr;
     //String for Json Array Req to server for all users "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
 
@@ -41,11 +43,46 @@ public class JsonRequest {
      * method to get the first user's name
      * @return name of first user
      */
-   public static String getString() {
-       return str;
-   }
+    public static String getString() {
+        return str;
+    }
 
-   public static void clearString(){ str = "Cleared";}
+    /**
+     * method to save the most recent json object received
+     * @param obj most recent json object received
+     */
+    public static void saveObj(JSONObject obj){
+        jsObj = obj;
+        return;
+    }
+
+    /**
+     * method to get the most recent json object received
+     * @return most recent json object received
+     */
+    public static JSONObject getObj(){
+        return jsObj;
+    }
+
+    /**
+     * method to save the most recent json array received
+     * @param arr the most recent json array recieved
+     */
+    public static void saveArr(JSONArray arr){
+        jsArr = arr;
+        return;
+    }
+
+    /**
+     * method to get the most recent json array received
+     * @return most recent json array received
+     */
+    public static JSONArray getArr(){
+        return jsArr;
+    }
+
+
+    public static void clearString(){ str = "Cleared";}
 
     /**
      * create a json object from a 2D array
@@ -102,36 +139,18 @@ public class JsonRequest {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        try{
-                                if(response.length() <= 0){ //If the array is empty
-                                    Log.d("JSONArray Status: ","Empty List");
-                                    saveString("Empty");
-                                }
-                                else { //If the array isn't empty
-                                    JSONObject user = response.getJSONObject(0); //get first JsonObject, this is the first user
-
-                                    String firstUser = user.getString("userName"); //get the userName from the first user
-                                    Log.d("First User", firstUser);
-                                    saveString(firstUser); //save this in a global variable
-                                }
-
-                            // Loop through the array elements
-//                                    for(int i=0;i<response.length();i++){
-//                                        // Get current json object
-//                                        JSONObject user = response.getJSONObject(i);
-//
-//                                        // Get the current student (json object) data
-//                                        //String userName = user.getString("userName");
-//                                        //String bio = user.getString("bio");
-//                                        if(i == 0){
-//                                            String firstUserName = user.getString("userName");
-//                                            jsonTestMsg.setText(firstUserName);
-//                                            Log.d("First Username", firstUserName);
-//                                        }
-//                                    }
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                        }
+//                        try{
+                            if(response.length() <= 0){ //If the array is empty
+                                Log.d("JSONArray Status: ","Empty List");
+                                saveArr(null);
+                            }
+                            else { //If the array isn't empty
+                                Log.d("Json array received", response.toString());
+                                saveArr(response); //save this in a global variable
+                            }
+//                        }catch (JSONException e){
+//                            e.printStackTrace();
+//                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -150,12 +169,11 @@ public class JsonRequest {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
-                        try { //will always give exception, is why need try catch
-                            saveString(response.getString("userName")); //not sure if case sensitive or not on the string input
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+//                        try { //will always give exception, is why need try catch
+                            saveObj(response); //not sure if case sensitive or not on the string input
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -164,5 +182,5 @@ public class JsonRequest {
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
-}
+    }
 }
