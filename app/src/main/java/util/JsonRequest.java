@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -197,4 +198,36 @@ public class JsonRequest {
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
     }
+
+    /*
+    public static void jsonObjectDeleteRequest(String url, Context context){
+        JsonObjectRequest jsonObjectRequest = new jsonObjectRequest(Request.Method.DELETE, url, null,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    onResponse(Response response){
+
+                    }
+                }, new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(){
+
+                    }
+                });
+    }
+
+    public static void stringDeleteRequest(String url, Context context){
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(Response response){
+
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+    }
+    */
 }
