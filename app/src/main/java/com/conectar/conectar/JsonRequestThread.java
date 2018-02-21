@@ -19,6 +19,9 @@ public class JsonRequestThread extends Thread {
     /**
      * Method to make the jsonObjectRequest call on the thread
      */
+    public JsonRequestThread(String url, Context context){
+        super("name");
+    }
     public void run(){
         //tODO set url and context
         Log.d("request is made", "");

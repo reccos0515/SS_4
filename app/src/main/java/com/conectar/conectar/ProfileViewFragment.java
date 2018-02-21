@@ -73,11 +73,11 @@ public class ProfileViewFragment extends Fragment {
         Log.d("Maybe it worked?", "3");
 //        JsonRequest.jsonObjectRequest(url, getContext()); //get user
 //        //String text = JsonRequest.getString(); //text to be set to the username from the user received
-        thread.start(); //start the thread
+//        thread.start(); //start the thread Todo uncomemnt
         Log.d("Maybe it worked?", "4");
         try{
             Log.d("Maybe it worked?", "6");
-            thread.join(); //wait for the thread to finish before continuing. can add millis as an arg
+//            thread.join(); //wait for the thread to finish before continuing. can add millis as an arg todo uncomment
             Log.d("Maybe it worked?", "7");
         } catch(Exception e){
             Log.d("ERROR", "ERROR");
