@@ -19,6 +19,7 @@ import util.Singleton;
 
 /**
  * Created by Jessie on 2/19/2018.
+ * Methods for sending volley requests to the server for JSONObjects, JSONArrays, and Strings
  */
 
 public class JsonRequest {
@@ -220,20 +221,22 @@ public class JsonRequest {
                     }
                 });
     }
+    */
+
 
     public static void stringDeleteRequest(String url, Context context){
         StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(Response response){
-
+            public void onResponse(String response) {
+                Log.d("Delete Status", "Success");
             }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
     }
-    */
+
+
 }
