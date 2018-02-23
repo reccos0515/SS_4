@@ -9,8 +9,8 @@
     -->
 
     //selected colors
-    <color name="colorPrimary">#CCAF0E</color>
-    <color name="colorPrimaryDark">#04080F</color>
+    <color name="colorPrimary">#ccaf0e</color>
+    <color name="colorPrimaryDark">#04080f</color>
     <color name="colorAccent">#EDE7D9</color>
     <color name="colorDarkLiver">#4B4237</color>
     <color name="colorEggshell">#EDE7D9</color>

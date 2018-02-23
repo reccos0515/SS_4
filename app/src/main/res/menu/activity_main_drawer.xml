@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_search"
-            android:icon="@android:drawable/ic_menu_search"
+            android:icon="@drawable/ic_search_black_24dp"
             android:title="Search" />
         <item
             android:id="@+id/nav_swipe"
@@ -18,7 +18,7 @@
             android:title="Friends" />
         <item
             android:id="@+id/nav_messages"
-            android:icon="@drawable/ic_action_messages"
+            android:icon="@drawable/ic_message_black_24dp"
             android:title="Messages" />
         <item
             android:id="@+id/nav_changeStatus"
@@ -53,7 +53,7 @@
                 android:title="Login" />
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
                 android:title="Logout" />
         </menu>
     </item>
