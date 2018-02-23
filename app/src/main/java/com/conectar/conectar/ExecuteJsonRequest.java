@@ -1,7 +1,9 @@
-package util;
+package com.conectar.conectar;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
+import util.JsonRequest;
 
 /**
  * Class to execute an asychronous task to send a json object request

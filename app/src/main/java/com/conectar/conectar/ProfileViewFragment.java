@@ -10,9 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import util.JsonRequest;
 
@@ -68,19 +65,16 @@ public class ProfileViewFragment extends Fragment {
         int thisUserId = 1;
         int id = 2; //set id of user want to receive
         url += id + "";
-        Log.d("Maybe it worked?", "2");
-        Log.d("Maybe it worked?", "3");
+        ExecuteJsonRequest req = new ExecuteJsonRequest();
+        req.execute(url);
 //        JsonRequest.jsonObjectRequest(url, getContext()); //get user
 //        //String text = JsonRequest.getString(); //text to be set to the username from the user received
-        Log.d("Maybe it worked?", "4");
-        try{
-            Log.d("Maybe it worked?", "6");
-            Log.d("Maybe it worked?", "7");
-        } catch(Exception e){
-            Log.d("ERROR", "ERROR");
-            //Todo implement what will happen with an exception
-        }
-        Log.d("Maybe it worked?", "5");
+//        try{
+//
+//        } catch(Exception e){
+//            Log.d("ERROR", "ERROR");
+//            //Todo implement what will happen with an exception
+//        }
 //        JSONObject user = JsonRequest.getObj();
 //        Log.d("json object", user.toString());
 //        if(user == null){
