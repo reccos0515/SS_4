@@ -69,22 +69,19 @@ public class ProfileViewFragment extends Fragment {
         int id = 2; //set id of user want to receive
         url += id + "";
         Log.d("Maybe it worked?", "2");
-        JsonRequestThread thread; //= new JsonRequestThread(getContext(), url); //create the thread to make the request
         Log.d("Maybe it worked?", "3");
 //        JsonRequest.jsonObjectRequest(url, getContext()); //get user
 //        //String text = JsonRequest.getString(); //text to be set to the username from the user received
-//        thread.start(); //start the thread Todo uncomemnt
         Log.d("Maybe it worked?", "4");
         try{
             Log.d("Maybe it worked?", "6");
-//            thread.join(); //wait for the thread to finish before continuing. can add millis as an arg todo uncomment
             Log.d("Maybe it worked?", "7");
         } catch(Exception e){
             Log.d("ERROR", "ERROR");
             //Todo implement what will happen with an exception
         }
         Log.d("Maybe it worked?", "5");
-        JSONObject user = JsonRequest.getObj();
+//        JSONObject user = JsonRequest.getObj();
 //        Log.d("json object", user.toString());
 //        if(user == null){
 //            Log.d("error is null", "");
