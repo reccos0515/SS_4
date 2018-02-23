@@ -1,0 +1,389 @@
+{
+	"info": {
+		"name": "Localhost CS309",
+		"_postman_id": "7d84a41d-412c-bdb4-d72d-a00e64b27a3b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add default Users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":6,\n    \"userName\": \"maggie\",\n    \"bio\": \"I am maggie\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9002/ben/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9002",
+					"path": [
+						"ben",
+						"test"
+					]
+				},
+				"description": "Add a set number of users to the data base\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Get ALL Users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":6,\n    \"userName\": \"maggie\",\n    \"bio\": \"I am maggie\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9002/ben/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9002",
+					"path": [
+						"ben",
+						"users"
+					]
+				},
+				"description": "get all users on the data base\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Add A User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"userName\": \"blah\",\n    \"bio\": \"my name is blah\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9002/ben/users/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9002",
+					"path": [
+						"ben",
+						"users",
+						""
+					]
+				},
+				"description": "Add a user to the data base\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete A User",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9002/ben/users/{userId}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9002",
+					"path": [
+						"ben",
+						"users",
+						"{userId}"
+					]
+				},
+				"description": "Delete a user from the db\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Single User",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":6,\n    \"userName\": \"maggie\",\n    \"bio\": \"I am maggie\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9002/ben/users/{userId}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9002",
+					"path": [
+						"ben",
+						"users",
+						"{userId}"
+					]
+				},
+				"description": "get single users on the data base\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Updtate A User",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1,\n    \"userName\": \"test2\",\n    \"bio\": \"hello\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9002/ben/users/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9002",
+					"path": [
+						"ben",
+						"users",
+						""
+					]
+				},
+				"description": "update a user from the db\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Request Friend",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9002/ben/users/1/request_friend/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9002",
+					"path": [
+						"ben",
+						"users",
+						"1",
+						"request_friend",
+						"2"
+					]
+				},
+				"description": "get all users on the data base\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "List of Outgoing Friend Requests",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9002/ben/users/1/sentrequestto",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9002",
+					"path": [
+						"ben",
+						"users",
+						"1",
+						"sentrequestto"
+					]
+				},
+				"description": "List of users requested to be freinds by a referenced user.\nOther user has not requested by the referenced user\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "List of Incoming Friend Requests",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9002/ben/users/1/recievedrequestfrom",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9002",
+					"path": [
+						"ben",
+						"users",
+						"1",
+						"recievedrequestfrom"
+					]
+				},
+				"description": "List of users requested to be freinds by a referenced user.\nOther user has not requested by the referenced user\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "List of Friends",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9002/ben/users/1/friends",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9002",
+					"path": [
+						"ben",
+						"users",
+						"1",
+						"friends"
+					]
+				},
+				"description": "List of users who have requested current user, and current user has requested back\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Force Friend Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9002/ben/users/1/friends/2/force",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9002",
+					"path": [
+						"ben",
+						"users",
+						"1",
+						"friends",
+						"2",
+						"force"
+					]
+				},
+				"description": "both refrenced users become friends\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Discover New users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9002/ben/users/3/discovery",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9002",
+					"path": [
+						"ben",
+						"users",
+						"3",
+						"discovery"
+					]
+				},
+				"description": "List of users who current user has yet to discover\n\n"
+			},
+			"response": []
+		}
+	]
+}
