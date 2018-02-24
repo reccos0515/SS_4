@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -24,12 +25,23 @@ import util.Singleton;
 
 public class JsonRequest {
     static String str;
-    static JSONObject jsObj;
+    static volatile JSONObject jsObj;
     static JSONArray jsArr;
-    static boolean ready = false;
+    static volatile boolean ready;
+    static Context context;
+    private static RequestQueue queue;
     //String for Json Array Req to server for all users "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"
     //String for Adding 10 users to the DB "http://projec-309-ss-4.cs.iastate.edu:9002/ben/test"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
+
+    /**
+     * method to be used before calling a request, to give the context
+     * @param cont context calling from
+     */
+    public static void sendContext(Context cont){
+        context = cont;
+        return;
+    }
 
     /**
      * Method to save the string taken from the response listener in a global variable that can be accessed elsewhere in the program
@@ -74,6 +86,7 @@ public class JsonRequest {
         Log.d("Maybe it worked? 8", ready + "");
         while(!ready){
             //implement something here
+            Thread.yield();
         }
         return jsObj;
     }
@@ -122,10 +135,9 @@ public class JsonRequest {
     /**
      * Sends a post request to a given url
      * @param js json object to send
-     * @param context context of the current system (getContext(), this, etc)
      * @param url url of where this request should be sent
      */
-    public static void postRequest(JSONObject js, Context context, String url){
+    public static void postRequest(JSONObject js, String url){
         ready = false;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  js, //may need typecasting to string on the null?
                 new Response.Listener<JSONObject>() {
@@ -153,7 +165,7 @@ public class JsonRequest {
      * @param url
      * @return
      */
-    public static void jsonArrayRequest(String url, Context context){
+    public static void jsonArrayRequest(String url){
         ready = false;
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,  //may need typecasting to string on the null?
                 new Response.Listener<JSONArray>() {
@@ -184,8 +196,11 @@ public class JsonRequest {
     /**
      * method to recieve a json object
      */
-    public static void jsonObjectRequest(String url, Context context){
+    public static void jsonObjectRequest(String url){
+        Singleton.getmInstance(context).getRequestQueue();
+        Log.d("got to", "9");
         ready = false;
+        Log.d("got to", "10");
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //may need typecasting to string on the null?
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -200,6 +215,7 @@ public class JsonRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("Recieved", "an error");
                 error.printStackTrace();
             }
         });

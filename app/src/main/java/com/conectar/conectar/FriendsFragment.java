@@ -93,7 +93,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         //ask for friends array for user 1
         Boolean wasRequested = false;
         String friendsUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/friends";
-        JsonRequest.jsonArrayRequest(friendsUrl, getContext());
+        JsonRequest.jsonArrayRequest(friendsUrl);
         String thisFriend = JsonRequest.getString();
         Log.d("Friend:", thisFriend);
         actualFriend.setText(JsonRequest.getString()); //List the first friend in the friend list
@@ -103,7 +103,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         //ask for pending array for user 1
         String pendingUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/pending";
-        JsonRequest.jsonArrayRequest(pendingUrl, getContext());
+        JsonRequest.jsonArrayRequest(pendingUrl);
         String thisPending = JsonRequest.getString();
         Log.d("Pending:", thisPending);
         pendingFriend.setText(JsonRequest.getString()); //List the first pending friend in the pending list

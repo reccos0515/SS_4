@@ -98,7 +98,7 @@ public class NewProfileFragment extends Fragment {
                     //create the json object
                     JSONObject js = JsonRequest.createJsonObject(newUser);
                     //make the post request
-                    JsonRequest.postRequest(js, getContext(), url);
+                    JsonRequest.postRequest(js, url);
                     //if confirmPassword and password are the same, submit
                     text = "Successfully submitted";
                 }

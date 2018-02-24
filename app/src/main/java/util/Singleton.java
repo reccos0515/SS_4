@@ -1,6 +1,7 @@
 package util;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,6 +37,6 @@ public class Singleton {
     }
 
     public<T> void addToRequestQueue(Request<T> request){ //IDK why theres the t thing
-        requestQueue.add(request);
+        getRequestQueue().add(request);
     }
 }

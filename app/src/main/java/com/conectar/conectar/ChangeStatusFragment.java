@@ -101,8 +101,8 @@ public class ChangeStatusFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //------------------------------String Request--------------------------------------------------//
-        textView = view.findViewById(R.id.txt); //Displays data from server
-        button = view.findViewById(R.id.bn); //Button to get data from server
+//        textView = view.findViewById(R.id.txt); //Displays data from server
+//        button = view.findViewById(R.id.bn); //Button to get data from server
 
         button.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -134,10 +134,10 @@ public class ChangeStatusFragment extends Fragment {
         });
         //---------------------------------------JSON VOLLEY------------------------------------------------//
 
-        testName = view.findViewById(R.id.jsonName);
-        testAge = view.findViewById(R.id.jsonAge);
-        testCity = view.findViewById(R.id.jsonCity);
-        button2 = view.findViewById(R.id.bn2);
+//        testName = view.findViewById(R.id.jsonName);
+//        testAge = view.findViewById(R.id.jsonAge);
+//        testCity = view.findViewById(R.id.jsonCity);
+//        button2 = view.findViewById(R.id.bn2);
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override

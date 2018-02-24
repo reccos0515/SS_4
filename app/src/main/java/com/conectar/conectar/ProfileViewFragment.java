@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import util.JsonRequest;
 
 
@@ -60,13 +62,19 @@ public class ProfileViewFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Log.d("Maybe it worked?", "1");
         super.onViewCreated(view, savedInstanceState);
         int thisUserId = 1;
         int id = 2; //set id of user want to receive
         url += id + "";
+        Log.d("got to", "1");
         ExecuteJsonRequest req = new ExecuteJsonRequest();
+        Log.d("got to", "2");
+        JsonRequest.sendContext(getContext());
+        Log.d("got to", "3");
         req.execute(url);
+        Log.d("got to", "4");
+//        JSONObject js = JsonRequest.getObj();
+        Log.d("got to", "5");
 //        JsonRequest.jsonObjectRequest(url, getContext()); //get user
 //        //String text = JsonRequest.getString(); //text to be set to the username from the user received
 //        try{
@@ -97,7 +105,7 @@ public class ProfileViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //first id receives, second id sends
-                JsonRequest.postRequest(null, getContext(), requestUrl);
+                JsonRequest.postRequest(null, requestUrl);
             }
         });
     }
