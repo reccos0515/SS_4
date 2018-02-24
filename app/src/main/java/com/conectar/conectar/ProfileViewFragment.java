@@ -25,7 +25,7 @@ public class ProfileViewFragment extends Fragment {
 
     private String curUsername; //the username of the user to be viewed
     private static int curIdNum; //id number of the user to be viewed
-    private static String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/";
+    private static String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
 
     private OnFragmentInteractionListener mListener;
 
@@ -63,9 +63,9 @@ public class ProfileViewFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        int thisUserId = 1;
-        int id = 2; //set id of user want to receive
-        url += id + "";
+//        int thisUserId = 1;
+//        int id = 2; //set id of user want to receive
+//        url += id + "";
         Log.d("got to", "1");
         ExecuteJsonRequest req = new ExecuteJsonRequest();
         Log.d("got to", "2");
@@ -73,7 +73,7 @@ public class ProfileViewFragment extends Fragment {
         Log.d("got to", "3");
         req.execute(url);
         Log.d("got to", "4");
-//        JSONObject js = JsonRequest.getObj();
+        JSONObject js = JsonRequest.getObj();
         Log.d("got to", "5");
 //        JsonRequest.jsonObjectRequest(url, getContext()); //get user
 //        //String text = JsonRequest.getString(); //text to be set to the username from the user received
@@ -98,7 +98,7 @@ public class ProfileViewFragment extends Fragment {
         //set the username on screen
         TextView username = view.findViewById(R.id.viewUsername);
 //        username.setText(text);
-        url += "/friends/" + thisUserId + "";
+//        url += "/friends/" + thisUserId + "";
         final String requestUrl = url;
         //when the button is pressed will add friend
         view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener(){
