@@ -16,6 +16,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import util.Singleton;
 
 /**
@@ -139,7 +142,7 @@ public class JsonRequest {
      */
     public static void postRequest(JSONObject js, String url){
         ready = false;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  js, //may need typecasting to string on the null?
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  js,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -159,6 +162,7 @@ public class JsonRequest {
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
     }
+
 
     /**
      * Method to receive a json array

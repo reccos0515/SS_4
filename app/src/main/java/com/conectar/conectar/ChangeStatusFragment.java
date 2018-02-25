@@ -100,76 +100,8 @@ public class ChangeStatusFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //------------------------------String Request--------------------------------------------------//
-//        textView = view.findViewById(R.id.txt); //Displays data from server
-//        button = view.findViewById(R.id.bn); //Button to get data from server
 
-        button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
 
-                final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, serverUrl,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-
-                                textView.setText(response);
-                                requestQueue.stop(); //closes the queue
-
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        textView.setText("Something went wrong");
-                        error.printStackTrace();
-                        requestQueue.stop();
-
-                    }
-                });
-                requestQueue.add(stringRequest);
-            }
-        });
-        //---------------------------------------JSON VOLLEY------------------------------------------------//
-
-//        testName = view.findViewById(R.id.jsonName);
-//        testAge = view.findViewById(R.id.jsonAge);
-//        testCity = view.findViewById(R.id.jsonCity);
-//        button2 = view.findViewById(R.id.bn2);
-
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //can use same request queue?
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, serverUrl2,  null, //may need typecasting to string on the null?
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-
-                                try { //will always give exception, is why need try catch
-                                    testName.setText(response.getString("name")); //not sure if case sensitive or not on the string input
-                                    testAge.setText(response.getString("age"));
-                                    testCity.setText(response.getString("city"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                        error.printStackTrace();
-
-                    }
-                });
-                Singleton.getmInstance(getContext()).addToRequestQueue(jsonObjectRequest); //add json to queue
-            }
-        });
 
     }
 
