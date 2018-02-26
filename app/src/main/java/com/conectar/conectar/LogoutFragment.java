@@ -5,11 +5,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
+
+import util.FragmentUtil;
 
 
 /**
@@ -75,21 +80,25 @@ public class LogoutFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getActivity(), "You pressed logout", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        view.findViewById(R.id.logoutBtn).setOnClickListener(new View.OnClickListener() { //if logout button is pressed
+            @Override
+            public void onClick(View view) {
+                //TODO remove all session variables that keep user logged in
+                Toast.makeText(getActivity(), "You are logged out!", Toast.LENGTH_SHORT).show();
+
+                //Send user to the login screen
+                //TODO make method for changing fragments?
+                Fragment fragment = new LoginFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area, fragment);
+                fragmentTransaction.commit();
+            }
+        });
+
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {

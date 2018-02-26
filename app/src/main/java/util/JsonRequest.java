@@ -226,22 +226,6 @@ public class JsonRequest {
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
     }
 
-    /*
-    public static void jsonObjectDeleteRequest(String url, Context context){
-        JsonObjectRequest jsonObjectRequest = new jsonObjectRequest(Request.Method.DELETE, url, null,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    onResponse(Response response){
-
-                    }
-                }, new Response.ErrorListener(){
-                    @Override
-                    public void onErrorResponse(){
-
-                    }
-                });
-    }
-    */
 
 
     public static void stringDeleteRequest(String url, Context context){
