@@ -224,6 +224,7 @@ public class JsonRequest {
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+        Log.d("got to", "11");
     }
 
 
