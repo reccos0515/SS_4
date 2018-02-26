@@ -73,7 +73,7 @@ public class ProfileViewFragment extends Fragment {
         Log.d("got to", "3");
         req.execute(url);
         Log.d("got to", "4");
-        JSONObject js = JsonRequest.getObj();
+//        JSONObject js = JsonRequest.getObj();
         Log.d("got to", "5");
 //        JsonRequest.jsonObjectRequest(url, getContext()); //get user
 //        //String text = JsonRequest.getString(); //text to be set to the username from the user received
