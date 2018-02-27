@@ -21,6 +21,7 @@ public class User {
     private String userBio;
     private String userEmail;
     private int[] userInterests;
+    private String userStatus;
 
     /**
      * Constructor for creating a user object from a JSONObject.  Is used
@@ -35,6 +36,7 @@ public class User {
             userPassword = js.getString("password");
             userBio = js.getString("bio");
             userEmail = js.getString("email");
+            userStatus = js.getString("status");
 
             //get interests from JSON
             JSONArray interests = js.getJSONArray("interests");
@@ -81,7 +83,7 @@ public class User {
     }
 
     /**
-     * Getter for current user's email
+     * Getter for user's email
      * @return current user's email
      */
     public String getUserEmail(){
@@ -94,5 +96,13 @@ public class User {
      */
     public int[] getInterests(){
         return userInterests;
+    }
+
+    /**
+     * Getter for user's status
+     * @return the user's status
+     */
+    public String getUserStatus(){
+        return userStatus;
     }
 }

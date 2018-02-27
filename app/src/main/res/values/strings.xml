@@ -86,6 +86,24 @@
         <item>I do not want to hangout now</item>
     </string-array>
 
+    <string-array name="interests">
+        <item>Reading</item>
+        <item>Cooking</item>
+        <item>Football</item>
+        <item>Soccer</item>
+        <item>Crafts</item>
+        <item>Movies</item>
+        <item>Snowboarding</item>
+        <item>Football</item>
+        <item>Football</item>
+        <item>Football</item>
+        <item>Football</item>
+        <item>Football</item>
+        <item>Football</item>
+        <item>Football</item>
+        <item>Football</item>
+    </string-array>
+
 
     <!-- Strings for the main menu -->
     <string name="menu_messages">Messages</string>

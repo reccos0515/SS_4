@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 public class CurrentUser extends User {
 
-    private boolean isLoggedIn;
+    private static boolean isLoggedIn;
     private String url = "http://proj-309-ss-4.iastate.edu"; //base url for server
     private String[][] userJSON; //2D array for editing fields before conversion to a JSONObject for server
 
@@ -26,11 +26,11 @@ public class CurrentUser extends User {
     /**
      * Logs the user out, resets variables to pre-login value
      */
-    public void logoutUser(){
+    public static void logoutUser(){
         //logs the user out
         if(isLoggedIn){
             isLoggedIn = false;
-            //remove values from other variables?
+            //TODO destroy session variables
         }
     }
 
@@ -109,14 +109,15 @@ public class CurrentUser extends User {
 
 
     /**
-     * A list of users the current user is friends with
+     * A string array of the list of users the current user is friends with
      * @return the list of friends
      */
-    public User[] getFriends(){ //TODO figure out whether or not to use User[] or String[] of ids
+    public String[] getFriends(){
+        String[] friends = null;
         url += "/users/" + getUserId() + "/friends";
         JsonRequest.jsonArrayRequest(url); //send request for JSONObject array of friends
-        //parse into array of friends???????
-        return null;
+        //TODO receive array and parse into list
+        return friends;
     }
 
     /**
@@ -153,6 +154,23 @@ public class CurrentUser extends User {
     public void removeFriend(int id){
         url += "/users/" + getUserId() + "/friends/" + id + ""; //TODO not sure if grabbing proper user id yet
         JsonRequest.deleteRequest(url);
+    }
+
+    public void updateStatus(int status){ //TODO change type to whatever Ben does
+        if(status  == 0){ //status is red
+            //TODO set status in userJSON
+            return; //did this to placate studio b/c I hate the yellow highlighting
+        }
+        else if(status == 1){ //status is yellow
+            return;
+        }
+        else if(status == 2){ //status is green
+            return;
+        }
+        else{
+            Log.d("updateStatus", "wrong status input");
+        }
+        updateJSONObject(userJSON);
     }
 
     /**
