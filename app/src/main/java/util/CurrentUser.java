@@ -170,7 +170,7 @@ public class CurrentUser extends User {
         else{
             Log.d("updateStatus", "wrong status input");
         }
-        updateJSONObject(userJSON);
+        //updateJSONObject(userJSON);
     }
 
     /**
