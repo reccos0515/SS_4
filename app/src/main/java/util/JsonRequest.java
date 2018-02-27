@@ -64,9 +64,9 @@ public class JsonRequest {
      * @return name of first user
      */
     public static String getString() {
-        while(!ready){
+       // while(!ready){
             //implement something here?
-        }
+       // }
         return str;
     }
 
@@ -206,7 +206,7 @@ public class JsonRequest {
     /**
      * method to recieve a json object
      */
-    public static void jsonObjectRequest(String url, Context context){ //TODO remove re-addition of context
+    public static void jsonObjectRequest(String url){
         //Singleton.getmInstance(context).getRequestQueue();
         Log.d("got to", "9");
         ready = false;
@@ -219,6 +219,7 @@ public class JsonRequest {
                         Log.d("Object Request Status", response.toString());
 //                        try { //will always give exception, is why need try catch
                             saveObj(response); //not sure if case sensitive or not on the string input
+                            //saveString(response.toString());
 //                        } catch (JSONException e) {
 //                            e.printStackTrace();
 //                        }

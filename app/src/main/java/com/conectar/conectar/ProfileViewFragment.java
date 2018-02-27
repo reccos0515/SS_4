@@ -68,7 +68,7 @@ public class ProfileViewFragment extends Fragment {
 //        url += id + "";
 
         //----------------------------------------------------------------------//
-        /*
+
         Log.d("got to", "1");
         ExecuteJsonRequest req = new ExecuteJsonRequest();
         Log.d("got to", "2");
@@ -78,12 +78,17 @@ public class ProfileViewFragment extends Fragment {
         Log.d("got to", "4");
         //JSONObject js = JsonRequest.getObj();
         Log.d("got to", "5");
-        */
+
         //----------------------------------------------------------------------//
+
+        //----------------------------MAGGIE'S GARBAGE----------------------------------//
+        /*
         Context context = getContext();
         JsonRequest.jsonObjectRequest("http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1", context);
         String text = JsonRequest.getString();
         Log.d("Request String", text);
+        */
+        //--------------------------------------------------------------------------------//
 
 //        JsonRequest.jsonObjectRequest(url, getContext()); //get user
 //        //String text = JsonRequest.getString(); //text to be set to the username from the user received

@@ -16,7 +16,7 @@ import util.JsonRequest;
 //        and potentially kill the response listener thread before it is done executing. The variables need
 //        ed by both threads in the JsonRequest class are volatile (Ready and the js object), so the same v
 //        ariable /should/ be viewable by both threads. Things that are definitely not happening are that t
-//        he response listener gets a response (would print "got a response", or "recieved an error") and t
+//        he response listener gets a response (would print "got a response", or "received an error") and t
 //        hat it continues in profile view after the getObj() call (would print 5) Possible issues Jessie h
 //        as identified: 1) response listener keeps yielding, so never gets its turn. 2) the Network Securi
 //        ty Config settings are not set, which could be causing a problem. 3) Something within the JsonReq
@@ -35,9 +35,9 @@ public class ExecuteJsonRequest extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... str) {
         Log.d("got to", "6");
         //String url = str[0];
-        String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
+        String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1"; //TODO change back?
         Log.d("got to", "7");
-        //JsonRequest.jsonObjectRequest(url);
+        JsonRequest.jsonObjectRequest(url);
         Log.d("Thread will", "sleep now");
         try {
             Thread.sleep(10000);
