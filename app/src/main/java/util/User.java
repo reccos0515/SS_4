@@ -20,10 +20,15 @@ public class User {
     private String userPassword;
     private String userBio;
     private String userEmail;
-    private String[] userInterests;
+    private int[] userInterests;
 
+    /**
+     * Constructor for creating a user object from a JSONObject.  Is used
+     * when a JSONObject is received from the server to convert the JSONObject
+     * to a useful form.
+     * @param js JSONObject from server call
+     */
     public User(JSONObject js){
-        //parse jsonobject into fields
         try {
             userName = js.getString("userName");
             userId = js.getString("id");
@@ -35,7 +40,8 @@ public class User {
             JSONArray interests = js.getJSONArray("interests");
             userInterests = Arrays.copyOf(userInterests, interests.length()); //changes the userInterests array to size of interests from JSON
             for (int i = 0; i < userInterests.length; i++) {
-                userInterests[i] = interests.getString(i);
+                int temp = Integer.parseInt(interests.getString(i)); //grabs individual interest and converts to int
+                userInterests[i] = temp; //places in useful array
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -86,7 +92,7 @@ public class User {
      * gets a list of user interests
      * @return an array of user interests
      */
-    public String[] getInterests(){
+    public int[] getInterests(){
         return userInterests;
     }
 }

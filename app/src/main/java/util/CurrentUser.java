@@ -2,6 +2,7 @@ package util;
 
 
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,12 +44,51 @@ public class CurrentUser extends User {
     }
 
     /**
-     * Sets the user's local variable for interests
+     * Sets the user's local variable for interests and updates
+     * JSONObject for sending to server when necessary
      * @param interests an array of selected interests
      */
-    public void setInterests(String[] interests){
+    public void setInterests(int[] interests){
         //set appropriate array spot with interests in userJSON
         updateJSONObject(userJSON);
+    }
+
+    /**
+     * Adds interest to interest list.  Eventually, list is passed
+     * to setInterests to be added to JSONObject
+     * @param interest interest to be added
+     */
+    public void addInterest(int interest){
+        int[] tempArr = getInterests();
+        boolean interestSet = false;
+        for(int i = 0; i < tempArr.length; i++){
+            if(tempArr[i] == 0 && !interestSet){
+                tempArr[i] = interest;
+                interestSet = true;
+            }
+            else if(tempArr[i] == interest){
+                interestSet = true;
+            }
+        }
+        if(!interestSet){
+            //TODO figure out how to toast or something to user
+            Log.d("Interest Status", "Interest full, cannot be added");
+        }
+    }
+
+    public void deleteInterest(int interest){
+        int[] tempArr = getInterests();
+        boolean isDeleted = false;
+        for(int i = 0; i < tempArr.length; i++){
+            if(tempArr[i] == interest && !isDeleted){
+                tempArr[i] = 0;
+                isDeleted = true;
+            }
+        }
+        if(!isDeleted){
+            //TODO figure out how to toast or something to user
+            Log.d("Interest Status", "Interest not in list, cannot be deleted");
+        }
     }
 
 
