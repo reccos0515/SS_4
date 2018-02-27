@@ -16,7 +16,7 @@ public class CurrentUser extends User {
 
     private boolean isLoggedIn;
     private String url = "http://proj-309-ss-4.iastate.edu"; //base url for server
-    private String[][] userJSON;
+    private String[][] userJSON; //2D array for editing fields before conversion to a JSONObject for server
 
     public CurrentUser(JSONObject js) {
         super(js);
@@ -76,6 +76,11 @@ public class CurrentUser extends User {
         }
     }
 
+    /**
+     * Deletes an interest from the interest list.  Eventually, the list is passed
+     * to setInterests to be added to JSONObject
+     * @param interest interest to be deleted
+     */
     public void deleteInterest(int interest){
         int[] tempArr = getInterests();
         boolean isDeleted = false;
@@ -88,6 +93,17 @@ public class CurrentUser extends User {
         if(!isDeleted){
             //TODO figure out how to toast or something to user
             Log.d("Interest Status", "Interest not in list, cannot be deleted");
+        }
+    }
+
+    /**
+     * Deletes all user interests.  List still needs to be passed
+     * to setInterests to be added to JSONObject
+     */
+    public void deleteAllInterests(){
+        int[] tempArr = getInterests();
+        for(int i = 0; i < tempArr.length; i++){
+            tempArr[i] = 0;
         }
     }
 
@@ -104,22 +120,38 @@ public class CurrentUser extends User {
     }
 
     /**
-     * Sends a friend request
+     * Takes a string input of a user id and sends a friend request to that user
      * @param id the user the request will be sent to
      */
     public void makeFriend(String id){
-        int friendId = Integer.parseInt(id);
-        url += "/users/" + getUserId() + "/request_friend/" + friendId + ""; //TODO not sure if grabbing proper user id yet
+        url += "/users/" + getUserId() + "/request_friend/" + id + ""; //TODO not sure if grabbing proper user id yet
         JsonRequest.postRequest(null, url);
     }
 
     /**
-     * Removes a user from current user's friend list
+     * Takes an int input of a user id and sends a friend request to that user
+     * @param id the user the request will be sent to
+     */
+    public void makeFriend(int id){
+        url += "/users/" + getUserId() + "/request_friend/" + id + ""; //TODO not sure if grabbing proper user id yet
+        JsonRequest.postRequest(null, url);
+    }
+
+    /**
+     * Takes a string input of a user id and removes a user from current user's friend list
      * @param id the user to be removed
      */
     public void removeFriend(String id){
-        int friendId = Integer.parseInt(id);
-        url += "/users/" + getUserId() + "/friends/" + friendId + ""; //TODO not sure if grabbing proper user id yet
+        url += "/users/" + getUserId() + "/friends/" + id + ""; //TODO not sure if grabbing proper user id yet
+        JsonRequest.deleteRequest(url);
+    }
+
+    /**
+     * Takes an int input of a user id and removes a user from curent user's friend list
+     * @param id the user to be removed
+     */
+    public void removeFriend(int id){
+        url += "/users/" + getUserId() + "/friends/" + id + ""; //TODO not sure if grabbing proper user id yet
         JsonRequest.deleteRequest(url);
     }
 

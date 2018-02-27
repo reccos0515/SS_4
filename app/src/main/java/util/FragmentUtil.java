@@ -25,6 +25,17 @@ public class FragmentUtil extends Fragment {
 
     }
 
+    //TODO change fragment
+    public void changeFragment(Fragment fragment){
+        /*
+        android.support.v4.app.FragmentManager fragmentManager = getFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.screen_area, fragment);
+        fragmentTransaction.commit();
+        */
+    }
+
+    //TODO save user across fragment??
 
 
 
