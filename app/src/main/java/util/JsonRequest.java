@@ -215,8 +215,8 @@ public class JsonRequest {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Object Request Status", "Successful Request");
-                        Log.d("Object Request Status", response.toString());
+                        Log.d("Object Get Status", "Successful Request");
+                        Log.d("Object Get Status", response.toString());
 //                        try { //will always give exception, is why need try catch
                             saveObj(response); //not sure if case sensitive or not on the string input
                             //saveString(response.toString());
@@ -227,7 +227,7 @@ public class JsonRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Object Request Status", "error");
+                Log.d("Object Get Status", "error");
                 error.printStackTrace();
             }
         });
@@ -237,8 +237,24 @@ public class JsonRequest {
     }
 
 
+    public static void jsonObjectPutRequest(JSONObject js, String url){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, js, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("Object Put Status", "Successful Request");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Object Put Status", "error");
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
 
-    public static void stringDeleteRequest(String url, Context context){
+
+    public static void deleteRequest(String url){ //is a string delete request
         StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -250,6 +266,7 @@ public class JsonRequest {
                 error.printStackTrace();
             }
         });
+        Singleton.getmInstance(context).addToRequestQueue(stringRequest);
     }
 
 

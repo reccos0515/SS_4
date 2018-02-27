@@ -2,7 +2,6 @@ package util;
 
 
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,8 +57,7 @@ public class CurrentUser extends User {
      * @return the list of friends
      */
     public User[] getFriends(){ //TODO figure out whether or not to use User[] or String[] of ids
-        //get a list of friends from server
-        url += "some garbage"; //TODO change to proper url
+        url += "/users/" + getUserId() + "/friends";
         JsonRequest.jsonArrayRequest(url); //send request for JSONObject array of friends
         //parse into array of friends???????
         return null;
@@ -70,8 +68,8 @@ public class CurrentUser extends User {
      * @param id the user the request will be sent to
      */
     public void makeFriend(String id){
-        int friendId = Integer.parseInt(id); //converts id to an integer
-        url += "some garbage" + id + ""; //TODO edit for proper url
+        int friendId = Integer.parseInt(id);
+        url += "/users/" + getUserId() + "/request_friend/" + friendId + ""; //TODO not sure if grabbing proper user id yet
         JsonRequest.postRequest(null, url);
     }
 
@@ -80,9 +78,9 @@ public class CurrentUser extends User {
      * @param id the user to be removed
      */
     public void removeFriend(String id){
-        int friendId = Integer.parseInt(id); //converts id to an integer
-        url += "some garbage" + id + ""; //TODO edit for proper url
-        JsonRequest.postRequest(null, url);
+        int friendId = Integer.parseInt(id);
+        url += "/users/" + getUserId() + "/friends/" + friendId + ""; //TODO not sure if grabbing proper user id yet
+        JsonRequest.deleteRequest(url);
     }
 
     /**
@@ -100,8 +98,8 @@ public class CurrentUser extends User {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        url += "garbage"; //TODO url for refreshing fields of JSONObject
-        JsonRequest.postRequest(js, url);
+        url += "/users";
+        JsonRequest.jsonObjectPutRequest(js, url); //TODO check that putting here is correct for updating user
     }
 
 
