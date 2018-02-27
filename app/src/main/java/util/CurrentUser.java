@@ -15,21 +15,12 @@ import org.json.JSONObject;
 public class CurrentUser extends User {
 
     private boolean isLoggedIn;
-    private String[] interests;
-    private String userEmail;
     private String url = "http://proj-309-ss-4.iastate.edu"; //base url for server
     private String[][] userJSON;
 
     public CurrentUser(JSONObject js) {
         super(js);
         isLoggedIn = true;
-        try {
-            userEmail = js.getString("email");
-            //set interests from jsonobject
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
     }
 
     /**
@@ -61,21 +52,6 @@ public class CurrentUser extends User {
         updateJSONObject(userJSON);
     }
 
-    /**
-     * gets a list of user interests
-     * @return an array of user interests
-     */
-    public String[] getInterests(){
-        return interests;
-    }
-
-    /**
-     * Getter for current user's email
-     * @return current user's email
-     */
-    public String getUserEmail(){
-        return userEmail;
-    }
 
     /**
      * A list of users the current user is friends with
@@ -113,7 +89,7 @@ public class CurrentUser extends User {
      * Updates the current user's JSONObject for server communications
      * @param fields a 2D array of the information for the fields of the JSONObject
      */
-    public void updateJSONObject(String[][] fields){
+    private void updateJSONObject(String[][] fields){
         //convert fields to JSONObject
         JSONObject js = new JSONObject();
         try {

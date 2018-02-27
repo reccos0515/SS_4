@@ -1,7 +1,10 @@
 package util;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Arrays;
 
 /**
  * Created by Maggie on 2/26/2018.
@@ -16,6 +19,8 @@ public class User {
     private String userId;
     private String userPassword;
     private String userBio;
+    private String userEmail;
+    private String[] userInterests;
 
     public User(JSONObject js){
         //parse jsonobject into fields
@@ -24,6 +29,14 @@ public class User {
             userId = js.getString("id");
             userPassword = js.getString("password");
             userBio = js.getString("bio");
+            userEmail = js.getString("email");
+
+            //get interests from JSON
+            JSONArray interests = js.getJSONArray("interests");
+            userInterests = Arrays.copyOf(userInterests, interests.length()); //changes the userInterests array to size of interests from JSON
+            for (int i = 0; i < userInterests.length; i++) {
+                userInterests[i] = interests.getString(i);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -59,5 +72,21 @@ public class User {
      */
     public String getBio(){
         return userBio;
+    }
+
+    /**
+     * Getter for current user's email
+     * @return current user's email
+     */
+    public String getUserEmail(){
+        return userEmail;
+    }
+
+    /**
+     * gets a list of user interests
+     * @return an array of user interests
+     */
+    public String[] getInterests(){
+        return userInterests;
     }
 }
