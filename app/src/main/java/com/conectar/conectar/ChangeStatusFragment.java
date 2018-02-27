@@ -26,7 +26,9 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.omg.CORBA.Current;
 
+import util.CurrentUser;
 import util.Singleton;
 
 
@@ -47,14 +49,6 @@ public class ChangeStatusFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    Button button;
-    TextView textView;
-    String serverUrl = "http://104.145.103.160/greetings.php"; //Use IPv4 IP address
-
-    Button button2;
-    TextView testName, testAge, testCity;
-    String serverUrl2 = "http://104.145.103.160/jsontest.php";
 
     private OnFragmentInteractionListener mListener;
 
@@ -101,7 +95,27 @@ public class ChangeStatusFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        view.findViewById(R.id.greenStatusBtn).setOnClickListener(new View.OnClickListener() { //green button clicked
+            @Override
+            public void onClick(View view) { //set status to green
+                CurrentUser.updateStatus(2);
+                Toast.makeText(getActivity(), "Status set to green", Toast.LENGTH_LONG).show();
+            }
+        });
+        view.findViewById(R.id.yellowStatusBtn).setOnClickListener(new View.OnClickListener(){ //yellow button clicked
+            @Override
+            public void onClick(View view){ //set status to yellow
+                CurrentUser.updateStatus(1);
+                Toast.makeText(getActivity(), "Status set to yellow", Toast.LENGTH_LONG).show();
+            }
+        });
+        view.findViewById(R.id.redStatusBtn).setOnClickListener(new View.OnClickListener() { //red button clicked
+            @Override
+            public void onClick(View view) { //set status to red
+                CurrentUser.updateStatus(0);
+                Toast.makeText(getActivity(), "Status set to red", Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 

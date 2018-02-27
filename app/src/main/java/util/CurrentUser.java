@@ -156,7 +156,7 @@ public class CurrentUser extends User {
         JsonRequest.deleteRequest(url);
     }
 
-    public void updateStatus(int status){ //TODO change type to whatever Ben does
+    public static void updateStatus(int status){ //TODO change type to whatever Ben does
         if(status  == 0){ //status is red
             //TODO set status in userJSON
             return; //did this to placate studio b/c I hate the yellow highlighting

@@ -86,7 +86,7 @@
         <item>I do not want to hangout now</item>
     </string-array>
 
-    <string-array name="interests">
+    <string-array name="possible_interests">
         <item>Reading</item>
         <item>Cooking</item>
         <item>Football</item>
@@ -94,14 +94,14 @@
         <item>Crafts</item>
         <item>Movies</item>
         <item>Snowboarding</item>
-        <item>Football</item>
-        <item>Football</item>
-        <item>Football</item>
-        <item>Football</item>
-        <item>Football</item>
-        <item>Football</item>
-        <item>Football</item>
-        <item>Football</item>
+        <item>Board Games</item>
+        <item>Music</item>
+        <item>Shopping</item> //10
+        <item>Basketball</item>
+        <item>Swimming</item>
+        <item>Working Out</item>
+        <item>Hiking</item>
+        <item>Volunteering</item> //15
     </string-array>
 
 
