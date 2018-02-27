@@ -28,15 +28,16 @@ import util.JsonRequest;
  */
 public class ExecuteJsonRequest extends AsyncTask<String, Void, String> {
     /**
-     * Method to make the json obeject request
+     * Method to make the json object request
      * @param str the url in the 0 spot
      * @return Todo figure out what to send back
      */
     protected String doInBackground(String... str) {
         Log.d("got to", "6");
-        String url = str[0];
+        //String url = str[0];
+        String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
         Log.d("got to", "7");
-        JsonRequest.jsonObjectRequest(url);
+        //JsonRequest.jsonObjectRequest(url);
         Log.d("Thread will", "sleep now");
         try {
             Thread.sleep(10000);

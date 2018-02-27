@@ -88,6 +88,7 @@ public class JsonRequest {
      */
     public static JSONObject getObj(){
         Log.d("Maybe it worked? 8", ready + "");
+        Log.d("Got to", "getObj");
         while(!ready){
             //implement something here
             Thread.yield();
@@ -130,6 +131,7 @@ public class JsonRequest {
             for(int i = 0; i < obj[0].length; i++){
                 js.put(obj[0][i], obj[1][i]);
             }
+            Log.d("createJsonObject Status", ("successful, " + js.toString()));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -147,6 +149,7 @@ public class JsonRequest {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
                                 /*
                                 try { //will always give exception, is why need try catch
                                     jsonTestMsg.setText(response.getString("userName")); //not sure if case sensitive or not on the string input
@@ -159,6 +162,7 @@ public class JsonRequest {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //fill here
+                error.printStackTrace();
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
@@ -178,11 +182,11 @@ public class JsonRequest {
                     public void onResponse(JSONArray response) {
 //                        try{
                             if(response.length() <= 0){ //If the array is empty
-                                Log.d("JSONArray Status: ","Empty List");
+                                Log.d("Array Request Status","Empty List");
                                 saveArr(null);
                             }
                             else { //If the array isn't empty
-                                Log.d("Json array received", response.toString());
+                                Log.d("Array Request Status", response.toString());
                                 saveArr(response); //save this in a global variable
                             }
 //                        }catch (JSONException e){
@@ -192,7 +196,8 @@ public class JsonRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //implement error response
+                Log.d("Array Request Status", "error");
+                error.printStackTrace();
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest); //add json to queue
@@ -201,16 +206,17 @@ public class JsonRequest {
     /**
      * method to recieve a json object
      */
-    public static void jsonObjectRequest(String url){
-        Singleton.getmInstance(context).getRequestQueue();
+    public static void jsonObjectRequest(String url, Context context){ //TODO remove re-addition of context
+        //Singleton.getmInstance(context).getRequestQueue();
         Log.d("got to", "9");
         ready = false;
         Log.d("got to", "10");
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //may need typecasting to string on the null?
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Got a response", "it was cool");
+                        Log.d("Object Request Status", "Successful Request");
+                        Log.d("Object Request Status", response.toString());
 //                        try { //will always give exception, is why need try catch
                             saveObj(response); //not sure if case sensitive or not on the string input
 //                        } catch (JSONException e) {
@@ -220,7 +226,7 @@ public class JsonRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Recieved", "an error");
+                Log.d("Object Request Status", "error");
                 error.printStackTrace();
             }
         });

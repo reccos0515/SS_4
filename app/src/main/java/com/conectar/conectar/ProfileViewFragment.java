@@ -66,6 +66,9 @@ public class ProfileViewFragment extends Fragment {
 //        int thisUserId = 1;
 //        int id = 2; //set id of user want to receive
 //        url += id + "";
+
+        //----------------------------------------------------------------------//
+        /*
         Log.d("got to", "1");
         ExecuteJsonRequest req = new ExecuteJsonRequest();
         Log.d("got to", "2");
@@ -73,8 +76,15 @@ public class ProfileViewFragment extends Fragment {
         Log.d("got to", "3");
         req.execute(url);
         Log.d("got to", "4");
-//        JSONObject js = JsonRequest.getObj();
+        //JSONObject js = JsonRequest.getObj();
         Log.d("got to", "5");
+        */
+        //----------------------------------------------------------------------//
+        Context context = getContext();
+        JsonRequest.jsonObjectRequest("http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1", context);
+        String text = JsonRequest.getString();
+        Log.d("Request String", text);
+
 //        JsonRequest.jsonObjectRequest(url, getContext()); //get user
 //        //String text = JsonRequest.getString(); //text to be set to the username from the user received
 //        try{
@@ -105,6 +115,7 @@ public class ProfileViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //first id receives, second id sends
+                Log.d("Got to", "Add friend onclick listener");
                 JsonRequest.postRequest(null, requestUrl);
             }
         });
