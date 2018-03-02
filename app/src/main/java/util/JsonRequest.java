@@ -36,19 +36,19 @@ public class JsonRequest {
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
 
     public class ExecuteJsonRequest{
-
-
         public synchronized String execute(String url){
             jsonObjectRequest(url);
             try{
-                wait();
+                lock.wait();
             }catch (InterruptedException e){
                 Log.d("Error", e.toString());
             }
             JSONObject js = JsonRequest.getObj();
             return js.toString();
         }
+
     }
+
 
     /**
      * method to be used before calling a request, to give the context
@@ -230,8 +230,8 @@ public class JsonRequest {
                         Log.d("Object Get Status", "Successful Request");
                         Log.d("Object Get Status", response.toString());
 //                        try { //will always give exception, is why need try catch
-                            saveObj(response); //not sure if case sensitive or not on the string input
-//                        ExecuteJsonRequest.notify();
+                        saveObj(response); //not sure if case sensitive or not on the string input
+                        JsonRequest.lock.notify();
                         //saveString(response.toString());
 //                        } catch (JSONException e) {
 //                            e.printStackTrace();
