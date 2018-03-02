@@ -2,7 +2,6 @@ package util;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -17,11 +16,6 @@ import com.conectar.conectar.ProfileViewFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import util.Singleton;
 
 /**
  * Created by Jessie on 2/19/2018.

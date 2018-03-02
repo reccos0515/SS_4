@@ -1,7 +1,7 @@
 package util;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,8 +31,10 @@ public class Singleton {
 
     public static synchronized Singleton getmInstance(Context context){
          if(mInstance == null){ //initializes a singleton
+             Log.d("added new instance", context.toString());
              mInstance = new Singleton(context);
          }
+         Log.d("Didnt add new", "instance");
          return mInstance;
     }
 
