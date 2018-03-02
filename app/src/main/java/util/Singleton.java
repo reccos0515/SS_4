@@ -31,10 +31,8 @@ public class Singleton {
 
     public static synchronized Singleton getmInstance(Context context){
          if(mInstance == null){ //initializes a singleton
-             Log.d("added new instance", context.toString());
              mInstance = new Singleton(context);
          }
-         Log.d("Didnt add new", "instance");
          return mInstance;
     }
 

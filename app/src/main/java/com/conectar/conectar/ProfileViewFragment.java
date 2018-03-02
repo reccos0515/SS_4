@@ -27,7 +27,7 @@ public class ProfileViewFragment extends Fragment {
     private static int curIdNum; //id number of the user to be viewed
     private static String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
     private static JSONObject jsObj;
-    private static boolean ready = false;
+    private static volatile boolean ready = false;
 
     private OnFragmentInteractionListener mListener;
 
