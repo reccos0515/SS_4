@@ -35,20 +35,6 @@ public class JsonRequest {
     //String for Adding 10 users to the DB "http://projec-309-ss-4.cs.iastate.edu:9002/ben/test"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
 
-    public class ExecuteJsonRequest{
-        public synchronized String execute(String url){
-            jsonObjectRequest(url);
-            try{
-                lock.wait();
-            }catch (InterruptedException e){
-                Log.d("Error", e.toString());
-            }
-            JSONObject js = JsonRequest.getObj();
-            return js.toString();
-        }
-
-    }
-
     /**
      * method to be used before calling a request, to give the context
      * @param cont context calling from
@@ -217,7 +203,7 @@ public class JsonRequest {
     /**
      * method to recieve a json object
      */
-    public static void jsonObjectRequest(String url){
+    public static Object jsonObjectRequest(String url){
         //Singleton.getmInstance(context).getRequestQueue();
         Log.d("got to", "9");
         ready = false;
@@ -246,6 +232,7 @@ public class JsonRequest {
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(1, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         Log.d("got to", "11");
+        return lock;
     }
 
 

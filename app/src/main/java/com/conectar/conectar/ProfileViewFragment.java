@@ -79,11 +79,9 @@ public class ProfileViewFragment extends Fragment {
         Log.d("got to", "1");
 //        ExecuteJsonRequest req = new ExecuteJsonRequest();
         JsonRequest.sendContext(getContext());
-//        JsonRequest.ExecuteJsonRequest.execute(url);
+        ExecuteJsonRequest.execute(url);
         Log.d("got to", "2");
-        while(!ready){
 
-        }
 //        JsonRequest.sendContext(getContext());
         Log.d("got value", jsObj.toString());
 

@@ -28,6 +28,31 @@ import util.JsonRequest;
  * Class to execute an asychronous task to send a json object request
  * Created by Jessie on 2/23/2018.
  */
+
+//TODO comment this part back in to continue
+//public class ExecuteJsonRequest{
+//    public static synchronized String execute(String url){
+//        Object lock = JsonRequest.jsonObjectRequest(url);
+//        try{
+//            lock.wait();
+//        }catch (InterruptedException e){
+//            Log.d("Error", e.toString());
+//        }
+//        JSONObject js = JsonRequest.getObj();
+//        return js.toString();
+//    }
+//
+//}
+
+
+
+
+
+
+
+
+
+
 //public class ExecuteJsonRequest{
 //
 //
