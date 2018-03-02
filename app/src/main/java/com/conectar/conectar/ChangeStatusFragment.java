@@ -26,7 +26,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.omg.CORBA.Current;
+//import org.omg.CORBA.Current;
 
 import util.CurrentUser;
 import util.Singleton;

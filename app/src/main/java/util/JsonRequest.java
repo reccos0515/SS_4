@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.conectar.conectar.ProfileViewFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -218,7 +219,7 @@ public class JsonRequest {
                         Log.d("Object Get Status", "Successful Request");
                         Log.d("Object Get Status", response.toString());
 //                        try { //will always give exception, is why need try catch
-                            saveObj(response); //not sure if case sensitive or not on the string input
+                            ProfileViewFragment.saveObj(response); //not sure if case sensitive or not on the string input
                             //saveString(response.toString());
 //                        } catch (JSONException e) {
 //                            e.printStackTrace();

@@ -26,11 +26,18 @@ public class ProfileViewFragment extends Fragment {
     private String curUsername; //the username of the user to be viewed
     private static int curIdNum; //id number of the user to be viewed
     private static String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
+    private static JSONObject jsObj;
+    private static boolean ready = false;
 
     private OnFragmentInteractionListener mListener;
 
     public ProfileViewFragment() {
         // Required empty public constructor
+    }
+
+    public static void saveObj(JSONObject js){
+        jsObj = js;
+        ready = true;
     }
 
     /**
@@ -70,14 +77,19 @@ public class ProfileViewFragment extends Fragment {
         //----------------------------------------------------------------------//
 
         Log.d("got to", "1");
-        ExecuteJsonRequest req = new ExecuteJsonRequest();
+//        ExecuteJsonRequest req = new ExecuteJsonRequest();
+        JsonRequest.jsonObjectRequest(url);
         Log.d("got to", "2");
-        JsonRequest.sendContext(getContext());
-        Log.d("got to", "3");
-        req.execute(url);
-        Log.d("got to", "4");
-        //JSONObject js = JsonRequest.getObj();
-        Log.d("got to", "5");
+        while(!ready){
+
+        }
+//        JsonRequest.sendContext(getContext());
+        Log.d("got value", jsObj.toString());
+
+////        req.execute(url);
+//        Log.d("got to", "4");
+//        //JSONObject js = JsonRequest.getObj();
+//        Log.d("got to", "5");
 
         //----------------------------------------------------------------------//
 
