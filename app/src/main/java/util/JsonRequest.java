@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+//import com.conectar.conectar.ExecuteJsonRequest;
 import com.conectar.conectar.ProfileViewFragment;
 
 import org.json.JSONArray;
@@ -26,12 +27,28 @@ public class JsonRequest {
     static String str;
     static volatile JSONObject jsObj;
     static JSONArray jsArr;
-    static volatile boolean ready;
+    static  volatile boolean ready;
     static Context context;
     private static RequestQueue queue;
+    private static final Object lock = new Object();
     //String for Json Array Req to server for all users "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"
     //String for Adding 10 users to the DB "http://projec-309-ss-4.cs.iastate.edu:9002/ben/test"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
+
+    public class ExecuteJsonRequest{
+
+
+        public synchronized String execute(String url){
+            jsonObjectRequest(url);
+            try{
+                wait();
+            }catch (InterruptedException e){
+                Log.d("Error", e.toString());
+            }
+            JSONObject js = JsonRequest.getObj();
+            return js.toString();
+        }
+    }
 
     /**
      * method to be used before calling a request, to give the context
@@ -213,8 +230,9 @@ public class JsonRequest {
                         Log.d("Object Get Status", "Successful Request");
                         Log.d("Object Get Status", response.toString());
 //                        try { //will always give exception, is why need try catch
-                            ProfileViewFragment.saveObj(response); //not sure if case sensitive or not on the string input
-                            //saveString(response.toString());
+                            saveObj(response); //not sure if case sensitive or not on the string input
+//                        ExecuteJsonRequest.notify();
+                        //saveString(response.toString());
 //                        } catch (JSONException e) {
 //                            e.printStackTrace();
 //                        }

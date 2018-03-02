@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONObject;
+
 import util.JsonRequest;
 
 //"By running it and following the logs, can see that it does everything in Profile
@@ -26,25 +28,39 @@ import util.JsonRequest;
  * Class to execute an asychronous task to send a json object request
  * Created by Jessie on 2/23/2018.
  */
-public class ExecuteJsonRequest extends AsyncTask<String, Void, String> {
-    /**
-     * Method to make the json object request
-     * @param str the url in the 0 spot
-     * @return Todo figure out what to send back
-     */
-    protected String doInBackground(String... str) {
-        Log.d("got to", "6");
-        //String url = str[0];
-        String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1"; //TODO change back?
-        Log.d("got to", "7");
-        JsonRequest.jsonObjectRequest(url);
-        Log.d("Thread will", "sleep now");
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        }
-        Log.d("Bye", "bye");
-        return "";
-    }
-}
+//public class ExecuteJsonRequest{
+//
+//
+//    public synchronized String execute(String url){
+//        JsonRequest.jsonObjectRequest(url);
+//        try{
+//            wait();
+//        }catch (InterruptedException e){
+//            Log.d("Error", e.toString());
+//        }
+//        JSONObject js = JsonRequest.getObj();
+//        return js.toString();
+//    }
+//}
+//public class ExecuteJsonRequest extends AsyncTask<String, Void, String> {
+//    /**
+//     * Method to make the json object request
+//     * @param str the url in the 0 spot
+//     * @return Todo figure out what to send back
+//     */
+//    protected String doInBackground(String... str) {
+//        Log.d("got to", "6");
+//        //String url = str[0];
+//        String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1"; //TODO change back?
+//        Log.d("got to", "7");
+//        JsonRequest.jsonObjectRequest(url);
+//        Log.d("Thread will", "sleep now");
+//        try {
+//            Thread.sleep(10000);
+//        } catch (InterruptedException e){
+//            e.printStackTrace();
+//        }
+//        Log.d("Bye", "bye");
+//        return "";
+//    }
+//}

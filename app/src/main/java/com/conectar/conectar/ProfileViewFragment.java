@@ -35,7 +35,7 @@ public class ProfileViewFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static void saveObj(JSONObject js){
+    public void saveObj(JSONObject js){
         jsObj = js;
         ready = true;
     }
