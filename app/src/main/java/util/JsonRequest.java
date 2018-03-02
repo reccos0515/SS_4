@@ -49,7 +49,6 @@ public class JsonRequest {
 
     }
 
-
     /**
      * method to be used before calling a request, to give the context
      * @param cont context calling from
