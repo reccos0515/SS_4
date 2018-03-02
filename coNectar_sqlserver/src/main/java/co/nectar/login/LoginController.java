@@ -1,0 +1,11 @@
+package co.nectar.login;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(path = "/ben")
+public class LoginController {
+	
+
+}

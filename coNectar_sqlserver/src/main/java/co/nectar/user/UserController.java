@@ -19,7 +19,7 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	//test add
+	// test add
 	@RequestMapping("/test")
 	public Iterable<User> getTest() {
 		User test = new User(0, "test", "hi");
@@ -31,118 +31,128 @@ public class UserController {
 		return userService.getAllUsers();
 	}
 
-
 	/**
-	* Returns all users
-	* @return Calls function in userService to return.
-	*/
-	@RequestMapping("/users")
+	 * Returns all users
+	 * Request Method: Get
+	 * URL: /users
+	 * @return Calls function in userService to return.
+	 */
+	@RequestMapping(method = RequestMethod.GET, value = "/users")
 	public Iterable<User> getAllTopics() {
 		return userService.getAllUsers();
 	}
-	//get a user
-	@RequestMapping("/users/{userId}")
-	public User getUser(@PathVariable int userId) {
-		return userService.getUser(userId);
-	}
-	@GetMapping(path = "/add") // Map ONLY GET Requests
-	public @ResponseBody String addNewUser (@RequestParam String userName, @RequestParam String bio) {
-		return userService.addUser(userName, bio);
-	}
 
-	//add a user
+	/**
+	 * Adds a user from the body of the request
+	 * Request Method: Post
+	 * URL: /users
+	 * @param user
+	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/users")
 	public void addUser(@RequestBody User user) {
 		userService.addUser(user);
 	}
 
-	//add user with username and bio
-
-
-	//update user
-	@RequestMapping(method = RequestMethod.PUT, value = "/users/{userId}")
-	public void updateBio(@PathVariable int userId, @RequestBody User user) {
-		userService.updateUser(userId, user);
+	/**
+	 * Updates a user from the body of the request
+	 * Request Method: Post
+	 * URL: /users
+	 * @param user
+	 */
+	@RequestMapping(method = RequestMethod.PUT, value = "/users")
+	public void updateBio(@RequestBody User user) {
+		userService.updateUser(user);
 	}
 
-
-	//update bio
-//		@RequestMapping(method=RequestMethod.PUT, value = "/users/{userId}")
-//		public void updateBio(@PathVariable String userId) {
-//			userService.updateBio(userId);
-//		}
-//
-
-
-	//delete a user
+	/**
+	 * 
+	 * @param userId
+	 */
 	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}")
 	public void addUser(@PathVariable int userId) {
 		userService.deleteUser(userId);
 	}
 
-
-	//add a friend. I think this is backwards. userid got the request from friendid.
-	@RequestMapping(method = RequestMethod.POST, value = "/users/{userId}/friends/{friendId}")
-	public String addFriend(@PathVariable int userId, @PathVariable int friendId) {
-		userService.addFriend(userId, friendId);
-		return "added friend";
+	// get a user
+	/**
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}")
+	public User getUser(@PathVariable int userId) {
+		return userService.getUser(userId);
 	}
 
-	//Force add a friend. Maybe delete this later? 
+	// update bio
+	// @RequestMapping(method=RequestMethod.PUT, value = "/users/{userId}")
+	// public void updateBio(@PathVariable String userId) {
+	// userService.updateBio(userId);
+	// }
+	//
+
+	
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/users/{userId}/request_friend/{friendId}")
+	public String addFriend(@PathVariable int userId, @PathVariable int friendId) {
+		userService.requestFriend(userId, friendId);
+		return "Requested friend";
+	}
+
+	// Force add a friend. Maybe delete this later?
 	@RequestMapping(method = RequestMethod.POST, value = "/users/{userId}/friends/{friendId}/force")
 	public String addFriendWeird(@PathVariable int userId, @PathVariable int friendId) {
-		userService.addFriend(userId, friendId);
-		userService.addFriend(friendId, userId);
+		userService.requestFriend(userId, friendId);
+		userService.requestFriend(friendId, userId);
 		return "added friend";
 	}
 
-	//getfriends to
+	// get friends to
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/sentrequestto")
 	public List<User> getFriendsTo(@PathVariable int userId) {
-		return userService.getFriendsTo(userId);
-	}
-	//get freinds of
-	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/recievedrequestfrom")
-	public List<User> getFriendsOf(@PathVariable int userId) {
-		return userService.getFriendsOf(userId);
+		return userService.getSentRequestTo(userId);
 	}
 
-	//remove friend
+	// get friends of
+	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/recievedrequestfrom")
+	public List<User> getFriendsOf(@PathVariable int userId) {
+		return userService.getRecievedRequestFrom(userId);
+	}
+
+	// remove friend
 	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}/friends/{friendId}")
 	public void deleteFriend(@PathVariable int userId, @PathVariable int friendId) {
 		userService.removeFriend(userId, friendId);
 	}
 
-	//Force Remove Friend. Maybe delete this later.
+	// Force Remove Friend. Maybe delete this later.
 	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}/friends/{friendId}/force")
 	public void deleteFriendWeird(@PathVariable int userId, @PathVariable int friendId) {
 		userService.removeFriend(userId, friendId);
-		userService.removeFriend(userId, friendId);
+		userService.removeFriend(friendId, userId);
 	}
 
-	//get friends
+	// get friends
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/friends")
 	public List<User> getFriends(@PathVariable int userId) {
 		return userService.getFriends(userId);
 	}
 
-
-	//get friend requests to me 
+	// get friend requests to me
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/incoming_requests")
 	public List<User> getRequests(@PathVariable int userId) {
 		return userService.getIncomingRequests(userId);
 	}
 
-	//get pending friend request to others
+	// get pending friend request to others
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/outgoing_requests")
 	public List<User> getPending(@PathVariable int userId) {
 		return userService.getOutgoingRequests(userId);
 	}
-	//get undiscovered people around me
+
+	// get undiscovered people around me
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/discovery")
 	public List<User> getDiscovery(@PathVariable int userId) {
 		return userService.getDiscovery(userId);
 	}
-
 
 }
