@@ -10,9 +10,9 @@ import co.nectar.user.User;
 public class Login {
 
 	//variables
+//	@Id
+//	Integer id;
 	@Id
-	Integer id;
-	
 	@OneToOne
 	User user;
 	String password;
