@@ -31,6 +31,7 @@ public class JsonRequest {
     static Context context;
     private static RequestQueue queue;
     private static final Object lock = new Object();
+    static User savedUser;
     //String for Json Array Req to server for all users "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"
     //String for Adding 10 users to the DB "http://projec-309-ss-4.cs.iastate.edu:9002/ben/test"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
@@ -112,6 +113,15 @@ public class JsonRequest {
             //implement something here?
         }
         return jsArr;
+    }
+
+    public static User saveUser(User user){
+        savedUser = user;
+        return savedUser;
+    }
+
+    public static User getUser(){
+        return savedUser;
     }
 
 
@@ -215,8 +225,10 @@ public class JsonRequest {
                         Log.d("Object Get Status", "Successful Request");
                         Log.d("Object Get Status", response.toString());
 //                        try { //will always give exception, is why need try catch
-                        saveObj(response); //not sure if case sensitive or not on the string input
-                        JsonRequest.lock.notify();
+                        User thisUser = new User(response);
+                        saveUser(thisUser);
+                        //saveObj(response); //not sure if case sensitive or not on the string input
+                        //JsonRequest.lock.notify();
                         //saveString(response.toString());
 //                        } catch (JSONException e) {
 //                            e.printStackTrace();

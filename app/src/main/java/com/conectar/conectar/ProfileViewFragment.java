@@ -11,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.JsonObjectRequest;
+
 import org.json.JSONObject;
 
 import util.JsonRequest;
+import util.User;
 
 
 /**
@@ -79,11 +82,15 @@ public class ProfileViewFragment extends Fragment {
         Log.d("got to", "1");
 //        ExecuteJsonRequest req = new ExecuteJsonRequest();
         JsonRequest.sendContext(getContext());
-        ExecuteJsonRequest.execute(url);
+        //ExecuteJsonRequest.execute(url);
         Log.d("got to", "2");
+        url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users";
+        JsonRequest.jsonObjectRequest(url);
+        User thisUser = JsonRequest.getUser();
+        Log.d("Object Request", "No Errors");
 
 //        JsonRequest.sendContext(getContext());
-        Log.d("got value", jsObj.toString());
+        //Log.d("got value", jsObj.toString());
 
 ////        req.execute(url);
 //        Log.d("got to", "4");

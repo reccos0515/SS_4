@@ -33,18 +33,19 @@ public class User {
         try {
             userName = js.getString("userName");
             userId = js.getString("id");
-            userPassword = js.getString("password");
+            //userPassword = js.getString("password");
             userBio = js.getString("bio");
-            userEmail = js.getString("email");
-            userStatus = js.getString("status");
+            //userEmail = js.getString("email");
+            //userStatus = js.getString("status");
 
+            /*
             //get interests from JSON
             JSONArray interests = js.getJSONArray("interests");
             userInterests = Arrays.copyOf(userInterests, interests.length()); //changes the userInterests array to size of interests from JSON
             for (int i = 0; i < userInterests.length; i++) {
                 int temp = Integer.parseInt(interests.getString(i)); //grabs individual interest and converts to int
                 userInterests[i] = temp; //places in useful array
-            }
+            } */
         } catch (JSONException e) {
             e.printStackTrace();
         }

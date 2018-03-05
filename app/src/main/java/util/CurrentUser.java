@@ -15,7 +15,7 @@ import org.json.JSONObject;
 public class CurrentUser extends User {
 
     private static boolean isLoggedIn;
-    private String url = "http://proj-309-ss-4.iastate.edu"; //base url for server
+    private String url = "http://proj-309-ss-4.iastate.edu:9002/ben"; //base url for server
     private String[][] userJSON; //2D array for editing fields before conversion to a JSONObject for server
 
     public CurrentUser(JSONObject js) {
