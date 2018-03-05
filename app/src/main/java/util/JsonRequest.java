@@ -2,6 +2,7 @@ package util;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -220,6 +221,8 @@ public class JsonRequest {
 //                        try { //will always give exception, is why need try catch
                         User thisUser = new User(response);
                         saveUser(thisUser);
+                        Toast.makeText(context, thisUser.toString(), Toast.LENGTH_SHORT).show();
+                        //synchronized (lock){lock.notifyAll();}
                         //saveObj(response); //not sure if case sensitive or not on the string input
                         //JsonRequest.lock.notify();
                         //saveString(response.toString());

@@ -35,6 +35,7 @@ public class ExecuteJsonRequest{
         Object lock = JsonRequest.jsonObjectRequest(url);
         synchronized (lock) {
                 try {
+                    Log.d("Made it", "withing lock");
                     lock.wait();
                 } catch (InterruptedException e) {
                     Log.d("Error", e.toString());
