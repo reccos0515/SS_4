@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: Java Brains Course API
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: basimon
+Built-By: Ben
 Implementation-Vendor-Id: io.javabrains.rpingbootquickstart
 Build-Jdk: 1.8.0_161
 Implementation-URL: http://projects.spring.io/spring-boot/course-api/
