@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import co.nectar.user.User;
 
-public interface LoginRepository extends CrudRepository<Login,User>{
+public interface LoginRepository extends CrudRepository<Login,Integer>{
 
 }
