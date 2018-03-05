@@ -13,9 +13,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
 import org.json.JSONObject;
 
 import util.JsonRequest;
+import util.Singleton;
 
 
 /**
@@ -39,6 +45,7 @@ public class LoginFragment extends Fragment {
     Button loginBtn;
     EditText loginUsername;
     EditText loginPassword;
+    Context context;
 
     private OnFragmentInteractionListener mListener;
 
@@ -85,6 +92,8 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        context = getContext(); //get the current context for use in Volley requests
+
         loginBtn = view.findViewById(R.id.loginBtn);
         loginPassword = view.findViewById(R.id.loginPassword);
         loginUsername = view.findViewById(R.id.loginUsername);
@@ -96,8 +105,21 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) { //TODO review whether or not this login stuff works
                 String[][] obj = {{"userName", "password"}, {loginUsername.toString(), loginPassword.toString()}}; //make 2D array for JSON conversion
                 JSONObject js = JsonRequest.createJsonObject(obj); //make JSON of username/password
-                JsonRequest.postRequest(js, url); //post JSON to server to find/return user credentials to log them in
-
+                //JsonRequest.postRequest(js, url); //post JSON to server to find/return user credentials to log them in
+                //TODO get request for logged in user
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  js,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //get user id out?
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+                Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
             }
         });
 
