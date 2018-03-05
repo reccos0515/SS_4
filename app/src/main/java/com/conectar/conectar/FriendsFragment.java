@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import util.JsonRequest;
 import util.Singleton;
@@ -32,14 +33,9 @@ import util.Singleton;
  * create an instance of this fragment.
  */
 public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static JSONArray friends;
+    private static JSONArray pending;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -53,16 +49,11 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment LogoutFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static FriendsFragment newInstance(String param1, String param2) {
+    public static FriendsFragment newInstance() {
         FriendsFragment fragment = new FriendsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,10 +61,6 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Nullable
@@ -107,6 +94,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     @Override
                     public void onResponse(JSONArray response) {
                         //display friends list
+                        friends = response;
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -126,6 +114,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     @Override
                     public void onResponse(JSONArray response) {
                         //display pending friends list
+                        pending = response;
                     }
                 }, new Response.ErrorListener() {
             @Override

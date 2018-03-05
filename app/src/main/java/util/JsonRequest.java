@@ -25,7 +25,6 @@ import org.json.JSONObject;
 
 public class JsonRequest {
     static String str;
-    static  volatile boolean ready;
     //String for Json Array Req to server for all users "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"
     //String for Adding 10 users to the DB "http://projec-309-ss-4.cs.iastate.edu:9002/ben/test"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
@@ -38,7 +37,6 @@ public class JsonRequest {
      */
     public static void saveString(String str2){
         str = str2;
-        ready = true;
         Log.d("Saved String", str);
         return;
     }
@@ -62,7 +60,6 @@ public class JsonRequest {
      * @param url url of where this request should be sent
      */
     public static void postRequest(JSONObject js, String url, Context context){
-        ready = false;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  js,
                 new Response.Listener<JSONObject>() {
                     @Override
