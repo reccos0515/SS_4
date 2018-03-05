@@ -13,7 +13,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+
+import org.json.JSONArray;
+
 import util.JsonRequest;
+import util.Singleton;
 
 
 /**
@@ -84,6 +91,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         super.onViewCreated(view, savedInstanceState);
 
         //Initialize the textviews on the friends page
+        Context context = getContext();
         TextView actualFriend = view.findViewById(R.id.friend1); //First full friend
         TextView pendingFriend = view.findViewById(R.id.pendingFriend1); //First pending friend
 
@@ -91,24 +99,42 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         //JsonRequest.clearString(); //Make sure there isn't anything already saved?
 
         //ask for friends array for user 1
-        //TODO set this up to use the updated request system
+        //TODO set this up to use the updated request system and test
         Boolean wasRequested = false;
         String friendsUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/friends";
-//        JsonRequest.jsonArrayRequest(friendsUrl);
-        String thisFriend = JsonRequest.getString();
-        Log.d("Friend:", thisFriend);
-        actualFriend.setText(JsonRequest.getString()); //List the first friend in the friend list
-        //JsonRequest.clearString();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(friendsUrl,  //may need typecasting to string on the null?
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        //display friends list
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest); //add json to queue
+
 
 
 
         //ask for pending array for user 1
         String pendingUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/pending";
-//        JsonRequest.jsonArrayRequest(pendingUrl);
-        String thisPending = JsonRequest.getString();
-        Log.d("Pending:", thisPending);
-        pendingFriend.setText(JsonRequest.getString()); //List the first pending friend in the pending list
-        JsonRequest.clearString();
+        jsonArrayRequest = new JsonArrayRequest(pendingUrl,  //may need typecasting to string on the null?
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        //display pending friends list
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest); //add json to queue
+
 
 
         //set friends textview

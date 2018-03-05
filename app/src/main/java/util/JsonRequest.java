@@ -146,7 +146,11 @@ public class JsonRequest {
 //        return;
 //    }
 
-
+    /**
+     * Sends a PUT request for a JSONObject to the server.
+     * @param js the JSONObject to be PUT
+     * @param url the url that the request will be sent to
+     */
     public static void jsonObjectPutRequest(JSONObject js, String url){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, js, new Response.Listener<JSONObject>() {
             @Override
@@ -163,32 +167,41 @@ public class JsonRequest {
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
+    /**
+     * Sends a GET request that waits to receive a string response from the server
+     * @param url url that the request will be sent to
+     */
     public static void jsonStringRequest(String url){
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 saveString(response);
-                Log.d("String Request Status", response);
+                Log.d("String Request Status", "Success.  Response =" + response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("String Request Status", "Error");
                 error.printStackTrace();
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(stringRequest);
     }
 
-
+    /**
+     * Sends a DELETE request to the server
+     * @param url url that the request will be sent to
+     */
     public static void deleteRequest(String url){ //is a string delete request
         StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("Delete Status", "Success");
+                Log.d("Delete Request Status", "Success");
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("Delete Request Status", "Error");
                 error.printStackTrace();
             }
         });
