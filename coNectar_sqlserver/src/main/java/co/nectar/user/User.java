@@ -86,7 +86,7 @@ public class User {
 	
 	
 	//getter/setter methods
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
@@ -121,25 +121,21 @@ public class User {
 
 	
 	
-//	//int friends
-//	private Integer friendOf;
-//	
-//	private Integer friendTo;
-//	//int frineds
-//	public int getFriendOf() {
-//		return friendOf;
-//	}
-//	public void setFriendOf(int friendOf) {
-//		this.friendOf = friendOf;
-//	}
-//	public int getFriendTo() {
-//		return friendTo;
-//	}
-//	public void setFriendTo(int friendTo) {
-//		this.friendTo = friendTo;
-//	}
-//	public void setId(Integer id) {
-//		this.id = id;
-//	}
+	/**
+	 * returns whether all required fields for user are complete
+	 * @param user user to be checked
+	 * @return valid: boolean status if user is valid
+	 */
+	@JsonIgnore
+	public boolean isValid() {
+		boolean valid = true;
+		if(this.bio == "" || this.bio == null)
+			valid = false;
+		else if(this.userName== "" || this.userName == null)
+			valid = false;
+		
+		return valid;
+	}
+	
 	
 }
