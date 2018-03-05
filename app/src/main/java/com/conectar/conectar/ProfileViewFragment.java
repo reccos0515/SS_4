@@ -10,12 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import util.JsonRequest;
+import util.Singleton;
 import util.User;
 
 
@@ -31,6 +37,7 @@ public class ProfileViewFragment extends Fragment {
     private static String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
     private static JSONObject jsObj;
     private static volatile boolean ready = false;
+    private Context context;
 
     private OnFragmentInteractionListener mListener;
 
@@ -71,7 +78,7 @@ public class ProfileViewFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 //        int thisUserId = 1;
 //        int id = 2; //set id of user want to receive
@@ -80,25 +87,11 @@ public class ProfileViewFragment extends Fragment {
         //----------------------------------------------------------------------//
 
         Log.d("got to", "1");
-//        ExecuteJsonRequest req = new ExecuteJsonRequest();
         JsonRequest.sendContext(getContext());
-        //ExecuteJsonRequest.execute(url);
         Log.d("got to", "2");
         url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
         JsonRequest.jsonObjectRequest(url);
-//        ExecuteJsonRequest.execute(url);
-//        JSONObject js = JsonRequest.getObj();
-//        Log.d("This may", "have worked");
-////        User thisUser = JsonRequest.getUser();
-//        Log.d("Object Request", "No Errors");
 
-//        JsonRequest.sendContext(getContext());
-        //Log.d("got value", jsObj.toString());
-
-////        req.execute(url);
-//        Log.d("got to", "4");
-//        //JSONObject js = JsonRequest.getObj();
-//        Log.d("got to", "5");
 
         //----------------------------------------------------------------------//
 
@@ -111,30 +104,28 @@ public class ProfileViewFragment extends Fragment {
         */
         //--------------------------------------------------------------------------------//
 
-//        JsonRequest.jsonObjectRequest(url, getContext()); //get user
-//        //String text = JsonRequest.getString(); //text to be set to the username from the user received
-//        try{
-//
-//        } catch(Exception e){
-//            Log.d("ERROR", "ERROR");
-//            //Todo implement what will happen with an exception
-//        }
-//        JSONObject user = JsonRequest.getObj();
-//        Log.d("json object", user.toString());
-//        if(user == null){
-//            Log.d("error is null", "");
-//        }
-//        Log.d("Json Object", user.toString());
-//        String text = "error";
-//        try {
-//            text = user.getString("userName");
-//        }catch (JSONException e){
-//            e.printStackTrace();
-//        }
+        context = getContext();
         //set the username on screen
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        TextView username = view.findViewById(R.id.viewUsername);
+                        try {
+                            username.setText(response.get("userName").toString());
+                        } catch (JSONException e){
+                            //TODO declare what will happen here
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Object Get Status", "error");
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
         TextView username = view.findViewById(R.id.viewUsername);
-//        username.setText(text);
-//        url += "/friends/" + thisUserId + "";
         final String requestUrl = url;
         //when the button is pressed will add friend
         view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener(){

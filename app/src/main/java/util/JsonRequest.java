@@ -12,7 +12,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-//import com.conectar.conectar.ExecuteJsonRequest;
 import com.conectar.conectar.ProfileViewFragment;
 
 import org.json.JSONArray;
@@ -208,8 +207,7 @@ public class JsonRequest {
     /**
      * method to recieve a json object
      */
-    public static Object jsonObjectRequest(String url){
-        //Singleton.getmInstance(context).getRequestQueue();
+    public static void jsonObjectRequest(String url){
         Log.d("got to", "9");
         Log.d("got to", "10");
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null,
@@ -218,17 +216,9 @@ public class JsonRequest {
                     public void onResponse(JSONObject response) {
                         Log.d("Object Get Status", "Successful Request");
                         Log.d("Object Get Status", response.toString());
-//                        try { //will always give exception, is why need try catch
                         User thisUser = new User(response);
                         saveUser(thisUser);
                         Toast.makeText(context, thisUser.toString(), Toast.LENGTH_SHORT).show();
-                        //synchronized (lock){lock.notifyAll();}
-                        //saveObj(response); //not sure if case sensitive or not on the string input
-                        //JsonRequest.lock.notify();
-                        //saveString(response.toString());
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -238,9 +228,8 @@ public class JsonRequest {
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
-        //jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(1, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         Log.d("got to", "11");
-        return lock;
+        return;
     }
 
 
