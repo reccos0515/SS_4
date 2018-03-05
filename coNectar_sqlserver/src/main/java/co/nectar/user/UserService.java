@@ -31,13 +31,17 @@ public class UserService {
 	public User getUser(int userId) {
 		return userRepo.findOne(userId);
 	}
+	
+	public User getUserByUserName(User user) {
+		return userRepo.findByUserName(user.getUserName());
+	}
 
 	/**
 	* Adds a user object to the repository.
 	* @param user The user object to be added
 	*/
-	public void addUser(User user) {
-		userRepo.save(user);
+	public User addUser(User user) {
+		return userRepo.save(user);
 	}
 
 	/**
@@ -54,8 +58,22 @@ public class UserService {
 		return "saved";
 	}
 
+	/**
+	 * returns if specified user's id exists in db
+	 *
+	 * @param user
+	 * @return
+	 */
+	public boolean userExists(User user) {
+		//check to make sure id is not null
+		return userRepo.existsByUserName(user.getUserName()) || (user.getId() != null && userRepo.exists(user.getId())) ;
+	}
+	
+
+	
 	public void deleteUser(int userId) {
 		userRepo.delete(userId);
+		
 	}
 
 	public void updateBio(int userId) {
