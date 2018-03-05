@@ -32,22 +32,15 @@ import util.User;
  */
 public class ProfileViewFragment extends Fragment {
 
-    private String curUsername; //the username of the user to be viewed
     private static int curIdNum; //id number of the user to be viewed
     private static String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
     private static JSONObject jsObj;
-    private static volatile boolean ready = false;
     private Context context;
 
     private OnFragmentInteractionListener mListener;
 
     public ProfileViewFragment() {
         // Required empty public constructor
-    }
-
-    public void saveObj(JSONObject js){
-        jsObj = js;
-        ready = true;
     }
 
     /**
@@ -84,14 +77,6 @@ public class ProfileViewFragment extends Fragment {
 //        int id = 2; //set id of user want to receive
 //        url += id + "";
 
-        //----------------------------------------------------------------------//
-
-        Log.d("got to", "1");
-        JsonRequest.sendContext(getContext());
-        Log.d("got to", "2");
-        url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
-        JsonRequest.jsonObjectRequest(url);
-
 
         //----------------------------------------------------------------------//
 
@@ -114,7 +99,7 @@ public class ProfileViewFragment extends Fragment {
                         try {
                             username.setText(response.get("userName").toString());
                         } catch (JSONException e){
-                            //TODO declare what will happen here
+                            e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {

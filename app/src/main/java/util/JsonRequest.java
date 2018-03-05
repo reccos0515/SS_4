@@ -25,25 +25,12 @@ import org.json.JSONObject;
 
 public class JsonRequest {
     static String str;
-    static volatile JSONObject jsObj;
-    static JSONArray jsArr;
     static  volatile boolean ready;
     static Context context;
-    private static RequestQueue queue;
-    private static final Object lock = new Object();
-    static User savedUser;
     //String for Json Array Req to server for all users "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"
     //String for Adding 10 users to the DB "http://projec-309-ss-4.cs.iastate.edu:9002/ben/test"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
 
-    /**
-     * method to be used before calling a request, to give the context
-     * @param cont context calling from
-     */
-    public static void sendContext(Context cont){
-        context = cont;
-        return;
-    }
 
     /**
      * Method to save the string taken from the response listener in a global variable that can be accessed elsewhere in the program
@@ -67,57 +54,6 @@ public class JsonRequest {
        // }
         return str;
     }
-
-    /**
-     * method to save the most recent json object received
-     * @param obj most recent json object received
-     */
-    public static void saveObj(JSONObject obj){
-        Log.d("it made it to save", "that's good");
-        jsObj = obj;
-        Log.d("it even saved it", obj.toString());
-        return;
-    }
-
-    /**
-     * method to get the most recent json object received
-     * @return most recent json object received
-     */
-    public static JSONObject getObj(){
-        Log.d("Got to", "getObj");
-        return jsObj;
-    }
-
-    /**
-     * method to save the most recent json array received
-     * @param arr the most recent json array recieved
-     */
-    public static void saveArr(JSONArray arr){
-        jsArr = arr;
-        ready = true;
-        return;
-    }
-
-    /**
-     * method to get the most recent json array received
-     * @return most recent json array received
-     */
-    public static JSONArray getArr(){
-        while(!ready){
-            //implement something here?
-        }
-        return jsArr;
-    }
-
-    public static User saveUser(User user){
-        savedUser = user;
-        return savedUser;
-    }
-
-    public static User getUser(){
-        return savedUser;
-    }
-
 
     public static void clearString(){ str = "Cleared";}
 
@@ -170,67 +106,45 @@ public class JsonRequest {
     }
 
 
-    /**
-     * Method to receive a json array
-     * @param url
-     * @return
-     */
-    public static void jsonArrayRequest(String url){
-        ready = false;
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,  //may need typecasting to string on the null?
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-//                        try{
-                            if(response.length() <= 0){ //If the array is empty
-                                Log.d("Array Request Status","Empty List");
-                                saveArr(null);
-                            }
-                            else { //If the array isn't empty
-                                Log.d("Array Request Status", response.toString());
-                                saveArr(response); //save this in a global variable
-                            }
-//                        }catch (JSONException e){
-//                            e.printStackTrace();
-//                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Array Request Status", "error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest); //add json to queue
-    }
+//    /**
+//     * Method to receive a json array
+//     * @param url
+//     * @return
+//     */
+//    public static void jsonArrayRequest(String url){
+//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,  //may need typecasting to string on the null?
+//                new Response.Listener<JSONArray>() {
+//                    @Override
+//                    public void onResponse(JSONArray response) {
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+//            }
+//        });
+//        Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest); //add json to queue
+//    }
 
-    /**
-     * method to recieve a json object
-     */
-    public static void jsonObjectRequest(String url){
-        Log.d("got to", "9");
-        Log.d("got to", "10");
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("Object Get Status", "Successful Request");
-                        Log.d("Object Get Status", response.toString());
-                        User thisUser = new User(response);
-                        saveUser(thisUser);
-                        Toast.makeText(context, thisUser.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Object Get Status", "error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
-        Log.d("got to", "11");
-        return;
-    }
+//    /**
+//     * method to recieve a json object
+//     */
+//    public static void jsonObjectRequest(String url){
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+//            }
+//        });
+//        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+//        return;
+//    }
 
 
     public static void jsonObjectPutRequest(JSONObject js, String url){
