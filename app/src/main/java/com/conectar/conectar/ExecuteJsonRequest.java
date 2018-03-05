@@ -30,19 +30,21 @@ import util.JsonRequest;
  */
 
 //TODO comment this part back in to continue
-//public class ExecuteJsonRequest{
-//    public static synchronized String execute(String url){
-//        Object lock = JsonRequest.jsonObjectRequest(url);
-//        try{
-//            lock.wait();
-//        }catch (InterruptedException e){
-//            Log.d("Error", e.toString());
-//        }
-//        JSONObject js = JsonRequest.getObj();
-//        return js.toString();
-//    }
-//
-//}
+public class ExecuteJsonRequest{
+    public static String execute(String url) {
+        Object lock = JsonRequest.jsonObjectRequest(url);
+        synchronized (lock) {
+                try {
+                    lock.wait();
+                } catch (InterruptedException e) {
+                    Log.d("Error", e.toString());
+                }
+            JSONObject js = JsonRequest.getObj();
+            return js.toString();
+        }
+
+    }
+}
 
 
 

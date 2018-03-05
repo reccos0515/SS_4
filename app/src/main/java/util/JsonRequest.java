@@ -75,7 +75,6 @@ public class JsonRequest {
     public static void saveObj(JSONObject obj){
         Log.d("it made it to save", "that's good");
         jsObj = obj;
-        ready = true;
         Log.d("it even saved it", obj.toString());
         return;
     }
@@ -85,12 +84,7 @@ public class JsonRequest {
      * @return most recent json object received
      */
     public static JSONObject getObj(){
-        Log.d("Maybe it worked? 8", ready + "");
         Log.d("Got to", "getObj");
-        while(!ready){
-            //implement something here
-            Thread.yield();
-        }
         return jsObj;
     }
 
@@ -213,10 +207,9 @@ public class JsonRequest {
     /**
      * method to recieve a json object
      */
-    public static void jsonObjectRequest(String url){
+    public static Object jsonObjectRequest(String url){
         //Singleton.getmInstance(context).getRequestQueue();
         Log.d("got to", "9");
-        ready = false;
         Log.d("got to", "10");
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null,
                 new Response.Listener<JSONObject>() {
@@ -244,7 +237,7 @@ public class JsonRequest {
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
         //jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(1, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         Log.d("got to", "11");
-        //return lock;
+        return lock;
     }
 
 

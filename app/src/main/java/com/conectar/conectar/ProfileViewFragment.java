@@ -85,9 +85,10 @@ public class ProfileViewFragment extends Fragment {
         //ExecuteJsonRequest.execute(url);
         Log.d("got to", "2");
         url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
-        JsonRequest.jsonStringRequest(url);
-        JsonRequest.jsonObjectRequest(url);
-        User thisUser = JsonRequest.getUser();
+        ExecuteJsonRequest.execute(url);
+        JSONObject js = JsonRequest.getObj();
+        Log.d("This may", "have worked");
+//        User thisUser = JsonRequest.getUser();
         Log.d("Object Request", "No Errors");
 
 //        JsonRequest.sendContext(getContext());
