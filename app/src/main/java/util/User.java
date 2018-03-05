@@ -17,13 +17,13 @@ import java.util.Arrays;
 
 public class User {
 
-    private String userName; //idk if these should be private, yell at me if not
-    private String userId;
-    private String userPassword;
-    private String userBio;
-    private String userEmail;
-    private int[] userInterests;
-    private String userStatus;
+    private static String userName; //idk if these should be private, yell at me if not
+    private static String userId;
+    private static String userPassword;
+    private static String userBio;
+    private static String userEmail;
+    private static int[] userInterests;
+    private static String userStatus;
 
     /**
      * Constructor for creating a user object from a JSONObject.  Is used
@@ -60,7 +60,7 @@ public class User {
      * Getter for user's username
      * @return the user's username
      */
-    public String getUsername(){
+    public static String getUsername(){
         return userName;
     }
 
@@ -68,7 +68,7 @@ public class User {
      * Getter for user id
      * @return the user's id
      */
-    public String getUserId(){
+    public static String getUserId(){
         return userId;
     }
 
@@ -76,7 +76,7 @@ public class User {
      * Getter for user's password
      * @return password
      */
-    public String getPassword(){
+    public static String getPassword(){
         return userPassword;
     }
 
@@ -84,7 +84,7 @@ public class User {
      * Getter for user's bio
      * @return user's bio
      */
-    public String getBio(){
+    public static String getBio(){
         return userBio;
     }
 
@@ -92,7 +92,7 @@ public class User {
      * Getter for user's email
      * @return current user's email
      */
-    public String getUserEmail(){
+    public static String getUserEmail(){
         return userEmail;
     }
 
@@ -100,7 +100,7 @@ public class User {
      * gets a list of user interests
      * @return an array of user interests
      */
-    public int[] getInterests(){
+    public static int[] getInterests(){
         return userInterests;
     }
 
@@ -108,7 +108,7 @@ public class User {
      * Getter for user's status
      * @return the user's status
      */
-    public String getUserStatus(){
+    public static String getUserStatus(){
         return userStatus;
     }
 }

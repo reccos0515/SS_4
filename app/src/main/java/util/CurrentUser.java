@@ -16,8 +16,8 @@ import org.json.JSONObject;
 public class CurrentUser extends User {
 
     private static boolean isLoggedIn;
-    private String url = "http://proj-309-ss-4.iastate.edu:9002/ben"; //base url for server
-    private String[][] userJSON; //2D array for editing fields before conversion to a JSONObject for server
+    private static String url = "http://proj-309-ss-4.iastate.edu:9002/ben"; //base url for server
+    private static String[][] userJSON; //2D array for editing fields before conversion to a JSONObject for server
 
     public CurrentUser(JSONObject js) {
         super(js);
@@ -39,7 +39,7 @@ public class CurrentUser extends User {
      * Set the user's local variable for bio
      * @param bio a string of the typed bio from the user
      */
-    public void setBio(String bio, Context context){
+    public static void setBio(String bio, Context context){
         //set appropriate array spot with interests in userJSON
         updateJSONObject(userJSON, context);
     }
@@ -49,7 +49,7 @@ public class CurrentUser extends User {
      * JSONObject for sending to server when necessary
      * @param interests an array of selected interests
      */
-    public void setInterests(int[] interests, Context context){
+    public static void setInterests(int[] interests, Context context){
         //set appropriate array spot with interests in userJSON
         updateJSONObject(userJSON, context);
     }
@@ -59,7 +59,7 @@ public class CurrentUser extends User {
      * to setInterests to be added to JSONObject
      * @param interest interest to be added
      */
-    public void addInterest(int interest){
+    public static void addInterest(int interest){
         int[] tempArr = getInterests();
         boolean interestSet = false;
         for(int i = 0; i < tempArr.length; i++){
@@ -82,7 +82,7 @@ public class CurrentUser extends User {
      * to setInterests to be added to JSONObject
      * @param interest interest to be deleted
      */
-    public void deleteInterest(int interest){
+    public static void deleteInterest(int interest){
         int[] tempArr = getInterests();
         boolean isDeleted = false;
         for(int i = 0; i < tempArr.length; i++){
@@ -101,7 +101,7 @@ public class CurrentUser extends User {
      * Deletes all user interests.  List still needs to be passed
      * to setInterests to be added to JSONObject
      */
-    public void deleteAllInterests(){
+    public static void deleteAllInterests(){
         int[] tempArr = getInterests();
         for(int i = 0; i < tempArr.length; i++){
             tempArr[i] = 0;
@@ -113,7 +113,7 @@ public class CurrentUser extends User {
      * A string array of the list of users the current user is friends with
      * @return the list of friends
      */
-    public String[] getFriends(){
+    public static String[] getFriends(){
         String[] friends = null;
         url += "/users/" + getUserId() + "/friends";
 //        JsonRequest.jsonArrayRequest(url); //send request for JSONObject array of friends
@@ -125,7 +125,7 @@ public class CurrentUser extends User {
      * Takes a string input of a user id and sends a friend request to that user
      * @param id the user the request will be sent to
      */
-    public void makeFriend(String id, Context context){
+    public static void makeFriend(String id, Context context){
         url += "/users/" + getUserId() + "/request_friend/" + id + ""; //TODO not sure if grabbing proper user id yet
         JsonRequest.postRequest(null, url, context);
     }
@@ -134,7 +134,7 @@ public class CurrentUser extends User {
      * Takes an int input of a user id and sends a friend request to that user
      * @param id the user the request will be sent to
      */
-    public void makeFriend(int id, Context context){
+    public static void makeFriend(int id, Context context){
         url += "/users/" + getUserId() + "/request_friend/" + id + ""; //TODO not sure if grabbing proper user id yet
         JsonRequest.postRequest(null, url, context);
     }
@@ -143,7 +143,7 @@ public class CurrentUser extends User {
      * Takes a string input of a user id and removes a user from current user's friend list
      * @param id the user to be removed
      */
-    public void removeFriend(String id, Context context){
+    public static void removeFriend(String id, Context context){
         url += "/users/" + getUserId() + "/friends/" + id + ""; //TODO not sure if grabbing proper user id yet
         JsonRequest.deleteRequest(url, context);
     }
@@ -152,7 +152,7 @@ public class CurrentUser extends User {
      * Takes an int input of a user id and removes a user from curent user's friend list
      * @param id the user to be removed
      */
-    public void removeFriend(int id, Context context){
+    public static void removeFriend(int id, Context context){
         url += "/users/" + getUserId() + "/friends/" + id + ""; //TODO not sure if grabbing proper user id yet
         JsonRequest.deleteRequest(url, context);
     }
@@ -178,7 +178,7 @@ public class CurrentUser extends User {
      * Updates the current user's JSONObject for server communications
      * @param fields a 2D array of the information for the fields of the JSONObject
      */
-    private void updateJSONObject(String[][] fields, Context context){
+    private static void updateJSONObject(String[][] fields, Context context){
         //convert fields to JSONObject
         JSONObject js = new JSONObject();
         try {

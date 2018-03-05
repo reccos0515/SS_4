@@ -20,6 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import util.CurrentUser;
 import util.JsonRequest;
 import util.Singleton;
 import util.User;
@@ -119,7 +120,12 @@ public class ProfileViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //first id receives, second id sends
-                JsonRequest.postRequest(null, url + curIdNum + "" + "/friends/" + userIDNum + "", getContext());
+                try{
+                    CurrentUser.makeFriend((int)jsObj.get("id"), getContext());
+                    jsObj.get("id");
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
             }
         });
     }
