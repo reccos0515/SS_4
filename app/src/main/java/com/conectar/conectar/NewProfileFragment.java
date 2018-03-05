@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import util.JsonRequest;
@@ -87,16 +88,14 @@ public class NewProfileFragment extends Fragment {
                 CharSequence text;
                 int duration = Toast.LENGTH_SHORT;
                 if(password.getText().toString().equals(confirmPassword.getText().toString())){
-                    //create an array of what will go in the json object
-                    String[][] newUser = new String[2][3];
-                    newUser[0][0] = "id";
-                    newUser[1][0] = "0";
-                    newUser[0][1] = "userName";
-                    newUser[1][1] = username.getText().toString();
-                    newUser[0][2] = "bio";
-                    newUser[1][2] = "no bio yet";
-                    //create the json object
-                    JSONObject js = JsonRequest.createJsonObject(newUser);
+                    JSONObject js = new JSONObject();
+                    try {
+                        js.put("id", 0);
+                        js.put("userName", username.getText().toString());
+                        js.put("bio", username.getText().toString() +" has not added a bio yet");
+                    } catch (JSONException e){
+                        e.printStackTrace();
+                    }
                     //make the post request
                     JsonRequest.postRequest(js, url, getContext());
                     //if confirmPassword and password are the same, submit

@@ -57,24 +57,6 @@ public class JsonRequest {
     public static void clearString(){ str = "Cleared";}
 
     /**
-     * create a json object from a 2D array
-     * @param obj 2D array of Strings, where obj[0] is the key and obj[1] is the value for each field. Will always be size obj[2][x] where x is the number of fields
-     * @return the jsonobject created
-     */
-    public static JSONObject createJsonObject(String[][] obj){
-        JSONObject js = new JSONObject();
-        try {
-            for(int i = 0; i < obj[0].length; i++){
-                js.put(obj[0][i], obj[1][i]);
-            }
-            Log.d("createJsonObject Status", ("successful, " + js.toString()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return js;
-    }
-
-    /**
      * Sends a post request to a given url
      * @param js json object to send
      * @param url url of where this request should be sent

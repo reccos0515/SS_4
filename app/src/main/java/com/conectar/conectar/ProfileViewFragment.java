@@ -93,7 +93,7 @@ public class ProfileViewFragment extends Fragment {
 
         context = getContext();
         //set the username on screen
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url + userIDNum + "",  null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -122,7 +122,6 @@ public class ProfileViewFragment extends Fragment {
                 //first id receives, second id sends
                 try{
                     CurrentUser.makeFriend((int)jsObj.get("id"), getContext());
-                    jsObj.get("id");
                 } catch (JSONException e){
                     e.printStackTrace();
                 }

@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import util.JsonRequest;
@@ -103,8 +104,13 @@ public class LoginFragment extends Fragment {
         loginBtn.setOnClickListener(new View.OnClickListener(){ //if user clicks the button to log in
             @Override
             public void onClick(View view) { //TODO review whether or not this login stuff works
-                String[][] obj = {{"userName", "password"}, {loginUsername.toString(), loginPassword.toString()}}; //make 2D array for JSON conversion
-                JSONObject js = JsonRequest.createJsonObject(obj); //make JSON of username/password
+                JSONObject js = new JSONObject();
+                try {
+                    js.put("userName", loginUsername.toString());
+                    js.put("password", loginPassword.toString());
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
                 //JsonRequest.postRequest(js, url); //post JSON to server to find/return user credentials to log them in
                 //TODO get request for logged in user
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  js,
