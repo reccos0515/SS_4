@@ -26,7 +26,6 @@ import org.json.JSONObject;
 public class JsonRequest {
     static String str;
     static  volatile boolean ready;
-    static Context context;
     //String for Json Array Req to server for all users "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"
     //String for Adding 10 users to the DB "http://projec-309-ss-4.cs.iastate.edu:9002/ben/test"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
@@ -80,25 +79,17 @@ public class JsonRequest {
      * @param js json object to send
      * @param url url of where this request should be sent
      */
-    public static void postRequest(JSONObject js, String url){
+    public static void postRequest(JSONObject js, String url, Context context){
         ready = false;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  js,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("Post Request Status", ("successful, response:" + response.toString()));
-                                /*
-                                try { //will always give exception, is why need try catch
-                                    jsonTestMsg.setText(response.getString("userName")); //not sure if case sensitive or not on the string input
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                */
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //fill here
                 error.printStackTrace();
             }
         });
@@ -151,7 +142,7 @@ public class JsonRequest {
      * @param js the JSONObject to be PUT
      * @param url the url that the request will be sent to
      */
-    public static void jsonObjectPutRequest(JSONObject js, String url){
+    public static void jsonObjectPutRequest(JSONObject js, String url, Context context){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, js, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -171,7 +162,7 @@ public class JsonRequest {
      * Sends a GET request that waits to receive a string response from the server
      * @param url url that the request will be sent to
      */
-    public static void jsonStringRequest(String url){
+    public static void jsonStringRequest(String url, Context context){
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -192,7 +183,7 @@ public class JsonRequest {
      * Sends a DELETE request to the server
      * @param url url that the request will be sent to
      */
-    public static void deleteRequest(String url){ //is a string delete request
+    public static void deleteRequest(String url, Context context){ //is a string delete request
         StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

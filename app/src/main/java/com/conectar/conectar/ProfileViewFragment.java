@@ -33,8 +33,9 @@ import util.User;
 public class ProfileViewFragment extends Fragment {
 
     private static int curIdNum; //id number of the user to be viewed
-    private static String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
-    private static JSONObject jsObj;
+    private static String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/";
+    private static int userIDNum = 1; //change this to a global variable of the logged in user
+    private static JSONObject jsObj; //json object that is received. Can only be accessed within a button
     private Context context;
 
     private OnFragmentInteractionListener mListener;
@@ -95,6 +96,7 @@ public class ProfileViewFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        jsObj = response;
                         TextView username = view.findViewById(R.id.viewUsername);
                         TextView bio = view.findViewById(R.id.viewBio);
                         try {
@@ -107,20 +109,17 @@ public class ProfileViewFragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Object Get Status", "error");
                 error.printStackTrace();
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
         TextView username = view.findViewById(R.id.viewUsername);
-        final String requestUrl = url;
         //when the button is pressed will add friend
         view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 //first id receives, second id sends
-                Log.d("Got to", "Add friend onclick listener");
-                JsonRequest.postRequest(null, requestUrl);
+                JsonRequest.postRequest(null, url + curIdNum + "" + "/friends/" + userIDNum + "", getContext());
             }
         });
     }

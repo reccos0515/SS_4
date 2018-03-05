@@ -1,6 +1,7 @@
 package util;
 
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -38,9 +39,9 @@ public class CurrentUser extends User {
      * Set the user's local variable for bio
      * @param bio a string of the typed bio from the user
      */
-    public void setBio(String bio){
+    public void setBio(String bio, Context context){
         //set appropriate array spot with interests in userJSON
-        updateJSONObject(userJSON);
+        updateJSONObject(userJSON, context);
     }
 
     /**
@@ -48,9 +49,9 @@ public class CurrentUser extends User {
      * JSONObject for sending to server when necessary
      * @param interests an array of selected interests
      */
-    public void setInterests(int[] interests){
+    public void setInterests(int[] interests, Context context){
         //set appropriate array spot with interests in userJSON
-        updateJSONObject(userJSON);
+        updateJSONObject(userJSON, context);
     }
 
     /**
@@ -124,36 +125,36 @@ public class CurrentUser extends User {
      * Takes a string input of a user id and sends a friend request to that user
      * @param id the user the request will be sent to
      */
-    public void makeFriend(String id){
+    public void makeFriend(String id, Context context){
         url += "/users/" + getUserId() + "/request_friend/" + id + ""; //TODO not sure if grabbing proper user id yet
-        JsonRequest.postRequest(null, url);
+        JsonRequest.postRequest(null, url, context);
     }
 
     /**
      * Takes an int input of a user id and sends a friend request to that user
      * @param id the user the request will be sent to
      */
-    public void makeFriend(int id){
+    public void makeFriend(int id, Context context){
         url += "/users/" + getUserId() + "/request_friend/" + id + ""; //TODO not sure if grabbing proper user id yet
-        JsonRequest.postRequest(null, url);
+        JsonRequest.postRequest(null, url, context);
     }
 
     /**
      * Takes a string input of a user id and removes a user from current user's friend list
      * @param id the user to be removed
      */
-    public void removeFriend(String id){
+    public void removeFriend(String id, Context context){
         url += "/users/" + getUserId() + "/friends/" + id + ""; //TODO not sure if grabbing proper user id yet
-        JsonRequest.deleteRequest(url);
+        JsonRequest.deleteRequest(url, context);
     }
 
     /**
      * Takes an int input of a user id and removes a user from curent user's friend list
      * @param id the user to be removed
      */
-    public void removeFriend(int id){
+    public void removeFriend(int id, Context context){
         url += "/users/" + getUserId() + "/friends/" + id + ""; //TODO not sure if grabbing proper user id yet
-        JsonRequest.deleteRequest(url);
+        JsonRequest.deleteRequest(url, context);
     }
 
     public static void updateStatus(int status){ //TODO change type to whatever Ben does
@@ -177,7 +178,7 @@ public class CurrentUser extends User {
      * Updates the current user's JSONObject for server communications
      * @param fields a 2D array of the information for the fields of the JSONObject
      */
-    private void updateJSONObject(String[][] fields){
+    private void updateJSONObject(String[][] fields, Context context){
         //convert fields to JSONObject
         JSONObject js = new JSONObject();
         try {
@@ -189,7 +190,7 @@ public class CurrentUser extends User {
             e.printStackTrace();
         }
         url += "/users";
-        JsonRequest.jsonObjectPutRequest(js, url); //TODO check that putting here is correct for updating user
+        JsonRequest.jsonObjectPutRequest(js, url, context); //TODO check that putting here is correct for updating user
     }
 
 
