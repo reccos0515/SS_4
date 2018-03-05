@@ -96,8 +96,10 @@ public class ProfileViewFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         TextView username = view.findViewById(R.id.viewUsername);
+                        TextView bio = view.findViewById(R.id.viewBio);
                         try {
                             username.setText(response.get("userName").toString());
+                            bio.setText(response.get("bio").toString());
                         } catch (JSONException e){
                             e.printStackTrace();
                         }

@@ -115,7 +115,7 @@ public class CurrentUser extends User {
     public String[] getFriends(){
         String[] friends = null;
         url += "/users/" + getUserId() + "/friends";
-        JsonRequest.jsonArrayRequest(url); //send request for JSONObject array of friends
+//        JsonRequest.jsonArrayRequest(url); //send request for JSONObject array of friends
         //TODO receive array and parse into list
         return friends;
     }
