@@ -213,7 +213,7 @@ public class JsonRequest {
     /**
      * method to recieve a json object
      */
-    public static Object jsonObjectRequest(String url){
+    public static void jsonObjectRequest(String url){
         //Singleton.getmInstance(context).getRequestQueue();
         Log.d("got to", "9");
         ready = false;
@@ -242,9 +242,9 @@ public class JsonRequest {
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
-        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(1, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(1, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         Log.d("got to", "11");
-        return lock;
+        //return lock;
     }
 
 
@@ -262,6 +262,22 @@ public class JsonRequest {
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+
+    public static void jsonStringRequest(String url){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                saveString(response);
+                Log.d("String Request Status", response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(stringRequest);
     }
 
 

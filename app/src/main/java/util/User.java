@@ -1,5 +1,7 @@
 package util;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,9 +34,12 @@ public class User {
     public User(JSONObject js){
         try {
             userName = js.getString("userName");
+            Log.d("User", "Username =" + userName);
             userId = js.getString("id");
+            Log.d("User", "id = " + userId);
             //userPassword = js.getString("password");
             userBio = js.getString("bio");
+            Log.d("User", "bio = " + userBio);
             //userEmail = js.getString("email");
             //userStatus = js.getString("status");
 
