@@ -149,7 +149,6 @@ public class UserUtil {
     public static void deleteInterest(int badInterest, Context context){
         String url = ""; //TODO update url
         boolean isDeleted = false; //used to relay that the interest wasn't in the list in the first place
-        //TODO change to json object, grabbing user (not a list)
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //grab user
                 new Response.Listener<JSONObject>() {
@@ -265,7 +264,7 @@ public class UserUtil {
      * A string array of the list of users the current user is friends with
      * @return the list of friends
      */
-    public static String[] getFriends(Context context, String id){
+    public static String[] getFriends(Context context, String id){ //TODO update
         String[] friends = null;
         url += "/users/" + id + "/friends";
 
@@ -273,29 +272,65 @@ public class UserUtil {
         return friends;
     }
 
+    /**
+     * Sends a friend request to a specific user using string ids
+     * @param userId user that the request is coming from
+     * @param friendId user that the request is going to
+     * @param context context in which this method is used
+     */
     public static void makeFriend(String userId, String friendId, Context context){
-        url += "/users/" + userId + "/request_friend/" + friendId + ""; //TODO not sure if grabbing proper user id yet
-        JsonRequest.postRequest(null, url, context);
+        url += "/users/" + userId + "/request_friend/" + friendId + "";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
     }
 
+    /**
+     * Sends a friend request to a specific user using integer ids
+     * @param userId user that the request is coming from
+     * @param friendId user that the request is going to
+     * @param context context in which this method is used
+     */
     public static void makeFriend(int userId, int friendId, Context context){
-        url += "/users/" + userId + "/request_friend/" + friendId + ""; //TODO not sure if grabbing proper user id yet
-        JsonRequest.postRequest(null, url, context);
+        url += "/users/" + userId + "/request_friend/" + friendId + "";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
     }
 
 
-    public static void removeFriend(String userId, String friendId, Context context){
-        url += "/users/" + userId + "/friends/" + friendId+ ""; //TODO not sure if grabbing proper user id yet
+    public static void removeFriend(String userId, String friendId, Context context){//TODO update
+        url += "/users/" + userId + "/friends/" + friendId+ "";
         JsonRequest.deleteRequest(url, context);
     }
 
 
-    public static void removeFriend(int userId, int friendId, Context context){
-        url += "/users/" + userId + "/friends/" + friendId + ""; //TODO not sure if grabbing proper user id yet
+    public static void removeFriend(int userId, int friendId, Context context){//TODO update
+        url += "/users/" + userId + "/friends/" + friendId + "";
         JsonRequest.deleteRequest(url, context);
     }
 
-    public static void updateStatus(int status, Context context){ //TODO change type to whatever Ben does
+    public static void updateStatus(int status, Context context){ //TODO update
         if(status  == 0){ //status is red
             //TODO set status in userJSON
             updateJSONObject(userJSON, context);
@@ -318,7 +353,7 @@ public class UserUtil {
      * Updates the current user's JSONObject for server communications
      * @param fields a 2D array of the information for the fields of the JSONObject
      */
-    private static void updateJSONObject(String[][] fields, Context context){
+    private static void updateJSONObject(String[][] fields, Context context){ //TODO remove once other methods are updated to not piss them off
         //convert fields to JSONObject
         JSONObject js = new JSONObject();
         try {
