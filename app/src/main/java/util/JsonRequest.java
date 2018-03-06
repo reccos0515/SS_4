@@ -117,7 +117,7 @@ public class JsonRequest {
 //    }
 
     /**
-     * Sends a PUT request for a JSONObject to the server.
+     * Sends a PUT request for a JSONObject to the server.  Often used for updating a JSONObject.
      * @param js the JSONObject to be PUT
      * @param url the url that the request will be sent to
      */

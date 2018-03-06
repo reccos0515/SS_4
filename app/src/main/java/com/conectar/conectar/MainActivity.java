@@ -1,5 +1,7 @@
 package com.conectar.conectar;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -26,6 +28,10 @@ public class MainActivity extends AppCompatActivity
             ProfileViewFragment.OnFragmentInteractionListener{
     /*Added Logout, Edit Profile, Change Status, Friends, Messages, New Profile, Search, Swipe Screen/Home, Login
     to drawer navigation */
+
+    SharedPreferences preferences = this.getSharedPreferences("com.conectar.conectar", Context.MODE_PRIVATE); //creates store for session variables?
+    String currentUsername;
+
     @Override
     public void onFragmentInteraction(Uri uri){
         //empty
@@ -35,6 +41,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //grabs the variables stored from the app killing itself
+        if(savedInstanceState != null){
+           currentUsername = savedInstanceState.getString("USERNAME");
+        }
+
+        //grabs the variables stored from the user killing the app
+        currentUsername = getPreferences(Context.MODE_PRIVATE).getString("USERNAME", "EMPTY");
+        if(!currentUsername.equals("EMPTY")){
+            //do a thing if empty??
+        }
+
+
         //sets the navigation drawer as initial layout
         setContentView(R.layout.activity_main);
 
@@ -64,6 +83,28 @@ public class MainActivity extends AppCompatActivity
 
 
 
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) { //called when the app kills itself that it saves information (also for orientation changes)
+        outState.putString("USERNAME", currentUsername); //saves last value
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * Saves any information that needs to be kept when a user kills the application
+     */
+    private void saveSettings(){
+        SharedPreferences.Editor sharedEditor = getPreferences(Context.MODE_PRIVATE).edit();
+        sharedEditor.putString("USERNAME", currentUsername);
+        sharedEditor.commit();
+    }
+
+    @Override
+    protected void onStop() { //tells the app that it was force closed by the user
+        saveSettings();
+        super.onStop();
     }
 
     @Override

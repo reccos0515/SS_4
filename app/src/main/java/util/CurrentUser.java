@@ -2,9 +2,15 @@ package util;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -101,11 +107,12 @@ public class CurrentUser extends User {
      * Deletes all user interests.  List still needs to be passed
      * to setInterests to be added to JSONObject
      */
-    public static void deleteAllInterests(){
+    public static void deleteAllInterests(Context context){
         int[] tempArr = getInterests();
         for(int i = 0; i < tempArr.length; i++){
             tempArr[i] = 0;
         }
+        updateJSONObject(userJSON, context);
     }
 
 
@@ -113,10 +120,10 @@ public class CurrentUser extends User {
      * A string array of the list of users the current user is friends with
      * @return the list of friends
      */
-    public static String[] getFriends(){
+    public static String[] getFriends(Context context){
         String[] friends = null;
         url += "/users/" + getUserId() + "/friends";
-//        JsonRequest.jsonArrayRequest(url); //send request for JSONObject array of friends
+
         //TODO receive array and parse into list
         return friends;
     }
@@ -157,16 +164,18 @@ public class CurrentUser extends User {
         JsonRequest.deleteRequest(url, context);
     }
 
-    public static void updateStatus(int status){ //TODO change type to whatever Ben does
+    public static void updateStatus(int status, Context context){ //TODO change type to whatever Ben does
         if(status  == 0){ //status is red
             //TODO set status in userJSON
-            return; //did this to placate studio b/c I hate the yellow highlighting
+            updateJSONObject(userJSON, context);
         }
         else if(status == 1){ //status is yellow
-            return;
+            //TODO set status in userJSON
+            updateJSONObject(userJSON, context);
         }
         else if(status == 2){ //status is green
-            return;
+            //TODO set status in userJSON
+            updateJSONObject(userJSON, context);
         }
         else{
             Log.d("updateStatus", "wrong status input");
