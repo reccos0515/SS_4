@@ -89,7 +89,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         //TODO set this up to use the updated request system and test
         Boolean wasRequested = false;
         String friendsUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/friends";
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(friendsUrl,  //may need typecasting to string on the null?
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(friendsUrl,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
