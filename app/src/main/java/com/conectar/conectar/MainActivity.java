@@ -23,7 +23,7 @@ import android.view.MenuItem;
 import util.CurrentUser;
 import util.User;
 
-import static util.User.setUserName;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,LogoutFragment.OnFragmentInteractionListener,
@@ -100,21 +100,27 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) { //called when the app kills itself that it saves information (also for orientation changes)
         outState.putString("USERNAME", currentUsername); //saves last value
+        outState.putString("BIO", currentBio);
+        outState.putString("ID", currentId);
         super.onSaveInstanceState(outState);
     }
 
     /**
-     * Saves any information that needs to be kept when a user kills the application
+     * Saves any information that needs to be kept when a user kills the application (maybe when they change fragments too?)
      */
     private void saveSettings(){
         SharedPreferences.Editor sharedEditor = getPreferences(Context.MODE_PRIVATE).edit();
         sharedEditor.putString("USERNAME", currentUsername);
-        sharedEditor.commit();
+        sharedEditor.putString("BIO", currentBio);
+        sharedEditor.putString("ID", currentId);
+        //sharedEditor.commit();
+        //commit writes to storage immediately and apply does it in the background, otherwise the same
+        sharedEditor.apply();
     }
 
     @Override
     protected void onStop() { //tells the app that it was force closed by the user
-        saveSettings();
+        saveSettings(); //save the settings before actually killing the app
         super.onStop();
     }
 
