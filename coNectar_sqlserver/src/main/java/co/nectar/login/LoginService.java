@@ -72,7 +72,7 @@ public class LoginService {
 	 * @param login login to be removed
 	 * @return
 	 */
-	public HtmlMessage removeLogin(Login login) {
+	public Object removeLogin(Login login) {
 		boolean success = true;
 		String error= "";
 		
@@ -84,12 +84,16 @@ public class LoginService {
 			success = false;
 			error = "given user not found";
 		}else {
-			//remove login and user
+			//find full user to be removed
 			//handle if userId is empty
 			User user = login.getUser();
-			if(user.getId() == null)
-				user = userService.getUserByUserName(user);
-						
+			if(user.getId() != null && user.getId() > 0) {
+				user = userService.getUser(user.getId());
+			}else {
+				user = userService.getUserByUserName(user.getUserName());
+			}
+			
+			
 			login = loginRepo.findByUser(user);
 			loginRepo.delete(login);
 			userService.deleteUser(user.getId());
@@ -112,9 +116,28 @@ public class LoginService {
 	 */
 	public Object getUser(Login login) {
 		// TODO Auto-generated method stub
-		User user = new User(0, "Test", "no bio");
-		Login test = new Login(user, "password");
-		return test;
+		boolean success = true;
+		String error = "";
+		User user = login.getUser();
+		if(user == null) {
+			success = false;
+			error = "user not given";
+		}else if(!userService.userExists(user)) {
+			success = false;
+			error = "user not found";
+		}else {
+			//handle if user id is null or not valid
+			if(user.getId() != null && user.getId() > 0) {
+				return userService.getUser(user.getId());
+			}else {
+				return userService.getUserByUserName(user.getUserName());
+			}
+			
+		}
+		
+		
+		HtmlMessage msg = new HtmlMessage(success, error);
+		return msg;
 	}
 
 }

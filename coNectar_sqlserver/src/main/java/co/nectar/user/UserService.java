@@ -32,8 +32,8 @@ public class UserService {
 		return userRepo.findOne(userId);
 	}
 	
-	public User getUserByUserName(User user) {
-		return userRepo.findByUserName(user.getUserName());
+	public User getUserByUserName(String username) {
+		return userRepo.findByUserName(username);
 	}
 
 	/**
