@@ -3,6 +3,11 @@ package util;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,30 +19,99 @@ import org.json.JSONObject;
 
 public class UserUtil {
 
+    //NOTE cannot change the username or id for a user
+
     private static String url = "http://proj-309-ss-4.iastate.edu:9002/ben"; //base url for server
     private static String[][] userJSON; //2D array for editing fields before conversion to a JSONObject for server
+    private static JSONObject userJSONObject = new JSONObject();
 
     public static void logoutUser(){
         //destroy bundle and remove shared preferences
     }
 
     /**
-     * Set the user's local variable for bio
+     * Updates the user's bio in the DB
      * @param bio a string of the typed bio from the user
+     * @param context the context in which this method is used
      */
     public static void setBio(String bio, Context context){
-        //set appropriate array spot with interests in userJSON
-        updateJSONObject(userJSON, context);
+        url = ""; //TODO update url
+        try {
+            userJSONObject.put("bio", bio);
+        } catch (JSONException e) {
+            Log.d("JSONObject Put Status", "Bio put failed");
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("Object Put Status", "Successful Request");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Object Put Status", "error");
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
     /**
-     * Sets the user's local variable for interests and updates
-     * JSONObject for sending to server when necessary
+     * Updates the user's interests in the DB
      * @param interests an array of selected interests
+     * @param context the context in which this method is used
      */
     public static void setInterests(int[] interests, Context context){
         //set appropriate array spot with interests in userJSON
-        updateJSONObject(userJSON, context);
+        String url = ""; //TODO update url
+        try {
+            userJSONObject.put("interests", interests);
+        } catch (JSONException e) {
+            Log.d("JSONObject Put Status", "Interests put failed");
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("Object Put Status", "Successful Request");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Object Put Status", "error");
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+
+    /**
+     * Sets the user's password in the DB
+     * @param pwd the new password that the user would like
+     * @param context context in which this method is used
+     */
+    public static void setPassword(String pwd, Context context){
+        String url = ""; //TODO update url
+        try {
+            userJSONObject.put("password", pwd);
+        } catch (JSONException e) {
+            Log.d("JSONObject Put Status", "Password put failed");
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("Object Put Status", "Successful Request");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Object Put Status", "error");
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
     /**
