@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -34,10 +35,8 @@ public class MainActivity extends AppCompatActivity
     /*Added Logout, Edit Profile, Change Status, Friends, Messages, New Profile, Search, Swipe Screen/Home, Login
     to drawer navigation */
 
-    SharedPreferences preferences = this.getSharedPreferences("com.conectar.conectar", Context.MODE_PRIVATE); //creates store for session variables?
-    String currentUsername;
-    String prefUsername; //variables for preferences
-    String instUsername; //variables for instance state
+    String currentUsername, currentId, currentBio;
+    String prefUsername, prefId, prefBio; //temp variable that is set based on whether or not there are stored preferences
 
     @Override
     public void onFragmentInteraction(Uri uri){
@@ -52,13 +51,24 @@ public class MainActivity extends AppCompatActivity
         //grabs the variables stored from the app killing itself
         if(savedInstanceState != null){
            //currentUsername = savedInstanceState.getString("USERNAME");
-           instUsername = savedInstanceState.getString("USERNAME");
+           currentUsername = savedInstanceState.getString("USERNAME");
+           currentId = savedInstanceState.getString("ID");
+           currentBio = savedInstanceState.getString("BIO");
         }
 
         //grabs the variables stored from the user killing the app
-        currentUsername = getPreferences(Context.MODE_PRIVATE).getString("USERNAME", "EMPTY");
-        if(!currentUsername.equals("EMPTY")){
-            //do a thing if empty??
+        prefUsername = getPreferences(Context.MODE_PRIVATE).getString("USERNAME", "EMPTY");
+        if(!prefUsername.equals("EMPTY")){ //If there actually is a stored value
+            //set the local variables
+            currentUsername = prefUsername;
+        }
+        prefBio = getPreferences(Context.MODE_PRIVATE).getString("BIO", "EMPTY");
+        if(!prefBio.equals("EMPTY")){
+            currentBio = prefBio;
+        }
+        prefId = getPreferences(Context.MODE_PRIVATE).getString("ID", "EMPTY");
+        if(!prefId.equals("EMPTY")){
+            currentId = prefId;
         }
 
 
