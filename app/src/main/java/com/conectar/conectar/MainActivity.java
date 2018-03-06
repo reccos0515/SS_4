@@ -19,6 +19,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import util.CurrentUser;
+import util.User;
+
+import static util.User.setUserName;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,LogoutFragment.OnFragmentInteractionListener,
             EditProfileFragment.OnFragmentInteractionListener, ChangeStatusFragment.OnFragmentInteractionListener,
@@ -31,6 +36,8 @@ public class MainActivity extends AppCompatActivity
 
     SharedPreferences preferences = this.getSharedPreferences("com.conectar.conectar", Context.MODE_PRIVATE); //creates store for session variables?
     String currentUsername;
+    String prefUsername; //variables for preferences
+    String instUsername; //variables for instance state
 
     @Override
     public void onFragmentInteraction(Uri uri){
@@ -44,7 +51,8 @@ public class MainActivity extends AppCompatActivity
 
         //grabs the variables stored from the app killing itself
         if(savedInstanceState != null){
-           currentUsername = savedInstanceState.getString("USERNAME");
+           //currentUsername = savedInstanceState.getString("USERNAME");
+           instUsername = savedInstanceState.getString("USERNAME");
         }
 
         //grabs the variables stored from the user killing the app
@@ -68,21 +76,14 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        //
+        //sets up the drawer as a navigation menu
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-
 
         //sets default page to the profile view page
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         tx.replace(R.id.screen_area, new ProfileViewFragment());
         tx.commit();
-
-
-
-
 
     }
 

@@ -41,6 +41,7 @@ public class CurrentUser extends User {
         }
     }
 
+
     /**
      * Set the user's local variable for bio
      * @param bio a string of the typed bio from the user

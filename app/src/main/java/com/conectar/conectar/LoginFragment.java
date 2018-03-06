@@ -76,6 +76,7 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         context = getContext(); //get the current context for use in Volley requests
 
         loginBtn = view.findViewById(R.id.loginBtn);

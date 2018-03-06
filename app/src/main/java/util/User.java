@@ -111,4 +111,17 @@ public class User {
     public static String getUserStatus(){
         return userStatus;
     }
+
+
+    public static void setUserName(String str){
+        userName = str;
+    }
+
+    public static void setUserId(String str){
+        userId = str;
+    }
+
+    public static void setUserBio(String str){
+        userBio = str;
+    }
 }
