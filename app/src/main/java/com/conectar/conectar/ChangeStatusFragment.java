@@ -18,15 +18,12 @@ import util.UserUtil;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link LogoutFragment.OnFragmentInteractionListener} interface
+ * {@link ChangeStatusFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link LogoutFragment#newInstance} factory method to
+ * Use the {@link ChangeStatusFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ChangeStatusFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
 
     private OnFragmentInteractionListener mListener;
 
@@ -40,9 +37,9 @@ public class ChangeStatusFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment LogoutFragment.
+     * @return A new instance of fragment ChangeStatusFragment.
      */
-    // TODO: Rename and change types and number of parameters
+    //Rename and change types and number of parameters
     public static ChangeStatusFragment newInstance(String param1, String param2) {
         ChangeStatusFragment fragment = new ChangeStatusFragment();
         Bundle args = new Bundle();
@@ -82,6 +79,7 @@ public class ChangeStatusFragment extends Fragment {
             public void onClick(View view){ //set status to yellow
                 UserUtil.updateStatus(1, userId, getContext());
                 Toast.makeText(getActivity(), "Status set to yellow", Toast.LENGTH_LONG).show();
+                //TODO allow user to select an interest for yellow status
             }
         });
         view.findViewById(R.id.redStatusBtn).setOnClickListener(new View.OnClickListener() { //red button clicked
@@ -94,12 +92,6 @@ public class ChangeStatusFragment extends Fragment {
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -129,7 +121,7 @@ public class ChangeStatusFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        //Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

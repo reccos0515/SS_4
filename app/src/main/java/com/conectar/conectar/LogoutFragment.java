@@ -39,7 +39,7 @@ public class LogoutFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment LogoutFragment.
      */
-    // TODO: Rename and change types and number of parameters
+    //Rename and change types and number of parameters
     public static LogoutFragment newInstance(String param1, String param2) {
         LogoutFragment fragment = new LogoutFragment();
         Bundle args = new Bundle();
@@ -112,7 +112,7 @@ public class LogoutFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        //Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
