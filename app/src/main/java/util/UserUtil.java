@@ -118,26 +118,80 @@ public class UserUtil {
     }
 
     /**
-     * Adds interest to interest list.  Eventually, list is passed
-     * to setInterests to be added to JSONObject
-     * @param interest interest to be added
+     * Adds a new interests to a user's list of interests if the list isn't full
+     * @param newInterest the value for the new interest to be added
+     * @param context the context in which this method is used
      */
-    public static void addInterest(int interest){ //TODO update
-        int[] tempArr = null;
+    public static void addInterest(int newInterest, Context context){
+        url = ""; //TODO update url
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //grab user
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        userJSONObject = response; //update for user grabbed
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+
+        try {
+            tempArr = userJSONObject.getJSONArray("interests"); //grabs the array of interests from user object
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         boolean interestSet = false;
-        for(int i = 0; i < tempArr.length; i++){
-            if(tempArr[i] == 0 && !interestSet){
-                tempArr[i] = interest;
+        int temp = 0;
+        int[] interests = new int[tempArr.length()]; //make interests correct size
+
+        for(int i = 0 ; i < interests.length; i++){
+            try {
+                temp = tempArr.getInt(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if(temp == newInterest){
+                //interest already exists in list
+                //TODO figure out how to toast that interests already exists to user
                 interestSet = true;
             }
-            else if(tempArr[i] == interest){
+            else if(temp == 0 && !interestSet){ //open spot in interests array for new interest found
+                interests[i] = newInterest;
                 interestSet = true;
+            }
+            else{
+                interests[i] = temp;
             }
         }
         if(!interestSet){
             //TODO figure out how to toast or something to user
-            Log.d("Interest Status", "Interest full, cannot be added");
+            Log.d("Interest Status", "Interests full, cannot be added");
         }
+
+        try {
+            userJSONObject.put("interests", interests); //update the jsonobject for the user with new interests
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //update the JSONObject in the DB
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("Object Put Status", "Successful Request");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Object Put Status", "error");
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
     /**
