@@ -34,7 +34,7 @@ import util.User;
 public class ProfileViewFragment extends Fragment {
 
     private static int curIdNum; //id number of the user to be viewed
-    private static String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/";
+    private static String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/"; //url to be modified
     private static int userIDNum = 1; //change this to a global variable of the logged in user
     private static JSONObject jsObj; //json object that is received. Can only be accessed within a button
     private Context context;
