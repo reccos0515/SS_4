@@ -330,23 +330,69 @@ public class UserUtil {
         JsonRequest.deleteRequest(url, context);
     }
 
-    public static void updateStatus(int status, Context context){ //TODO update
+    /**
+     * Changes the user's status in the DB
+     * @param status the new status the user wishes to switch to
+     * @param id the id number of the person changing their status
+     * @param context the context in which this method is used
+     */
+    public static void updateStatus(int status, int id, Context context){
+        url = ""; //TODO update url
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //grab user
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        userJSONObject = response; //update for user grabbed
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+
+        //change status
         if(status  == 0){ //status is red
-            //TODO set status in userJSON
-            updateJSONObject(userJSON, context);
+            try {
+                userJSONObject.put("status", 0); //sets the status in the user object
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         else if(status == 1){ //status is yellow
-            //TODO set status in userJSON
-            updateJSONObject(userJSON, context);
+            try {
+                userJSONObject.put("status", 1); //TODO revisit what value status should be set to
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         else if(status == 2){ //status is green
-            //TODO set status in userJSON
-            updateJSONObject(userJSON, context);
+            try {
+                userJSONObject.put("status", 2);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         else{
             Log.d("updateStatus", "wrong status input");
         }
-        //updateJSONObject(userJSON);
+
+        //update the DB to reflect deleted interests
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("Object Put Status", "Successful Request");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Object Put Status", "error");
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+
     }
 
     /**
