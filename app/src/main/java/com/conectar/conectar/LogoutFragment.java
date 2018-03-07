@@ -8,14 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
-
-import util.CurrentUser;
-import util.FragmentUtil;
 
 
 /**
@@ -77,7 +72,6 @@ public class LogoutFragment extends Fragment {
 
                 //Send user to the login screen
                 //TODO make method for changing fragments?
-                CurrentUser.logoutUser(); //resets session variables for current user
                 Fragment fragment = new LoginFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

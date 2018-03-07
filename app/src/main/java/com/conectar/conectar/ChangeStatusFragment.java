@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-//import org.omg.CORBA.Current;
+import util.UserUtil;
 
-import util.CurrentUser;
+//import org.omg.CORBA.Current;
 
 
 /**
@@ -26,12 +26,7 @@ import util.CurrentUser;
 public class ChangeStatusFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -51,8 +46,6 @@ public class ChangeStatusFragment extends Fragment {
     public static ChangeStatusFragment newInstance(String param1, String param2) {
         ChangeStatusFragment fragment = new ChangeStatusFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,10 +53,7 @@ public class ChangeStatusFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Nullable
@@ -78,24 +68,26 @@ public class ChangeStatusFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final int userId = 0; //TODO update methods and this for current user using session variables
+
         view.findViewById(R.id.greenStatusBtn).setOnClickListener(new View.OnClickListener() { //green button clicked
             @Override
             public void onClick(View view) { //set status to green
-                CurrentUser.updateStatus(2);
+                UserUtil.updateStatus(2, userId, getContext());
                 Toast.makeText(getActivity(), "Status set to green", Toast.LENGTH_LONG).show();
             }
         });
         view.findViewById(R.id.yellowStatusBtn).setOnClickListener(new View.OnClickListener(){ //yellow button clicked
             @Override
             public void onClick(View view){ //set status to yellow
-                CurrentUser.updateStatus(1);
+                UserUtil.updateStatus(1, userId, getContext());
                 Toast.makeText(getActivity(), "Status set to yellow", Toast.LENGTH_LONG).show();
             }
         });
         view.findViewById(R.id.redStatusBtn).setOnClickListener(new View.OnClickListener() { //red button clicked
             @Override
             public void onClick(View view) { //set status to red
-                CurrentUser.updateStatus(0);
+                UserUtil.updateStatus(0, userId, getContext());
                 Toast.makeText(getActivity(), "Status set to red", Toast.LENGTH_LONG).show();
             }
         });

@@ -5,12 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -20,10 +18,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import util.CurrentUser;
-import util.JsonRequest;
+import util.FriendsUtil;
 import util.Singleton;
-import util.User;
 
 
 /**
@@ -79,18 +75,6 @@ public class ProfileViewFragment extends Fragment {
 //        int id = 2; //set id of user want to receive
 //        url += id + "";
 
-
-        //----------------------------------------------------------------------//
-
-        //----------------------------MAGGIE'S GARBAGE----------------------------------//
-        /*
-        Context context = getContext();
-        JsonRequest.jsonObjectRequest("http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1", context);
-        String text = JsonRequest.getString();
-        Log.d("Request String", text);
-        */
-        //--------------------------------------------------------------------------------//
-
         context = getContext();
         //set the username on screen
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url + userIDNum + "",  null,
@@ -120,11 +104,13 @@ public class ProfileViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //first id receives, second id sends
-                try{
-                    CurrentUser.makeFriend((int)jsObj.get("id"), getContext());
+                /*
+                try{ //TODO update for makeFriend
+                    FriendsUtil.makeFriend((int)jsObj.get("id"), getContext());
                 } catch (JSONException e){
                     e.printStackTrace();
                 }
+                */
             }
         });
     }
