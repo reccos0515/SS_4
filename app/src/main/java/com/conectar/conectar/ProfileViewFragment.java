@@ -29,11 +29,11 @@ import util.Singleton;
  */
 public class ProfileViewFragment extends Fragment {
 
-    private static int curIdNum; //id number of the user to be viewed
     private static String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/"; //url to be modified
     private static int userIDNum = 1; //change this to a global variable of the logged in user
     private static JSONObject jsObj; //json object that is received. Can only be accessed within a button
     private Context context;
+    //TODO update this to work with swipe fragment
 
     private OnFragmentInteractionListener mListener;
 
@@ -45,14 +45,12 @@ public class ProfileViewFragment extends Fragment {
      * Use this factory method to create a new instance of
      * ProfileView by pulling up the profile of a user from
      * their user ID
-     * @param idNum an int that represents the id number of the user to be viewed
      * @return A new instance of fragment ProfileViewFragment.
      */
-    public static ProfileViewFragment newInstance(int idNum) {
+    public static ProfileViewFragment newInstance() {
         ProfileViewFragment fragment = new ProfileViewFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
-        curIdNum = idNum;
         return fragment;
     }
 
@@ -71,10 +69,6 @@ public class ProfileViewFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        int thisUserId = 1;
-//        int id = 2; //set id of user want to receive
-//        url += id + "";
-
         context = getContext();
         //set the username on screen
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url + userIDNum + "",  null,
@@ -104,13 +98,12 @@ public class ProfileViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //first id receives, second id sends
-                /*
-                try{ //TODO update for makeFriend
-                    FriendsUtil.makeFriend((int)jsObj.get("id"), getContext());
+                try{
+                    FriendsUtil.makeFriend(userIDNum + "", (int)jsObj.get("id") + "", getContext());
                 } catch (JSONException e){
                     e.printStackTrace();
                 }
-                */
+
             }
         });
     }
