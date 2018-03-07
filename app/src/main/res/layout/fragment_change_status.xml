@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context="com.conectar.conectar.ChangeStatusFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <Button
         android:id="@+id/greenStatusBtn"

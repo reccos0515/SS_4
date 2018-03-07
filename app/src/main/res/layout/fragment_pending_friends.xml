@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.conectar.conectar.PendingFriendsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- TODO redo to list multiple pending friend requests from any user -->
 
     <Switch
         android:id="@+id/friendsViewSwitch"
