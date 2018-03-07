@@ -55,7 +55,7 @@ public class LoginService {
 		//give cryptic message if secure mode is enabled
 		//disallows people from guessing usernames
 		if(secureMode) {
-			error = "unable to login";
+			error = "unable to add login";
 		}
 		HtmlMessage msg = new HtmlMessage(success,error);
 		return msg;
@@ -125,17 +125,30 @@ public class LoginService {
 		}else if(!userService.userExists(user)) {
 			success = false;
 			error = "user not found";
-		}else {
+		} else {
 			//handle if user id is null or not valid
 			if(user.getId() != null && user.getId() > 0) {
-				return userService.getUser(user.getId());
+				user = userService.getUser(user.getId());
 			}else {
-				return userService.getUserByUserName(user.getUserName());
+				user = userService.getUserByUserName(user.getUserName());
 			}
 			
+			//check password
+			String pass = loginRepo.findByUser(user).getPassword();//get password
+			if(!pass.equals(login.getPassword())) {
+				success = false;
+				error = "incorrect password";
+			}else {
+				return user;
+			}
 		}
 		
 		
+		//give cryptic message if secure mode is enabled
+		//disallows people from guessing usernames
+		if(secureMode) {
+			error = "unable to login";
+		}	
 		HtmlMessage msg = new HtmlMessage(success, error);
 		return msg;
 	}
