@@ -147,4 +147,51 @@ public class UserUtil {
 
     }
 
+    /**
+     * Gets a user from the DB using a GET request
+     * @param url url that the request will be sent to
+     * @param context context in which this method is used
+     * @return the user that was grabbed from the DB
+     */
+    public static JSONObject getUser(String url, Context context){
+        JSONObject jsonUser = new JSONObject();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //grab user
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        userJSONObject = response; //update for user grabbed
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+        return jsonUser;
+    }
+
+    /**
+     * Updates a user in the DB
+     * @param url url that the put request will be sent to
+     * @param context context in which this method is used
+     */
+    public static void putUser(String url, Context context){
+        JSONObject jsonUser = new JSONObject();
+        //update the DB to reflect deleted interests
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("Object Put Status", "Successful Request");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Object Put Status", "error");
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+
 }

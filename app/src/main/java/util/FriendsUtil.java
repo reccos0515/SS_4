@@ -30,9 +30,41 @@ public class FriendsUtil {
      * @param id the id number of the friend whose friends list is wanted
      * @return the list of friends
      */
-    public static JSONArray getFriends(Context context, String id){
+    public static JSONArray getFriends(Context context, String id){ //TODO revisit, don't think it works
         url = "";
+        //TODO accommodate success status
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //grab user
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        userJSONObject = response; //update for user grabbed
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
 
+        try {
+            tempArr = userJSONObject.getJSONArray("friends");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return tempArr;
+    }
+
+    /**
+     * Returns a JSONArray of all the pending friend requests a specific user has
+     * @param context the context in which this method is used
+     * @param id the id number of the friend whose friends list is wanted
+     * @return the list of friends
+     */
+    public static JSONArray getPending(Context context, String id){ //TODO revisit, don't think it works
+        url = "";
+        //TODO accommodate success status
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //grab user
                 new Response.Listener<JSONObject>() {
                     @Override
