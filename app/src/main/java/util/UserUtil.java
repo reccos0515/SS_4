@@ -316,15 +316,35 @@ public class UserUtil {
 
 
     /**
-     * A string array of the list of users the current user is friends with
+     * Returns a JSONArray of all the friends a specific user has
+     * @param context the context in which this method is used
+     * @param id the id number of the friend whose friends list is wanted
      * @return the list of friends
      */
-    public static String[] getFriends(Context context, String id){ //TODO update
-        String[] friends = null;
-        url += "/users/" + id + "/friends";
+    public static JSONArray getFriends(Context context, String id){
+        url = "";
 
-        //TODO receive array and parse into list
-        return friends;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //grab user
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        userJSONObject = response; //update for user grabbed
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+
+        try {
+            tempArr = userJSONObject.getJSONArray("friends");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return tempArr;
     }
 
     /**
@@ -482,25 +502,6 @@ public class UserUtil {
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
 
-    }
-
-    /**
-     * Updates the current user's JSONObject for server communications
-     * @param fields a 2D array of the information for the fields of the JSONObject
-     */
-    private static void updateJSONObject(String[][] fields, Context context){ //TODO remove once other methods are updated to not piss them off
-        //convert fields to JSONObject
-        JSONObject js = new JSONObject();
-        try {
-            for(int i = 0; i < fields[0].length; i++){
-                js.put(fields[0][i], fields[1][i]);
-            }
-            Log.d("createJsonObject Status", ("successful, " + js.toString()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        url += "/users";
-        JsonRequest.jsonObjectPutRequest(js, url, context);
     }
 
 }
