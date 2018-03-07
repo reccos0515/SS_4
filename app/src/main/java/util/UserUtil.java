@@ -8,6 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -372,16 +373,50 @@ public class UserUtil {
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
     }
 
-
-    public static void removeFriend(String userId, String friendId, Context context){//TODO update
-        url += "/users/" + userId + "/friends/" + friendId+ "";
-        JsonRequest.deleteRequest(url, context);
+    /**
+     * Removes a friend from a user's friends list
+     * @param userId the user who is deleting the friend
+     * @param friendId the friend to be deleted from the user's list
+     * @param context the context in which this method is used
+     */
+    public static void removeFriend(String userId, String friendId, Context context){
+        url += "/users/" + userId + "/friends/" + friendId+ ""; //TODO update url
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Delete Request Status", "Success");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Delete Request Status", "Error");
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(stringRequest);
     }
 
-
-    public static void removeFriend(int userId, int friendId, Context context){//TODO update
-        url += "/users/" + userId + "/friends/" + friendId + "";
-        JsonRequest.deleteRequest(url, context);
+    /**
+     * Removes a friend from a user's friends list
+     * @param userId the user who is deleting the friend
+     * @param friendId the friend to be deleted from the user's list
+     * @param context the context in which this method is used
+     */
+    public static void removeFriend(int userId, int friendId, Context context){
+        url += "/users/" + userId + "/friends/" + friendId + ""; //TODO update url
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Delete Request Status", "Success");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Delete Request Status", "Error");
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(stringRequest);
     }
 
     /**
@@ -465,7 +500,7 @@ public class UserUtil {
             e.printStackTrace();
         }
         url += "/users";
-        JsonRequest.jsonObjectPutRequest(js, url, context); //TODO check that putting here is correct for updating user
+        JsonRequest.jsonObjectPutRequest(js, url, context);
     }
 
 }
