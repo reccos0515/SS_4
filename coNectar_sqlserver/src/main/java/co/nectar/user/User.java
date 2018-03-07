@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User {
-
+	private boolean success;
 	//variables
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -67,6 +67,7 @@ public class User {
 	}
 	public User(int id,String userName, String bio) {
 		super();
+		this.success = true;
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
@@ -74,8 +75,9 @@ public class User {
 		this.recievedRequestFrom = new ArrayList<User>();
 	}
 	
-	public User(Integer id, String userName, String bio, List<User> sentRequestTo, List<User> recievedRequestFrom) {
+	public User(boolean success, Integer id, String userName, String bio, List<User> sentRequestTo, List<User> recievedRequestFrom) {
 		super();
+		this.success = success;
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
@@ -86,6 +88,13 @@ public class User {
 	
 	
 	//getter/setter methods
+	
+	public boolean isSuccess() {
+		return success;
+	}
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
 	public Integer getId() {
 		return id;
 	}

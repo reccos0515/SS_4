@@ -30,7 +30,7 @@ public class LoginService {
 	 * user already exists
 	 * 
 	 * @param login login to be added
-	 * @return
+	 * @return htmlmessage indicating sucess or error
 	 */
 	public HtmlMessage addLogin(Login login) {
 		boolean success = true;
@@ -47,6 +47,7 @@ public class LoginService {
 		}else {
 			//save login and user
 			User added = userService.addUser(login.getUser());
+			added.setSuccess(true);
 			login.setUser(added);
 			loginRepo.save(login);
 		}
@@ -54,7 +55,7 @@ public class LoginService {
 		
 		//give cryptic message if secure mode is enabled
 		//disallows people from guessing usernames
-		if(secureMode) {
+		if(secureMode&&!success) {
 			error = "unable to add login";
 		}
 		HtmlMessage msg = new HtmlMessage(success,error);
@@ -70,7 +71,7 @@ public class LoginService {
 	 * 
 	 * 
 	 * @param login login to be removed
-	 * @return
+	 * @return htmlmessage(on error)
 	 */
 	public Object removeLogin(Login login) {
 		boolean success = true;
@@ -99,8 +100,13 @@ public class LoginService {
 			userService.deleteUser(user.getId());
 		}
 		
-		
-		return null;
+		//give cryptic message if secure mode is enabled
+		//disallows people from guessing usernames
+		if(secureMode&&!success) {
+			error = "unable to add login";
+		}
+		HtmlMessage msg = new HtmlMessage(success,error);
+		return msg;
 	}
 
 
@@ -112,7 +118,7 @@ public class LoginService {
 	 * passwords do not match
 	 * 
 	 * @param login
-	 * @return
+	 * @return user or htmlmessage(on error)
 	 */
 	public Object getUser(Login login) {
 		// TODO Auto-generated method stub
