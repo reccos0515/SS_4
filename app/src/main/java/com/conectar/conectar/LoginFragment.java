@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +37,7 @@ import util.Singleton;
  */
 public class LoginFragment extends Fragment {
 
-    Button loginBtn;
+    Button loginBtn, createAccountBtn;
     EditText loginUsername;
     EditText loginPassword;
     Context context;
@@ -80,6 +82,7 @@ public class LoginFragment extends Fragment {
         context = getContext(); //get the current context for use in Volley requests
 
         loginBtn = view.findViewById(R.id.loginBtn);
+        createAccountBtn = view.findViewById(R.id.createAccountBtn);
         loginPassword = view.findViewById(R.id.loginPassword);
         loginUsername = view.findViewById(R.id.loginUsername);
 
@@ -95,13 +98,11 @@ public class LoginFragment extends Fragment {
                 } catch (JSONException e){
                     e.printStackTrace();
                 }
-                //JsonRequest.postRequest(js, url); //post JSON to server to find/return user credentials to log them in
-                //TODO get request for logged in user
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  js,
+
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  js, //get user that's being logged in
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //get user id out?
                         user = response;
                     }
                 }, new Response.ErrorListener() {
@@ -114,6 +115,16 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        createAccountBtn.setOnClickListener(new View.OnClickListener() { //if create account button is clicked
+            @Override
+            public void onClick(View view) { //change fragments to the new profile fragment
+                Fragment fragment = new NewProfileFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area, fragment);
+                fragmentTransaction.commit();
+            }
+        });
 
     }
 
