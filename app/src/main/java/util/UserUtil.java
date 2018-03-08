@@ -25,6 +25,36 @@ public class UserUtil {
 
     private static String url = "http://proj-309-ss-4.iastate.edu:9002/ben"; //base url for server
     private static JSONObject userJSONObject = new JSONObject();
+    private static JSONArray jsonArray = new JSONArray();
+
+
+//    /**
+//     * Updates the user's bio in the DB
+//     * @param bio a string of the typed bio from the user
+//     * @param context the context in which this method is used
+//     */
+//    public static void setBio(String bio, Context context){
+//        url = ""; //TODO update url
+//        try {
+//            userJSONObject.put("bio", bio);
+//        } catch (JSONException e) {
+//            Log.d("JSONObject Put Status", "Bio put failed");
+//            e.printStackTrace();
+//        }
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                Log.d("Object Put Status", "Successful Request");
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d("Object Put Status", "error");
+//                error.printStackTrace();
+//            }
+//        });
+//        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+//    }
 
     /**
      * Updates the user's bio in the DB
@@ -39,19 +69,7 @@ public class UserUtil {
             Log.d("JSONObject Put Status", "Bio put failed");
             e.printStackTrace();
         }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d("Object Put Status", "Successful Request");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Object Put Status", "error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+        putUser(url, userJSONObject, context);
     }
 
     /**
@@ -154,12 +172,11 @@ public class UserUtil {
      * @return the user that was grabbed from the DB
      */
     public static JSONObject getUser(String url, Context context){
-        JSONObject jsonUser = new JSONObject();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //grab user
-                new Response.Listener<JSONObject>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        userJSONObject = response; //update for user grabbed
+                    public void onResponse(JSONArray response) {
+                        jsonArray = response;
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -167,19 +184,28 @@ public class UserUtil {
                 error.printStackTrace();
             }
         });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
-        return jsonUser;
+        String message = "";
+        try {
+            message = jsonArray.getString(1); //grabs status message from request
+            userJSONObject = jsonArray.getJSONObject(2); //grabs user
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if(!message.equals("Success")){
+            Log.d("Volley Request Error", message);
+        }
+        return userJSONObject;
     }
 
     /**
-     * Updates a user in the DB
+     * Updates a user in the DB with a PUT request
      * @param url url that the put request will be sent to
      * @param context context in which this method is used
      */
-    public static void putUser(String url, Context context){
-        JSONObject jsonUser = new JSONObject();
+    public static void putUser(String url, JSONObject js, Context context){
         //update the DB to reflect deleted interests
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, js, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d("Object Put Status", "Successful Request");
@@ -193,5 +219,30 @@ public class UserUtil {
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
     }
+
+    /**
+     * Returns a JSONArray from a specific url
+     * @param url url the request will be sent to
+     * @param context context in which this method is used
+     * @return the JSONArray returned from the server
+     */
+    public static JSONArray getArray(String url, Context context){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        jsonArray = response;
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest); //add json to queue
+        return jsonArray;
+    }
+
+
 
 }
