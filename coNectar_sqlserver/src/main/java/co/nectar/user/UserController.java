@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.nectar.Message.HtmlUserList;
+
 @RestController
 @RequestMapping(path = "/ben")
 public class UserController {
@@ -38,8 +40,19 @@ public class UserController {
 	 * @return Calls function in userService to return.
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/users")
-	public Iterable<User> getAllTopics() {
+	public Iterable<User> getAllUsers() {
 		return userService.getAllUsers();
+	}
+	
+	/**
+	 * Returns all users in HtmlUserList form
+	 * Request Method: Get
+	 * URL: /users
+	 * @return Calls function in userService to return.
+	 */
+	@RequestMapping(method = RequestMethod.GET, value = "/users_list")
+	public HtmlUserList getAllUsers_list() {
+		return userService.getAllUsers_list();
 	}
 
 	/**
@@ -70,7 +83,7 @@ public class UserController {
 	 */
 	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}")
 	public void deleteUser(@PathVariable int userId) {
-		userService.deleteUser(userId);
+		userService.deleteUserById(userId);
 	}
 
 	// get a user
@@ -80,7 +93,7 @@ public class UserController {
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}")
 	public User getUser(@PathVariable int userId) {
-		return userService.getUser(userId);
+		return userService.getUserById(userId);
 	}
 
 	// update bio
@@ -94,15 +107,15 @@ public class UserController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/users/{userId}/request_friend/{friendId}")
 	public String addFriend(@PathVariable int userId, @PathVariable int friendId) {
-		userService.requestFriend(userId, friendId);
+		userService.requestFriendById(userId, friendId);
 		return "Requested friend";
 	}
 
 	// Force add a friend. Maybe delete this later?
 	@RequestMapping(method = RequestMethod.POST, value = "/users/{userId}/friends/{friendId}/force")
 	public String addFriendWeird(@PathVariable int userId, @PathVariable int friendId) {
-		userService.requestFriend(userId, friendId);
-		userService.requestFriend(friendId, userId);
+		userService.requestFriendById(userId, friendId);
+		userService.requestFriendById(friendId, userId);
 		return "added friend";
 	}
 
@@ -121,14 +134,14 @@ public class UserController {
 	// remove friend
 	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}/friends/{friendId}")
 	public void deleteFriend(@PathVariable int userId, @PathVariable int friendId) {
-		userService.removeFriend(userId, friendId);
+		userService.removeFriendById(userId, friendId);
 	}
 
 	// Force Remove Friend. Maybe delete this later.
 	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}/friends/{friendId}/force")
 	public void deleteFriendWeird(@PathVariable int userId, @PathVariable int friendId) {
-		userService.removeFriend(userId, friendId);
-		userService.removeFriend(friendId, userId);
+		userService.removeFriendById(userId, friendId);
+		userService.removeFriendById(friendId, userId);
 	}
 
 	// get friends

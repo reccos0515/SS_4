@@ -16,14 +16,14 @@ import co.nectar.user.User;
 public class HtmlUserList {
 
 	private boolean success;
-	private List<User> users;
+	private Iterable<User> users;
 	
 
 	//constuctors
-	public HtmlUserList(boolean success, List<User> users) {
+	public HtmlUserList(boolean success, Iterable<User> iterable) {
 		super();
 		this.success = success;
-		this.users = users;
+		this.users = iterable;
 	}
 	
 	//getters and setters
@@ -33,7 +33,7 @@ public class HtmlUserList {
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
-	public List<User> getUsers() {
+	public Iterable<User> getUsers() {
 		return users;
 	}
 	public void setUsers(List<User> users) {

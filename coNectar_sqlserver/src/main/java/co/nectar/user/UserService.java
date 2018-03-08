@@ -25,6 +25,19 @@ public class UserService {
 	public Iterable<User> getAllUsers() {
 		return userRepo.findAll();
 	}
+	
+	/**
+	 * Returns a list of all users stored in the repository.
+	 * returns as a HtmlUserList
+	 * 
+	 * @return List of all users
+	 */
+	public HtmlUserList getAllUsers_list() {
+		return new HtmlUserList(true, userRepo.findAll());
+	}
+
+	
+	
 
 	/**
 	 * Returns a user that has the given ID.
@@ -86,19 +99,18 @@ public class UserService {
 		} else {
 			userRepo.delete(userId);
 		}
-		
+
 		return new HtmlMessage(success, error);
 
 	}
 
 	/**
-	 * updates user based on given user
-	 * returns unsuccessfully if:
-	 * -user id not specified
-	 * -user is not stored currently in db
-	 * -given user object is not filled out completely
+	 * updates user based on given user returns unsuccessfully if: -user id not
+	 * specified -user is not stored currently in db -given user object is not
+	 * filled out completely
 	 * 
-	 * @param user user to be updated
+	 * @param user
+	 *            user to be updated
 	 * @return HtmlMessage indicating success of operation and any error messages
 	 */
 	public HtmlMessage updateUser(User user) {
@@ -110,33 +122,36 @@ public class UserService {
 		} else if (!this.userExists(user)) {
 			success = false;
 			error = "given user not found";
-		} else if(!user.isValid()) {
+		} else if (!user.isValid()) {
 			success = false;
 			error = "given user not completely filled";
-		}else {
+		} else {
 			userRepo.save(user);
 		}
-		
+
 		return new HtmlMessage(success, error);
 
 	}
+
 	/**
 	 * returns list of users current user send a request to
-	 * @param userId user id of current user
+	 * 
+	 * @param userId
+	 *            user id of current user
 	 * @return list of users user send a request to
 	 */
 	public List<User> getSentRequestTo(int userId) {
 
 		return userRepo.findOne(userId).getSentRequestTo();
 	}
-	
-	/** 
+
+	/**
 	 * returns HtmlUserList of users current user send a request to
 	 * 
-	 * returns unsuccessfully if:
-	 * userId not in database
+	 * returns unsuccessfully if: userId not in database
 	 * 
-	 * @param userId id of user to get outgoing request from
+	 * @param userId
+	 *            id of user to get outgoing request from
 	 * @return HtmlUser list of users
 	 */
 	public HtmlUserList getSendRequestTo_list(Integer userId) {
@@ -145,17 +160,53 @@ public class UserService {
 		if (userId == null) {
 			success = false;
 			error = "userId not specified";
-		}else {
+		} else {
 			return new HtmlUserList(success, userRepo.findOne(userId).getSentRequestTo());
 		}
-		return new HtmlUserList(success, new ArrayList<User>()); //returns error and empty list
+		return new HtmlUserList(success, new ArrayList<User>()); // returns error and empty list
 	}
 
+	
+	/**
+	 * returns list of users current user received a request from
+	 * 
+	 * @param userId
+	 *            user id of current user
+	 * @return list of users user received a request from
+	 */
 	public List<User> getRecievedRequestFrom(int userId) {
 		return userRepo.findOne(userId).getRecievedRequestFrom();
 	}
 
-	public void requestFriend(int userId, int friendId) {
+	/**
+	 * returns HtmlUserList of users current user send a request to
+	 * 
+	 * returns unsuccessfully if: userId not in database
+	 * 
+	 * @param userId
+	 *            id of user to get outgoing request from
+	 * @return HtmlUser list of users
+	 * @error returns unsuccessful HtmlMessage with error message
+	 */
+	public Object getRecievedRequestFrom_list(Integer userId) {
+		boolean success = true;
+		String error = "";
+		if (userId == null) {
+			success = false;
+			error = "userId not specified";
+		} else {
+			return new HtmlUserList(success, userRepo.findOne(userId).getRecievedRequestFrom());
+		}
+		return new HtmlMessage(success, error); // returns error and empty list
+	}
+	
+	
+	/**
+	 * stores friend request from userId to friendId
+	 * @param userId
+	 * @param friendId
+	 */
+	public void requestFriendById(int userId, int friendId) {
 		User user = this.getUserById(userId);
 		User friend = this.getUserById(friendId);
 
@@ -166,7 +217,12 @@ public class UserService {
 		userRepo.save(friend);
 	}
 
-	public void removeFriend(int userId, int friendId) {
+	/**
+	 * removes friend request from userId to friendId
+	 * @param userId
+	 * @param friendId
+	 */
+	public void removeFriendById(int userId, int friendId) {
 		User user = this.getUserById(userId);
 		User friend = this.getUserById(friendId);
 

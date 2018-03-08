@@ -17,8 +17,8 @@ public class LoginController {
 	@Autowired
 	LoginService loginService;
 	
-	
-	@RequestMapping(method = RequestMethod.POST, value = "/login/feedback")
+	//map all to feedback
+	@RequestMapping("/login/feedback")
 	public Object postFeedback(@RequestBody Login login) {
 		return login.isValid();	
 	}

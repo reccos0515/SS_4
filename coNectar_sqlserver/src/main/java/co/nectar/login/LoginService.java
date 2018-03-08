@@ -77,6 +77,22 @@ public class LoginService {
 		boolean success = true;
 		String error= "";
 		
+		//find full user to be removed
+		//handle if userId is empty
+		User user = login.getUser();
+		if(!userService.userExists(user))
+			return new HtmlMessage(false,"could not find user in db");
+			
+		if(user.getId() != null && user.getId() > 0) {
+			user = userService.getUserById(user.getId());
+		}else {
+			user = userService.getUserByUserName(user.getUserName());
+		}
+		
+		//set full user
+		login.setUser(user);
+		
+		
 		if(!login.isValid()) {
 			success  =false;
 			error = "missing fields from given login";
@@ -84,20 +100,10 @@ public class LoginService {
 		else if(!loginRepo.existsByUser(login.getUser())) {
 			success = false;
 			error = "given user not found";
-		}else {
-			//find full user to be removed
-			//handle if userId is empty
-			User user = login.getUser();
-			if(user.getId() != null && user.getId() > 0) {
-				user = userService.getUser(user.getId());
-			}else {
-				user = userService.getUserByUserName(user.getUserName());
-			}
-			
-			
+		}else {	
 			login = loginRepo.findByUser(user);
 			loginRepo.delete(login);
-			userService.deleteUser(user.getId());
+			userService.deleteUserById(user.getId());
 		}
 		
 		//give cryptic message if secure mode is enabled
@@ -134,7 +140,7 @@ public class LoginService {
 		} else {
 			//handle if user id is null or not valid
 			if(user.getId() != null && user.getId() > 0) {
-				user = userService.getUser(user.getId());
+				user = userService.getUserById(user.getId());
 			}else {
 				user = userService.getUserByUserName(user.getUserName());
 			}
