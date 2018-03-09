@@ -71,5 +71,29 @@ public class SessionUtil {
         return user;
     }
 
+    /**
+     * Returns the user's username as stored in sharedPreferences
+     * @return the user's username
+     */
+    public String getSessionusername(){
+        return preferences.getString(KEY_USERNAME, null);
+    }
+
+    /**
+     * Returns the user's current status as stored in sharedPreferences
+     * @return the user's current status
+     */
+    public String getSessionId(){
+        return preferences.getString(KEY_ID, null);
+    }
+
+    /**
+     * Returns the user's status stored in sharedPreferences
+     * @return the user's current status
+     */
+    public String getSessionStatus(){
+        return preferences.getString(KEY_STATUS, null);
+    }
+
 
 }
