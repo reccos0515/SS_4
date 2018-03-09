@@ -35,7 +35,8 @@ public class FragmentUtil extends Fragment {
         */
     }
 
-    //TODO save user across fragment??
+    //TODO refresh fragment
+    //TODO scrolling???
 
 
 

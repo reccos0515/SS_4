@@ -63,6 +63,7 @@ public class UserUtil {
      */
     public static void setBio(String bio, Context context){
         url = ""; //TODO update url
+        userJSONObject = getUser(url, context);
         try {
             userJSONObject.put("bio", bio);
         } catch (JSONException e) {
@@ -72,32 +73,44 @@ public class UserUtil {
         putUser(url, userJSONObject, context);
     }
 
-    /**
-     * Sets the user's password in the DB
-     * @param pwd the new password that the user would like
-     * @param context context in which this method is used
-     */
+//    /**
+//     * Sets the user's password in the DB
+//     * @param pwd the new password that the user would like
+//     * @param context context in which this method is used
+//     */
+//    public static void setPassword(String pwd, Context context){
+//        String url = ""; //TODO update url
+//        try {
+//            userJSONObject.put("password", pwd);
+//        } catch (JSONException e) {
+//            Log.d("JSONObject Put Status", "Password put failed");
+//            e.printStackTrace();
+//        }
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                Log.d("Object Put Status", "Successful Request");
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d("Object Put Status", "error");
+//                error.printStackTrace();
+//            }
+//        });
+//        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+//    }
+
     public static void setPassword(String pwd, Context context){
         String url = ""; //TODO update url
+        getUser(url, context);
         try {
             userJSONObject.put("password", pwd);
         } catch (JSONException e) {
             Log.d("JSONObject Put Status", "Password put failed");
             e.printStackTrace();
         }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d("Object Put Status", "Successful Request");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Object Put Status", "error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+        putUser(url, userJSONObject, context);
     }
 
     /**
@@ -188,7 +201,7 @@ public class UserUtil {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        jsonArray = response;
+                        jsonArray = response; //grabs the array from the server's response
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -196,18 +209,33 @@ public class UserUtil {
                 error.printStackTrace();
             }
         });
-        String message = "";
+        Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest); //puts request in queue
+        Boolean success = false;
         try {
-            message = jsonArray.getString(1); //grabs status message from request
-            userJSONObject = jsonArray.getJSONObject(2); //grabs user
-        } catch (JSONException e) {
+            success = jsonArray.getBoolean(1); //grabs status message from request
+        } catch (JSONException e) { //if something goes wrong with Volley
             e.printStackTrace();
         }
 
-        if(!message.equals("Success")){
-            Log.d("Volley Request Error", message);
+
+        String message = ""; //only actually message when success = false
+
+        if(!success){
+            try {
+                message = jsonArray.getString(2);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("Volley Request Error", message); //sends what went wrong to logs
         }
-        return userJSONObject;
+        else{
+            try {
+                userJSONObject = jsonArray.getJSONObject(2); //grabs user
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return userJSONObject; //returns the user for manipulation
     }
 
     /**
