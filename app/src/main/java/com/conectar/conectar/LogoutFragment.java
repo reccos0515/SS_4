@@ -1,6 +1,7 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -70,6 +71,8 @@ public class LogoutFragment extends Fragment {
                 //TODO remove all session variables that keep user logged in
                 Toast.makeText(getActivity(), "You are logged out!", Toast.LENGTH_SHORT).show();
 
+                destroySession(); //remove sharedPreferences session variables
+
                 //Send user to the login screen
                 //TODO make method for changing fragments?
                 Fragment fragment = new LoginFragment();
@@ -81,6 +84,13 @@ public class LogoutFragment extends Fragment {
         });
 
 
+    }
+
+    public void destroySession(){
+        SharedPreferences preferences = getContext().getSharedPreferences("MyPref", 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply(); //or commit, but studio says apply??
     }
 
 
