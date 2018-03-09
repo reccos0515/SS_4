@@ -101,6 +101,18 @@ public class UserUtil {
     }
 
     /**
+     * Sends the request to get a user object back when logging a user in
+     * @param username the username the user inputs
+     * @param password the password the user inputs
+     * @param context the context in which this method is used
+     * @return a JSONObject of a user
+     */
+    public static JSONObject sendLoginRequest(String username, String password, Context context){ //TODO implement
+
+        return userJSONObject;
+    }
+
+    /**
      * Changes the user's status in the DB
      * @param status the new status the user wishes to switch to
      * @param id the id number of the person changing their status
@@ -132,7 +144,7 @@ public class UserUtil {
         }
         else if(status == 1){ //status is yellow
             try {
-                userJSONObject.put("status", 1); //TODO revisit what value status should be set to
+                userJSONObject.put("status", 1);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

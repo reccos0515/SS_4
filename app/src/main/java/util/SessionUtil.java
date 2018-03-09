@@ -1,10 +1,7 @@
 package util;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-
-import org.json.JSONArray;
 
 import java.util.HashMap;
 
@@ -15,10 +12,10 @@ import java.util.HashMap;
 
 public class SessionUtil {
 
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
-    Context context;
-    int PRIVATE_MODE = 0;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+    private Context context;
+    private int PRIVATE_MODE = 0;
 
     //Keys
     private static final String PREF_NAME = "coNectarPref";
@@ -26,7 +23,7 @@ public class SessionUtil {
     private static final String KEY_USERNAME = "userName";
     private static final String KEY_ID = "id";
     private static final String KEY_STATUS = "status";
-    private static final String KEY_FRIENDS = "friends";
+    private static final String KEY_FRIENDS = "friends"; //not sure if we even need to keep these on hand in session variables
     private static final String KEY_PENDING = "pending";
     private static final String KEY_INTERESTS = "interests";
 
@@ -75,7 +72,7 @@ public class SessionUtil {
      * Returns the user's username as stored in sharedPreferences
      * @return the user's username
      */
-    public String getSessionusername(){
+    public  String getSessionusername(){
         return preferences.getString(KEY_USERNAME, null);
     }
 

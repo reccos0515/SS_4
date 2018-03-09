@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import util.JsonRequest;
+import util.SessionUtil;
 import util.Singleton;
 
 
@@ -37,11 +38,12 @@ import util.Singleton;
  */
 public class LoginFragment extends Fragment {
 
-    Button loginBtn, createAccountBtn;
+    //Button loginBtn, createAccountBtn;
     EditText loginUsername;
     EditText loginPassword;
     Context context;
     JSONObject user;
+    //final SessionUtil session =  new SessionUtil(getContext());
 
     private OnFragmentInteractionListener mListener;
 
@@ -71,58 +73,35 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_logout, null); //opens the logout screen
+        return inflater.inflate(R.layout.fragment_login, null); //opens the logout screen
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         context = getContext(); //get the current context for use in Volley requests
 
-        loginBtn = view.findViewById(R.id.loginBtn);
-        createAccountBtn = view.findViewById(R.id.createAccountBtn);
         loginPassword = view.findViewById(R.id.loginPassword);
         loginUsername = view.findViewById(R.id.loginUsername);
 
-        final String url = "temp"; //TODO change to url to post to login page
-
-        loginBtn.setOnClickListener(new View.OnClickListener(){ //if user clicks the button to log in
+        view.findViewById(R.id.loginBtn).setOnClickListener(new View.OnClickListener(){ //if user clicks the button to log in
             @Override
             public void onClick(View view) { //TODO review whether or not this login stuff works
-                JSONObject js = new JSONObject();
-                try {
-                    js.put("userName", loginUsername.toString());
-                    js.put("password", loginPassword.toString());
-                } catch (JSONException e){
-                    e.printStackTrace();
-                }
-
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  js, //get user that's being logged in
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        user = response;
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                });
-                Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+                 //session.createSession("username", "1", "1");
             }
         });
 
-        createAccountBtn.setOnClickListener(new View.OnClickListener() { //if create account button is clicked
+        view.findViewById(R.id.createAccountBtn).setOnClickListener(new View.OnClickListener() { //if create account button is clicked
             @Override
             public void onClick(View view) { //change fragments to the new profile fragment
+
                 Fragment fragment = new NewProfileFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.screen_area, fragment);
                 fragmentTransaction.commit();
+
             }
         });
 
