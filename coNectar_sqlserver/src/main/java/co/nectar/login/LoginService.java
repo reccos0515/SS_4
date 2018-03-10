@@ -3,7 +3,7 @@ package co.nectar.login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.nectar.Message.HtmlMessage;
+import co.nectar.Message.HtmlError;
 import co.nectar.user.User;
 import co.nectar.user.UserService;
 
@@ -30,9 +30,9 @@ public class LoginService {
 	 * user already exists
 	 * 
 	 * @param login login to be added
-	 * @return
+	 * @return htmlmessage indicating sucess or error
 	 */
-	public HtmlMessage addLogin(Login login) {
+	public HtmlError addLogin(Login login) {
 		boolean success = true;
 		String error = "";
 		if(login.getPassword().equals("") || login.getPassword() == null) {
@@ -54,10 +54,10 @@ public class LoginService {
 		
 		//give cryptic message if secure mode is enabled
 		//disallows people from guessing usernames
-		if(secureMode) {
-			error = "unable to login";
+		if(secureMode&&!success) {
+			error = "unable to add login";
 		}
-		HtmlMessage msg = new HtmlMessage(success,error);
+		HtmlError msg = new HtmlError(success,error);
 		return msg;
 	}
 
@@ -70,11 +70,27 @@ public class LoginService {
 	 * 
 	 * 
 	 * @param login login to be removed
-	 * @return
+	 * @return htmlmessage(on error)
 	 */
-	public HtmlMessage removeLogin(Login login) {
+	public Object removeLogin(Login login) {
 		boolean success = true;
 		String error= "";
+		
+		//find full user to be removed
+		//handle if userId is empty
+		User user = login.getUser();
+		if(!userService.userExists(user))
+			return new HtmlError(false,"could not find user in db");
+			
+		if(user.getId() != null && user.getId() > 0) {
+			user = userService.getUserById(user.getId());
+		}else {
+			user = userService.getUserByUserName(user.getUserName());
+		}
+		
+		//set full user
+		login.setUser(user);
+		
 		
 		if(!login.isValid()) {
 			success  =false;
@@ -83,20 +99,19 @@ public class LoginService {
 		else if(!loginRepo.existsByUser(login.getUser())) {
 			success = false;
 			error = "given user not found";
-		}else {
-			//remove login and user
-			//handle if userId is empty
-			User user = login.getUser();
-			if(user.getId() == null)
-				user = userService.getUserByUserName(user);
-						
+		}else {	
 			login = loginRepo.findByUser(user);
 			loginRepo.delete(login);
-			userService.deleteUser(user.getId());
+			userService.deleteUserById(user.getId());
 		}
 		
-		
-		return null;
+		//give cryptic message if secure mode is enabled
+		//disallows people from guessing usernames
+		if(secureMode&&!success) {
+			error = "unable to add login";
+		}
+		HtmlError msg = new HtmlError(success,error);
+		return msg;
 	}
 
 
@@ -108,13 +123,45 @@ public class LoginService {
 	 * passwords do not match
 	 * 
 	 * @param login
-	 * @return
+	 * @return user or htmlmessage(on error)
 	 */
 	public Object getUser(Login login) {
 		// TODO Auto-generated method stub
-		User user = new User(0, "Test", "no bio");
-		Login test = new Login(user, "password");
-		return test;
+		boolean success = true;
+		String error = "";
+		User user = login.getUser();
+		if(user == null) {
+			success = false;
+			error = "user not given";
+		}else if(!userService.userExists(user)) {
+			success = false;
+			error = "user not found";
+		} else {
+			//handle if user id is null or not valid
+			if(user.getId() != null && user.getId() > 0) {
+				user = userService.getUserById(user.getId());
+			}else {
+				user = userService.getUserByUserName(user.getUserName());
+			}
+			
+			//check password
+			String pass = loginRepo.findByUser(user).getPassword();//get password
+			if(!pass.equals(login.getPassword())) {
+				success = false;
+				error = "incorrect password";
+			}else {
+				return user;
+			}
+		}
+		
+		
+		//give cryptic message if secure mode is enabled
+		//disallows people from guessing usernames
+		if(secureMode) {
+			error = "unable to login";
+		}	
+		HtmlError msg = new HtmlError(success, error);
+		return msg;
 	}
 
 }

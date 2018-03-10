@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.nectar.Message.HtmlMessage;
+import co.nectar.Message.HtmlError;
 import co.nectar.user.User;
 
 
@@ -17,8 +17,8 @@ public class LoginController {
 	@Autowired
 	LoginService loginService;
 	
-	
-	@RequestMapping(method = RequestMethod.POST, value = "/login/feedback")
+	//map all to feedback
+	@RequestMapping("/login/feedback")
 	public Object postFeedback(@RequestBody Login login) {
 		return login.isValid();	
 	}
@@ -35,7 +35,7 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/login/add")
-	public HtmlMessage addLogin(@RequestBody Login login) {
+	public Object addLogin(@RequestBody Login login) {
 		return loginService.addLogin(login);	
 	}
 	
@@ -48,7 +48,7 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.DELETE, value = "/login")
-	public HtmlMessage removeLogin(@RequestBody Login login) {
+	public Object removeLogin(@RequestBody Login login) {
 		return loginService.removeLogin(login);	
 	}
 	

@@ -30,7 +30,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User {
-
 	//variables
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

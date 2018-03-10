@@ -8,98 +8,207 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.UsesJava7;
 import org.springframework.stereotype.Service;
 
+import co.nectar.Message.HtmlError;
+import co.nectar.Message.HtmlUserList;
 
 @Service
 public class UserService {
 
-	@Autowired //Automatically connects relevant beans.
-	private UserRepository userRepo; //Define a repository to use in this service.
+	@Autowired // Automatically connects relevant beans.
+	private UserRepository userRepo; // Define a repository to use in this service.
 
 	/**
-	* Returns a list of all users stored in the repository.
-	* @return List of all users
-	*/
+	 * Returns a list of all users stored in the repository.
+	 * 
+	 * @return List of all users
+	 */
 	public Iterable<User> getAllUsers() {
 		return userRepo.findAll();
 	}
+	
+	/**
+	 * Returns a list of all users stored in the repository.
+	 * returns as a HtmlUserList
+	 * 
+	 * @return List of all users
+	 */
+	public HtmlUserList getAllUsers_list() {
+		return new HtmlUserList(true, userRepo.findAll());
+	}
+
+	
+	
 
 	/**
-	* Returns a user that has the given ID.
-	* @param userId The id of the user you wish to return.
-	* @return User with id = userId.
-	*/
-	public User getUser(int userId) {
+	 * Returns a user that has the given ID.
+	 * 
+	 * @param userId
+	 *            The id of the user you wish to return.
+	 * @return User with id = userId.
+	 */
+	public User getUserById(int userId) {
 		return userRepo.findOne(userId);
 	}
-	
-	public User getUserByUserName(User user) {
-		return userRepo.findByUserName(user.getUserName());
+
+	public User getUserByUserName(String username) {
+		return userRepo.findByUserName(username);
 	}
 
 	/**
-	* Adds a user object to the repository.
-	* @param user The user object to be added
-	*/
+	 * Adds a user object to the repository.
+	 * 
+	 * @param user
+	 *            The user object to be added
+	 */
 	public User addUser(User user) {
 		return userRepo.save(user);
 	}
 
 	/**
-	* What is this supposed to do? It seems wrong.
-	* @param userName The username of the user.
-	* @param bio The bio of the user.
-	* @return Reports that the user was saved.
-	*/
-	public String addUser(String userName, String bio) {
-		User user = new User();
-		user.setUserName(userName);
-		user.setBio(bio);
-		userRepo.save(user);
-		return "saved";
+	 * returns if specified user's exists in db
+	 * 
+	 * ONLY userId or username needs to be filled in the given user object
+	 *
+	 * @param user
+	 *            user to be checked
+	 * @return if user is found or not
+	 */
+	public boolean userExists(User user) {
+		// check to make sure id is not null
+		return userRepo.existsByUserName(user.getUserName()) || (user.getId() != null && userRepo.exists(user.getId()));
 	}
 
 	/**
-	 * returns if specified user's id exists in db
-	 *
-	 * @param user
-	 * @return
+	 * deletes user denoted by userId from db
+	 * 
+	 * 
+	 * @param userId
+	 *            userid to be deleted
+	 * @return html message indicating if operation succeeded
 	 */
-	public boolean userExists(User user) {
-		//check to make sure id is not null
-		return userRepo.existsByUserName(user.getUserName()) || (user.getId() != null && userRepo.exists(user.getId())) ;
-	}
-	
+	public HtmlError deleteUserById(Integer userId) {
+		boolean success = true;
+		String error = "";
 
-	
-	public void deleteUser(int userId) {
-		userRepo.delete(userId);
-		
-	}
+		if (userId == null) {
+			success = false;
+			error = "userId not specified";
+		} else if (userRepo.findOne(userId) == null) {
+			success = false;
+			error = "given userId not found";
+		} else {
+			userRepo.delete(userId);
+		}
 
-	public void updateBio(int userId) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void updateUser(User user) {
-		userRepo.save(user);
+		return new HtmlError(success, error);
 
 	}
 
+	/**
+	 * updates user based on given user returns unsuccessfully if: -user id not
+	 * specified -user is not stored currently in db -given user object is not
+	 * filled out completely
+	 * 
+	 * @param user
+	 *            user to be updated
+	 * @return HtmlMessage indicating success of operation and any error messages
+	 */
+	public HtmlError updateUser(User user) {
+		boolean success = true;
+		String error = "";
+		if (user.getId() == null) {
+			success = false;
+			error = "userId not specified";
+		} else if (!this.userExists(user)) {
+			success = false;
+			error = "given user not found";
+		} else if (!user.isValid()) {
+			success = false;
+			error = "given user not completely filled";
+		} else {
+			userRepo.save(user);
+		}
 
+		return new HtmlError(success, error);
+
+	}
+
+	/**
+	 * returns list of users current user send a request to
+	 * 
+	 * @param userId
+	 *            user id of current user
+	 * @return list of users user send a request to
+	 */
 	public List<User> getSentRequestTo(int userId) {
 
 		return userRepo.findOne(userId).getSentRequestTo();
 	}
 
+	/**
+	 * returns HtmlUserList of users current user send a request to
+	 * 
+	 * returns unsuccessfully if: userId not in database
+	 * 
+	 * @param userId
+	 *            id of user to get outgoing request from
+	 * @return HtmlUser list of users
+	 */
+	public HtmlUserList getSendRequestTo_list(Integer userId) {
+		boolean success = true;
+		String error = "";
+		if (userId == null) {
+			success = false;
+			error = "userId not specified";
+		} else {
+			return new HtmlUserList(success, userRepo.findOne(userId).getSentRequestTo());
+		}
+		return new HtmlUserList(success, new ArrayList<User>()); // returns error and empty list
+	}
 
+	
+	/**
+	 * returns list of users current user received a request from
+	 * 
+	 * @param userId
+	 *            user id of current user
+	 * @return list of users user received a request from
+	 */
 	public List<User> getRecievedRequestFrom(int userId) {
 		return userRepo.findOne(userId).getRecievedRequestFrom();
 	}
 
-	public void requestFriend(int userId, int friendId) {
-		User user = this.getUser(userId);
-		User friend = this.getUser(friendId);
+	/**
+	 * returns HtmlUserList of users current user send a request to
+	 * 
+	 * returns unsuccessfully if: userId not in database
+	 * 
+	 * @param userId
+	 *            id of user to get outgoing request from
+	 * @return HtmlUser list of users
+	 * @error returns unsuccessful HtmlMessage with error message
+	 */
+	public Object getRecievedRequestFrom_list(Integer userId) {
+		boolean success = true;
+		String error = "";
+		if (userId == null) {
+			success = false;
+			error = "userId not specified";
+		} else {
+			return new HtmlUserList(success, userRepo.findOne(userId).getRecievedRequestFrom());
+		}
+		return new HtmlError(success, error); // returns error and empty list
+	}
+	
+	
+	/**
+	 * stores friend request from userId to friendId
+	 * @param userId
+	 * @param friendId
+	 */
+	public void requestFriendById(int userId, int friendId) {
+		User user = this.getUserById(userId);
+		User friend = this.getUserById(friendId);
 
 		user.getSentRequestTo().add(friend);
 		friend.getRecievedRequestFrom().add(user);
@@ -108,76 +217,82 @@ public class UserService {
 		userRepo.save(friend);
 	}
 
-	public void removeFriend(int userId, int friendId) {
-		User user = this.getUser(userId);
-		User friend = this.getUser(friendId);
+	/**
+	 * removes friend request from userId to friendId
+	 * @param userId
+	 * @param friendId
+	 */
+	public void removeFriendById(int userId, int friendId) {
+		User user = this.getUserById(userId);
+		User friend = this.getUserById(friendId);
 
-		//clear friends
+		// clear friends
 		user.getSentRequestTo().remove(friend);
 		friend.getRecievedRequestFrom().remove(user);
 		userRepo.save(user);
 		userRepo.save(friend);
 	}
 
-	//friends are in both friendTo and friendFrom
+	// friends are in both friendTo and friendFrom
 	public List<User> getFriends(int userId) {
 		List<User> friends = new ArrayList<User>();
-		User user = this.getUser(userId);
+		User user = this.getUserById(userId);
 
-		//get to and from friend lists
+		// get to and from friend lists
 		List<User> to = user.getSentRequestTo();
 		List<User> from = user.getRecievedRequestFrom();
 
 		for (User friend : to) {
 			if (from.contains(friend))
-				friends.add(friend);//add if in both to and from lists
+				friends.add(friend);// add if in both to and from lists
 		}
 		return friends;
 	}
 
-	//request are in friend to but not from
+	// request are in friend to but not from
 	public List<User> getOutgoingRequests(int userId) {
 		List<User> requests = new ArrayList<User>();
-		User user = this.getUser(userId);
+		User user = this.getUserById(userId);
 
-		//get to and from friend lists
+		// get to and from friend lists
 		List<User> to = user.getSentRequestTo();
 		List<User> from = user.getRecievedRequestFrom();
 
 		for (User friend : to) {
 			if (!from.contains(friend))
-				requests.add(friend);//add friend is not in from
+				requests.add(friend);// add friend is not in from
 		}
 		return requests;
 	}
 
-	//pending users are in from but not in to
+	// pending users are in from but not in to
 	public List<User> getIncomingRequests(int userId) {
 		List<User> requests = new ArrayList<User>();
-		User user = this.getUser(userId);
+		User user = this.getUserById(userId);
 
-		//get to and from friend lists
+		// get to and from friend lists
 		List<User> to = user.getSentRequestTo();
 		List<User> from = user.getRecievedRequestFrom();
 
 		for (User friend : from) {
 			if (!to.contains(friend))
-				requests.add(friend);//add friend is not in to yet
+				requests.add(friend);// add friend is not in to yet
 		}
 		return requests;
 	}
+
 	// a discovery get all users that the current user had not friended or requested
 	public List<User> getDiscovery(int userId) {
 		List<User> discovery = new ArrayList<User>();
-		User user = this.getUser(userId);
+		User user = this.getUserById(userId);
 
-		//get all users and current user's requests
+		// get all users and current user's requests
 		List<User> users = (List<User>) this.getAllUsers();
 		List<User> requests = this.getSentRequestTo(userId);
 
 		for (User user_ele : users) {
 			if (!requests.contains(user_ele) && !user_ele.equals(user))
-				discovery.add(user_ele);//add if in both to and from lists
+				discovery.add(user_ele);// add if in both to and from lists
 		}
 		return discovery;
 	}
