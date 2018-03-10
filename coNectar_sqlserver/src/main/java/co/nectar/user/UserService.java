@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.UsesJava7;
 import org.springframework.stereotype.Service;
 
-import co.nectar.Message.HtmlMessage;
+import co.nectar.Message.HtmlError;
 import co.nectar.Message.HtmlUserList;
 
 @Service
@@ -22,22 +22,10 @@ public class UserService {
 	 * 
 	 * @return List of all users
 	 */
-	public Iterable<User> getAllUsers() {
-		return userRepo.findAll();
-	}
-	
-	/**
-	 * Returns a list of all users stored in the repository.
-	 * returns as a HtmlUserList
-	 * 
-	 * @return List of all users
-	 */
-	public HtmlUserList getAllUsers_list() {
+	public HtmlUserList getAllUsers() {
 		return new HtmlUserList(true, userRepo.findAll());
 	}
-
-	
-	
+		
 
 	/**
 	 * Returns a user that has the given ID.
@@ -86,7 +74,7 @@ public class UserService {
 	 *            userid to be deleted
 	 * @return html message indicating if operation succeeded
 	 */
-	public HtmlMessage deleteUserById(Integer userId) {
+	public HtmlError deleteUserById(Integer userId) {
 		boolean success = true;
 		String error = "";
 
@@ -100,7 +88,7 @@ public class UserService {
 			userRepo.delete(userId);
 		}
 
-		return new HtmlMessage(success, error);
+		return new HtmlError(success, error);
 
 	}
 
@@ -113,7 +101,7 @@ public class UserService {
 	 *            user to be updated
 	 * @return HtmlMessage indicating success of operation and any error messages
 	 */
-	public HtmlMessage updateUser(User user) {
+	public HtmlError updateUser(User user) {
 		boolean success = true;
 		String error = "";
 		if (user.getId() == null) {
@@ -129,7 +117,7 @@ public class UserService {
 			userRepo.save(user);
 		}
 
-		return new HtmlMessage(success, error);
+		return new HtmlError(success, error);
 
 	}
 
@@ -197,7 +185,7 @@ public class UserService {
 		} else {
 			return new HtmlUserList(success, userRepo.findOne(userId).getRecievedRequestFrom());
 		}
-		return new HtmlMessage(success, error); // returns error and empty list
+		return new HtmlError(success, error); // returns error and empty list
 	}
 	
 	

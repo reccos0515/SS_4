@@ -3,7 +3,7 @@ package co.nectar.login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.nectar.Message.HtmlMessage;
+import co.nectar.Message.HtmlError;
 import co.nectar.user.User;
 import co.nectar.user.UserService;
 
@@ -32,7 +32,7 @@ public class LoginService {
 	 * @param login login to be added
 	 * @return htmlmessage indicating sucess or error
 	 */
-	public HtmlMessage addLogin(Login login) {
+	public HtmlError addLogin(Login login) {
 		boolean success = true;
 		String error = "";
 		if(login.getPassword().equals("") || login.getPassword() == null) {
@@ -47,7 +47,6 @@ public class LoginService {
 		}else {
 			//save login and user
 			User added = userService.addUser(login.getUser());
-			added.setSuccess(true);
 			login.setUser(added);
 			loginRepo.save(login);
 		}
@@ -58,7 +57,7 @@ public class LoginService {
 		if(secureMode&&!success) {
 			error = "unable to add login";
 		}
-		HtmlMessage msg = new HtmlMessage(success,error);
+		HtmlError msg = new HtmlError(success,error);
 		return msg;
 	}
 
@@ -81,7 +80,7 @@ public class LoginService {
 		//handle if userId is empty
 		User user = login.getUser();
 		if(!userService.userExists(user))
-			return new HtmlMessage(false,"could not find user in db");
+			return new HtmlError(false,"could not find user in db");
 			
 		if(user.getId() != null && user.getId() > 0) {
 			user = userService.getUserById(user.getId());
@@ -111,7 +110,7 @@ public class LoginService {
 		if(secureMode&&!success) {
 			error = "unable to add login";
 		}
-		HtmlMessage msg = new HtmlMessage(success,error);
+		HtmlError msg = new HtmlError(success,error);
 		return msg;
 	}
 
@@ -161,7 +160,7 @@ public class LoginService {
 		if(secureMode) {
 			error = "unable to login";
 		}	
-		HtmlMessage msg = new HtmlMessage(success, error);
+		HtmlError msg = new HtmlError(success, error);
 		return msg;
 	}
 

@@ -13,7 +13,7 @@ import co.nectar.user.User;
  * @author basimon
  *
  */
-public class HtmlUserList {
+public class HtmlUserList implements HtmlMessage{
 
 	private boolean success;
 	private Iterable<User> users;

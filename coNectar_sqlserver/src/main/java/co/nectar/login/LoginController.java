@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.nectar.Message.HtmlMessage;
+import co.nectar.Message.HtmlError;
 import co.nectar.user.User;
 
 
