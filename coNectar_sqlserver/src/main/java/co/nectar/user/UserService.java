@@ -86,6 +86,7 @@ public class UserService {
 	 *            userid to be deleted
 	 * @return html message indicating if operation succeeded
 	 */
+
 	public HtmlError deleteUserById(Integer userId) {
 		boolean success = true;
 		String error = "";
@@ -114,6 +115,7 @@ public class UserService {
 	 * @return HtmlMessage indicating success of operation and any error messages
 	 */
 	public HtmlError updateUser(User user) {
+
 		boolean success = true;
 		String error = "";
 		if (user.getId() == null) {
