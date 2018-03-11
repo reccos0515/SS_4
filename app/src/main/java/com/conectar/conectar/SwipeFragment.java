@@ -34,6 +34,7 @@ import util.Singleton;
 public class SwipeFragment extends Fragment {
     private static Context context;
     private static String url;
+    private int userOnDisplayID; //int to hold the id of the user being viewed on the screen
 
     private OnFragmentInteractionListener mListener;
 
@@ -90,7 +91,13 @@ public class SwipeFragment extends Fragment {
                         else{
                             //if succeeded, can make the text view not see-able
                             errorMessage.setText("");
-                            
+                            //----------------------------------- pseudo code to be implemented later ----------------------------------------//
+
+                            //while (there is another object to be viewed)
+                                //pull the user
+                                //updateUI(user)
+
+                            //----------------------------------------------------------------------------------------------------------------//
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -100,6 +107,27 @@ public class SwipeFragment extends Fragment {
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+    }
+
+    /**
+     * Helper method to update the ui to the right user
+     * @param int place of user in JSONArray
+     */
+    private void updateUI(JSONObject user){
+        //----------------------------------------------------pseudo code to be implemented later-----------------------------------------------//
+
+        //pull this user
+        //userOnDisplayID = id of this user
+        //display picture
+        //display name
+        //int currentInterestNumDisplayed = 0
+        //for(i = 0; i < numInterests of logged in user; i++)
+            //for(j = 0; j < numInterests of viewed user; j++)
+                //if(loggedInUserInterests[i] == viewedUserInterests[j])
+                //display this in interests[currentInterestNumDisplayed]
+        
+        //-------------------------------------------------------------------------------------------------------------------------------------//
+        return;
     }
 
     @Override
