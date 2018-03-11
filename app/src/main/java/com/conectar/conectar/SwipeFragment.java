@@ -66,7 +66,7 @@ public class SwipeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
         JSONObject js = null; //TODO update this to send what is needed in a request
@@ -74,7 +74,24 @@ public class SwipeFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        boolean success; //hold the success value
+                        TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
+                        //check for success
+                        try{
+                            success = (boolean) response.get("success");
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                            return;
+                        }
+                        if(!success){
+                            //if failed, set text to nothing to view at this time
+                            errorMessage.setText("There are no matches to view at this time");
+                        }
+                        else{
+                            //if succeeded, can make the text view not see-able
+                            errorMessage.setText("");
+                            
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
