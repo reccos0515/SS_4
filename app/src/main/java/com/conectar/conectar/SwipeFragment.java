@@ -34,7 +34,8 @@ import util.Singleton;
 public class SwipeFragment extends Fragment {
     private static Context context;
     private static String url;
-    private int userOnDisplayID; //int to hold the id of the user being viewed on the screen
+    private int userOnDisplayLoc; //int to hold the location in the array of the user being viewed on the screen
+    private int userOnDisplayID; //int to hold the id of the user on display
 
     private OnFragmentInteractionListener mListener;
 
@@ -106,12 +107,49 @@ public class SwipeFragment extends Fragment {
                             errorMessage.setText("");
                             //----------------------------------- pseudo code to be implemented later ----------------------------------------//
 
-                            //while (there is another object to be viewed)
-                                //pull the user
-                                //updateUI(user)
+                            //pull the user
+                            //userOnDisplayLoc = 0
+                            //updateUI(user)
 
                             //----------------------------------------------------------------------------------------------------------------//
                         }
+                        //on click listener for next
+                        view.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //-------------------------------------pseudo code to be implemented later ----------------------------------//
+
+                                //pull the user at userOnDisplayLoc - 1
+                                //userOnDisplayLoc--
+                                //updateUser(this user)
+
+                                //----------------------------------------------------------------------------------------------------------//
+                            }
+                        });
+                        //on click listener for prev
+                        view.findViewById(R.id.swipePrev).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //-------------------------------------pseudo code to be implemented later ----------------------------------//
+
+                                //pull the user at userOnDisplayLoc + 1
+                                //userOnDisplayLoc++
+                                //updateUser(this user)
+
+                                //----------------------------------------------------------------------------------------------------------//
+                            }
+                        });
+                        //on click listener for view
+                        view.findViewById(R.id.swipeView).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //-------------------------------------pseudo code to be implemented later ----------------------------------//
+
+                                //call a profile view fragment with userOnDisplayLoc user
+
+                                //----------------------------------------------------------------------------------------------------------//
+                            }
+                        });
                     }
                 }, new Response.ErrorListener() {
             @Override
