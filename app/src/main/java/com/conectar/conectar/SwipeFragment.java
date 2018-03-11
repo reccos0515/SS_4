@@ -36,6 +36,8 @@ public class SwipeFragment extends Fragment {
     private static String url;
     private int userOnDisplayLoc; //int to hold the location in the array of the user being viewed on the screen
     private int userOnDisplayID; //int to hold the id of the user on display
+    private int numInterests; //TODO initialize this
+    private int id; //TODO initialize this
 
     private OnFragmentInteractionListener mListener;
 
@@ -163,11 +165,35 @@ public class SwipeFragment extends Fragment {
     /**
      * Helper method to update the ui to the right user
      * @param user object to be viewed
+     * @param view from where it is called, to be able to update the ui
      */
-    private void updateUI(JSONObject user){
+    private void updateUI(JSONObject user, View view){
+        //make all textviews
+        TextView errorMessage = view.findViewById(R.id.swipeMessage);
+        TextView firstName = view.findViewById(R.id.swipeFirstName);
+        TextView interest1 = view.findViewById(R.id.swipeInterest1);
+        TextView interest2 = view.findViewById(R.id.swipeInterest2);
+        TextView interest3 = view.findViewById(R.id.swipeInterest3);
+        TextView interest4 = view.findViewById(R.id.swipeInterest4);
+        TextView interest5 = view.findViewById(R.id.swipeInterest5);
+        //TODO implement userOnDisplayID = id of this user
+        int viewNumInterests = 0;
+        try {
+            userOnDisplayID = (int) user.get("id");
+            //TODO display picture
+            firstName.setText(user.get("firstName").toString());
+            viewNumInterests = (int) user.get("numInterests"); //TODO check if this is how we will be doing it for sure
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+        int currentCommonIntsDisplayed = 0;
+        for(int i = 0; i < numInterests; i++){
+            //TODO update this completely as outlined in pseudo code once clear how to
+        }
+        //TODO finish after loops
+
         //----------------------------------------------------pseudo code to be implemented later-----------------------------------------------//
 
-        //pull this user
         //userOnDisplayID = id of this user
         //display picture
         //display name
