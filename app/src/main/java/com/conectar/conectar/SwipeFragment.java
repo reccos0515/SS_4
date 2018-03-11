@@ -125,7 +125,7 @@ public class SwipeFragment extends Fragment {
             //for(j = 0; j < numInterests of viewed user; j++)
                 //if(loggedInUserInterests[i] == viewedUserInterests[j])
                 //display this in interests[currentInterestNumDisplayed]
-        
+
         //-------------------------------------------------------------------------------------------------------------------------------------//
         return;
     }
