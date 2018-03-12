@@ -33,11 +33,12 @@ import util.Singleton;
  */
 public class SwipeFragment extends Fragment {
     private static Context context;
-    private static String url;
+    private static String url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/";
     private int userOnDisplayLoc; //int to hold the location in the array of the user being viewed on the screen
     private int userOnDisplayID; //int to hold the id of the user on display
     private int numInterests; //TODO initialize this
     private int id; //TODO initialize this
+    //TODO take in environmental variables
 
     private OnFragmentInteractionListener mListener;
 
@@ -73,6 +74,7 @@ public class SwipeFragment extends Fragment {
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
+        url += "" + id + "/discovery"; //create full url
         JSONObject js = null; //TODO update this to send what is needed in a request
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, js,
                 new Response.Listener<JSONObject>() {
@@ -111,6 +113,10 @@ public class SwipeFragment extends Fragment {
                         else{
                             //if succeeded, can make the text view not see-able
                             errorMessage.setText("");
+                            JSONObject user = new JSONObject(); //TODO pull the user
+                            userOnDisplayLoc = 0;
+                            updateUI(user, view);
+
                             //----------------------------------- pseudo code to be implemented later ----------------------------------------//
 
                             //pull the user
@@ -123,10 +129,14 @@ public class SwipeFragment extends Fragment {
                         view.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
+                                userOnDisplayLoc++;
+                                JSONObject user = new JSONObject(); //TODO pull the user at userOnDisplayLoc
+                                updateUI(user, view);
                                 //-------------------------------------pseudo code to be implemented later ----------------------------------//
 
-                                //pull the user at userOnDisplayLoc - 1
-                                //userOnDisplayLoc--
+                                //userOnDisplayLoc++
+                                //pull the user at userOnDisplayLoc
                                 //updateUser(this user)
 
                                 //----------------------------------------------------------------------------------------------------------//
@@ -136,10 +146,14 @@ public class SwipeFragment extends Fragment {
                         view.findViewById(R.id.swipePrev).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
+                                userOnDisplayLoc--;
+                                JSONObject user = new JSONObject(); //TODO pull the user at userOnDisplayLoc
+                                updateUI(user, view);
                                 //-------------------------------------pseudo code to be implemented later ----------------------------------//
 
-                                //pull the user at userOnDisplayLoc + 1
-                                //userOnDisplayLoc++
+                                //userOnDisplayLoc--
+                                //pull the user at userOnDisplayLoc
                                 //updateUser(this user)
 
                                 //----------------------------------------------------------------------------------------------------------//
@@ -182,14 +196,14 @@ public class SwipeFragment extends Fragment {
         TextView interest4 = view.findViewById(R.id.swipeInterest4);
         TextView interest5 = view.findViewById(R.id.swipeInterest5);
         */
-        //TODO implement userOnDisplayID = id of this user
-        int viewNumInterests = 0;
-        try {
+        //set userOnDisplayID
+        int viewNumInterests;
+        try{
             userOnDisplayID = (int) user.get("id");
+            viewNumInterests = (int) user.get("numInterests"); //TODO update this to how implemented server side
             //TODO display picture
             firstName.setText(user.get("firstName").toString());
-            viewNumInterests = (int) user.get("numInterests"); //TODO check if this is how we will be doing it for sure
-        } catch (JSONException e){
+        }catch (JSONException e){
             e.printStackTrace();
         }
         int currentCommonIntsDisplayed = 0;
