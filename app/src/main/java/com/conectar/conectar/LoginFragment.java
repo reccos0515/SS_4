@@ -41,7 +41,7 @@ import util.UserUtil;
  */
 public class LoginFragment extends Fragment {
 
-    //Button loginBtn, createAccountBtn;
+    Button loginBtn;
     EditText loginUsername, loginPassword;
     Context context;
     JSONObject user;

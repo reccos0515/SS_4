@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import util.FriendsUtil;
@@ -37,6 +41,8 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     private static JSONArray friends;
     private static JSONArray pending;
+    String[] friendsUsernames;
+    int[] friendsIds;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -85,8 +91,21 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         String id = "1";
 
 
-        FriendsUtil.getFriends(context, id);
+        friends = FriendsUtil.getFriends(context, id);
+        for(int i = 0; i < friends.length(); i++){ //set arrays for listing items
+            JSONObject tempUser = new JSONObject();
+            try {
+                tempUser = friends.getJSONObject(i);
+                friendsUsernames[i] = tempUser.getString("username");
+                friendsIds[i] = tempUser.getInt("id"); //TODO is id an int or string?
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
+        ListAdapter listAdapter = new ArrayAdapter<String>(this, R.layout.fragment_friends, R.id.friendUsername, friendsUsernames);
+        ListView listView = (ListView) view.findViewById(R.id.friendsListView); //grabs the list view our items will be in
+        listView.setAdapter(listAdapter); //tells list view to use the items we have
     }
 
     @Override
