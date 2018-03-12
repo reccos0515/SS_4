@@ -121,9 +121,10 @@ public class UserUtil {
      * @param context the context in which this method is used
      * @return a JSONObject of a user
      */
-    public static JSONObject sendLoginRequest(String username, String password, Context context){ //TODO implement
+    public static JSONArray sendLoginRequest(String username, String password, Context context){ //TODO implement
+        //probably needs special volley requests, not the premade volley methods
 
-        return userJSONObject;
+        return jsonArray;
     }
 
     /**

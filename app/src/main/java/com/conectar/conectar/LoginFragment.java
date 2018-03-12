@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,12 +21,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import util.JsonRequest;
 import util.SessionUtil;
 import util.Singleton;
+import util.UserUtil;
 
 
 /**
@@ -42,6 +45,7 @@ public class LoginFragment extends Fragment {
     EditText loginUsername, loginPassword;
     Context context;
     JSONObject user;
+    JSONArray tempJSONArray = new JSONArray();
     final SessionUtil session =  new SessionUtil(getContext());
 
     private OnFragmentInteractionListener mListener;
@@ -91,6 +95,54 @@ public class LoginFragment extends Fragment {
                 //session.createSession("username", "1", "1");
                 //Toast.makeText(getActivity(), "User Username" + session.getSessionusername(), Toast.LENGTH_LONG).show();
                 Toast.makeText(getActivity(), "Things", Toast.LENGTH_LONG).show();
+                //TODO grab actual values from edittext???
+                tempJSONArray = UserUtil.sendLoginRequest(loginUsername.toString(), loginPassword.toString(), context); //returns JSONArray response to login request
+                //deal with whether or not the request was successful
+                Boolean success = false;
+                try {
+                    success = tempJSONArray.getBoolean(0); //get whether or not the request was successful
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if(success){ //if the request was successful
+                    try {
+                        user = tempJSONArray.getJSONObject(1); //get the user
+
+                        String username = user.getString("username");
+                        String id = user.getString("id");
+                        String bio = user.getString("bio");
+                        JSONArray interests = user.getJSONArray("interests"); //TODO idk
+                        String status = Integer.toString(user.getInt("status"));
+
+                        //set session variables
+                        session.createSession(username, id, status);
+
+                        //send user to swipe page
+                        Fragment fragment = new SwipeFragment();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.screen_area, fragment);
+                        fragmentTransaction.commit();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else{
+                    String message = "";
+                    try {
+                        message = tempJSONArray.getString(1); //get error message
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if(message.equals("incorrect login")){ //TODO change to whatever error messages there are
+                        //if user has incorrect credentials
+                        Toast.makeText(getActivity(), "Login Unsuccessful", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Log.d("Login Error Message", message); //if it was an app/server error
+                    }
+                }
+
+
             }
         });
 
