@@ -88,8 +88,9 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) { //TODO review whether or not this login stuff works
                 //to test whether the session can work
-                Toast.makeText(getActivity(), "User Username" + session.getSessionusername(), Toast.LENGTH_LONG).show();
-                 session.createSession("username", "1", "1");
+                //session.createSession("username", "1", "1");
+                //Toast.makeText(getActivity(), "User Username" + session.getSessionusername(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Things", Toast.LENGTH_LONG).show();
             }
         });
 
