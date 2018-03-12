@@ -111,8 +111,24 @@ public class UserController {
 	// Force Remove Friend. Maybe delete this later.
 	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}/friends/{friendId}/force")
 	public HtmlMessage deleteFriendWeird(@PathVariable int userId, @PathVariable int friendId) {
-		userService.removeFriendById(userId, friendId);
-		userService.removeFriendById(friendId, userId);
+		HtmlMessage msg1 = userService.removeFriendById(userId, friendId);
+		HtmlMessage msg2 = userService.removeFriendById(friendId, userId);
+		
+		boolean success = true;
+		String error = "";
+		
+		if(!msg1.isSuccess() && !msg2.isSuccess()) {
+			success = false;
+			error = "error adding both users";
+		}else if(!msg1.isSuccess()) {
+			success = false;
+			error = "error userId removing friendId: " + ((HtmlError) msg1).getMessage();
+		}else if(!msg2.isSuccess()) {
+			success = false;
+			error = "error frindId removing userId: " + ((HtmlError) msg2).getMessage(); 
+		}
+		return new HtmlError(success, error);
+		
 	}
 
 	// get friends
