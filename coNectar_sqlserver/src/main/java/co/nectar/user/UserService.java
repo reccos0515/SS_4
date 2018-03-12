@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.UsesJava7;
 import org.springframework.stereotype.Service;
 
-import co.nectar.Message.HtmlError;
-import co.nectar.Message.HtmlUserList;
+import co.nectar.Message.*;;
 
 @Service
 public class UserService {
@@ -28,18 +27,57 @@ public class UserService {
 		
 
 	/**
-	 * Returns a user that has the given ID.
+	 * Returns a HtmlUserList that has the given userId.
+	 * 
+	 * Returns a HtmlError if:
+	 * - no userId is given
+	 * - userId is not found
 	 * 
 	 * @param userId
 	 *            The id of the user you wish to return.
-	 * @return User with id = userId.
+	 * @return HtmlUserList success: true, users: list of size 1 with found user
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
 	 */
-	public User getUserById(int userId) {
-		return userRepo.findOne(userId);
+	public HtmlMessage getUserById(Integer userId) {
+		ArrayList<User> users = new ArrayList<User>();
+		User user = userRepo.findOne(userId);
+		
+		//check for errors
+		if(userId == null) {
+			return new HtmlError(false, "UserId not given");
+		}else if(user == null) {
+			return new HtmlError(false, "UserId not found");
+		}
+		users.add(user);
+		return new HtmlUserList(true, users);
 	}
 
-	public User getUserByUserName(String username) {
-		return userRepo.findByUserName(username);
+	/**
+	 * Returns a HtmlUserList that has the given username.
+	 * 
+	 * Returns a HtmlError if:
+	 * - no username is given
+	 * - username is not found
+	 * 
+	 * @param username
+	 *            The username of the user you wish to return.
+	 * @return HtmlUserList success: true, users: list of size 1 with found user
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
+	 */
+	public HtmlMessage getUserByUserName(String username) {
+		ArrayList<User> users = new ArrayList<User>();
+		User user = userRepo.findByUserName(username);
+		
+		//check for errors
+		if(username == null) {
+			return new HtmlError(false, "Username not given");
+		}else if(user == null) {
+			return new HtmlError(false, "Username not found");
+		}
+		users.add(user);
+		return new HtmlUserList(true, users);
 	}
 
 	/**
@@ -47,6 +85,19 @@ public class UserService {
 	 * 
 	 * @param user
 	 *            The user object to be added
+	 */
+	/**
+	 * Returns a HtmlMessage of add success.
+	 * 
+	 * Returns a HtmlError if:
+	 * - no username is given
+	 * - username is not found
+	 * 
+	 * @param username
+	 *            The username of the user you wish to return.
+	 * @return HtmlUserList success: true, users: list of size 1 with found user
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
 	 */
 	public User addUser(User user) {
 		return userRepo.save(user);
