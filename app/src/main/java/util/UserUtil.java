@@ -26,6 +26,7 @@ public class UserUtil {
     private static String url = "http://proj-309-ss-4.iastate.edu:9002/ben"; //base url for server
     private static JSONObject userJSONObject = new JSONObject();
     private static JSONArray jsonArray = new JSONArray();
+    private static JSONArray jsonArray2 = new JSONArray();
 
 
 //    /**
@@ -133,19 +134,7 @@ public class UserUtil {
      */
     public static void updateStatus(int status, int id, Context context){
         url = ""; //TODO update url
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //grab user
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        userJSONObject = response; //update for user grabbed
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+        getUser(url, context);
 
         //change status
         if(status  == 0){ //status is red
@@ -174,19 +163,7 @@ public class UserUtil {
         }
 
         //update the DB to reflect deleted interests
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d("Object Put Status", "Successful Request");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Object Put Status", "error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+        putUser(url, userJSONObject, context);
 
     }
 
@@ -267,7 +244,7 @@ public class UserUtil {
      * @return the JSONArray returned from the server
      */
     public static JSONArray getArray(String url, Context context){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, //grab first layer of array
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -280,8 +257,36 @@ public class UserUtil {
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest); //add json to queue
-        return jsonArray;
+
+        Boolean success = false;
+        try {
+            success = jsonArray.getBoolean(1); //grabs status message from request
+        } catch (JSONException e) { //if something goes wrong with Volley
+            e.printStackTrace();
+        }
+
+
+        String message = ""; //only actually message when success = false
+
+        if(!success){
+            try {
+                message = jsonArray.getString(2);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("Volley Request Error", message); //sends what went wrong to logs
+        }
+        else{
+            try {
+                jsonArray2 = jsonArray.getJSONArray(3); //grabs array of users
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return jsonArray2;
     }
+
 
 
 

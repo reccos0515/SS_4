@@ -33,25 +33,7 @@ public class FriendsUtil {
     public static JSONArray getFriends(Context context, String id){ //TODO revisit, don't think it works
         url = "";
         //TODO accommodate success status
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //grab user
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        userJSONObject = response; //update for user grabbed
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
-
-        try {
-            tempArr = userJSONObject.getJSONArray("friends");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+       tempArr = UserUtil.getArray(url, context);
 
         return tempArr;
     }
