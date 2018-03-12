@@ -20,6 +20,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import util.FriendsUtil;
 import util.JsonRequest;
 import util.Singleton;
 
@@ -81,63 +82,10 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         Context context = getContext();
         TextView actualFriend = view.findViewById(R.id.friend1); //First full friend
         TextView pendingFriend = view.findViewById(R.id.pendingFriend1); //First pending friend
+        String id = "1";
 
 
-        //JsonRequest.clearString(); //Make sure there isn't anything already saved?
-
-        //ask for friends array for user 1
-        //TODO set this up to use the updated request system and test
-        Boolean wasRequested = false;
-        String friendsUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/friends";
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(friendsUrl,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        //display friends list
-                        friends = response;
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest); //add json to queue
-
-
-
-
-        //ask for pending array for user 1
-        String pendingUrl = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/1/pending";
-        jsonArrayRequest = new JsonArrayRequest(pendingUrl,  //may need typecasting to string on the null?
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        //display pending friends list
-                        pending = response;
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest); //add json to queue
-
-
-
-        //set friends textview
-        //set pending textview
-
-
-
-        //sending request and receiving user profile from server
-        /*
-        JSONObject userObj = null;
-        makeRequest(userObj, this);
-        Context context = getContext();
-        userObj = getRequests(context);
-        */
+        FriendsUtil.getFriends(context, id);
 
     }
 

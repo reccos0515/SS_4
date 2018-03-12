@@ -30,11 +30,21 @@ public class FriendsUtil {
      * @param id the id number of the friend whose friends list is wanted
      * @return the list of friends
      */
-    public static JSONArray getFriends(Context context, String id){ //TODO revisit, don't think it works
-        url = "";
-        //TODO accommodate success status
+    public static JSONArray getFriends(Context context, String id){ //TODO test
+        url = "/users/" + id + "/friends";
        tempArr = UserUtil.getArray(url, context);
+        return tempArr;
+    }
 
+    /**
+     * Returns a JSONArray of all the friends a specific user has
+     * @param context the context in which this method is used
+     * @param id the id number of the friend whose friends list is wanted
+     * @return the list of friends
+     */
+    public static JSONArray getFriends(Context context, int id){ //TODO test
+        url = "/users/" + id + "/friends";
+        tempArr = UserUtil.getArray(url, context);
         return tempArr;
     }
 
@@ -45,28 +55,20 @@ public class FriendsUtil {
      * @return the list of friends
      */
     public static JSONArray getPending(Context context, String id){ //TODO revisit, don't think it works
-        url = "";
-        //TODO accommodate success status
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //grab user
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        userJSONObject = response; //update for user grabbed
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+        url = "/users/" + id + "pending_friends"; //TODO review url
+        tempArr = UserUtil.getArray(url, context);
+        return tempArr;
+    }
 
-        try {
-            tempArr = userJSONObject.getJSONArray("friends");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+    /**
+     * Returns a JSONArray of all the pending friend requests a specific user has
+     * @param context the context in which this method is used
+     * @param id the id number of the friend whose friends list is wanted
+     * @return the list of friends
+     */
+    public static JSONArray getPending(Context context, int id){ //TODO revisit, don't think it works
+        url = "/users/" + id + "pending_friends"; //TODO review url
+        tempArr = UserUtil.getArray(url, context);
         return tempArr;
     }
 
@@ -78,19 +80,7 @@ public class FriendsUtil {
      */
     public static void makeFriend(String userId, String friendId, Context context){
         url += "/users/" + userId + "/request_friend/" + friendId + "";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+        UserUtil.postRequest(url, context);
     }
 
     /**
@@ -101,19 +91,7 @@ public class FriendsUtil {
      */
     public static void makeFriend(int userId, int friendId, Context context){
         url += "/users/" + userId + "/request_friend/" + friendId + "";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+        UserUtil.postRequest(url, context);
     }
 
     /**
@@ -123,20 +101,8 @@ public class FriendsUtil {
      * @param context the context in which this method is used
      */
     public static void removeFriend(String userId, String friendId, Context context){
-        url += "/users/" + userId + "/friends/" + friendId+ ""; //TODO update url
-        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("Delete Request Status", "Success");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Delete Request Status", "Error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(stringRequest);
+        url += "/users/" + userId + "/friends/" + friendId+ ""; //TODO review url
+        UserUtil.deleteRequest(url, context);
     }
 
     /**
@@ -146,19 +112,7 @@ public class FriendsUtil {
      * @param context the context in which this method is used
      */
     public static void removeFriend(int userId, int friendId, Context context){
-        url += "/users/" + userId + "/friends/" + friendId + ""; //TODO update url
-        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("Delete Request Status", "Success");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Delete Request Status", "Error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(stringRequest);
+        url += "/users/" + userId + "/friends/" + friendId + ""; //TODO review url
+        UserUtil.deleteRequest(url, context);
     }
 }

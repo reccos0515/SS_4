@@ -28,28 +28,17 @@ public class InterestsUtil {
      * @param interests an array of selected interests
      * @param context the context in which this method is used
      */
-    public static void setInterests(int[] interests, Context context){
+    public static void setInterests(int[] interests, String id, Context context){
         //set appropriate array spot with interests in userJSON
         String url = ""; //TODO update url
+        userJSONObject = UserUtil.getUser(url, context);
         try {
             userJSONObject.put("interests", interests);
         } catch (JSONException e) {
             Log.d("JSONObject Put Status", "Interests put failed");
             e.printStackTrace();
         }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d("Object Put Status", "Successful Request");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Object Put Status", "error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+        UserUtil.putUser(url, userJSONObject, context);
     }
 
     /**
@@ -59,19 +48,7 @@ public class InterestsUtil {
      */
     public static void addInterest(int newInterest, Context context){
         url = ""; //TODO update url
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //grab user
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        userJSONObject = response; //update for user grabbed
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+        userJSONObject = UserUtil.getUser(url, context);
 
         try {
             tempArr = userJSONObject.getJSONArray("interests"); //grabs the array of interests from user object
@@ -114,19 +91,7 @@ public class InterestsUtil {
         }
 
         //update the JSONObject in the DB
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d("Object Put Status", "Successful Request");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Object Put Status", "error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+        UserUtil.putUser(url, userJSONObject, context);
     }
 
     /**
@@ -139,19 +104,7 @@ public class InterestsUtil {
         String url = ""; //TODO update url
         boolean isDeleted = false; //used to relay that the interest wasn't in the list in the first place
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //grab user
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        userJSONObject = response; //update for user grabbed
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+        userJSONObject = UserUtil.getUser(url, context);
 
         try {
             tempArr = userJSONObject.getJSONArray("interests"); //grabs the array of interests from user object
@@ -189,19 +142,7 @@ public class InterestsUtil {
             e.printStackTrace();
         }
         //update the JSONObject in the DB
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d("Object Put Status", "Successful Request");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Object Put Status", "error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+        UserUtil.putUser(url, userJSONObject, context);
     }
 
     /**
@@ -212,19 +153,7 @@ public class InterestsUtil {
     public static void deleteAllInterests(Context context, int id){
         int[] tempArr = {0,0,0,0,0};
         url = ""; //TODO update url for grabbing a specific user's information, should be same for putting I believe
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null, //grab user
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        userJSONObject = response; //update for user grabbed
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+        userJSONObject = UserUtil.getUser(url, context);
 
         try {
             userJSONObject.put("interests", tempArr); //set JSONObject with deleted interests
@@ -233,19 +162,7 @@ public class InterestsUtil {
         }
 
         //update the DB to reflect deleted interests
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d("Object Put Status", "Successful Request");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Object Put Status", "error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+        UserUtil.putUser(url, userJSONObject, context);
     }
 
 }

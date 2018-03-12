@@ -39,8 +39,7 @@ import util.Singleton;
 public class LoginFragment extends Fragment {
 
     //Button loginBtn, createAccountBtn;
-    EditText loginUsername;
-    EditText loginPassword;
+    EditText loginUsername, loginPassword;
     Context context;
     JSONObject user;
     final SessionUtil session =  new SessionUtil(getContext());
@@ -85,14 +84,12 @@ public class LoginFragment extends Fragment {
         loginPassword = view.findViewById(R.id.loginPassword);
         loginUsername = view.findViewById(R.id.loginUsername);
 
-        Toast.makeText(getActivity(), "User Username" + session.getSessionusername(), Toast.LENGTH_LONG).show();
-
         view.findViewById(R.id.loginBtn).setOnClickListener(new View.OnClickListener(){ //if user clicks the button to log in
             @Override
             public void onClick(View view) { //TODO review whether or not this login stuff works
                 //to test whether the session can work
                 Toast.makeText(getActivity(), "User Username" + session.getSessionusername(), Toast.LENGTH_LONG).show();
-                 //session.createSession("username", "1", "1");
+                 session.createSession("username", "1", "1");
             }
         });
 

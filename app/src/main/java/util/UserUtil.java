@@ -35,7 +35,7 @@ public class UserUtil {
 //     * @param context the context in which this method is used
 //     */
 //    public static void setBio(String bio, Context context){
-//        url = ""; //TODO update url
+//        url = "";
 //        try {
 //            userJSONObject.put("bio", bio);
 //        } catch (JSONException e) {
@@ -62,8 +62,8 @@ public class UserUtil {
      * @param bio a string of the typed bio from the user
      * @param context the context in which this method is used
      */
-    public static void setBio(String bio, Context context){
-        url = ""; //TODO update url
+    public static void setBio(String bio, String id, Context context){
+        url += "/users/" + id; //TODO verify url
         userJSONObject = getUser(url, context);
         try {
             userJSONObject.put("bio", bio);
@@ -80,7 +80,7 @@ public class UserUtil {
 //     * @param context context in which this method is used
 //     */
 //    public static void setPassword(String pwd, Context context){
-//        String url = ""; //TODO update url
+//        String url = "";
 //        try {
 //            userJSONObject.put("password", pwd);
 //        } catch (JSONException e) {
@@ -102,8 +102,8 @@ public class UserUtil {
 //        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
 //    }
 
-    public static void setPassword(String pwd, Context context){
-        String url = ""; //TODO update url
+    public static void setPassword(String pwd, String id, Context context){
+        String url = "/users/" + id; //TODO verify url
         getUser(url, context);
         try {
             userJSONObject.put("password", pwd);
@@ -287,7 +287,37 @@ public class UserUtil {
         return jsonArray2;
     }
 
+    public static void postRequest(String url, Context context){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+    }
 
+    public static void deleteRequest(String url, Context context){
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Delete Request Status", "Success");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Delete Request Status", "Error");
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(stringRequest);
+    }
 
 
 }
