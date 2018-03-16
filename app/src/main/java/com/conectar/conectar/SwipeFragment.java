@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,6 +39,7 @@ public class SwipeFragment extends Fragment {
     private int userOnDisplayID; //int to hold the id of the user on display
     private int numInterests; //TODO initialize this
     private int id; //TODO initialize this
+    private JSONArray users; //array of users found in response
     //TODO take in environmental variables
 
     private OnFragmentInteractionListener mListener;
@@ -107,22 +109,20 @@ public class SwipeFragment extends Fragment {
                             interest3.setText("");
                             interest4.setText("");
                             interest5.setText("");
-
                         }
                         else{
                             //if succeeded, can make the text view not see-able
                             errorMessage.setText("");
-                            JSONObject user = new JSONObject(); //TODO pull the user
-                            userOnDisplayLoc = 0;
-                            updateUI(user, view);
-
-                            //----------------------------------- pseudo code to be implemented later ----------------------------------------//
-
+                            JSONObject user = new JSONObject(); //specific user
                             //pull the user
-                            //userOnDisplayLoc = 0
-                            //updateUI(user)
-
-                            //----------------------------------------------------------------------------------------------------------------//
+                            try{
+                                users = (JSONArray) response.get("users");
+                                user = (JSONObject) users.get(0);
+                            }catch (JSONException e){
+                                e.printStackTrace();
+                            }
+                            userOnDisplayLoc = 0; //update place in array to 0
+                            updateUI(user, view); //update the UI
                         }
                         //on click listener for next
                         view.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
