@@ -83,13 +83,13 @@ public class SwipeFragment extends Fragment {
                         boolean success; //hold the success value
                         TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
                         TextView firstName = view.findViewById(R.id.swipeFirstName);
-                        /*
+
                         TextView interest1 = view.findViewById(R.id.swipeInterest1);
                         TextView interest2 = view.findViewById(R.id.swipeInterest2);
                         TextView interest3 = view.findViewById(R.id.swipeInterest3);
                         TextView interest4 = view.findViewById(R.id.swipeInterest4);
                         TextView interest5 = view.findViewById(R.id.swipeInterest5);
-                        */
+
                         //check for success
                         try{
                             success = (boolean) response.get("success");
@@ -102,13 +102,12 @@ public class SwipeFragment extends Fragment {
                             errorMessage.setText("There are no matches to view at this time");
                             //set all interests as blank
                             firstName.setText("");
-                            /*
                             interest1.setText("");
                             interest2.setText("");
                             interest3.setText("");
                             interest4.setText("");
                             interest5.setText("");
-                            */
+
                         }
                         else{
                             //if succeeded, can make the text view not see-able

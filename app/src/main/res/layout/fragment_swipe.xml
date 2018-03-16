@@ -36,7 +36,7 @@
         app:layout_constraintVertical_bias="0.734" />
 
     <TextView
-        android:id="@+id/int1"
+        android:id="@+id/swipeInterest1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -52,7 +52,7 @@
         app:layout_constraintVertical_bias="0.791" />
 
     <TextView
-        android:id="@+id/int2"
+        android:id="@+id/swipeInterest2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -68,7 +68,7 @@
         app:layout_constraintVertical_bias="0.827" />
 
     <TextView
-        android:id="@+id/int3"
+        android:id="@+id/swipeInterest3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -84,7 +84,7 @@
         app:layout_constraintVertical_bias="0.885" />
 
     <TextView
-        android:id="@+id/int4"
+        android:id="@+id/swipeInterest4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -100,7 +100,7 @@
         app:layout_constraintVertical_bias="0.932" />
 
     <TextView
-        android:id="@+id/int5"
+        android:id="@+id/swipeInterest5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
