@@ -42,7 +42,6 @@ public class SwipeFragment extends Fragment {
     private JSONArray users; //array of users found in response
     private int len = 0; //length of array of users
     //TODO take in environmental variables
-    //TODO set what happens if end/beginning of users
 
     private OnFragmentInteractionListener mListener;
 
@@ -87,7 +86,6 @@ public class SwipeFragment extends Fragment {
                         boolean success; //hold the success value
                         TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
                         TextView firstName = view.findViewById(R.id.swipeFirstName);
-
                         TextView interest1 = view.findViewById(R.id.swipeInterest1);
                         TextView interest2 = view.findViewById(R.id.swipeInterest2);
                         TextView interest3 = view.findViewById(R.id.swipeInterest3);
@@ -111,10 +109,10 @@ public class SwipeFragment extends Fragment {
                             interest3.setText("");
                             interest4.setText("");
                             interest5.setText("");
-                            len = 0;
+                            len = 0; // length of array is 0
                         }
                         else{
-                            //if succeeded, can make the text view not see-able
+                            //if succeeded, can make the text view invisible
                             errorMessage.setText("");
                             JSONObject user = new JSONObject(); //specific user
                             //pull the user
@@ -210,10 +208,34 @@ public class SwipeFragment extends Fragment {
             firstName.setText(user.get("firstName").toString());
         }catch (JSONException e){
             e.printStackTrace();
+            return; //TODO better way to handle this???
         }
         int currentCommonIntsDisplayed = 0;
-        for(int i = 0; i < numInterests; i++){
-            //TODO update this completely as outlined in pseudo code once clear how to
+        //as long as they both have at least 1 interest, compare interests
+        if(numInterests > 0 && viewNumInterests > 0) {
+            for (int i = 0; i < numInterests; i++) {
+                for (int j = 0; j < viewNumInterests; j++) {
+                    //TODO update this completely as outlined in pseudo code once clear how to
+                    //if interests(i) == view interests(j)
+                    //update the correct interest
+                    if(currentCommonIntsDisplayed == 0){
+                        interest1.setText(""); //set this to be interests(i)
+                    }
+                    else if(currentCommonIntsDisplayed == 1){
+                        interest2.setText(""); //set this to be interests(i)
+                    }
+                    else if(currentCommonIntsDisplayed == 2){
+                        interest3.setText(""); //set this to be interests(i)
+                    }
+                    else if(currentCommonIntsDisplayed == 3){
+                        interest4.setText(""); //set this to be interests(i)
+                    }
+                    else if(currentCommonIntsDisplayed == 4){
+                        interest5.setText(""); //set this to be interests(i)
+                    }
+                    currentCommonIntsDisplayed++;
+                }
+            }
         }
         //TODO finish after loops
 
