@@ -208,15 +208,14 @@ public class SwipeFragment extends Fragment {
             firstName.setText(user.get("firstName").toString());
         }catch (JSONException e){
             e.printStackTrace();
-            return; //TODO better way to handle this???
+            return;
         }
         int currentCommonIntsDisplayed = 0;
         //as long as they both have at least 1 interest, compare interests
         if(numInterests > 0 && viewNumInterests > 0) {
             for (int i = 0; i < numInterests; i++) {
                 for (int j = 0; j < viewNumInterests; j++) {
-                    //TODO update this completely as outlined in pseudo code once clear how to
-                    //if interests(i) == view interests(j)
+                    //TODO if interests(i) == view interests(j)
                     //update the correct interest
                     if(currentCommonIntsDisplayed == 0){
                         interest1.setText(""); //set this to be interests(i)
@@ -253,7 +252,7 @@ public class SwipeFragment extends Fragment {
         if(currentCommonIntsDisplayed < 5){
             interest5.setText("");
         }
-        //TODO finish after loops
+        errorMessage.setText(""); //set no error
 
         //----------------------------------------------------pseudo code to be implemented later-----------------------------------------------//
 
