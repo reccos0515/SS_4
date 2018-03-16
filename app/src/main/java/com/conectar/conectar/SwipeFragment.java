@@ -40,6 +40,7 @@ public class SwipeFragment extends Fragment {
     private int numInterests; //TODO initialize this
     private int id; //TODO initialize this
     private JSONArray users; //array of users found in response
+    private int len = 0; //length of array of users
     //TODO take in environmental variables
     //TODO set what happens if end/beginning of users
 
@@ -110,6 +111,7 @@ public class SwipeFragment extends Fragment {
                             interest3.setText("");
                             interest4.setText("");
                             interest5.setText("");
+                            len = 0;
                         }
                         else{
                             //if succeeded, can make the text view not see-able
@@ -119,6 +121,7 @@ public class SwipeFragment extends Fragment {
                             try{
                                 users = (JSONArray) response.get("users");
                                 user = (JSONObject) users.get(0);
+                                len = users.length(); //set length of the array
                             }catch (JSONException e){
                                 e.printStackTrace();
                             }
@@ -130,8 +133,11 @@ public class SwipeFragment extends Fragment {
                         view.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
                                 userOnDisplayLoc++; //go to next user
+                                //if it has reached the end, return to 0
+                                if(userOnDisplayLoc >= len){
+                                    userOnDisplayLoc = 0;
+                                }
                                 try {
                                     JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
                                     updateUI(user, view);
@@ -145,7 +151,11 @@ public class SwipeFragment extends Fragment {
                         view.findViewById(R.id.swipePrev).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                userOnDisplayLoc--; //go to previous user
+                                userOnDisplayLoc--; //go to previous
+                                //if it has passed the beginning, return to the end
+                                if(userOnDisplayLoc < 0){
+                                    userOnDisplayLoc = len - 1;
+                                }
                                 try{
                                     JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
                                     updateUI(user, view);
@@ -185,13 +195,12 @@ public class SwipeFragment extends Fragment {
         //make all textviews
         TextView errorMessage = view.findViewById(R.id.swipeMessage);
         TextView firstName = view.findViewById(R.id.swipeFirstName);
-        /*
         TextView interest1 = view.findViewById(R.id.swipeInterest1);
         TextView interest2 = view.findViewById(R.id.swipeInterest2);
         TextView interest3 = view.findViewById(R.id.swipeInterest3);
         TextView interest4 = view.findViewById(R.id.swipeInterest4);
         TextView interest5 = view.findViewById(R.id.swipeInterest5);
-        */
+
         //set userOnDisplayID
         int viewNumInterests;
         try{
