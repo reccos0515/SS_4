@@ -41,6 +41,7 @@ public class SwipeFragment extends Fragment {
     private int id; //TODO initialize this
     private JSONArray users; //array of users found in response
     //TODO take in environmental variables
+    //TODO set what happens if end/beginning of users
 
     private OnFragmentInteractionListener mListener;
 
@@ -124,40 +125,36 @@ public class SwipeFragment extends Fragment {
                             userOnDisplayLoc = 0; //update place in array to 0
                             updateUI(user, view); //update the UI
                         }
+
                         //on click listener for next
                         view.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
 
-                                userOnDisplayLoc++;
-                                JSONObject user = new JSONObject(); //TODO pull the user at userOnDisplayLoc
-                                updateUI(user, view);
-                                //-------------------------------------pseudo code to be implemented later ----------------------------------//
-
-                                //userOnDisplayLoc++
-                                //pull the user at userOnDisplayLoc
-                                //updateUser(this user)
-
-                                //----------------------------------------------------------------------------------------------------------//
+                                userOnDisplayLoc++; //go to next user
+                                try {
+                                    JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
+                                    updateUI(user, view);
+                                } catch (JSONException e){
+                                    e.printStackTrace();
+                                }
                             }
                         });
+
                         //on click listener for prev
                         view.findViewById(R.id.swipePrev).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
-                                userOnDisplayLoc--;
-                                JSONObject user = new JSONObject(); //TODO pull the user at userOnDisplayLoc
-                                updateUI(user, view);
-                                //-------------------------------------pseudo code to be implemented later ----------------------------------//
-
-                                //userOnDisplayLoc--
-                                //pull the user at userOnDisplayLoc
-                                //updateUser(this user)
-
-                                //----------------------------------------------------------------------------------------------------------//
+                                userOnDisplayLoc--; //go to previous user
+                                try{
+                                    JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
+                                    updateUI(user, view);
+                                }catch (JSONException e){
+                                    e.printStackTrace();
+                                }
                             }
                         });
+
                         //on click listener for view
                         view.findViewById(R.id.swipeView).setOnClickListener(new View.OnClickListener() {
                             @Override
