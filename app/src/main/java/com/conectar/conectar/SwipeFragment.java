@@ -237,6 +237,22 @@ public class SwipeFragment extends Fragment {
                 }
             }
         }
+        //set all non-common interests to ""
+        if(currentCommonIntsDisplayed == 0){
+            interest1.setText("No common interests found");
+        }
+        if(currentCommonIntsDisplayed < 2){
+            interest2.setText("");
+        }
+        if(currentCommonIntsDisplayed < 3){
+            interest3.setText("");
+        }
+        if(currentCommonIntsDisplayed < 4){
+            interest4.setText("");
+        }
+        if(currentCommonIntsDisplayed < 5){
+            interest5.setText("");
+        }
         //TODO finish after loops
 
         //----------------------------------------------------pseudo code to be implemented later-----------------------------------------------//
