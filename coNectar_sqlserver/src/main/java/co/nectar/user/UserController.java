@@ -105,7 +105,7 @@ public class UserController {
 	// remove friend
 	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}/friends/{friendId}")
 	public HtmlMessage deleteFriend(@PathVariable int userId, @PathVariable int friendId) {
-		userService.removeFriendById(userId, friendId);
+		return userService.removeFriendById(userId, friendId);
 	}
 
 	// Force Remove Friend. Maybe delete this later.
