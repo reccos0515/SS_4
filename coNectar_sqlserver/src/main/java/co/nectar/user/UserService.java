@@ -359,52 +359,153 @@ public class UserService {
 		return new HtmlError(success, error);
 	}
 
-	// friends are in both friendTo and friendFrom
+	
+	/**
+	 * Returns a HtmlMessage of list of friends
+	 * 
+	 * Returns a HtmlError if:
+	 * - no userId is given
+	 * - userId is not found
+	 * 
+	 * friends are in sentRequestTo and recievedRequestsFrom
+	 * 
+	 * @param userId
+	 *            The userId of the user you wish to friends list.
+	 * @return HtmlUserList success: true, users: list of users current friends
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
+	 */
 	public HtmlMessage getFriends(Integer userId) {
+		boolean success = true;
+		String error = "";
 		List<User> friends = new ArrayList<User>();
-		User user = this.getUserById(userId);
+		HtmlMessage msg = this.getUserById(userId);
+		
+		//check user 
+		if (!msg.isSuccess()) {
+			success = false;
+			error = "error userId: " + ((HtmlError) msg).getMessage();
+		} else {
+			//get user
+			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			
+			// get to and from friend lists
+			List<User> to = user.getSentRequestTo();
+			List<User> from = user.getRecievedRequestFrom();
 
-		// get to and from friend lists
-		List<User> to = user.getSentRequestTo();
-		List<User> from = user.getRecievedRequestFrom();
-
-		for (User friend : to) {
-			if (from.contains(friend))
-				friends.add(friend);// add if in both to and from lists
+			// friends are in both friendTo and friendFrom
+			for (User friend : to) {
+				if (from.contains(friend))
+					friends.add(friend);
+			}
+			
+			return new HtmlUserList(success, friends);
 		}
-		return friends;
+
+		return new HtmlError(success, error);
 	}
 
-	// request are in friend to but not from
+	/**
+	 * Returns a HtmlMessage of list of outgoing friends
+	 * 
+	 * Returns a HtmlError if:
+	 * - no userId is given
+	 * - userId is not found
+	 * 
+	 * outgoing requests are in sentRequestTo but not recievedRequestsFrom
+	 * 
+	 * @param userId
+	 *            The userId of the user you wish to friends list.
+	 * @return HtmlUserList success: true, users: list of users current friends
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
+	 */
 	public HtmlMessage getOutgoingRequests(Integer userId) {
+		
+		boolean success = true;
+		String error = "";
 		List<User> requests = new ArrayList<User>();
-		User user = this.getUserById(userId);
+		HtmlMessage msg = this.getUserById(userId);
+		
+		//check user 
+		if (!msg.isSuccess()) {
+			success = false;
+			error = "error userId: " + ((HtmlError) msg).getMessage();
+		} else {
+			//get user
+			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			
+			// get to and from friend lists
+			List<User> to = user.getSentRequestTo();
+			List<User> from = user.getRecievedRequestFrom();
 
-		// get to and from friend lists
-		List<User> to = user.getSentRequestTo();
-		List<User> from = user.getRecievedRequestFrom();
-
-		for (User friend : to) {
-			if (!from.contains(friend))
-				requests.add(friend);// add friend is not in from
+			// friends are in sentReuquestTo but not RecievedReuqestFrom
+			for (User friend : to) {
+				if (!from.contains(friend))
+					requests.add(friend);// add friend is not in from
+			}
+			
+			return new HtmlUserList(success, requests);
 		}
-		return requests;
+
+		return new HtmlError(success, error);
 	}
 
-	// pending users are in from but not in to
+	/**
+	 * Returns a HtmlMessage of list of outgoing friends
+	 * 
+	 * Returns a HtmlError if:
+	 * - no userId is given
+	 * - userId is not found
+	 * 
+	 * incoming requests are in not sentRequestTo but are in recievedRequestsFrom
+	 * 
+	 * @param userId
+	 *            The userId of the user you wish to friends list.
+	 * @return HtmlUserList success: true, users: list of users current friends
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
+	 */
 	public HtmlMessage getIncomingRequests(Integer userId) {
+//		List<User> requests = new ArrayList<User>();
+//		User user = this.getUserById(userId);
+//
+//		// get to and from friend lists
+//		List<User> to = user.getSentRequestTo();
+//		List<User> from = user.getRecievedRequestFrom();
+//
+//		for (User friend : from) {
+//			if (!to.contains(friend))
+//				requests.add(friend);// add friend is not in to yet
+//		}
+//		return requests;
+		
+		boolean success = true;
+		String error = "";
 		List<User> requests = new ArrayList<User>();
-		User user = this.getUserById(userId);
+		HtmlMessage msg = this.getUserById(userId);
+		
+		//check user 
+		if (!msg.isSuccess()) {
+			success = false;
+			error = "error userId: " + ((HtmlError) msg).getMessage();
+		} else {
+			//get user
+			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			
+			// get to and from friend lists
+			List<User> to = user.getSentRequestTo();
+			List<User> from = user.getRecievedRequestFrom();
 
-		// get to and from friend lists
-		List<User> to = user.getSentRequestTo();
-		List<User> from = user.getRecievedRequestFrom();
-
-		for (User friend : from) {
-			if (!to.contains(friend))
-				requests.add(friend);// add friend is not in to yet
+			//incoming requests are in not sentRequestTo but are in recievedRequestsFrom
+			for (User friend : from) {
+				if (!to.contains(friend))
+					requests.add(friend);// add friend is not in to yet
+			}
+			return new HtmlUserList(success, requests);
 		}
-		return requests;
+
+		return new HtmlError(success, error);
 	}
 
 	// a discovery get all users that the current user had not friended or requested
