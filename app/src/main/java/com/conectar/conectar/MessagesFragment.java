@@ -10,6 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
+import util.FriendsUtil;
+import util.Interests;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,7 +62,17 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        view.findViewById(R.id.testButton).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                String trial = "42345120000";
+                String one = Interests.getInterest(trial.charAt(1) + "" + trial.charAt(2) + "");
+                String two = Interests.getInterest(trial.charAt(3) + "" + trial.charAt(4) + "");
+                String three = Interests.getInterest(trial.charAt(5) + "" + trial.charAt(6) + "");
+                String four = Interests.getInterest(trial.charAt(7) + "" + trial.charAt(8) + "");
+                Toast.makeText(getContext(), one + " " + two + " " + three + " " + four, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
