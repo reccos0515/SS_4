@@ -83,6 +83,87 @@ public class Interests {
         else if(i.equals("25")){
             return "Square dancing";
         }
+        else if(i.equals("26")){
+            return "Photography";
+        }
+        else if(i.equals("27")){
+            return "Working out";
+        }
+        else if(i.equals("28")){
+            return "Football";
+        }
+        else if(i.equals("29")){
+            return "Soccer";
+        }
+        else if(i.equals("30")){
+            return "Volleyball";
+        }
+        else if(i.equals("31")){
+            return "Tennis";
+        }
+        else if(i.equals("32")){
+            return "Baseball";
+        }
+        else if(i.equals("33")){
+            return "Swimming";
+        }
+        else if(i.equals("34")){
+            return "Go to a spa";
+        }
+        else if(i.equals("35")){
+            return "Chess";
+        }
+        else if(i.equals("36")){
+            return "Basketball";
+        }
+        else if(i.equals("37")){
+            return "Hockey";
+        }
+        else if(i.equals("38")){
+            return "Skydiving";
+        }
+        else if(i.equals("39")){
+            return "Surfing";
+        }
+        else if(i.equals("40")){
+            return "Snorkeling";
+        }
+        else if(i.equals("41")){
+            return "Rock climbing";
+        }
+        else if(i.equals("42")){
+            return "Pool";
+        }
+        else if(i.equals("43")){
+            return "Playing cards";
+        }
+        else if(i.equals("44")){
+            return "Fishing";
+        }
+        else if(i.equals("45")){
+            return "Golf";
+        }
+        else if(i.equals("46")){
+            return "Camping";
+        }
+        else if(i.equals("47")){
+            return "Running a triathlon";
+        }
+        else if(i.equals("48")){
+            return "Playing music";
+        }
+        else if(i.equals("49")){
+            return "Amusement parks";
+        }
+        else if(i.equals("50")){
+            return "Boating";
+        }
+        else if(i.equals("51")){
+            return "Kayaking";
+        }
+        else if(i.equals("52")){
+            return "Cooking";
+        }
         else{
             return null;
         }
