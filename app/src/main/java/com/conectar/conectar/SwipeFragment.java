@@ -36,7 +36,7 @@ import util.SwipeStubs;
  */
 public class SwipeFragment extends Fragment {
     private Context context;
-    private static String url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
+    private static String url;
     private int userOnDisplayLoc; //int to hold the location in the array of the user being viewed on the screen
     private int userOnDisplayID; //int to hold the id of the user on display
     private int numInterests; //TODO initialize this
@@ -52,7 +52,7 @@ public class SwipeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /** 
+    /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
@@ -79,6 +79,7 @@ public class SwipeFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
         context = getContext();
 //        url += "" + id + "/discovery"; //create full url TODO put this back in
         JSONObject js = new JSONObject(); //TODO update this to send what is needed in a request

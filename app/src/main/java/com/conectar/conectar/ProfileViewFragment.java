@@ -49,8 +49,6 @@ public class ProfileViewFragment extends Fragment {
      */
     public static ProfileViewFragment newInstance() {
         ProfileViewFragment fragment = new ProfileViewFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
