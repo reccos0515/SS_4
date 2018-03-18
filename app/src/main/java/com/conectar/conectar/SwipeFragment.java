@@ -102,8 +102,12 @@ public class SwipeFragment extends Fragment {
                             return;
                         }
                         if(!success){
-                            //if failed, set text to nothing to view at this time
-                            errorMessage.setText("There are no matches to view at this time");
+                            //if failed, set text error message
+                            try {
+                                errorMessage.setText((String) response.get("message"));
+                            } catch (JSONException e){
+                                e.printStackTrace();
+                            }
                             //set all interests as blank
                             firstName.setText("");
                             interest1.setText("");
