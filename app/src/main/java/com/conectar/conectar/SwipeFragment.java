@@ -39,10 +39,8 @@ public class SwipeFragment extends Fragment {
     private Context context;
     private static String url;
     private int userOnDisplayLoc; //int to hold the location in the array of the user being viewed on the screen
-    private int userOnDisplayID; //int to hold the id of the user on display
-    private int numInterests; //TODO initialize this
-    private int id; //TODO initialize this
-    private String interests; //TODO initialize this
+    private int numInterests;
+    private String interests;
     private JSONArray users; //array of users found in response
     private int len = 0; //length of array of users
     //TODO take in environmental variables
@@ -81,9 +79,10 @@ public class SwipeFragment extends Fragment {
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         interests = SessionUtil.getSessionInterests();
+        numInterests = interests.charAt(0) - '0';
         url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
         context = getContext();
-//        url += "" + id + "/discovery"; //create full url TODO put this back in
+//      url += id + "/discovery"; //create full url TODO put this back in
         JSONObject js = new JSONObject(); //TODO update this to send what is needed in a request
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, js,
                 new Response.Listener<JSONObject>() {
@@ -213,7 +212,6 @@ public class SwipeFragment extends Fragment {
         //set userOnDisplayID
         String viewInterests;
         try{
-            userOnDisplayID = (int) user.get("id");
             viewInterests = (String) user.get("interests");
             //TODO display picture
             firstName.setText(user.get("firstName").toString());
