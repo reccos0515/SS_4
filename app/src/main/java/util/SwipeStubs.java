@@ -10,7 +10,7 @@ import org.json.JSONObject;
  */
 
 public class SwipeStubs {
-    public JSONObject getFail(){
+    public static JSONObject getFail(){
         JSONObject obj = new JSONObject();
         try {
             obj.put("success", false);

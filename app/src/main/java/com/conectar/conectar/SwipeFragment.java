@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import util.Interests;
 import util.Singleton;
+import util.SwipeStubs;
 
 
 /**
@@ -79,12 +80,13 @@ public class SwipeFragment extends Fragment {
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
-        url += "" + id + "/discovery"; //create full url
+//        url += "" + id + "/discovery"; //create full url TODO put this back in
         JSONObject js = null; //TODO update this to send what is needed in a request
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, js,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        response = SwipeStubs.getFail(); //TODO delete this after testing
                         boolean success; //hold the success value
                         TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
                         TextView firstName = view.findViewById(R.id.swipeFirstName);
