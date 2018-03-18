@@ -57,12 +57,7 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.submitInterest).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
     }
 
     @Override
