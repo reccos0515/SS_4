@@ -65,12 +65,39 @@ public class MessagesFragment extends Fragment {
         view.findViewById(R.id.testButton).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                String trial = "42345120000";
-                String one = Interests.getInterest(trial.charAt(1) + "" + trial.charAt(2) + "");
-                String two = Interests.getInterest(trial.charAt(3) + "" + trial.charAt(4) + "");
-                String three = Interests.getInterest(trial.charAt(5) + "" + trial.charAt(6) + "");
-                String four = Interests.getInterest(trial.charAt(7) + "" + trial.charAt(8) + "");
-                Toast.makeText(getContext(), one + " " + two + " " + three + " " + four, Toast.LENGTH_SHORT).show();
+                String interests = "52345121314";
+                String viewInterests = "51314122345";
+                int numInterests = interests.charAt(0) - '0';
+                int viewNumInterests = viewInterests.charAt(0) - '0';
+                int currentCommonIntsDisplayed = 0;
+                String[] views = new String[5];
+                if(numInterests > 0 && viewNumInterests > 0) {
+                    for (int i = 0; i < numInterests; i++) {
+                        for (int j = 0; j < viewNumInterests; j++) {
+                            //compare interests
+                            if (interests.charAt(2 * i + 1) == viewInterests.charAt(2 * j + 1) && interests.charAt(2 * i + 2) == viewInterests.charAt(2 * j + 2)) {
+                                //update the correct interest
+                                if (currentCommonIntsDisplayed == 0) {
+                                    views[0] = (Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                } else if (currentCommonIntsDisplayed == 1) {
+                                    views[1] = (Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                } else if (currentCommonIntsDisplayed == 2) {
+                                    views[2] = (Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                } else if (currentCommonIntsDisplayed == 3) {
+                                    views[3] = (Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                } else if (currentCommonIntsDisplayed == 4) {
+                                    views[4] = (Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                }
+                                currentCommonIntsDisplayed++;
+                            }
+                        }
+                    }
+                }
+                String msg = "";
+                for(int i = 0; i < currentCommonIntsDisplayed; i++){
+                    msg += views[i] + " ";
+                }
+                Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
             }
         });
     }

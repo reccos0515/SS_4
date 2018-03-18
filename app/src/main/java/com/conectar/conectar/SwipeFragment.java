@@ -220,7 +220,7 @@ public class SwipeFragment extends Fragment {
             return;
         }
         int currentCommonIntsDisplayed = 0;
-        int viewNumInterests = viewInterests.charAt(0); //the first char in this String is the number
+        int viewNumInterests = viewInterests.charAt(0) - '0'; //the first char in this String is the number
         //as long as they both have at least 1 interest, compare interests
         if(numInterests > 0 && viewNumInterests > 0) {
             for (int i = 0; i < numInterests; i++) {
