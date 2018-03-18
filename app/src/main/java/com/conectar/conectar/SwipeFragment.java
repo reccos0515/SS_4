@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import util.Interests;
+import util.SessionUtil;
 import util.Singleton;
 import util.SwipeStubs;
 
@@ -79,6 +80,7 @@ public class SwipeFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        interests = SessionUtil.getSessionInterests();
         url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
         context = getContext();
 //        url += "" + id + "/discovery"; //create full url TODO put this back in

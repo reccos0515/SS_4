@@ -12,10 +12,10 @@ import java.util.HashMap;
 
 public class SessionUtil {
 
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor editor;
-    private Context context;
-    private int PRIVATE_MODE = 0;
+    private static SharedPreferences preferences;
+    private static SharedPreferences.Editor editor;
+    private static Context context;
+    private static int PRIVATE_MODE = 0;
 
     //Keys
     private static final String PREF_NAME = "coNectarPref";
@@ -39,7 +39,7 @@ public class SessionUtil {
      * @param id the user's id number
      * @param status the user's current status
      */
-    public void createSession(String username, String id, String status){
+    public static void createSession(String username, String id, String status){
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(KEY_USERNAME, username);
         editor.putString(KEY_ID, id);
@@ -50,7 +50,7 @@ public class SessionUtil {
     /**
      * Destroys a user's session variables in sharedPreferences
      */
-    public void destroySession(){
+    public static void destroySession(){
         editor.clear();
         editor.commit();
     }
@@ -60,7 +60,7 @@ public class SessionUtil {
      * sharedPreferences
      * @return a hashmap of the details
      */
-    public HashMap<String, String> getUserDetails(){
+    public static HashMap<String, String> getUserDetails(){
         HashMap<String, String> user = new HashMap<String, String>();
         user.put(KEY_USERNAME, preferences.getString(KEY_USERNAME, null));
         user.put(KEY_ID, preferences.getString(KEY_ID, null));
@@ -72,7 +72,7 @@ public class SessionUtil {
      * Returns the user's username as stored in sharedPreferences
      * @return the user's username
      */
-    public  String getSessionusername(){
+    public static String getSessionusername(){
         return preferences.getString(KEY_USERNAME, null);
     }
 
@@ -80,7 +80,7 @@ public class SessionUtil {
      * Returns the user's current status as stored in sharedPreferences
      * @return the user's current status
      */
-    public String getSessionId(){
+    public static String getSessionId(){
         return preferences.getString(KEY_ID, null);
     }
 
@@ -88,10 +88,16 @@ public class SessionUtil {
      * Returns the user's status stored in sharedPreferences
      * @return the user's current status
      */
-    public String getSessionStatus(){
+    public static String getSessionStatus(){
         return preferences.getString(KEY_STATUS, null);
     }
-
+    /**
+     * Returns the user's interests stored in sharedPreferences
+     * @return the user's current interests
+     */
+    public static String getSessionInterests(){
+        return preferences.getString(KEY_INTERESTS, null);
+    }
 
 
 }
