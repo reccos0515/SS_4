@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import util.Interests;
 import util.Singleton;
 
 
@@ -39,6 +40,7 @@ public class SwipeFragment extends Fragment {
     private int userOnDisplayID; //int to hold the id of the user on display
     private int numInterests; //TODO initialize this
     private int id; //TODO initialize this
+    private String interests; //TODO initialize this
     private JSONArray users; //array of users found in response
     private int len = 0; //length of array of users
     //TODO take in environmental variables
@@ -200,10 +202,10 @@ public class SwipeFragment extends Fragment {
         TextView interest5 = view.findViewById(R.id.swipeInterest5);
 
         //set userOnDisplayID
-        int viewNumInterests;
+        String viewInterests;
         try{
             userOnDisplayID = (int) user.get("id");
-            viewNumInterests = (int) user.get("numInterests"); //TODO update this to how implemented server side
+            viewInterests = (String) user.get("interests");
             //TODO display picture
             firstName.setText(user.get("firstName").toString());
         }catch (JSONException e){
@@ -211,28 +213,27 @@ public class SwipeFragment extends Fragment {
             return;
         }
         int currentCommonIntsDisplayed = 0;
+        int viewNumInterests = viewInterests.charAt(0); //the first char in this String is the number
         //as long as they both have at least 1 interest, compare interests
         if(numInterests > 0 && viewNumInterests > 0) {
             for (int i = 0; i < numInterests; i++) {
                 for (int j = 0; j < viewNumInterests; j++) {
-                    //TODO if interests(i) == view interests(j)
-                    //update the correct interest
-                    if(currentCommonIntsDisplayed == 0){
-                        interest1.setText(""); //set this to be interests(i)
+                    //compare interests
+                    if (interests.charAt(2 * i + 1) == viewInterests.charAt(2 * j + 1) && interests.charAt(2 * i + 2) == viewInterests.charAt(2 * j + 2)) {
+                        //update the correct interest
+                        if (currentCommonIntsDisplayed == 0) {
+                            interest1.setText(Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                        } else if (currentCommonIntsDisplayed == 1) {
+                            interest2.setText(Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                        } else if (currentCommonIntsDisplayed == 2) {
+                            interest3.setText(Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                        } else if (currentCommonIntsDisplayed == 3) {
+                            interest4.setText(Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                        } else if (currentCommonIntsDisplayed == 4) {
+                            interest5.setText(Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                        }
+                        currentCommonIntsDisplayed++;
                     }
-                    else if(currentCommonIntsDisplayed == 1){
-                        interest2.setText(""); //set this to be interests(i)
-                    }
-                    else if(currentCommonIntsDisplayed == 2){
-                        interest3.setText(""); //set this to be interests(i)
-                    }
-                    else if(currentCommonIntsDisplayed == 3){
-                        interest4.setText(""); //set this to be interests(i)
-                    }
-                    else if(currentCommonIntsDisplayed == 4){
-                        interest5.setText(""); //set this to be interests(i)
-                    }
-                    currentCommonIntsDisplayed++;
                 }
             }
         }

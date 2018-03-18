@@ -7,7 +7,7 @@ package util;
 
 public class Interests {
 
-    public String getInterest(String i){
+    public static String getInterest(String i){
         if(i.equals("01")){
             return "Snowboarding";
         }
