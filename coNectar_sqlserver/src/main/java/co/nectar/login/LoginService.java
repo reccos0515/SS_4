@@ -3,7 +3,7 @@ package co.nectar.login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.nectar.Message.HtmlError;
+import co.nectar.Message.*;
 import co.nectar.user.User;
 import co.nectar.user.UserService;
 
@@ -46,7 +46,12 @@ public class LoginService {
 			error = "user is missing requierd fields";			
 		}else {
 			//save login and user
-			User added = userService.addUser(login.getUser());
+			HtmlMessage msg = userService.addUser(login.getUser());
+			if(!msg.isSuccess())
+				return new HtmlError(false, "error: "+((HtmlError) msg).getMessage());
+			
+			//get added user
+			User added = ((HtmlUserList) msg).getUsers().iterator().next();
 			login.setUser(added);
 			loginRepo.save(login);
 		}

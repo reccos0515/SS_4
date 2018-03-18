@@ -467,18 +467,6 @@ public class UserService {
 	 * @return HtmlError success: false, message: detailed error message 
 	 */
 	public HtmlMessage getIncomingRequests(Integer userId) {
-//		List<User> requests = new ArrayList<User>();
-//		User user = this.getUserById(userId);
-//
-//		// get to and from friend lists
-//		List<User> to = user.getSentRequestTo();
-//		List<User> from = user.getRecievedRequestFrom();
-//
-//		for (User friend : from) {
-//			if (!to.contains(friend))
-//				requests.add(friend);// add friend is not in to yet
-//		}
-//		return requests;
 		
 		boolean success = true;
 		String error = "";
@@ -509,19 +497,60 @@ public class UserService {
 	}
 
 	// a discovery get all users that the current user had not friended or requested
+	/**
+	 * Returns a HtmlMessage of list of outgoing friends
+	 * 
+	 * Returns a HtmlError if:
+	 * - no userId is given
+	 * - userId is not found
+	 * 
+	 * discovery requests are in not sentRequestTo but are in recievedRequestsFrom
+	 * 
+	 * @param userId
+	 *            The userId of the user you wish to friends list.
+	 * @return HtmlUserList success: true, users: list of users current friends
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
+	 */
 	public HtmlMessage getDiscovery(Integer userId) {
+//		List<User> discovery = new ArrayList<User>();
+//		User user = this.getUserById(userId);
+//
+//		// get all users and current user's requests
+//		List<User> users = (List<User>) this.getAllUsers();
+//		List<User> requests = this.getSentRequestTo(userId);
+//
+//		for (User user_ele : users) {
+//			if (!requests.contains(user_ele) && !user_ele.equals(user))
+//				discovery.add(user_ele);// add if in both to and from lists
+//		}
+//		return discovery;
+		boolean success = true;
+		String error = "";
 		List<User> discovery = new ArrayList<User>();
-		User user = this.getUserById(userId);
+		HtmlMessage msg = this.getUserById(userId);
+		
+		//check user 
+		if (!msg.isSuccess()) {
+			success = false;
+			error = "error userId: " + ((HtmlError) msg).getMessage();
+		} else {
+			//get user
+			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			
+			// get to and from friend lists
+			List<User> users = (List<User>) this.getAllUsers();
+			List<User> to = user.getSentRequestTo();
 
-		// get all users and current user's requests
-		List<User> users = (List<User>) this.getAllUsers();
-		List<User> requests = this.getSentRequestTo(userId);
-
-		for (User user_ele : users) {
-			if (!requests.contains(user_ele) && !user_ele.equals(user))
-				discovery.add(user_ele);// add if in both to and from lists
+			//incoming requests are in not sentRequestTo but are in recievedRequestsFrom
+			for (User user_ele : users) {
+				if (!to.contains(user_ele) && !user_ele.equals(user))
+					discovery.add(user_ele);// add if in both to and from lists
+			}
+			return new HtmlUserList(success, discovery);
 		}
-		return discovery;
+
+		return new HtmlError(success, error);
 	}
 
 }
