@@ -103,9 +103,9 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
             }
         }
 
-        ListAdapter listAdapter = new ArrayAdapter<String>(this, R.layout.fragment_friends, R.id.friendUsername, friendsUsernames);
-        ListView listView = (ListView) view.findViewById(R.id.friendsListView); //grabs the list view our items will be in
-        listView.setAdapter(listAdapter); //tells list view to use the items we have
+//        ListAdapter listAdapter = new ArrayAdapter<String>(this, R.layout.fragment_friends, R.id.friendUsername, friendsUsernames);
+//        ListView listView = (ListView) view.findViewById(R.id.friendsListView); //grabs the list view our items will be in
+//        listView.setAdapter(listAdapter); //tells list view to use the items we have
     }
 
     @Override

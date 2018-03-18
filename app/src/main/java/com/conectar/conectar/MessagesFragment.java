@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 /**
@@ -35,7 +36,7 @@ public class MessagesFragment extends Fragment {
 
      * @return A new instance of fragment MessagesFragment.
      */
-    public static MessagesFragment newInstance(String param1, String param2) {
+    public static MessagesFragment newInstance() {
         MessagesFragment fragment = new MessagesFragment();
         return fragment;
     }
@@ -56,7 +57,12 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        view.findViewById(R.id.submitInterest).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
     }
 
     @Override
