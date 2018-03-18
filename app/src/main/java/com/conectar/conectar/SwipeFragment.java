@@ -36,14 +36,13 @@ import util.SwipeStubs;
  * create an instance of this fragment.
  */
 public class SwipeFragment extends Fragment {
-    private Context context;
-    private static String url;
-    private int userOnDisplayLoc; //int to hold the location in the array of the user being viewed on the screen
-    private int numInterests;
-    private String interests;
+    private Context context; //context to be used to add JSONRequest to queue
+    private static String url; //beginning of url
+    private int userOnDisplayLoc; //int to hold the location in the array of the current user being viewed on the screen
+    private int numInterests; //number of interests of the logged in user
+    private String interests; //logged in user's interests
     private JSONArray users; //array of users found in response
     private int len = 0; //length of array of users
-    //TODO take in environmental variables
 
     private OnFragmentInteractionListener mListener;
 
@@ -78,10 +77,10 @@ public class SwipeFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        interests = SessionUtil.getSessionInterests();
-        numInterests = interests.charAt(0) - '0';
-        url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1";
-        context = getContext();
+        interests = SessionUtil.getSessionInterests(); //set logged in user's interests from session variables
+        numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
+        url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1"; //set the url TODO delete the 1
+        context = getContext(); //get the context
 //      url += id + "/discovery"; //create full url TODO put this back in
         JSONObject js = new JSONObject(); //TODO update this to send what is needed in a request
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, js,
@@ -90,7 +89,7 @@ public class SwipeFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         response = SwipeStubs.getFail(); //TODO delete this after testing
                         boolean success; //hold the success value
-                        TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
+                        final TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
                         TextView firstName = view.findViewById(R.id.swipeFirstName);
                         TextView interest1 = view.findViewById(R.id.swipeInterest1);
                         TextView interest2 = view.findViewById(R.id.swipeInterest2);
@@ -125,10 +124,10 @@ public class SwipeFragment extends Fragment {
                             //if succeeded, can make the text view invisible
                             errorMessage.setText("");
                             JSONObject user = new JSONObject(); //specific user
-                            //pull the user
+                            //pull the first user
                             try{
                                 users = (JSONArray) response.get("users");
-                                user = (JSONObject) users.get(0);
+                                user = (JSONObject) users.get(0); //first user
                                 len = users.length(); //set length of the array
                             }catch (JSONException e){
                                 e.printStackTrace();
@@ -150,6 +149,7 @@ public class SwipeFragment extends Fragment {
                                     JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
                                     updateUI(user, view);
                                 } catch (JSONException e){
+                                    errorMessage.setText("Sorry, we ran into a problem");//set an error for the user to see
                                     e.printStackTrace();
                                 }
                             }
@@ -168,6 +168,7 @@ public class SwipeFragment extends Fragment {
                                     JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
                                     updateUI(user, view);
                                 }catch (JSONException e){
+                                    errorMessage.setText("Sorry, we ran into a problem"); //set an error for the user to see
                                     e.printStackTrace();
                                 }
                             }
@@ -209,17 +210,17 @@ public class SwipeFragment extends Fragment {
         TextView interest4 = view.findViewById(R.id.swipeInterest4);
         TextView interest5 = view.findViewById(R.id.swipeInterest5);
 
-        //set userOnDisplayID
-        String viewInterests;
+        String viewInterests; //interests of the current user on display
         try{
             viewInterests = (String) user.get("interests");
             //TODO display picture
             firstName.setText(user.get("firstName").toString());
         }catch (JSONException e){
+            errorMessage.setText("Sorry, we ran into a problem"); //set error message to show to user
             e.printStackTrace();
             return;
         }
-        int currentCommonIntsDisplayed = 0;
+        int currentCommonIntsDisplayed = 0; //how many common interests are being displayed
         int viewNumInterests = viewInterests.charAt(0) - '0'; //the first char in this String is the number
         //as long as they both have at least 1 interest, compare interests
         if(numInterests > 0 && viewNumInterests > 0) {
@@ -239,14 +240,14 @@ public class SwipeFragment extends Fragment {
                         } else if (currentCommonIntsDisplayed == 4) {
                             interest5.setText(Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
                         }
-                        currentCommonIntsDisplayed++;
+                        currentCommonIntsDisplayed++; //increment count of how many common interests are being displayed
                     }
                 }
             }
         }
         //set all non-common interests to ""
         if(currentCommonIntsDisplayed == 0){
-            interest1.setText("No common interests found");
+            interest1.setText("No common interests found"); //if there are no common interests, tell the user this
         }
         if(currentCommonIntsDisplayed < 2){
             interest2.setText("");
