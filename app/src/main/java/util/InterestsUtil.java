@@ -84,6 +84,11 @@ public class InterestsUtil {
             Log.d("Interest Status", "Interests full, cannot be added");
         }
 
+        interests = "";
+        for(int i = 0; i < interestsArr.length; i ++){ //convert the array back to a string
+            interests += interestsArr[i];
+        }
+
         try {
             userJSONObject.put("interests", interests); //update the jsonobject for the user with new interests
         } catch (JSONException e) {
@@ -101,45 +106,51 @@ public class InterestsUtil {
      * @param badInterest interest to be deleted
      * @param context context in which this method is used
      */
-    public static void deleteInterest(int badInterest, Context context){ //TODO change for strings
-        String url = ""; //TODO update url
+    public static void deleteInterest(String badInterest, String id, Context context){ //TODO change for strings
+        String url = "/users/" + id; //TODO update url
         boolean isDeleted = false; //used to relay that the interest wasn't in the list in the first place
 
         userJSONObject = UserUtil.getUser(url, context);
+        String interests = "";
 
         try {
-            tempArr = userJSONObject.getJSONArray("interests"); //grabs the array of interests from user object
+            interests = userJSONObject.getString("interests"); //grabs the array of interests from user object
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        int[] interests = new int[tempArr.length()]; //array of correct size
-        int temp = 0; //used to minimize number of times we need try/catch blocks
+        boolean interestDeleted = false;
+        String[] interestsArr = new String[5]; //make an array for parsed interests
+        int j = 0;
+        for(int i = 0; i < 5; i ++){
+            char temp1 = interests.charAt(j);
+            char temp2 = interests.charAt(j + 1);
+            String temp3 = "" + temp1 + temp2; //concatonate the two characters
+            j += 2; //increment j by 2 instead of 1 because we grabbed two characters
+            interestsArr[i] = temp3;
+        }
 
-        for(int i = 0; i < interests.length; i++){
-            try {
-                temp = tempArr.getInt(i); //grab interest from array from DB
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            if(temp == badInterest && !isDeleted){ //if interest is found
-                interests[i] = 0; //remove interest
-                //TODO adjust as needed to show no interest
-                isDeleted = true;
-            }
-            else {
-                interests[i] = temp; //if it wasn't the interest to be deleted, keep it
+        for(int i = 0 ; i < interestsArr.length; i++){
+            if(interestsArr[i].equals(badInterest)){
+                //interest exists in list, delete it
+                interestsArr[i] = "00";
+                interestDeleted = true;
             }
         }
-        if(!isDeleted){ //interest wasn't in list and therefore couldn't be deleted
+        if(!interestDeleted){
             //TODO figure out how to toast or something to user
-            Log.d("Interest Status", "Interest not in list, cannot be deleted");
+            Log.d("Interest Status", "Interests full, cannot be added");
+        }
+
+        interests = "";
+        for(int i = 0; i < interestsArr.length; i ++){ //convert the array back to a string
+            interests += interestsArr[i];
         }
 
         try {
             userJSONObject.put("interests", interests); //update JSONObject for user
         } catch (JSONException e) {
-            Log.d("JSONObject Put Status", "Bio put failed");
+            Log.d("JSONObject Put Status", "Interests put failed");
             e.printStackTrace();
         }
         //update the JSONObject in the DB
