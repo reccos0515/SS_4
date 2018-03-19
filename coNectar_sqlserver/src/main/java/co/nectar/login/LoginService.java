@@ -80,25 +80,27 @@ public class LoginService {
 	public Object removeLogin(Login login) {
 		boolean success = true;
 		String error= "";
+		HtmlMessage msg;
 		
 		//find full user to be removed
 		//handle if userId is empty
 		User user = login.getUser();
 		if(!userService.userExists(user))
 			return new HtmlError(false,"could not find user in db");
-			
-		if(user.getId() != null && user.getId() > 0) {
-			user = userService.getUserById(user.getId());
-		}else {
-			user = userService.getUserByUserName(user.getUserName());
-		}
+		
+		//get valid user
+		msg = userService.getUserByObject(user);
+		if(!msg.isSuccess())
+			return new HtmlError(false,"error retrieving user from db: "+((HtmlError)msg).getMessage());
+		else
+			user = ((HtmlUserList)msg).getUsers().iterator().next();
 		
 		//set full user
 		login.setUser(user);
 		
 		
 		if(!login.isValid()) {
-			success  =false;
+			success = false;
 			error = "missing fields from given login";
 		}
 		else if(!loginRepo.existsByUser(login.getUser())) {
@@ -115,8 +117,8 @@ public class LoginService {
 		if(secureMode&&!success) {
 			error = "unable to add login";
 		}
-		HtmlError msg = new HtmlError(success,error);
-		return msg;
+		return new HtmlError(success,error);
+		
 	}
 
 
@@ -143,11 +145,12 @@ public class LoginService {
 			error = "user not found";
 		} else {
 			//handle if user id is null or not valid
-			if(user.getId() != null && user.getId() > 0) {
-				user = userService.getUserById(user.getId());
-			}else {
-				user = userService.getUserByUserName(user.getUserName());
-			}
+			//get valid user
+			HtmlMessage msg = userService.getUserByObject(user);
+			if(!msg.isSuccess())
+				return new HtmlError(false,"error retrieving user from db: "+((HtmlError)msg).getMessage());
+			else
+				user = ((HtmlUserList)msg).getUsers().iterator().next();
 			
 			//check password
 			String pass = loginRepo.findByUser(user).getPassword();//get password

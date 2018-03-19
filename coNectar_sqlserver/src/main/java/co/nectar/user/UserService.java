@@ -79,6 +79,37 @@ public class UserService {
 		users.add(user);
 		return new HtmlUserList(true, users);
 	}
+	/**
+	 * Returns a HtmlUserList that has the given user object.
+	 * 
+	 * Returns a HtmlError if:
+	 * - no username and no userId is given
+	 * - username or userId is not found
+	 * - user object is empty
+	 * 
+	 * @param user
+	 *            User object containing username or userId of user you wish to return
+	 * @return HtmlUserList success: true, users: list of size 1 with found user
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
+	 */
+	public HtmlMessage getUserByObject(User user) {
+		ArrayList<User> users = new ArrayList<User>();
+		
+		if(user.getUserName() != null) {
+			user = userRepo.findByUserName(user.getUserName());
+		}else if(user.getId() != null) {
+			user = userRepo.findOne(user.getId());
+		}else {
+			return new HtmlError(false,"neither username or userId not given");
+		}
+		
+		if(user == null) {
+			return new HtmlError(false, "User not found");
+		}
+		users.add(user);
+		return new HtmlUserList(true, users);
+	}
 
 	/**
 	 * Returns a HtmlMessage of add success.
