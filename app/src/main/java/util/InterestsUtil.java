@@ -59,7 +59,7 @@ public class InterestsUtil {
 
         boolean interestSet = false;
         String[] interestsArr = new String[5]; //make an array for parsed interests
-        int j = 0;
+        int j = 1;
         for(int i = 0; i < 5; i ++){
             char temp1 = interests.charAt(j);
             char temp2 = interests.charAt(j + 1);
@@ -67,6 +67,8 @@ public class InterestsUtil {
             j += 2; //increment j by 2 instead of 1 because we grabbed two characters
             interestsArr[i] = temp3;
         }
+        char tempnumInterests = interests.charAt(0); //get number of interest user currently haves
+        String numInterests = "" + tempnumInterests; // change to string
 
         for(int i = 0 ; i < interestsArr.length; i++){
             if(interestsArr[i].equals(newInterest)){
@@ -77,6 +79,9 @@ public class InterestsUtil {
             else if(interestsArr[i].equals("00") && !interestSet){ //open spot in interests array for new interest found
                 interestsArr[i] = newInterest; //put new interest in list
                 interestSet = true;
+                int temp = Integer.getInteger(numInterests);
+                temp++;
+                numInterests = Integer.toString(temp); //update the number of interests that the user has
             }
         }
         if(!interestSet){
@@ -84,7 +89,7 @@ public class InterestsUtil {
             Log.d("Interest Status", "Interests full, cannot be added");
         }
 
-        interests = "";
+        interests = numInterests; //start with how many interests the user has
         for(int i = 0; i < interestsArr.length; i ++){ //convert the array back to a string
             interests += interestsArr[i];
         }
@@ -106,7 +111,7 @@ public class InterestsUtil {
      * @param badInterest interest to be deleted
      * @param context context in which this method is used
      */
-    public static void deleteInterest(String badInterest, String id, Context context){ //TODO change for strings
+    public static void deleteInterest(String badInterest, String id, Context context){
         String url = "/users/" + id; //TODO update url
         boolean isDeleted = false; //used to relay that the interest wasn't in the list in the first place
 
@@ -129,20 +134,25 @@ public class InterestsUtil {
             j += 2; //increment j by 2 instead of 1 because we grabbed two characters
             interestsArr[i] = temp3;
         }
+        char tempChar = interests.charAt(0);
+        String numInterests = "" + tempChar; //grab how many interests the user has
 
         for(int i = 0 ; i < interestsArr.length; i++){
             if(interestsArr[i].equals(badInterest)){
                 //interest exists in list, delete it
                 interestsArr[i] = "00";
                 interestDeleted = true;
+                int temp = Integer.getInteger(numInterests);
+                temp --;
+                numInterests = Integer.toString(temp); //decrement the number of interests that the user has
             }
         }
         if(!interestDeleted){
             //TODO figure out how to toast or something to user
-            Log.d("Interest Status", "Interests full, cannot be added");
+            Log.d("Interest Status", "Interest not in list, could not delete");
         }
 
-        interests = "";
+        interests = numInterests;
         for(int i = 0; i < interestsArr.length; i ++){ //convert the array back to a string
             interests += interestsArr[i];
         }
@@ -163,12 +173,12 @@ public class InterestsUtil {
      * @param id id number for the user who will have their interests deleted
      */
     public static void deleteAllInterests(Context context, int id){
-        int[] tempArr = {0,0,0,0,0};
-        url = ""; //TODO update url for grabbing a specific user's information, should be same for putting I believe
-        userJSONObject = UserUtil.getUser(url, context);
+        String interests = "00000000000"; //0 interests, all interest slots to 0
+        url = "/users/" + id; //TODO update url for grabbing a specific user's information, should be same for putting I believe
+        userJSONObject = UserUtil.getUser(url, context); //grab user
 
         try {
-            userJSONObject.put("interests", tempArr); //set JSONObject with deleted interests
+            userJSONObject.put("interests", interests); //set JSONObject with deleted interests
         } catch (JSONException e) {
             e.printStackTrace();
         }
