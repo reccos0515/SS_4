@@ -37,6 +37,7 @@ public class User {
 	private String userName;
 	
 	private String bio;
+	private String interests;
 
 	
 	
@@ -64,20 +65,22 @@ public class User {
 	public User() {
 		
 	}
-	public User(int id,String userName, String bio) {
+	public User(int id,String userName, String bio, String interests) {
 		super();
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
+		this.interests = interests;
 		this.sentRequestTo = new ArrayList<User>();
 		this.recievedRequestFrom = new ArrayList<User>();
 	}
 	
-	public User(Integer id, String userName, String bio, List<User> sentRequestTo, List<User> recievedRequestFrom) {
+	public User(Integer id, String userName, String bio, List<User> sentRequestTo, List<User> recievedRequestFrom,String interests) {
 		super();
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
+		this.interests = interests;
 		this.sentRequestTo = sentRequestTo;
 		this.recievedRequestFrom = recievedRequestFrom;
 	}
@@ -117,9 +120,12 @@ public class User {
 	public void setRecievedRequestFrom(List<User> recievedRequestFrom) {
 		this.recievedRequestFrom = recievedRequestFrom;
 	}
-
-	
-	
+	public String getInterests() {
+		return interests;
+	}
+	public void setInterests(String interests) {
+		this.interests = interests;
+	}
 	/**
 	 * returns whether all required fields for user are complete
 	 * @param user user to be checked
@@ -128,11 +134,12 @@ public class User {
 	@JsonIgnore
 	public boolean isValid() {
 		boolean valid = true;
-		if(this.bio == "" || this.bio == null)
+		if(this.bio == null || this.bio == "")
 			valid = false;
-		else if(this.userName== "" || this.userName == null)
+		else if(this.userName == null || this.userName== "")
 			valid = false;
-		
+		else if(this.interests == null || this.interests == "")
+			valid = false;
 		return valid;
 	}
 	
