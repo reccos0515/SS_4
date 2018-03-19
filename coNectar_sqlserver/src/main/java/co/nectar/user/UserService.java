@@ -63,6 +63,18 @@ public class UserService {
 	public User addUser(User user) {
 		return userRepo.save(user);
 	}
+	
+	/**
+	 * Updates a users status
+	 * 
+	 * @param userId
+	 *            The id of the user whose status is updated.
+	 * @param status
+	 *			  The value of the users new status.
+	 */
+	public void setStatus(int user, int status) {
+		userRepo.findOne(userID).setStatus(status);
+	}
 
 	/**
 	 * returns if specified user's exists in db

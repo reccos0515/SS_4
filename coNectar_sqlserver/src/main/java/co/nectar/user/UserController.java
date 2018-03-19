@@ -167,5 +167,11 @@ public class UserController {
 	public List<User> getDiscovery(@PathVariable int userId) {
 		return userService.getDiscovery(userId);
 	}
+	
+	// edit user status
+	@RequestMapping(method = RequestMethod.PUT, value = "/users/{userId}/status/{status}")
+	public void setStatus(@PathVariable int userId, @PathVariable int status) {
+		return userService.setStatus(userId, status);
+	}
 
 }

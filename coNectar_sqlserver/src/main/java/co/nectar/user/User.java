@@ -34,6 +34,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+	private Integer status;
 	private String userName;
 	
 	private String bio;
@@ -102,6 +103,12 @@ public class User {
 	}
 	public void setBio(String bio) {
 		this.bio = bio;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	//friend list methods
