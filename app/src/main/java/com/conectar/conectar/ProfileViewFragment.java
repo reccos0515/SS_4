@@ -31,7 +31,7 @@ public class ProfileViewFragment extends Fragment {
 
     private static String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/"; //url to be modified
     private static int userIDNum = 1; //change this to a global variable of the logged in user
-    private static JSONObject jsObj; //json object that is received. Can only be accessed within a button
+    private static JSONObject user; //user to display
     private Context context;
     //TODO update this to work with swipe fragment
 
@@ -47,8 +47,9 @@ public class ProfileViewFragment extends Fragment {
      * their user ID
      * @return A new instance of fragment ProfileViewFragment.
      */
-    public static ProfileViewFragment newInstance() {
+    public static ProfileViewFragment newInstance(JSONObject jsObj) {
         ProfileViewFragment fragment = new ProfileViewFragment();
+        user = jsObj;
         return fragment;
     }
 
@@ -67,37 +68,21 @@ public class ProfileViewFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        context = getContext();
-        //set the username on screen
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url + userIDNum + "",  null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        jsObj = response;
-                        TextView username = view.findViewById(R.id.viewUsername);
-                        TextView bio = view.findViewById(R.id.viewBio);
-                        try {
-                            username.setText(response.get("userName").toString());
-                            bio.setText(response.get("bio").toString());
-                        } catch (JSONException e){
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
         TextView username = view.findViewById(R.id.viewUsername);
+        TextView bio = view.findViewById(R.id.viewBio);
+        try {
+            username.setText(user.get("userName").toString());
+            bio.setText(user.get("bio").toString());
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
         //when the button is pressed will add friend
         view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 //first id receives, second id sends
                 try{
-                    FriendsUtil.makeFriend(userIDNum + "", (int)jsObj.get("id") + "", getContext());
+                    FriendsUtil.makeFriend(userIDNum + "", (int)user.get("id") + "", getContext());
                 } catch (JSONException e){
                     e.printStackTrace();
                 }

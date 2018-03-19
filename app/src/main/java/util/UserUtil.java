@@ -27,7 +27,7 @@ public class UserUtil {
     private static JSONObject userJSONObject = new JSONObject();
     private static JSONArray jsonArray = new JSONArray();
     private static JSONArray jsonArray2 = new JSONArray();
-
+    private static JSONObject profView = null; //user that can be viewed in profile view next
 
 //    /**
 //     * Updates the user's bio in the DB
@@ -350,5 +350,22 @@ public class UserUtil {
         Singleton.getmInstance(context).addToRequestQueue(stringRequest);
     }
 
+    /**
+     * method to get a user to be viewed in profile view, called from profile view
+     * @return
+     */
+    public static JSONObject getUserToView(){
+        return profView;
+    }
+
+    /**
+     * method to set the user that would be viewed in Profile View
+     * Called from other methods
+     * @param user that would be viewed
+     */
+    public static void setUserToView(JSONObject user){
+        profView = user;
+        return;
+    }
 
 }

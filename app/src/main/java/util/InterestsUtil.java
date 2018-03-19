@@ -187,6 +187,11 @@ public class InterestsUtil {
         UserUtil.putUser(url, userJSONObject, context);
     }
 
+    /**
+     * method to return the name of the activity from the id of that activity
+     * @param i two char number indicating the id of the interest
+     * @return string name of interest for user to view
+     */
     public static String getInterest(String i){
         if(i.equals("01")){
             return "Snowboarding";
