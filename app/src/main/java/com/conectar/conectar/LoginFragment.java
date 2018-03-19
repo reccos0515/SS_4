@@ -46,7 +46,7 @@ public class LoginFragment extends Fragment {
     Context context;
     JSONObject user;
     JSONArray tempJSONArray = new JSONArray();
-    final SessionUtil session =  new SessionUtil(getContext());
+    //final SessionUtil session =  new SessionUtil(getContext());
 
     private OnFragmentInteractionListener mListener;
 
@@ -94,7 +94,7 @@ public class LoginFragment extends Fragment {
                 //to test whether the session can work
                 //session.createSession("username", "1", "1");
                 //Toast.makeText(getActivity(), "User Username" + session.getSessionusername(), Toast.LENGTH_LONG).show();
-                Toast.makeText(getActivity(), "Things", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Login attempt made", Toast.LENGTH_LONG).show();
                 //TODO grab actual values from edittext???
                 tempJSONArray = UserUtil.sendLoginRequest(loginUsername.toString(), loginPassword.toString(), context); //returns JSONArray response to login request
                 //deal with whether or not the request was successful
@@ -111,11 +111,12 @@ public class LoginFragment extends Fragment {
                         String username = user.getString("username");
                         String id = user.getString("id");
                         String bio = user.getString("bio");
+                        Log.d("User Values", "username: " + username + "   id: " + id + "   bio: " + bio);
                         JSONArray interests = user.getJSONArray("interests"); //TODO idk
                         String status = Integer.toString(user.getInt("status"));
 
                         //set session variables
-                        session.createSession(username, id, status);
+                        //session.createSession(username, id, status);
 
                         //send user to swipe page
                         Fragment fragment = new SwipeFragment();

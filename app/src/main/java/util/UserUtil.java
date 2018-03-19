@@ -121,8 +121,38 @@ public class UserUtil {
      * @param context the context in which this method is used
      * @return a JSONObject of a user
      */
-    public static JSONArray sendLoginRequest(String username, String password, Context context){ //TODO implement
+    public static JSONArray sendLoginRequest(String username, String password, Context context){
         //probably needs special volley requests, not the premade volley methods
+        Log.d("UserUtil", "sendLoginRequest entered");
+        url += "/login";
+
+        try { //TODO modify for how Ben wants info
+            userJSONObject.put("username", username);
+            userJSONObject.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  userJSONObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
+                        userJSONObject = response;
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+
+        try { //TODO modify for what Ben is sending back
+            jsonArray = userJSONObject.getJSONArray("info");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return jsonArray;
     }
