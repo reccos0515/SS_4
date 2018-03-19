@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import util.SessionUtil;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,11 +27,10 @@ import android.widget.Toast;
  */
 public class EditProfileFragment extends Fragment {
 
-    private EditText bio;
-    private EditText newInterest;
-    //TODO figure out how to use delete interest buttons with interests at size 5.  Extra space here is unideal
-    private String[] interests = new String[6];
-    private int numInterests;
+    private EditText bio; //bio to be edited by user
+    private EditText newInterest; //todo this must be changed
+    private String interests; //String with user's interest
+    private int numInterests; //int with number of interest user currently has
 
     private OnFragmentInteractionListener mListener;
 
@@ -41,15 +42,11 @@ public class EditProfileFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment LogoutFragment.
      */
     //Rename and change types and number of parameters
-    public static EditProfileFragment newInstance(String param1, String param2) {
+    public static EditProfileFragment newInstance() {
         EditProfileFragment fragment = new EditProfileFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -73,24 +70,26 @@ public class EditProfileFragment extends Fragment {
         //create variables that take input from UI
         bio = view.findViewById(R.id.bio);
         newInterest = view.findViewById(R.id.newInterest);
+        //set all the user info
+        bio.setText(SessionUtil.getSessionBio());
+        interests = SessionUtil.getSessionInterests();
         //int to keep track of the current number of interests
-        numInterests = 0;
+        numInterests = interests.charAt(0) - '0';
         //create a button to add an interest
         view.findViewById(R.id.submitInterest).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                //todo update all of this
                 //if there are not yet 5 interests, it can be added
                 if(numInterests < 5){
-                    //toast to let the user know it worked
-                    Context context = getActivity().getApplicationContext();
-                    CharSequence text = "Interests are not full";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                    //add the interest
-                    interests[numInterests] = newInterest.getText().toString();
+                    //-------------------psuedo code to be implemented-------------------------------//
+                    //update the string to add the interest
                     //increment the number of interests
+                    //update the string with new number of interests
+                    //toast to let the user know it worked
+                    //update the server
                     numInterests++;
+                    //-------------------------------------------------------------------------------//
                 }
                 else{
                     //let the user know there are too many interests to add another
@@ -107,13 +106,12 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(numInterests >= 1){
-                    //move every interest down one place
-                    for(int i = 0; i < numInterests; i++){
-                        interests[i] = interests[i + 1];
-                        Toast.makeText(getActivity(), "Interest One Removed", Toast.LENGTH_SHORT).show();
-                    }
+                    //-----------------------------pseudo code to be implemented---------------------------//
+                    //move every interest down one place starting at the first
                     //decrement number of interests
+                    //update the server
                     numInterests--;
+                    //-------------------------------------------------------------------------------------//
                 }
             }
         });
@@ -121,13 +119,12 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(numInterests >= 2){
-                    //move every interest down one place
-                    for(int i = 1; i < numInterests; i++){
-                        interests[i] = interests[i + 1];
-                        Toast.makeText(getActivity(), "Interest Two Removed", Toast.LENGTH_SHORT).show();
-                    }
+                    //-----------------------------pseudo code to be implemented---------------------------//
+                    //move every interest down one place starting at the second
                     //decrement number of interests
+                    //update server
                     numInterests--;
+                    //------------------------------------------------------------------------------------//
                 }
             }
         });
@@ -135,13 +132,12 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(numInterests >= 3){
-                    //move every interest down one place
-                    for(int i = 2; i < numInterests; i++){
-                        interests[i] = interests[i + 1];
-                        Toast.makeText(getActivity(), "Interest Three Removed", Toast.LENGTH_SHORT).show();
-                    }
+                    //-----------------------------pseudo code to be implemented---------------------------//
+                    //move every interest down one place starting at the third
                     //decrement number of interests
+                    //update server
                     numInterests--;
+                    //------------------------------------------------------------------------------------//
                 }
             }
         });
@@ -149,12 +145,10 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(numInterests >= 4){
-                    //move every interest down one place
-                    for(int i = 3; i < numInterests; i++){
-                        interests[i] = interests[i + 1];
-                        Toast.makeText(getActivity(), "Interest Four Removed", Toast.LENGTH_SHORT).show();
-                    }
+                    //-----------------------------pseudo code to be implemented---------------------------//
+                    //move every interest down one place starting at the fourth
                     //decrement number of interests
+                    //update server
                     numInterests--;
                 }
             }
@@ -163,12 +157,11 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(numInterests >= 5){
-                    //move every interest down one place
-                    for(int i = 4; i < numInterests; i++){
-                        interests[i] = interests[i + 1];
-                        Toast.makeText(getActivity(), "Interest Five Removed", Toast.LENGTH_SHORT).show();
-                    }
+                    //-----------------------------pseudo code to be implemented---------------------------//
+                    //delete the last interest
                     //decrement number of interests
+                    //update server
+                    //-------------------------------------------------------------------------------------//
                     numInterests--;
                 }
             }
@@ -177,11 +170,9 @@ public class EditProfileFragment extends Fragment {
         view.findViewById(R.id.debugButton).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Context context = getActivity().getApplicationContext();
-                CharSequence text = (CharSequence)(interests[0] + interests[1] + interests[2] + interests[3] + interests[4]);
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                //-----------------------------pseudo code to be implemented---------------------------//
+                //can use this to debug if needed
+                //-------------------------------------------------------------------------------------//
             }
         });
     }

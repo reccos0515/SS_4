@@ -25,6 +25,7 @@ public class SessionUtil {
     private static final String KEY_STATUS = "status";
     private static final String KEY_FRIENDS = "friends"; //not sure if we even need to keep these on hand in session variables
     private static final String KEY_PENDING = "pending";
+    private static final String KEY_BIO = "bio";
     private static final String KEY_INTERESTS = "interests";
 
     public SessionUtil(Context context){
@@ -99,5 +100,12 @@ public class SessionUtil {
         return preferences.getString(KEY_INTERESTS, null);
     }
 
+    /**
+     * Returns the user's bio stored in sharedPreferences
+     * @return the user's bio
+     */
+    public static String getSessionBio(){
+        return preferences.getString(KEY_BIO, null);
+    }
 
 }
