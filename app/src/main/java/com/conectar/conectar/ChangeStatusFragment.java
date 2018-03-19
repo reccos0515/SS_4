@@ -79,7 +79,6 @@ public class ChangeStatusFragment extends Fragment {
             public void onClick(View view){ //set status to yellow
                 UserUtil.updateStatus(1, userId, getContext());
                 Toast.makeText(getActivity(), "Status set to yellow", Toast.LENGTH_LONG).show();
-                //TODO allow user to select an interest for yellow status
             }
         });
         view.findViewById(R.id.redStatusBtn).setOnClickListener(new View.OnClickListener() { //red button clicked
