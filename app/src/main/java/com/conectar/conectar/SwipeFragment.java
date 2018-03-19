@@ -23,6 +23,7 @@ import util.InterestsUtil;
 import util.SessionUtil;
 import util.Singleton;
 import util.SwipeStubs;
+import util.UserUtil;
 
 
 /**
@@ -137,6 +138,7 @@ public class SwipeFragment extends Fragment {
 
                             userOnDisplayLoc = 0; //update place in array to 0
                             updateUI(user, view); //update the UI
+                            UserUtil.setUserToView(user); //save this where profile view can access it if needed
                         }
 
                         //on click listener for next
@@ -150,6 +152,7 @@ public class SwipeFragment extends Fragment {
                                 try {
                                     JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
                                     updateUI(user, view);
+                                    UserUtil.setUserToView(user); //save this where profile view can access if needed
                                 } catch (JSONException e){
                                     errorMessage.setText("Sorry, we ran into a problem");//set an error for the user to see
                                     e.printStackTrace();
@@ -169,6 +172,7 @@ public class SwipeFragment extends Fragment {
                                 try{
                                     JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
                                     updateUI(user, view);
+                                    UserUtil.setUserToView(user); //save this where profile view can access if needed
                                 }catch (JSONException e){
                                     errorMessage.setText("Sorry, we ran into a problem"); //set an error for the user to see
                                     e.printStackTrace();

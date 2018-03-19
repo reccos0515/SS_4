@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import util.FriendsUtil;
 import util.Singleton;
+import util.UserUtil;
 
 
 /**
@@ -47,9 +48,8 @@ public class ProfileViewFragment extends Fragment {
      * their user ID
      * @return A new instance of fragment ProfileViewFragment.
      */
-    public static ProfileViewFragment newInstance(JSONObject jsObj) {
+    public static ProfileViewFragment newInstance() {
         ProfileViewFragment fragment = new ProfileViewFragment();
-        user = jsObj;
         return fragment;
     }
 
@@ -68,6 +68,7 @@ public class ProfileViewFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        user = UserUtil.getUserToView(); //get the user that should be shown
         TextView username = view.findViewById(R.id.viewUsername);
         TextView bio = view.findViewById(R.id.viewBio);
         try {
