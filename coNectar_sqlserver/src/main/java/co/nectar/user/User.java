@@ -33,10 +33,11 @@ public class User {
 	//variables
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer numInterests = 6;
 	private Integer id;
 	private Integer status;
 	private String userName;
-	
+	private Integer[numInterests] interests;
 	private String bio;
 
 	
@@ -109,6 +110,15 @@ public class User {
 	}
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	public void addInterest(Integer interest) {
+		for(int i = 0; i < numInterests; i++){
+			if(interests[i] == 0){
+				interests[i] = interest;
+				break;
+			}
+		}
+		//sort somehow, probably trying to keep the list sorted to make checking against faster later.
 	}
 
 	//friend list methods
