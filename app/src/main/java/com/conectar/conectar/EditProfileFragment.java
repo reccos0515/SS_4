@@ -69,13 +69,16 @@ public class EditProfileFragment extends Fragment {
 
         //create variables that take input from UI
         bio = view.findViewById(R.id.bio);
-        newInterest = view.findViewById(R.id.newInterest);
+        //TODO remove comments
+        //newInterest = view.findViewById(R.id.newInterest);
         //set all the user info
         bio.setText(SessionUtil.getSessionBio());
         interests = SessionUtil.getSessionInterests();
         //int to keep track of the current number of interests
         numInterests = interests.charAt(0) - '0';
         //create a button to add an interest
+        //TODO remove comments
+        /*
         view.findViewById(R.id.submitInterest).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -101,6 +104,7 @@ public class EditProfileFragment extends Fragment {
                 }
             }
         });
+        */
 
         view.findViewById(R.id.interestOne).setOnClickListener(new View.OnClickListener(){
             @Override

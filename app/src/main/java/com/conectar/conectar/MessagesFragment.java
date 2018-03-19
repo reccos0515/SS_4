@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import util.InterestsUtil;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,15 +75,15 @@ public class MessagesFragment extends Fragment {
                             if (interests.charAt(2 * i + 1) == viewInterests.charAt(2 * j + 1) && interests.charAt(2 * i + 2) == viewInterests.charAt(2 * j + 2)) {
                                 //update the correct interest
                                 if (currentCommonIntsDisplayed == 0) {
-                                    views[0] = (Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                    views[0] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
                                 } else if (currentCommonIntsDisplayed == 1) {
-                                    views[1] = (Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                    views[1] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
                                 } else if (currentCommonIntsDisplayed == 2) {
-                                    views[2] = (Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                    views[2] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
                                 } else if (currentCommonIntsDisplayed == 3) {
-                                    views[3] = (Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                    views[3] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
                                 } else if (currentCommonIntsDisplayed == 4) {
-                                    views[4] = (Interests.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                    views[4] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
                                 }
                                 currentCommonIntsDisplayed++;
                             }
