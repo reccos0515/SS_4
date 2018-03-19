@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -186,7 +188,13 @@ public class SwipeFragment extends Fragment {
                             public void onClick(View view) {
 
                                 //TODO finish this
-                                Fragment fragement = new ProfileViewFragment();
+                                Fragment fragment = new ProfileViewFragment();
+//                                if(fragment != null){ //Changes the screens
+//                                    FragmentManager fragmentManager = getSupportFragmentManager();
+//                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                                    fragmentTransaction.replace(R.id.screen_area, fragment);
+//                                    fragmentTransaction.commit();
+//                                }
                                 //-------------------------------------pseudo code to be implemented later ----------------------------------//
 
                                 //call a profile view fragment with userOnDisplayLoc user
