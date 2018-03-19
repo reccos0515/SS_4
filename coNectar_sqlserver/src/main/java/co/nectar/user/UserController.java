@@ -20,9 +20,9 @@ public class UserController {
 	// test add
 	@RequestMapping("/test")
 	public HtmlMessage getTest() {
-		User test = new User(0, "test", "hi");
-		User test2 = new User(0, "blah", "hello");
-		User test3 = new User(0, "Maggie", "I am Maggie");
+		User test = new User(0, "test", "hi","");
+		User test2 = new User(0, "blah", "hello","");
+		User test3 = new User(0, "Maggie", "I am Maggie","");
 		userService.addUser(test);
 		userService.addUser(test2);
 		userService.addUser(test3);
