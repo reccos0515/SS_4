@@ -28,7 +28,7 @@ public class InterestsUtil {
      * @param interests an array of selected interests
      * @param context the context in which this method is used
      */
-    public static void setInterests(int[] interests, String id, Context context){ //TODO change for string format
+    public static void setInterests(String interests, String id, Context context){
         //set appropriate array spot with interests in userJSON
         String url = ""; //TODO update url
         userJSONObject = UserUtil.getUser(url, context);
@@ -46,37 +46,37 @@ public class InterestsUtil {
      * @param newInterest the value for the new interest to be added
      * @param context the context in which this method is used
      */
-    public static void addInterest(int newInterest, Context context){ //TODO change for string format
-        url = ""; //TODO update url
-        userJSONObject = UserUtil.getUser(url, context);
+    public static void addInterest(String newInterest, int id, Context context){ //TODO test
+        url = "/users/" + id; //TODO update url
+        userJSONObject = UserUtil.getUser(url, context); //pull the user's information
+        String interests = ""; //temp string for holding interests after grabbing from obj
 
         try {
-            tempArr = userJSONObject.getJSONArray("interests"); //grabs the array of interests from user object
+            interests = userJSONObject.getString("interests"); //grabs the string of interests from user object
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         boolean interestSet = false;
-        int temp = 0;
-        int[] interests = new int[tempArr.length()]; //make interests correct size
+        String[] interestsArr = new String[5]; //make an array for parsed interests
+        int j = 0;
+        for(int i = 0; i < 5; i ++){
+            char temp1 = interests.charAt(j);
+            char temp2 = interests.charAt(j + 1);
+            String temp3 = "" + temp1 + temp2; //concatonate the two characters
+            j += 2; //increment j by 2 instead of 1 because we grabbed two characters
+            interestsArr[i] = temp3;
+        }
 
-        for(int i = 0 ; i < interests.length; i++){
-            try {
-                temp = tempArr.getInt(i);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            if(temp == newInterest){
+        for(int i = 0 ; i < interestsArr.length; i++){
+            if(interestsArr[i].equals(newInterest)){
                 //interest already exists in list
                 //TODO figure out how to toast that interests already exists to user
                 interestSet = true;
             }
-            else if(temp == 0 && !interestSet){ //open spot in interests array for new interest found
-                interests[i] = newInterest;
+            else if(interestsArr[i].equals("00") && !interestSet){ //open spot in interests array for new interest found
+                interestsArr[i] = newInterest; //put new interest in list
                 interestSet = true;
-            }
-            else{
-                interests[i] = temp;
             }
         }
         if(!interestSet){
@@ -92,6 +92,7 @@ public class InterestsUtil {
 
         //update the JSONObject in the DB
         UserUtil.putUser(url, userJSONObject, context);
+        //TODO clear userJSONObject
     }
 
     /**

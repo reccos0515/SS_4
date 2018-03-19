@@ -89,11 +89,14 @@ public class SwipeFragment extends Fragment {
                         boolean success; //hold the success value
                         final TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
                         TextView firstName = view.findViewById(R.id.swipeFirstName);
+                        //TODO removce comments
+                        /*
                         TextView interest1 = view.findViewById(R.id.swipeInterest1);
                         TextView interest2 = view.findViewById(R.id.swipeInterest2);
                         TextView interest3 = view.findViewById(R.id.swipeInterest3);
                         TextView interest4 = view.findViewById(R.id.swipeInterest4);
                         TextView interest5 = view.findViewById(R.id.swipeInterest5);
+                        */
 
                         //check for success
                         try{
@@ -111,11 +114,14 @@ public class SwipeFragment extends Fragment {
                             }
                             //set all interests as blank
                             firstName.setText("");
+                            //TODO remove comments
+                            /*
                             interest1.setText("");
                             interest2.setText("");
                             interest3.setText("");
                             interest4.setText("");
                             interest5.setText("");
+                            */
                             len = 0; // length of array is 0
                         }
                         else{
@@ -202,11 +208,14 @@ public class SwipeFragment extends Fragment {
         //make all textviews
         TextView errorMessage = view.findViewById(R.id.swipeMessage);
         TextView firstName = view.findViewById(R.id.swipeFirstName);
+        //TODO remove comments
+        /*
         TextView interest1 = view.findViewById(R.id.swipeInterest1);
         TextView interest2 = view.findViewById(R.id.swipeInterest2);
         TextView interest3 = view.findViewById(R.id.swipeInterest3);
         TextView interest4 = view.findViewById(R.id.swipeInterest4);
         TextView interest5 = view.findViewById(R.id.swipeInterest5);
+        */
 
         String viewInterests; //interests of the current user on display
         try{
@@ -227,6 +236,8 @@ public class SwipeFragment extends Fragment {
                     //compare interests
                     if (interests.charAt(2 * i + 1) == viewInterests.charAt(2 * j + 1) && interests.charAt(2 * i + 2) == viewInterests.charAt(2 * j + 2)) {
                         //update the correct interest
+                        //TODO remove comments
+                        /*
                         if (currentCommonIntsDisplayed == 0) {
                             interest1.setText(InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
                         } else if (currentCommonIntsDisplayed == 1) {
@@ -238,12 +249,15 @@ public class SwipeFragment extends Fragment {
                         } else if (currentCommonIntsDisplayed == 4) {
                             interest5.setText(InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
                         }
+                        */
                         currentCommonIntsDisplayed++; //increment count of how many common interests are being displayed
                     }
                 }
             }
         }
         //set all non-common interests to ""
+        //TODO remove comments
+        /*
         if(currentCommonIntsDisplayed == 0){
             interest1.setText("No common interests found"); //if there are no common interests, tell the user this
         }
@@ -259,6 +273,7 @@ public class SwipeFragment extends Fragment {
         if(currentCommonIntsDisplayed < 5){
             interest5.setText("");
         }
+        */
         errorMessage.setText(""); //set no error
 
         //----------------------------------------------------pseudo code to be implemented later-----------------------------------------------//
