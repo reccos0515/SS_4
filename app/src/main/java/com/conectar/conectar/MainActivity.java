@@ -175,8 +175,8 @@ public class MainActivity extends AppCompatActivity
             fragment = new SwipeFragment();
         } else if (id == R.id.nav_newProfile) {
             fragment = new NewProfileFragment();
-        } else if (id == R.id.nav_about) {
-            //waiting for xml implementation
+        } else if (id == R.id.nav_about) { //TODO fix
+
         } else if (id == R.id.nav_report) {
             //waiting for xml implementation
         } else if (id == R.id.nav_friends) {
