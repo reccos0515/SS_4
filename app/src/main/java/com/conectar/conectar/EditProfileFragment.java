@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import util.InterestsUtil;
 import util.SessionUtil;
 
 
@@ -69,29 +70,41 @@ public class EditProfileFragment extends Fragment {
 
         //create variables that take input from UI
         bio = view.findViewById(R.id.bio);
-        //TODO remove comments
-        //newInterest = view.findViewById(R.id.newInterest);
+        newInterest = view.findViewById(R.id.newInterest);
         //set all the user info
         bio.setText(SessionUtil.getSessionBio());
         interests = SessionUtil.getSessionInterests();
         //int to keep track of the current number of interests
         numInterests = interests.charAt(0) - '0';
         //create a button to add an interest
-        //TODO remove comments
-        /*
-        view.findViewById(R.id.submitInterest).setOnClickListener(new View.OnClickListener(){
+        view.findViewById(R.id.submitNewInterest).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 //todo update all of this
-                //if there are not yet 5 interests, it can be added
+                //if there are not yet 5 interests, it can try to be added
                 if(numInterests < 5){
+                    String interestToAdd = newInterest.getText().toString();
+                    //if this is a valid interest, it can be added
+                    if(InterestsUtil.getInterest(interestToAdd) != null){
+                        char[] interestChars = interests.toCharArray(); //convert interests to a char array
+                        interestChars[(2 * numInterests) + 1] = interestToAdd.charAt(0); //replace the old numbers with the new id
+                        interestChars[(2 * numInterests) + 2] = interestToAdd.charAt(1);
+                        numInterests++; //increment the number of interests
+                        interestChars[0] = (char) numInterests; //update numInterests in the string
+                        interests = interestChars.toString(); //turn it back into a string
+                        Toast.makeText(getContext(), "Successfully added " + InterestsUtil.getInterest(interestToAdd), Toast.LENGTH_SHORT); //toast to let the user know it worked
+                        //TODO update the server
+                    }
+                    else{
+                        //toast to tell the user it was not valid
+                        Toast.makeText(getContext(), "Please enter a valid interest number", Toast.LENGTH_SHORT).show();
+                    }
                     //-------------------psuedo code to be implemented-------------------------------//
                     //update the string to add the interest
                     //increment the number of interests
                     //update the string with new number of interests
                     //toast to let the user know it worked
                     //update the server
-                    numInterests++;
                     //-------------------------------------------------------------------------------//
                 }
                 else{
@@ -104,7 +117,7 @@ public class EditProfileFragment extends Fragment {
                 }
             }
         });
-        */
+
 
         view.findViewById(R.id.interestOne).setOnClickListener(new View.OnClickListener(){
             @Override
