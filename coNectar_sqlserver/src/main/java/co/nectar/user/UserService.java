@@ -150,8 +150,16 @@ public class UserService {
 	 * @param status
 	 *			  The value of the users new status.
 	 */
-	public void setStatus(int user, int status) {
-		userRepo.findOne(userID).setStatus(status);
+	public HtmlMessage setStatus(Integer userId, int status) {
+		//error checking
+		if(!userRepo.exists(userId))
+			return new HtmlError(false, "userId not found");
+		else if(status != 0 || status != 1 || status != 2)
+			return new HtmlError(false, "incorrect status value, must be 1,2, or 3");
+		
+		//set status
+		userRepo.findOne(userId).setStatus(status);
+		return new HtmlError(true, "");
 
 	}
 
@@ -599,8 +607,9 @@ public class UserService {
 			//get user
 			User user = ((HtmlUserList) msg).getUsers().iterator().next();
 			
-			// get to and from friend lists
+			//get all users
 			List<User> users = (List<User>) ((HtmlUserList) this.getAllUsers()).getUsers();
+			// get all users sent a requests to from getSentRequestTo
 			List<User> to = user.getSentRequestTo();
 
 			//incoming requests are in not sentRequestTo but are in recievedRequestsFrom
@@ -630,10 +639,15 @@ public class UserService {
 			//get user
 			User user = ((HtmlUserList) msg).getUsers().iterator().next();
 			
+			//get all users
+			List<User> users = (List<User>) ((HtmlUserList) this.getAllUsers()).getUsers();
+			
+			//getting all outgoing requests
 			List<User> to = user.getSentRequestTo(); //list of users that I sent a request to
+			//getting all users that have been discovered
 			List<User> been = user.getBeenDiscovered();
 
-			//incoming requests are in not sentRequestTo but are in recievedRequestsFrom
+			
 			for (User user_ele : users) {
 				if (!to.contains(user_ele) && !user_ele.equals(user) && !been.contains(user_ele))
 					relevant.add(user_ele);// add if i have not added the user, and the user is not me.
@@ -653,10 +667,10 @@ public class UserService {
 		List<User> send = new ArrayList<User>();
 		List<User> been = user.getBeenDiscovered();
 		for(int i = 0; i<10; i++){
-			send.add(discovery.get(i));
-			been.add(discovery.get(i));
+			send.add(relevant.get(i));
+			been.add(relevant.get(i));
 		}
-		user.setBeenDiscovered(been); //changes the users beendiscovered to include that which was just found.
+		user.setBeenDiscovered(been); //changes the users been discovered to include that which was just found.
 		userRepo.save(user);
 		
 		return send;

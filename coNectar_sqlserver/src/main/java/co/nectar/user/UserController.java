@@ -163,7 +163,7 @@ public class UserController {
 	
 	// edit user status
 	@RequestMapping(method = RequestMethod.PUT, value = "/users/{userId}/status/{status}")
-	public void setStatus(@PathVariable int userId, @PathVariable int status) {
+	public HtmlMessage setStatus(@PathVariable int userId, @PathVariable int status) {
 		return userService.setStatus(userId, status);
 	}
 
