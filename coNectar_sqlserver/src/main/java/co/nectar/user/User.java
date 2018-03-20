@@ -76,6 +76,7 @@ public class User {
 	public User() {
 		super();
 		this.status = 0;
+		this.interests = "000000000";
 	}
 	public User(int id,String userName, String bio, String interests) {
 		super();

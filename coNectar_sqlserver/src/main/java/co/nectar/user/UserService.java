@@ -175,15 +175,17 @@ public class UserService {
 	
 	public boolean userExists(User user) {
 		// check to make sure id or userName are not null
-		if(user.getId() == null) {
-			if(user.getUserName() == null) {
-				return false;
-			}else {
-				return userRepo.existsByUserName(user.getUserName());	
-			}
-		}else {
-			return userRepo.exists(user.getId());
-		}
+		Integer id = user.getId();
+		String name = user.getUserName();
+		if(id == null && name == null)
+			return false;
+		else if(id != null && name == null)
+			return userRepo.exists(id);
+		else if(id == null && name != null)
+			return  userRepo.existsByUserName(name);
+		else
+			return userRepo.existsByUserName(name); 
+		
 	}
 
 	/**
