@@ -676,5 +676,19 @@ public class UserService {
 		return send;
 		
 	}	
+	
+	//green people will see random green and yellow people. do not take their 
+	//interests into account. the expectation is that they are willing to do
+	//anything, so we show them random people, not people within a certain
+	//interest group.
+	
+	//yellow people see yellow and green people "equally" when both those 
+	//people share interests with the user. i.e. as long as they share 
+	//interests, it doesn't matter what the "discoverd" persons status is.
+	//once they have seen those that share their interests, they will be shown
+	//green people at random, because greens should be willing to do whatever.
+	
+	//red people will not be shown ever, and they will not be allowed to see others.
+	//this will be implemented as an error 
 
 }
