@@ -633,10 +633,10 @@ public class UserService {
 			//incoming requests are in not sentRequestTo but are in recievedRequestsFrom
 			for (User user_ele : users) {
 				if (!to.contains(user_ele) && !user_ele.equals(user) && !been.contains(user_ele))
-					discovery.add(user_ele);// add if i have not added the user, and the user is not me.
+					relevant.add(user_ele);// add if i have not added the user, and the user is not me.
 			}
 			//now i have a list of everyone that i dont know and have not discovered before (discover). 
-			List<User> send = makeSend(userId, discovery);
+			List<User> send = makeSend(user, relevant);
 			return new HtmlUserList(success, send);
 		}
 
@@ -644,7 +644,7 @@ public class UserService {
 	}
 	
 	//we are going to need some list to keep track of who has been discovered (nevermind).
-	public List<User> makeSend(Integer userId, List<User> discovery){
+	public List<User> makeSend(User user, List<User> relevant){
 		//right now im just sending back the first ten, this will be improved soon.
 		List<User> send = new ArrayList<User>();
 		List<User> been = user.getBeenDiscovered();
@@ -653,6 +653,7 @@ public class UserService {
 			been.add(discovery.get(i));
 		}
 		user.setBeenDiscovered(been); //changes the users beendiscovered to include that which was just found.
+		userRepo.save(user);
 		
 		return send;
 	}

@@ -59,6 +59,13 @@ public class User {
 //		inverseJoinColumns={@JoinColumn(name="userId",referencedColumnName = "id")})
 	private List<User> recievedRequestFrom;
 	
+	
+	//ManyToMany Connecion having trouble with this
+	@ManyToMany
+	@JsonIgnore
+	@JoinTable(name="TBL_DISCOVERED",
+			joinColumns={@JoinColumn(name="userId",referencedColumnName = "id")},
+			inverseJoinColumns={@JoinColumn(name="discoveredId",referencedColumnName = "id")})
 	private List<User> beenDiscovered;
 	
 	
