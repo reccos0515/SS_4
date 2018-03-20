@@ -611,5 +611,38 @@ public class UserService {
 
 		return new HtmlError(success, error);
 	}
+	
+	public HtmlMessage getRelevant(Integer userId) {
+		boolean success = true;
+		String error = "";
+		List<User> relevant = new ArrayList<User>();
+		HtmlMessage msg = this.getUserById(userId);
+		
+		//check user 
+		if (!msg.isSuccess()) {
+			success = false;
+			error = "error userId: " + ((HtmlError) msg).getMessage();
+		} else {
+			//get user
+			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			
+			List<User> to = user.getSentRequestTo(); //list of users that I sent a request to
+
+			//incoming requests are in not sentRequestTo but are in recievedRequestsFrom
+			for (User user_ele : users) {
+				if (!to.contains(user_ele) && !user_ele.equals(user))
+					discovery.add(user_ele);// add if i have not added the user, and the user is not me.
+			}
+			//now i have a list of everyone that i dont know. 
+			List<User> send = makeSend(userId);
+			return new HtmlUserList(success, discovery);
+		}
+
+		return new HtmlError(success, error);
+	}
+	
+	public List<User> makeSend(Integer userId){
+		
+	}
 
 }
