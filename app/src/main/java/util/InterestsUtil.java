@@ -349,6 +349,9 @@ public class InterestsUtil {
         else if(i.equals("52")){
             return "Cooking";
         }
+        else if(i.equals("53")){
+            return "Picnicing";
+        }
         else{
             return null;
         }
