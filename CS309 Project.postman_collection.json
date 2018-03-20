@@ -1,0 +1,517 @@
+{
+	"info": {
+		"name": "CS309 Project",
+		"_postman_id": "7d84a41d-412c-bdb4-d72d-a00e64b27a3b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"description": "",
+			"item": [
+				{
+					"name": "Add default Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":6,\n    \"userName\": \"maggie\",\n    \"bio\": \"I am maggie\"\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/test",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"test"
+							]
+						},
+						"description": "Add a set number of users to the data base\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get ALL Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":6,\n    \"userName\": \"maggie\",\n    \"bio\": \"I am maggie\"\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users"
+							]
+						},
+						"description": "get all users on the data base\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":6,\n    \"userName\": \"maggie\",\n    \"bio\": \"I am maggie\"\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users/1",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users",
+								"1"
+							]
+						},
+						"description": "get single users on the data base\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Update A User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":1,\n    \"userName\": \"test1\",\n    \"bio\": \"test user\",\n    \"interests\": \"00000000001\"\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users",
+								""
+							]
+						},
+						"description": "update a user from the db\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Request Friend",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users/2/request_friend/1",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users",
+								"2",
+								"request_friend",
+								"1"
+							]
+						},
+						"description": "get all users on the data base\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "List of ALL Outgoing Friend Requests",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users/1/sentrequestto",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users",
+								"1",
+								"sentrequestto"
+							]
+						},
+						"description": "List of users requested to be freinds by a referenced user.\nOther user has not requested by the referenced user\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "List of ALL Incoming Friend Requests",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users/1/recievedrequestfrom",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users",
+								"1",
+								"recievedrequestfrom"
+							]
+						},
+						"description": "List of users requested to be freinds by a referenced user.\nOther user has not requested by the referenced user\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "List of Friends",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users/1/friends",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users",
+								"1",
+								"friends"
+							]
+						},
+						"description": "List of users who have requested current user, and current user has requested back\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Force Friend Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users/1/friends/3/force",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users",
+								"1",
+								"friends",
+								"3",
+								"force"
+							]
+						},
+						"description": "both refrenced users become friends\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Discover New users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users/1/discovery",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users",
+								"1",
+								"discovery"
+							]
+						},
+						"description": "List of users who current user has yet to discover\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "List of CURRENT Outgoing Friend Requests",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users/1/outgoing_requests",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users",
+								"1",
+								"outgoing_requests"
+							]
+						},
+						"description": "List of users requested to be freinds by a referenced user.\nOther user has not requested by the referenced user\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "List of CURRENT Incoming Friend Requests",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users/1/incoming_requests",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users",
+								"1",
+								"incoming_requests"
+							]
+						},
+						"description": "List of users requested to be freinds by a referenced user.\nOther user has not requested by the referenced user\n\n"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"description": "",
+			"item": [
+				{
+					"name": "Add a User and Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user\": {\n    \t\"id\" : 0,\n        \"bio\" : \"test user\",\n        \"userName\": \"test3\",\n        \"interests\": \"00000000000\"\n    },\n    \"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/login/add",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"login",
+								"add"
+							]
+						},
+						"description": "Add a login and a user to the database\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove User and Login",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user\": {\n\t\t\"userName\": \"test3\"\n    },\n    \"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/login",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"login"
+							]
+						},
+						"description": "Remove a login and a user from the database\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Request Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user\": {\n\t\t\"userName\": \"test1\"\n    },\n    \"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/login/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"login",
+								""
+							]
+						},
+						"description": "Get login based on correct password\n\n"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "6a4c1218-9e06-48f8-abb6-ee28ee3fe04d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ed1f7069-1453-4c2d-8692-cd1ed81f7fe2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
