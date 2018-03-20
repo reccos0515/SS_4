@@ -153,8 +153,16 @@ public class UserService {
 	 */
 	
 	public boolean userExists(User user) {
-		// check to make sure id is not null
-		return userRepo.existsByUserName(user.getUserName()) || (user.getId() != null && userRepo.exists(user.getId()));
+		// check to make sure id or userName are not null
+		if(user.getId() == null) {
+			if(user.getUserName() == null) {
+				return false;
+			}else {
+				return userRepo.existsByUserName(user.getUserName());	
+			}
+		}else {
+			return userRepo.exists(user.getId());
+		}
 	}
 
 	/**
@@ -213,10 +221,18 @@ public class UserService {
 		} else if (!this.userExists(user)) {
 			success = false;
 			error = "given user not found";
-		} else if (!user.isValid()) {
+		} else if (!user.isValid() || user.getUserName() == null) {
 			success = false;
 			error = "given user not completely filled";
 		} else {
+			//set id if not set
+			if(user.getId() == null || user.getId() <= 0)
+				user.setId(userRepo.findByUserName(user.getUserName()).getId());
+			//check if username is duplicated
+			User otherUser = userRepo.findByUserName(user.getUserName());
+			if(otherUser != null && user.getId() != otherUser.getId()) {
+				return new HtmlError(false, "new username exists already");
+			}
 			userRepo.save(user);
 		}
 
@@ -570,7 +586,7 @@ public class UserService {
 			User user = ((HtmlUserList) msg).getUsers().iterator().next();
 			
 			// get to and from friend lists
-			List<User> users = (List<User>) this.getAllUsers();
+			List<User> users = (List<User>) ((HtmlUserList) this.getAllUsers()).getUsers();
 			List<User> to = user.getSentRequestTo();
 
 			//incoming requests are in not sentRequestTo but are in recievedRequestsFrom

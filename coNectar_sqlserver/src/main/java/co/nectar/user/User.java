@@ -134,7 +134,9 @@ public class User {
 	@JsonIgnore
 	public boolean isValid() {
 		boolean valid = true;
-		if(this.bio == null || this.bio == "")
+		if(this.id == null && this.userName == null)
+			valid = false;
+		else if(this.bio == null || this.bio == "")
 			valid = false;
 		else if(this.userName == null || this.userName== "")
 			valid = false;
