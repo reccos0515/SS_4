@@ -176,7 +176,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Snowboarding = 01, Movies = 02, Hammocking = 03, Volunteering = 04, Video Games = 05,
+        android:text="Snowboarding = 01, Movies = 02, Hamocking = 03, Volunteering = 04, Video Games = 05,
         Board Games = 06, Shopping = 07, Bowling = 08,
         Ice Skating = 09, Roller Blading = 10, Laser Tag = 11, Painting pottery = 12, Lunch = 13, Dinner = 14,
         Breakfast = 15, Ice Cream = 16, Concerts = 17, Parks = 18, Hiking = 19, Biking = 20, Skateboarding = 21, Museums = 22, Jogging = 23, Swing dancing = 24, Square dancing = 25, Photography = 26,
