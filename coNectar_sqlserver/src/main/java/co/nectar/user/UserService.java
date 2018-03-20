@@ -628,23 +628,33 @@ public class UserService {
 			User user = ((HtmlUserList) msg).getUsers().iterator().next();
 			
 			List<User> to = user.getSentRequestTo(); //list of users that I sent a request to
+			List<User> been = user.getBeenDiscovered();
 
 			//incoming requests are in not sentRequestTo but are in recievedRequestsFrom
 			for (User user_ele : users) {
-				if (!to.contains(user_ele) && !user_ele.equals(user))
+				if (!to.contains(user_ele) && !user_ele.equals(user) && !been.contains(user_ele))
 					discovery.add(user_ele);// add if i have not added the user, and the user is not me.
 			}
-			//now i have a list of everyone that i dont know. 
+			//now i have a list of everyone that i dont know and have not discovered before (discover). 
 			List<User> send = makeSend(userId, discovery);
-			return new HtmlUserList(success, discovery);
+			return new HtmlUserList(success, send);
 		}
 
 		return new HtmlError(success, error);
 	}
 	
-	//we are going to need some list to keep track of who has been discovered.
-	public List<User> makeSend(Integer userId){
+	//we are going to need some list to keep track of who has been discovered (nevermind).
+	public List<User> makeSend(Integer userId, List<User> discovery){
+		//right now im just sending back the first ten, this will be improved soon.
+		List<User> send = new ArrayList<User>();
+		List<User> been = user.getBeenDiscovered();
+		for(int i = 0; i<10; i++){
+			send.add(discovery.get(i));
+			been.add(discovery.get(i));
+		}
+		user.setBeenDiscovered(been); //changes the users beendiscovered to include that which was just found.
 		
+		return send;
 	}
 
 }
