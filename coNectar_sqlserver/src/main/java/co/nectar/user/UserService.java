@@ -586,7 +586,7 @@ public class UserService {
 			User user = ((HtmlUserList) msg).getUsers().iterator().next();
 			
 			// get to and from friend lists
-			List<User> users = (List<User>) this.getAllUsers();
+			List<User> users = (List<User>) ((HtmlUserList) this.getAllUsers()).getUsers();
 			List<User> to = user.getSentRequestTo();
 
 			//incoming requests are in not sentRequestTo but are in recievedRequestsFrom
