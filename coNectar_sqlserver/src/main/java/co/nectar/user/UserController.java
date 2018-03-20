@@ -155,6 +155,12 @@ public class UserController {
 		return userService.getDiscovery(userId);
 	}
 	
+	// get relevant people around me
+	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/relevant")
+	public HtmlMessage getRelevant(@PathVariable int userId) {
+		return userService.getRelevant(userId);
+	}
+	
 	// edit user status
 	@RequestMapping(method = RequestMethod.PUT, value = "/users/{userId}/status/{status}")
 	public void setStatus(@PathVariable int userId, @PathVariable int status) {
