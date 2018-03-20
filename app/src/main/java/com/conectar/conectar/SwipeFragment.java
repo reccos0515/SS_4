@@ -84,8 +84,7 @@ public class SwipeFragment extends Fragment {
         url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1"; //set the url TODO delete the 1
         context = getContext(); //get the context
 //      url += id + "/discovery"; //create full url TODO put this back in
-        JSONObject js = new JSONObject(); //TODO update this to send what is needed in a request
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, js,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
