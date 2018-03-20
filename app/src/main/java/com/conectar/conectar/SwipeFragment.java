@@ -187,20 +187,14 @@ public class SwipeFragment extends Fragment {
                         view.findViewById(R.id.swipeView).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
-                                //TODO ask Maggie how to do this
-                                Fragment fragment = new ProfileViewFragment();
-//                                if(fragment != null){ //Changes the screens
-//                                    FragmentManager fragmentManager = getSupportFragmentManager();
-//                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                                    fragmentTransaction.replace(R.id.screen_area, fragment);
-//                                    fragmentTransaction.commit();
-//                                }
-                                //-------------------------------------pseudo code to be implemented later ----------------------------------//
-
                                 //call a profile view fragment with userOnDisplayLoc user
-
-                                //----------------------------------------------------------------------------------------------------------//
+                                Fragment fragment = new ProfileViewFragment();
+                                if(fragment != null){ //Changes the screens
+                                    FragmentManager fragmentManager = getFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                    fragmentTransaction.replace(R.id.screen_area, fragment);
+                                    fragmentTransaction.commit();
+                                }
                             }
                         });
                     }
