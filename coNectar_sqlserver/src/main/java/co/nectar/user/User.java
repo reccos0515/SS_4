@@ -59,6 +59,8 @@ public class User {
 //		inverseJoinColumns={@JoinColumn(name="userId",referencedColumnName = "id")})
 	private List<User> recievedRequestFrom;
 	
+	private List<User> beenDiscovered;
+	
 	
 	
 
@@ -75,6 +77,7 @@ public class User {
 		this.interests = interests;
 		this.sentRequestTo = new ArrayList<User>();
 		this.recievedRequestFrom = new ArrayList<User>();
+		this.beenDiscovered = new ArrayList<User>();
 	}
 
 	
@@ -86,6 +89,7 @@ public class User {
 		this.interests = interests;
 		this.sentRequestTo = sentRequestTo;
 		this.recievedRequestFrom = recievedRequestFrom;
+		this.beenDiscovered = new ArrayList<User>();
 	}
 
 	
@@ -136,6 +140,14 @@ public class User {
 	}
 	public void setRecievedRequestFrom(List<User> recievedRequestFrom) {
 		this.recievedRequestFrom = recievedRequestFrom;
+	}
+	
+	//discovery
+	public List<User> getBeenDiscovered() {
+		return beenDiscovered;
+	}
+	public void setBeenDiscovered(List<User> beenDiscovered) {
+		this.beenDiscovered = beenDiscovered;
 	}
 
 	

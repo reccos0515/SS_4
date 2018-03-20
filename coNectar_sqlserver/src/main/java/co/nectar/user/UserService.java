@@ -612,6 +612,7 @@ public class UserService {
 		return new HtmlError(success, error);
 	}
 	
+	//sending ten good people to the client
 	public HtmlMessage getRelevant(Integer userId) {
 		boolean success = true;
 		String error = "";
@@ -634,13 +635,14 @@ public class UserService {
 					discovery.add(user_ele);// add if i have not added the user, and the user is not me.
 			}
 			//now i have a list of everyone that i dont know. 
-			List<User> send = makeSend(userId);
+			List<User> send = makeSend(userId, discovery);
 			return new HtmlUserList(success, discovery);
 		}
 
 		return new HtmlError(success, error);
 	}
 	
+	//we are going to need some list to keep track of who has been discovered.
 	public List<User> makeSend(Integer userId){
 		
 	}
