@@ -84,8 +84,7 @@ public class SwipeFragment extends Fragment {
         url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1"; //set the url TODO delete the 1
         context = getContext(); //get the context
 //      url += id + "/discovery"; //create full url TODO put this back in
-        JSONObject js = new JSONObject(); //TODO update this to send what is needed in a request
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, js,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -187,20 +186,14 @@ public class SwipeFragment extends Fragment {
                         view.findViewById(R.id.swipeView).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
-                                //TODO ask Maggie how to do this
-                                Fragment fragment = new ProfileViewFragment();
-//                                if(fragment != null){ //Changes the screens
-//                                    FragmentManager fragmentManager = getSupportFragmentManager();
-//                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                                    fragmentTransaction.replace(R.id.screen_area, fragment);
-//                                    fragmentTransaction.commit();
-//                                }
-                                //-------------------------------------pseudo code to be implemented later ----------------------------------//
-
                                 //call a profile view fragment with userOnDisplayLoc user
-
-                                //----------------------------------------------------------------------------------------------------------//
+                                Fragment fragment = new ProfileViewFragment();
+                                if(fragment != null){ //Changes the screens
+                                    FragmentManager fragmentManager = getFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                    fragmentTransaction.replace(R.id.screen_area, fragment);
+                                    fragmentTransaction.commit();
+                                }
                             }
                         });
                     }
