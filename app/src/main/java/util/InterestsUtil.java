@@ -230,22 +230,22 @@ public class InterestsUtil {
             return "Painting pottery";
         }
         else if(i.equals("13")){
-            return "Getting lunch";
+            return "Lunch";
         }
         else if(i.equals("14")){
-            return "Getting dinner";
+            return "Dinner";
         }
         else if(i.equals("15")){
-            return "Getting breakfast";
+            return "Breakfast";
         }
         else if(i.equals("16")){
-            return "Getting ice cream";
+            return "Ice cream";
         }
         else if(i.equals("17")){
-            return "Going to concerts";
+            return "Concerts";
         }
         else if(i.equals("18")){
-            return "Going to the park";
+            return "Parks";
         }
         else if(i.equals("19")){
             return "Hiking";
@@ -257,7 +257,7 @@ public class InterestsUtil {
             return "Skateboarding";
         }
         else if(i.equals("22")){
-            return "Going to museums";
+            return "Museums";
         }
         else if(i.equals("23")){
             return "Jogging";
@@ -293,7 +293,7 @@ public class InterestsUtil {
             return "Swimming";
         }
         else if(i.equals("34")){
-            return "Go to a spa";
+            return "Spa";
         }
         else if(i.equals("35")){
             return "Chess";
@@ -332,7 +332,7 @@ public class InterestsUtil {
             return "Camping";
         }
         else if(i.equals("47")){
-            return "Running a triathlon";
+            return "Triathlon";
         }
         else if(i.equals("48")){
             return "Playing music";
@@ -350,7 +350,7 @@ public class InterestsUtil {
             return "Cooking";
         }
         else if(i.equals("53")){
-            return "Picnicing";
+            return "Picnicking";
         }
         else{
             return null;
