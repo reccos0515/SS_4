@@ -25,7 +25,7 @@ public class UserUtil {
 
     //NOTE cannot change the username or id for a user
 
-    private static String url = "http://proj-309-ss-4.iastate.edu:9002/ben"; //base url for server
+    private static String url = "http://proj-309-ss-4.iastate.edu:9001/ben"; //base url for server
     private static JSONObject userJSONObject = new JSONObject();
     private static JSONArray jsonArray = new JSONArray();
     private static JSONArray jsonArray2 = new JSONArray();
@@ -124,6 +124,7 @@ public class UserUtil {
      * @return a JSONObject of a user
      */
     public static JSONObject sendLoginRequest(String username, String password, Context context){
+        //TODO outer part is an object with a success field, user object, and password field.  Need to convert.
         //probably needs special volley requests, not the premade volley methods
         Log.d("UserUtil", "sendLoginRequest entered");
         url += "/login";
@@ -203,7 +204,7 @@ public class UserUtil {
      * @param context context in which this method is used
      * @return the user that was grabbed from the DB
      */
-    public static JSONObject getUser(String url, Context context){
+    public static JSONObject getUser(String url, Context context){ //TODO outer part is object not array
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -273,7 +274,7 @@ public class UserUtil {
      * @param context context in which this method is used
      * @return the JSONArray returned from the server
      */
-    public static JSONArray getArray(String url, Context context){
+    public static JSONArray getArray(String url, Context context){ //TODO outer part is object not array
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, //grab first layer of array
                 new Response.Listener<JSONArray>() {
                     @Override
