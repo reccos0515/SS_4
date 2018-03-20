@@ -33,11 +33,12 @@ public class User {
 	//variables
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer numInterests = 6;
+	//private Integer numInterests = 6;
 	private Integer id;
 	private Integer status;
 	private String userName;
-	private Integer[numInterests] interests;
+	private String interests;
+	//private Integer[numInterests] interests;
 	private String bio;
 
 	
@@ -66,23 +67,27 @@ public class User {
 	public User() {
 		
 	}
-	public User(int id,String userName, String bio) {
+	public User(int id,String userName, String bio, String interests) {
 		super();
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
+		this.interests = interests;
 		this.sentRequestTo = new ArrayList<User>();
 		this.recievedRequestFrom = new ArrayList<User>();
 	}
+
 	
-	public User(Integer id, String userName, String bio, List<User> sentRequestTo, List<User> recievedRequestFrom) {
+	public User(Integer id, String userName, String bio, List<User> sentRequestTo, List<User> recievedRequestFrom,String interests) {
 		super();
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
+		this.interests = interests;
 		this.sentRequestTo = sentRequestTo;
 		this.recievedRequestFrom = recievedRequestFrom;
 	}
+
 	
 	
 	
@@ -111,15 +116,13 @@ public class User {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public void addInterest(Integer interest) {
-		for(int i = 0; i < numInterests; i++){
-			if(interests[i] == 0){
-				interests[i] = interest;
-				break;
-			}
-		}
-		//sort somehow, probably trying to keep the list sorted to make checking against faster later.
+	public String getInterests() {
+		return interests;
 	}
+	public void setInterests(String interests) {
+		this.interests = interests;
+	}
+
 
 	//friend list methods
 	public List<User> getSentRequestTo() {
@@ -145,13 +148,17 @@ public class User {
 	@JsonIgnore
 	public boolean isValid() {
 		boolean valid = true;
-		if(this.bio == "" || this.bio == null)
+		if(this.id == null && this.userName == null)
 			valid = false;
-		else if(this.userName== "" || this.userName == null)
+		else if(this.bio == null || this.bio == "")
 			valid = false;
-		
+		else if(this.userName == null || this.userName== "")
+			valid = false;
+		else if(this.interests == null || this.interests == "")
+			valid = false;
 		return valid;
 	}
+
 	
 	
 }
