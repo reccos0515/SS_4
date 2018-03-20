@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.UsesJava7;
 import org.springframework.stereotype.Service;
 
-import co.nectar.Message.HtmlError;
-import co.nectar.Message.HtmlUserList;
+import co.nectar.Message.*;;
 
 @Service
 public class UserService {
@@ -22,46 +21,125 @@ public class UserService {
 	 * 
 	 * @return List of all users
 	 */
-	public Iterable<User> getAllUsers() {
-		return userRepo.findAll();
-	}
-	
-	/**
-	 * Returns a list of all users stored in the repository.
-	 * returns as a HtmlUserList
-	 * 
-	 * @return List of all users
-	 */
-	public HtmlUserList getAllUsers_list() {
+	public HtmlUserList getAllUsers() {
 		return new HtmlUserList(true, userRepo.findAll());
 	}
-
-	
-	
+		
 
 	/**
-	 * Returns a user that has the given ID.
+	 * Returns a HtmlUserList that has the given userId.
+	 * 
+	 * Returns a HtmlError if:
+	 * - no userId is given
+	 * - userId is not found
 	 * 
 	 * @param userId
 	 *            The id of the user you wish to return.
-	 * @return User with id = userId.
+	 * @return HtmlUserList success: true, users: list of size 1 with found user
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
 	 */
-	public User getUserById(int userId) {
-		return userRepo.findOne(userId);
-	}
-
-	public User getUserByUserName(String username) {
-		return userRepo.findByUserName(username);
+	public HtmlMessage getUserById(Integer userId) {
+		ArrayList<User> users = new ArrayList<User>();
+		User user = userRepo.findOne(userId);
+		
+		//check for errors
+		if(userId == null) {
+			return new HtmlError(false, "UserId not given");
+		}else if(user == null) {
+			return new HtmlError(false, "UserId not found");
+		}
+		users.add(user);
+		return new HtmlUserList(true, users);
 	}
 
 	/**
-	 * Adds a user object to the repository.
+	 * Returns a HtmlUserList that has the given username.
+	 * 
+	 * Returns a HtmlError if:
+	 * - no username is given
+	 * - username is not found
+	 * 
+	 * @param username
+	 *            The username of the user you wish to return.
+	 * @return HtmlUserList success: true, users: list of size 1 with found user
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
+	 */
+	public HtmlMessage getUserByUserName(String username) {
+		ArrayList<User> users = new ArrayList<User>();
+		User user = userRepo.findByUserName(username);
+		
+		//check for errors
+		if(username == null) {
+			return new HtmlError(false, "Username not given");
+		}else if(user == null) {
+			return new HtmlError(false, "Username not found");
+		}
+		users.add(user);
+		return new HtmlUserList(true, users);
+	}
+	/**
+	 * Returns a HtmlUserList that has the given user object.
+	 * 
+	 * Returns a HtmlError if:
+	 * - no username and no userId is given
+	 * - username or userId is not found
+	 * - user object is empty
 	 * 
 	 * @param user
-	 *            The user object to be added
+	 *            User object containing username or userId of user you wish to return
+	 * @return HtmlUserList success: true, users: list of size 1 with found user
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
 	 */
-	public User addUser(User user) {
-		return userRepo.save(user);
+	public HtmlMessage getUserByObject(User user) {
+		ArrayList<User> users = new ArrayList<User>();
+		
+		if(user.getUserName() != null) {
+			user = userRepo.findByUserName(user.getUserName());
+		}else if(user.getId() != null) {
+			user = userRepo.findOne(user.getId());
+		}else {
+			return new HtmlError(false,"neither username or userId not given");
+		}
+		
+		if(user == null) {
+			return new HtmlError(false, "User not found");
+		}
+		users.add(user);
+		return new HtmlUserList(true, users);
+	}
+
+	/**
+	 * Returns a HtmlMessage of add success.
+	 * 
+	 * Returns a HtmlError if:
+	 * - no user is given
+	 * - user is not valid
+	 * 		-see user isValid()
+	 * 
+	 * @param user
+	 *            The user of the user you wish to add.
+	 * @return HtmlUserList success: true, users: list of size 1 with found user
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
+	 */
+	public HtmlMessage addUser(User user) {
+		boolean success = true;
+		String error = "";
+		ArrayList<User> users = new ArrayList<>();
+		if (user == null) {
+			success = false;
+			error = "no user given";
+		} else if (!user.isValid()) {
+			success = false;
+			error = "user is not valid";
+		} else {
+			users.add(userRepo.save(user));
+			return new HtmlUserList(success, users);
+		}
+		return new HtmlError(success, error);
 	}
 	
 	/**
@@ -85,20 +163,33 @@ public class UserService {
 	 *            user to be checked
 	 * @return if user is found or not
 	 */
+	
 	public boolean userExists(User user) {
-		// check to make sure id is not null
-		return userRepo.existsByUserName(user.getUserName()) || (user.getId() != null && userRepo.exists(user.getId()));
+		// check to make sure id or userName are not null
+		if(user.getId() == null) {
+			if(user.getUserName() == null) {
+				return false;
+			}else {
+				return userRepo.existsByUserName(user.getUserName());	
+			}
+		}else {
+			return userRepo.exists(user.getId());
+		}
 	}
 
 	/**
-	 * deletes user denoted by userId from db
+	 * Returns a HtmlMessage of delete success.
 	 * 
+	 * Returns a HtmlError if:
+	 * - no userId is given
+	 * - userId is not found
 	 * 
 	 * @param userId
-	 *            userid to be deleted
-	 * @return html message indicating if operation succeeded
+	 *            The userId of the user you wish to delete.
+	 * @return HtmlUserList success: true, users: list of size 0
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
 	 */
-
 	public HtmlError deleteUserById(Integer userId) {
 		boolean success = true;
 		String error = "";
@@ -117,29 +208,43 @@ public class UserService {
 
 	}
 
+	
 	/**
-	 * updates user based on given user returns unsuccessfully if: -user id not
-	 * specified -user is not stored currently in db -given user object is not
-	 * filled out completely
+	 * Returns a HtmlMessage of update success.
+	 * 
+	 * Returns a HtmlError if:
+	 * - no user is given
+	 * - user is not valid
+	 * 		-see user isValid()
+	 * - user not found
 	 * 
 	 * @param user
-	 *            user to be updated
-	 * @return HtmlMessage indicating success of operation and any error messages
+	 *            The user of the user you wish to add.
+	 * @return HtmlUserList success: true, users: list of size 1 with found user
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
 	 */
 	public HtmlError updateUser(User user) {
-
 		boolean success = true;
 		String error = "";
-		if (user.getId() == null) {
+		if (user == null) {
 			success = false;
-			error = "userId not specified";
+			error = "user not given";
 		} else if (!this.userExists(user)) {
 			success = false;
 			error = "given user not found";
-		} else if (!user.isValid()) {
+		} else if (!user.isValid() || user.getUserName() == null) {
 			success = false;
 			error = "given user not completely filled";
 		} else {
+			//set id if not set
+			if(user.getId() == null || user.getId() <= 0)
+				user.setId(userRepo.findByUserName(user.getUserName()).getId());
+			//check if username is duplicated
+			User otherUser = userRepo.findByUserName(user.getUserName());
+			if(otherUser != null && user.getId() != otherUser.getId()) {
+				return new HtmlError(false, "new username exists already");
+			}
 			userRepo.save(user);
 		}
 
@@ -147,168 +252,364 @@ public class UserService {
 
 	}
 
-	/**
-	 * returns list of users current user send a request to
-	 * 
-	 * @param userId
-	 *            user id of current user
-	 * @return list of users user send a request to
-	 */
-	public List<User> getSentRequestTo(int userId) {
-
-		return userRepo.findOne(userId).getSentRequestTo();
-	}
 
 	/**
-	 * returns HtmlUserList of users current user send a request to
+	 * Returns a HtmlMessage of sentRequestsTo list
 	 * 
-	 * returns unsuccessfully if: userId not in database
+	 * Returns a HtmlError if:
+	 * - no userId is given
+	 * - userId is not found
 	 * 
 	 * @param userId
-	 *            id of user to get outgoing request from
-	 * @return HtmlUser list of users
+	 *            The userId of the user you wish to delete.
+	 * @return HtmlUserList success: true, users: list of users sent a request
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
 	 */
-	public HtmlUserList getSendRequestTo_list(Integer userId) {
+	public HtmlMessage getSentRequestTo(Integer userId) {
 		boolean success = true;
 		String error = "";
+		List<User> users;
+
 		if (userId == null) {
 			success = false;
 			error = "userId not specified";
+		} else if (userRepo.findOne(userId) == null) {
+			success = false;
+			error = "given userId not found";
 		} else {
-			return new HtmlUserList(success, userRepo.findOne(userId).getSentRequestTo());
+			users = userRepo.findOne(userId).getSentRequestTo();
+			return new HtmlUserList(success, users);
 		}
-		return new HtmlUserList(success, new ArrayList<User>()); // returns error and empty list
+
+		return new HtmlError(success, error);
+		
 	}
 
 	
 	/**
-	 * returns list of users current user received a request from
+	 * Returns a HtmlMessage of recievedRequestFrom list
+	 * 
+	 * Returns a HtmlError if:
+	 * - no userId is given
+	 * - userId is not found
 	 * 
 	 * @param userId
-	 *            user id of current user
-	 * @return list of users user received a request from
-	 */
-	public List<User> getRecievedRequestFrom(int userId) {
-		return userRepo.findOne(userId).getRecievedRequestFrom();
-	}
-
-	/**
-	 * returns HtmlUserList of users current user send a request to
+	 *            The userId of the user you wish to delete.
+	 * @return HtmlUserList success: true, users: list of users current user received a request from
 	 * 
-	 * returns unsuccessfully if: userId not in database
-	 * 
-	 * @param userId
-	 *            id of user to get outgoing request from
-	 * @return HtmlUser list of users
-	 * @error returns unsuccessful HtmlMessage with error message
+	 * @return HtmlError success: false, message: detailed error message 
 	 */
-	public Object getRecievedRequestFrom_list(Integer userId) {
+	public HtmlMessage getRecievedRequestFrom(Integer userId) {
 		boolean success = true;
 		String error = "";
+		List<User> users;
+
 		if (userId == null) {
 			success = false;
 			error = "userId not specified";
+		} else if (userRepo.findOne(userId) == null) {
+			success = false;
+			error = "given userId not found";
 		} else {
-			return new HtmlUserList(success, userRepo.findOne(userId).getRecievedRequestFrom());
+			users = userRepo.findOne(userId).getRecievedRequestFrom();
+			return new HtmlUserList(success, users);
 		}
-		return new HtmlError(success, error); // returns error and empty list
+
+		return new HtmlError(success, error);
 	}
+
 	
 	
 	/**
-	 * stores friend request from userId to friendId
+	 * Returns a HtmlMessage of request success
+	 * 
+	 * Returns a HtmlError if: - no userId is given - no friendId is given - userId
+	 * is not found - friendId is not found
+	 * 
 	 * @param userId
+	 *            The userId to send a request from
 	 * @param friendId
+	 *            The friendId to send a request to
+	 * @return HtmlUserList success: true, users: list size of 0 or HtmlError
+	 *         success: false, message: detailed error message
 	 */
-	public void requestFriendById(int userId, int friendId) {
-		User user = this.getUserById(userId);
-		User friend = this.getUserById(friendId);
+	public HtmlMessage requestFriendById(int userId, int friendId) {
+		HtmlMessage msg1 = this.getUserById(userId);
+		HtmlMessage msg2 = this.getUserById(friendId);
 
-		user.getSentRequestTo().add(friend);
-		friend.getRecievedRequestFrom().add(user);
+		//check for errors
+		boolean success = true;
+		String error = "";
+		
+		if(!msg1.isSuccess() && !msg2.isSuccess()) {
+			success = false;
+			error = "error requesting both users" + ((HtmlError) msg1).getMessage()+((HtmlError) msg2).getMessage();
+		}else if(!msg1.isSuccess()) {
+			success = false;
+			error = "error userId requesting friendId: " + ((HtmlError) msg1).getMessage();
+		}else if(!msg2.isSuccess()) {
+			success = false;
+			error = "error frindId requesting userId: " + ((HtmlError) msg2).getMessage(); 
+		}else {
+			//get user and friend from first item in list
+			User user = ((HtmlUserList) msg1).getUsers().iterator().next();
+			User friend = ((HtmlUserList) msg2).getUsers().iterator().next();
+			
+			//add outgoing request to user
+			user.getSentRequestTo().add(friend);
+			//add incoming request to friend
+			friend.getRecievedRequestFrom().add(user);
 
-		userRepo.save(user);
-		userRepo.save(friend);
+			//save user and friend
+			userRepo.save(user);
+			userRepo.save(friend);
+		}
+		//return error
+		return new HtmlError(success, error);
 	}
 
 	/**
-	 * removes friend request from userId to friendId
+	 * Returns a HtmlMessage of removed friend success
+	 * 
+	 * Returns a HtmlError if: - no userId is given - no friendId is given - userId
+	 * is not found - friendId is not found
+	 * 
 	 * @param userId
+	 *            The userId to remove outgoing request
 	 * @param friendId
+	 *            The friendId to delete incoming request to
+	 * @return HtmlUserList success: true, users: list size of 0 or HtmlError
+	 *         success: false, message: detailed error message
 	 */
-	public void removeFriendById(int userId, int friendId) {
-		User user = this.getUserById(userId);
-		User friend = this.getUserById(friendId);
+	public HtmlMessage removeFriendById(int userId, int friendId) {
+		HtmlMessage msg1 = this.getUserById(userId);
+		HtmlMessage msg2 = this.getUserById(friendId);
 
-		// clear friends
-		user.getSentRequestTo().remove(friend);
-		friend.getRecievedRequestFrom().remove(user);
-		userRepo.save(user);
-		userRepo.save(friend);
+		// check for errors
+		boolean success = true;
+		String error = "";
+
+		if (!msg1.isSuccess() && !msg2.isSuccess()) {
+			success = false;
+			error = "error requesting both users" + ((HtmlError) msg1).getMessage() + ((HtmlError) msg2).getMessage();
+		} else if (!msg1.isSuccess()) {
+			success = false;
+			error = "error userId requesting friendId: " + ((HtmlError) msg1).getMessage();
+		} else if (!msg2.isSuccess()) {
+			success = false;
+			error = "error frindId requesting userId: " + ((HtmlError) msg2).getMessage();
+		} else {
+			// get user and friend from first item in list
+			User user = ((HtmlUserList) msg1).getUsers().iterator().next();
+			User friend = ((HtmlUserList) msg2).getUsers().iterator().next();
+
+			// remove sent request
+			user.getSentRequestTo().remove(friend);
+
+			// removed received request
+			friend.getRecievedRequestFrom().remove(user);
+
+			// save user and friend
+			userRepo.save(user);
+			userRepo.save(friend);
+		}
+		// return error
+		return new HtmlError(success, error);
 	}
 
-	// friends are in both friendTo and friendFrom
-	public List<User> getFriends(int userId) {
+	
+	/**
+	 * Returns a HtmlMessage of list of friends
+	 * 
+	 * Returns a HtmlError if:
+	 * - no userId is given
+	 * - userId is not found
+	 * 
+	 * friends are in sentRequestTo and recievedRequestsFrom
+	 * 
+	 * @param userId
+	 *            The userId of the user you wish to friends list.
+	 * @return HtmlUserList success: true, users: list of users current friends
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
+	 */
+	public HtmlMessage getFriends(Integer userId) {
+		boolean success = true;
+		String error = "";
 		List<User> friends = new ArrayList<User>();
-		User user = this.getUserById(userId);
+		HtmlMessage msg = this.getUserById(userId);
+		
+		//check user 
+		if (!msg.isSuccess()) {
+			success = false;
+			error = "error userId: " + ((HtmlError) msg).getMessage();
+		} else {
+			//get user
+			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			
+			// get to and from friend lists
+			List<User> to = user.getSentRequestTo();
+			List<User> from = user.getRecievedRequestFrom();
 
-		// get to and from friend lists
-		List<User> to = user.getSentRequestTo();
-		List<User> from = user.getRecievedRequestFrom();
-
-		for (User friend : to) {
-			if (from.contains(friend))
-				friends.add(friend);// add if in both to and from lists
+			// friends are in both friendTo and friendFrom
+			for (User friend : to) {
+				if (from.contains(friend))
+					friends.add(friend);
+			}
+			
+			return new HtmlUserList(success, friends);
 		}
-		return friends;
+
+		return new HtmlError(success, error);
 	}
 
-	// request are in friend to but not from
-	public List<User> getOutgoingRequests(int userId) {
+	/**
+	 * Returns a HtmlMessage of list of outgoing friends
+	 * 
+	 * Returns a HtmlError if:
+	 * - no userId is given
+	 * - userId is not found
+	 * 
+	 * outgoing requests are in sentRequestTo but not recievedRequestsFrom
+	 * 
+	 * @param userId
+	 *            The userId of the user you wish to friends list.
+	 * @return HtmlUserList success: true, users: list of users current friends
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
+	 */
+	public HtmlMessage getOutgoingRequests(Integer userId) {
+		
+		boolean success = true;
+		String error = "";
 		List<User> requests = new ArrayList<User>();
-		User user = this.getUserById(userId);
+		HtmlMessage msg = this.getUserById(userId);
+		
+		//check user 
+		if (!msg.isSuccess()) {
+			success = false;
+			error = "error userId: " + ((HtmlError) msg).getMessage();
+		} else {
+			//get user
+			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			
+			// get to and from friend lists
+			List<User> to = user.getSentRequestTo();
+			List<User> from = user.getRecievedRequestFrom();
 
-		// get to and from friend lists
-		List<User> to = user.getSentRequestTo();
-		List<User> from = user.getRecievedRequestFrom();
-
-		for (User friend : to) {
-			if (!from.contains(friend))
-				requests.add(friend);// add friend is not in from
+			// friends are in sentReuquestTo but not RecievedReuqestFrom
+			for (User friend : to) {
+				if (!from.contains(friend))
+					requests.add(friend);// add friend is not in from
+			}
+			
+			return new HtmlUserList(success, requests);
 		}
-		return requests;
+
+		return new HtmlError(success, error);
 	}
 
-	// pending users are in from but not in to
-	public List<User> getIncomingRequests(int userId) {
+	/**
+	 * Returns a HtmlMessage of list of outgoing friends
+	 * 
+	 * Returns a HtmlError if:
+	 * - no userId is given
+	 * - userId is not found
+	 * 
+	 * incoming requests are in not sentRequestTo but are in recievedRequestsFrom
+	 * 
+	 * @param userId
+	 *            The userId of the user you wish to friends list.
+	 * @return HtmlUserList success: true, users: list of users current friends
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
+	 */
+	public HtmlMessage getIncomingRequests(Integer userId) {
+		
+		boolean success = true;
+		String error = "";
 		List<User> requests = new ArrayList<User>();
-		User user = this.getUserById(userId);
+		HtmlMessage msg = this.getUserById(userId);
+		
+		//check user 
+		if (!msg.isSuccess()) {
+			success = false;
+			error = "error userId: " + ((HtmlError) msg).getMessage();
+		} else {
+			//get user
+			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			
+			// get to and from friend lists
+			List<User> to = user.getSentRequestTo();
+			List<User> from = user.getRecievedRequestFrom();
 
-		// get to and from friend lists
-		List<User> to = user.getSentRequestTo();
-		List<User> from = user.getRecievedRequestFrom();
-
-		for (User friend : from) {
-			if (!to.contains(friend))
-				requests.add(friend);// add friend is not in to yet
+			//incoming requests are in not sentRequestTo but are in recievedRequestsFrom
+			for (User friend : from) {
+				if (!to.contains(friend))
+					requests.add(friend);// add friend is not in to yet
+			}
+			return new HtmlUserList(success, requests);
 		}
-		return requests;
+
+		return new HtmlError(success, error);
 	}
 
 	// a discovery get all users that the current user had not friended or requested
-	public List<User> getDiscovery(int userId) {
+	/**
+	 * Returns a HtmlMessage of list of outgoing friends
+	 * 
+	 * Returns a HtmlError if:
+	 * - no userId is given
+	 * - userId is not found
+	 * 
+	 * discovery requests are in not sentRequestTo but are in recievedRequestsFrom
+	 * 
+	 * @param userId
+	 *            The userId of the user you wish to friends list.
+	 * @return HtmlUserList success: true, users: list of users current friends
+	 * 
+	 * @return HtmlError success: false, message: detailed error message 
+	 */
+	public HtmlMessage getDiscovery(Integer userId) {
+//		List<User> discovery = new ArrayList<User>();
+//		User user = this.getUserById(userId);
+//
+//		// get all users and current user's requests
+//		List<User> users = (List<User>) this.getAllUsers();
+//		List<User> requests = this.getSentRequestTo(userId);
+//
+//		for (User user_ele : users) {
+//			if (!requests.contains(user_ele) && !user_ele.equals(user))
+//				discovery.add(user_ele);// add if in both to and from lists
+//		}
+//		return discovery;
+		boolean success = true;
+		String error = "";
 		List<User> discovery = new ArrayList<User>();
-		User user = this.getUserById(userId);
+		HtmlMessage msg = this.getUserById(userId);
+		
+		//check user 
+		if (!msg.isSuccess()) {
+			success = false;
+			error = "error userId: " + ((HtmlError) msg).getMessage();
+		} else {
+			//get user
+			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			
+			// get to and from friend lists
+			List<User> users = (List<User>) ((HtmlUserList) this.getAllUsers()).getUsers();
+			List<User> to = user.getSentRequestTo();
 
-		// get all users and current user's requests
-		List<User> users = (List<User>) this.getAllUsers();
-		List<User> requests = this.getSentRequestTo(userId);
-
-		for (User user_ele : users) {
-			if (!requests.contains(user_ele) && !user_ele.equals(user))
-				discovery.add(user_ele);// add if in both to and from lists
+			//incoming requests are in not sentRequestTo but are in recievedRequestsFrom
+			for (User user_ele : users) {
+				if (!to.contains(user_ele) && !user_ele.equals(user))
+					discovery.add(user_ele);// add if in both to and from lists
+			}
+			return new HtmlUserList(success, discovery);
 		}
-		return discovery;
+
+		return new HtmlError(success, error);
 	}
 
 }
