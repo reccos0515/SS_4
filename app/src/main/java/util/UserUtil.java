@@ -14,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Iterator;
+
 /**
  * Created by Maggie on 3/5/2018.
  * Methods to make common android/server interactions regarding users easier
@@ -121,10 +123,11 @@ public class UserUtil {
      * @param context the context in which this method is used
      * @return a JSONObject of a user
      */
-    public static JSONArray sendLoginRequest(String username, String password, Context context){
+    public static JSONObject sendLoginRequest(String username, String password, Context context){
         //probably needs special volley requests, not the premade volley methods
         Log.d("UserUtil", "sendLoginRequest entered");
         url += "/login";
+        clearuserJSONObject(); //double check that userJSONObject
 
         try { //TODO modify for how Ben wants info
             userJSONObject.put("username", username);
@@ -133,28 +136,24 @@ public class UserUtil {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  userJSONObject,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
-                        userJSONObject = response;
-                    }
-                }, new Response.ErrorListener() {
+        /*
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, url, userJSONObject, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                jsonArray = response;
+            }
+        }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
             }
         });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+        Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest);
+        */
 
-        try { //TODO modify for what Ben is sending back
-            jsonArray = userJSONObject.getJSONArray("info");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        return jsonArray;
+
+        return userJSONObject;
     }
 
     /**
@@ -367,5 +366,13 @@ public class UserUtil {
         profView = user;
         return;
     }
+
+    private static void clearuserJSONObject(){
+        Iterator keys = userJSONObject.keys();
+        while(keys.hasNext()){
+            userJSONObject.remove(keys.next().toString());
+        }
+    }
+
 
 }

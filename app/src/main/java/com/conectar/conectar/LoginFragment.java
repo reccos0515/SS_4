@@ -46,6 +46,7 @@ public class LoginFragment extends Fragment {
     Context context;
     JSONObject user;
     JSONArray tempJSONArray = new JSONArray();
+    JSONObject tempJSONObject = new JSONObject();
     //final SessionUtil session =  new SessionUtil(getContext());
 
     private OnFragmentInteractionListener mListener;
@@ -96,7 +97,7 @@ public class LoginFragment extends Fragment {
                 //Toast.makeText(getActivity(), "User Username" + session.getSessionusername(), Toast.LENGTH_LONG).show();
                 Toast.makeText(getActivity(), "Login attempt made", Toast.LENGTH_LONG).show();
                 //TODO grab actual values from edittext???
-                tempJSONArray = UserUtil.sendLoginRequest(loginUsername.toString(), loginPassword.toString(), context); //returns JSONArray response to login request
+                tempJSONObject = UserUtil.sendLoginRequest(loginUsername.toString(), loginPassword.toString(), context); //returns JSONArray response to login request
                 //deal with whether or not the request was successful
                 Boolean success = false;
                 try {
