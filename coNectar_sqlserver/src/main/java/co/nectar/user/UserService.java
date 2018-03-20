@@ -152,6 +152,7 @@ public class UserService {
 	 */
 	public void setStatus(int user, int status) {
 		userRepo.findOne(userID).setStatus(status);
+
 	}
 
 	/**
@@ -386,6 +387,7 @@ public class UserService {
 		HtmlMessage msg1 = this.getUserById(userId);
 		HtmlMessage msg2 = this.getUserById(friendId);
 
+
 		// check for errors
 		boolean success = true;
 		String error = "";
@@ -607,6 +609,7 @@ public class UserService {
 					discovery.add(user_ele);// add if in both to and from lists
 			}
 			return new HtmlUserList(success, discovery);
+
 		}
 
 		return new HtmlError(success, error);
@@ -644,6 +647,7 @@ public class UserService {
 	}
 	
 	//we are going to need some list to keep track of who has been discovered (nevermind).
+	//this only works if there is ten users in the discover
 	public List<User> makeSend(User user, List<User> relevant){
 		//right now im just sending back the first ten, this will be improved soon.
 		List<User> send = new ArrayList<User>();
@@ -656,6 +660,7 @@ public class UserService {
 		userRepo.save(user);
 		
 		return send;
-	}
+		
+	}	
 
 }

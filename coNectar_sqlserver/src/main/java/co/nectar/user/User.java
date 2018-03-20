@@ -40,6 +40,7 @@ public class User {
 	private String interests;
 	//private Integer[numInterests] interests;
 	private String bio;
+	private String interests;
 
 	
 	
@@ -148,6 +149,7 @@ public class User {
 	public void setRecievedRequestFrom(List<User> recievedRequestFrom) {
 		this.recievedRequestFrom = recievedRequestFrom;
 	}
+
 	
 	//discovery
 	public List<User> getBeenDiscovered() {
@@ -159,6 +161,14 @@ public class User {
 
 	
 	
+
+	public String getInterests() {
+		return interests;
+	}
+	public void setInterests(String interests) {
+		this.interests = interests;
+	}
+
 	/**
 	 * returns whether all required fields for user are complete
 	 * @param user user to be checked
