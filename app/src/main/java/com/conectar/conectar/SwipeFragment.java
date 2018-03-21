@@ -83,10 +83,10 @@ public class SwipeFragment extends Fragment {
 //        interests = SessionUtil.getSessionInterests(); //set logged in user's interests from session variables TODO comment back in
         interests = "11200000000"; //TODO delete this
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
-        url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1"; //set the url TODO delete the 1
-        context = getContext(); //get the context
+        url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1"; //set the url TODO delete the 1ine
+        context = getActivity().getApplicationContext(); //get the context
 //      url += id + "/discovery"; //create full url TODO put this back in
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1", null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
