@@ -77,9 +77,11 @@ public class SwipeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        interests = SessionUtil.getSessionInterests(); //set logged in user's interests from session variables
+        final View nView = view;
+//        interests = SessionUtil.getSessionInterests(); //set logged in user's interests from session variables TODO comment back in
+        interests = "11200000000"; //TODO delete this
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
         url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1"; //set the url TODO delete the 1
         context = getContext(); //get the context
@@ -90,14 +92,14 @@ public class SwipeFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         response = SwipeStubs.getFail(); //TODO delete this after testing
                         boolean success; //hold the success value
-                        final TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
-                        TextView firstName = view.findViewById(R.id.swipeFirstName);
+                        TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
+                        TextView firstName = nView.findViewById(R.id.swipeFirstName);
 
-                        TextView interest1 = view.findViewById(R.id.swipeInterest1);
-                        TextView interest2 = view.findViewById(R.id.swipeInterest2);
-                        TextView interest3 = view.findViewById(R.id.swipeInterest3);
-                        TextView interest4 = view.findViewById(R.id.swipeInterest4);
-                        TextView interest5 = view.findViewById(R.id.swipeInterest5);
+                        TextView interest1 = nView.findViewById(R.id.swipeInterest1);
+                        TextView interest2 = nView.findViewById(R.id.swipeInterest2);
+                        TextView interest3 = nView.findViewById(R.id.swipeInterest3);
+                        TextView interest4 = nView.findViewById(R.id.swipeInterest4);
+                        TextView interest5 = nView.findViewById(R.id.swipeInterest5);
 
 
                         //check for success
@@ -139,12 +141,12 @@ public class SwipeFragment extends Fragment {
                             }                                    userOnDisplayLoc = 0;
 
                             userOnDisplayLoc = 0; //update place in array to 0
-                            updateUI(user, view); //update the UI
+                            updateUI(user, nView); //update the UI
                             UserUtil.setUserToView(user); //save this where profile view can access it if needed
                         }
 
                         //on click listener for next
-                        view.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
+                        nView.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 userOnDisplayLoc++; //go to next user
@@ -156,6 +158,7 @@ public class SwipeFragment extends Fragment {
                                     updateUI(user, view);
                                     UserUtil.setUserToView(user); //save this where profile view can access if needed
                                 } catch (JSONException e){
+                                    TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
                                     errorMessage.setText("Sorry, we ran into a problem");//set an error for the user to see
                                     e.printStackTrace();
                                 }
@@ -163,7 +166,7 @@ public class SwipeFragment extends Fragment {
                         });
 
                         //on click listener for prev
-                        view.findViewById(R.id.swipePrev).setOnClickListener(new View.OnClickListener() {
+                        nView.findViewById(R.id.swipePrev).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 userOnDisplayLoc--; //go to previous
@@ -176,6 +179,7 @@ public class SwipeFragment extends Fragment {
                                     updateUI(user, view);
                                     UserUtil.setUserToView(user); //save this where profile view can access if needed
                                 }catch (JSONException e){
+                                    TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
                                     errorMessage.setText("Sorry, we ran into a problem"); //set an error for the user to see
                                     e.printStackTrace();
                                 }
@@ -183,7 +187,7 @@ public class SwipeFragment extends Fragment {
                         });
 
                         //on click listener for view
-                        view.findViewById(R.id.swipeView).setOnClickListener(new View.OnClickListener() {
+                        nView.findViewById(R.id.swipeView).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 //call a profile view fragment with userOnDisplayLoc user
