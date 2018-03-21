@@ -138,14 +138,14 @@
 
 
     <Button
-        android:id="@+id/debugButton"
+        android:id="@+id/updateServer"
         android:layout_width="wrap_content"
         android:layout_height="49dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Debug"
+        android:text="Save changes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.971"

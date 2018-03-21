@@ -123,11 +123,21 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(numInterests >= 1){
+                    char[] interestChars = interests.toCharArray(); //convert interests to a char array
+                    //move every interest down in the string
+                    for(int i = 1; i < 9; i++){
+                        interestChars[i] = interestChars[i + 2];
+                    }
+                    interestChars[9] = '0'; //fill in last interest as 0
+                    interestChars[10] = '0';
+                    numInterests--; //decrement number of interests
+                    interestChars[0] = (char) numInterests; //reset the number of interests in the string
+                    interests = interestChars.toString(); //return to a string
+
                     //-----------------------------pseudo code to be implemented---------------------------//
                     //move every interest down one place starting at the first
                     //decrement number of interests
                     //update the server
-                    numInterests--;
                     //-------------------------------------------------------------------------------------//
                 }
             }
@@ -136,6 +146,16 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(numInterests >= 2){
+                    char[] interestChars = interests.toCharArray(); //convert interests to a char array
+                    //move every interest down in the string
+                    for(int i = 3; i < 9; i++){
+                        interestChars[i] = interestChars[i + 2];
+                    }
+                    interestChars[9] = '0'; //fill in last interest as 0
+                    interestChars[10] = '0';
+                    numInterests--; //decrement number of interests
+                    interestChars[0] = (char) numInterests; //reset the number of interests in the string
+                    interests = interestChars.toString(); //return to a string
                     //-----------------------------pseudo code to be implemented---------------------------//
                     //move every interest down one place starting at the second
                     //decrement number of interests
@@ -149,6 +169,16 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(numInterests >= 3){
+                    char[] interestChars = interests.toCharArray(); //convert interests to a char array
+                    //move every interest down in the string
+                    for(int i = 5; i < 9; i++){
+                        interestChars[i] = interestChars[i + 2];
+                    }
+                    interestChars[9] = '0'; //fill in last interest as 0
+                    interestChars[10] = '0';
+                    numInterests--; //decrement number of interests
+                    interestChars[0] = (char) numInterests; //reset the number of interests in the string
+                    interests = interestChars.toString(); //return to a string
                     //-----------------------------pseudo code to be implemented---------------------------//
                     //move every interest down one place starting at the third
                     //decrement number of interests
@@ -162,6 +192,16 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(numInterests >= 4){
+                    char[] interestChars = interests.toCharArray(); //convert interests to a char array
+                    //move every interest down in the string
+                    for(int i = 7; i < 9; i++){
+                        interestChars[i] = interestChars[i + 2];
+                    }
+                    interestChars[9] = '0'; //fill in last interest as 0
+                    interestChars[10] = '0';
+                    numInterests--; //decrement number of interests
+                    interestChars[0] = (char) numInterests; //reset the number of interests in the string
+                    interests = interestChars.toString(); //return to a string
                     //-----------------------------pseudo code to be implemented---------------------------//
                     //move every interest down one place starting at the fourth
                     //decrement number of interests
@@ -174,6 +214,12 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(numInterests >= 5){
+                    char[] interestChars = interests.toCharArray(); //convert interests to a char array
+                    interestChars[9] = '0'; //fill in last interest as 0
+                    interestChars[10] = '0';
+                    numInterests--; //decrement number of interests
+                    interestChars[0] = (char) numInterests; //reset the number of interests in the string
+                    interests = interestChars.toString(); //return to a string
                     //-----------------------------pseudo code to be implemented---------------------------//
                     //delete the last interest
                     //decrement number of interests
@@ -184,11 +230,12 @@ public class EditProfileFragment extends Fragment {
             }
         });
         //For debugging, outputs all the current values in interests
-        view.findViewById(R.id.debugButton).setOnClickListener(new View.OnClickListener(){
+        view.findViewById(R.id.updateServer).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 //-----------------------------pseudo code to be implemented---------------------------//
-                //can use this to debug if needed
+                //save most recent list to user session variables
+                //update the server
                 //-------------------------------------------------------------------------------------//
             }
         });
