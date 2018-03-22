@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import util.InterestsUtil;
+import util.JsonRequest;
 import util.SessionUtil;
 import util.Singleton;
 import util.SwipeStubs;
@@ -87,10 +88,7 @@ public class SwipeFragment extends Fragment {
         url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1"; //set the url TODO delete the 1ine
         context = getActivity().getApplicationContext(); //get the context
 //      url += id + "/discovery"; //create full url TODO put this back in
-
-
-
-        //TODO move the jsonObjectRequest to JsonRequest, but leave the on click listeners
+        JsonRequest.swipeRequest(view, url, context);
 
 
                         //on click listener for next
