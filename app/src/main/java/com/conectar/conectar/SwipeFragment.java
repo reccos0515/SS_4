@@ -85,7 +85,7 @@ public class SwipeFragment extends Fragment {
 //        interests = SessionUtil.getSessionInterests(); //set logged in user's interests from session variables TODO comment back in
         interests = "11200000000"; //TODO delete this
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
-        url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"; //set the url TODO delete the 1ine
+        url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/1/discovery"; //set the url TODO delete the 1ine
         //      url += id + "/discovery"; //create full url TODO put this back in
         context = getActivity().getApplicationContext(); //get the context
         JsonRequest.swipeRequest(view, url, context); //call this to send the request
@@ -167,7 +167,7 @@ public class SwipeFragment extends Fragment {
         try{
             viewInterests = (String) user.get("interests");
             //TODO display picture
-            firstName.setText(user.get("firstName").toString());
+            firstName.setText(user.get("userName").toString());
         }catch (JSONException e){
             errorMessage.setText("Sorry, we ran into a problem"); //set error message to show to user
             e.printStackTrace();

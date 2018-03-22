@@ -188,7 +188,6 @@ public class JsonRequest {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                response = SwipeStubs.getFail(); //TODO delete this after testing
                 SwipeFragment.saveNewObject(response); //send this back to swipe fragment for saving
                 boolean success; //hold the success value
                 //set up the textviews
