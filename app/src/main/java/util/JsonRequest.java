@@ -182,12 +182,12 @@ public class JsonRequest {
         Singleton.getmInstance(context).addToRequestQueue(stringRequest);
     }
 
-    public static JSONObject swipeRequest(final View nView, String url, Context context){
+    public static void swipeRequest(final View nView, String url, Context context){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 response = SwipeStubs.getFail(); //TODO delete this after testing
-
+                SwipeFragment.saveNewObject(response);
                 boolean success; //hold the success value
                 TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
                 TextView firstName = nView.findViewById(R.id.swipeFirstName);
@@ -229,12 +229,10 @@ public class JsonRequest {
                     try{
                         JSONArray users = (JSONArray) response.get("users");
                         user = (JSONObject) users.get(0); //first user
-//                               len = users.length(); //set length of the array
                     }catch (JSONException e){
                         e.printStackTrace();
                     }
 
-//                            userOnDisplayLoc = 0; //update place in array to 0
                     SwipeFragment.updateUI(user, nView); //update the UI
                     UserUtil.setUserToView(user); //save this where profile view can access it if needed
                 }
@@ -248,7 +246,7 @@ public class JsonRequest {
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
-        return null;
+        return;
     }
 
 }

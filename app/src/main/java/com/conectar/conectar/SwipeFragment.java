@@ -41,11 +41,11 @@ import util.UserUtil;
 public class SwipeFragment extends Fragment {
     private Context context; //context to be used to add JSONRequest to queue
     private static String url; //beginning of url
-    private int userOnDisplayLoc; //int to hold the location in the array of the current user being viewed on the screen
+    private static int userOnDisplayLoc; //int to hold the location in the array of the current user being viewed on the screen
     private static int numInterests; //number of interests of the logged in user
     private static String interests; //logged in user's interests
-    private JSONArray users; //array of users found in response
-    private int len = 0; //length of array of users
+    private static JSONArray users; //array of users found in response
+    private static int len = 0; //length of array of users
 
     private OnFragmentInteractionListener mListener;
 
@@ -239,6 +239,33 @@ public class SwipeFragment extends Fragment {
         return;
     }
 
+    /**
+     * Method to save the received object. Can be accessed after a user presses a button
+     * @param js json object found in response
+     */
+    public static void saveNewObject(JSONObject js){
+        boolean success;
+        try{
+            success = (boolean) js.get("success");
+        }catch (JSONException e){
+            e.printStackTrace();
+            return;
+        }
+        if(!success) {
+            len = 0; // length of array is 0
+        }
+        else{
+            userOnDisplayLoc = 0; //update place in array to 0
+            try{
+                JSONArray u = js.getJSONArray("users");
+                users = u;
+                len = users.length(); //set length of the array
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+        return;
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
