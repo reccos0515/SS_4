@@ -52,7 +52,7 @@ public class NewProfileFragment extends Fragment {
 
     public static NewProfileFragment newInstance() {
         NewProfileFragment fragment = new NewProfileFragment();
-        Bundle args = new Bundle();;
+        Bundle args = new Bundle();
         return fragment;
     }
 
