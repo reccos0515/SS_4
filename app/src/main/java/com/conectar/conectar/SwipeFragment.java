@@ -89,26 +89,8 @@ public class SwipeFragment extends Fragment {
 //      url += id + "/discovery"; //create full url TODO put this back in
 
 
-        JSONObject js = new JSONObject();
-        try{
-            js.put("trial", "random");
-        } catch(JSONException e){
-            e.printStackTrace();
-        }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  js,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+        //TODO move the jsonObjectRequest to JsonRequest, but leave the on click listeners
 
 
 
