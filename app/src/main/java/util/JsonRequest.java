@@ -187,8 +187,9 @@ public class JsonRequest {
             @Override
             public void onResponse(JSONObject response) {
                 response = SwipeStubs.getFail(); //TODO delete this after testing
-                SwipeFragment.saveNewObject(response);
+                SwipeFragment.saveNewObject(response); //send this back to swipe fragment for saving
                 boolean success; //hold the success value
+                //set up the textviews
                 TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
                 TextView firstName = nView.findViewById(R.id.swipeFirstName);
                 TextView interest1 = nView.findViewById(R.id.swipeInterest1);
@@ -200,7 +201,7 @@ public class JsonRequest {
 
                 //check for success
                 try{
-                    success = (boolean) response.get("success");
+                    success = (boolean) response.get("success"); //see if it succeeded or not
                 }catch (JSONException e){
                     e.printStackTrace();
                     return;
@@ -219,25 +220,19 @@ public class JsonRequest {
                     interest3.setText("");
                     interest4.setText("");
                     interest5.setText("");
-//                            len = 0; // length of array is 0
                 }
                 else{
-                    //if succeeded, can make the text view invisible
-                    errorMessage.setText("");
+                    errorMessage.setText(""); //if succeeded, can make the text view invisible
                     JSONObject user = new JSONObject(); //specific user
-                    //pull the first user
                     try{
-                        JSONArray users = (JSONArray) response.get("users");
+                        JSONArray users = (JSONArray) response.get("users"); //pull the first user
                         user = (JSONObject) users.get(0); //first user
                     }catch (JSONException e){
                         e.printStackTrace();
                     }
-
                     SwipeFragment.updateUI(user, nView); //update the UI
                     UserUtil.setUserToView(user); //save this where profile view can access it if needed
                 }
-
-
             }
         }, new Response.ErrorListener() {
             @Override

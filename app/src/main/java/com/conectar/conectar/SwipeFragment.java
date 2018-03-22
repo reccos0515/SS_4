@@ -81,18 +81,17 @@ public class SwipeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final View nView = view;
 //        interests = SessionUtil.getSessionInterests(); //set logged in user's interests from session variables TODO comment back in
         interests = "11200000000"; //TODO delete this
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
         url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1"; //set the url TODO delete the 1ine
         context = getActivity().getApplicationContext(); //get the context
 //      url += id + "/discovery"; //create full url TODO put this back in
-        JsonRequest.swipeRequest(view, url, context);
+        JsonRequest.swipeRequest(view, url, context); //call this to send the request
 
 
                         //on click listener for next
-        nView.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userOnDisplayLoc++; //go to next user
@@ -104,14 +103,14 @@ public class SwipeFragment extends Fragment {
                     updateUI(user, view);
                     UserUtil.setUserToView(user); //save this where profile view can access if needed
                 } catch (JSONException e){
-                    TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
+                    TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
                     errorMessage.setText("Sorry, we ran into a problem");//set an error for the user to see
                     e.printStackTrace();
                 }
             }
         });
         //on click listener for prev
-        nView.findViewById(R.id.swipePrev).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.swipePrev).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userOnDisplayLoc--; //go to previous
@@ -124,14 +123,14 @@ public class SwipeFragment extends Fragment {
                     updateUI(user, view);
                     UserUtil.setUserToView(user); //save this where profile view can access if needed
                 }catch (JSONException e){
-                    TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
+                    TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
                     errorMessage.setText("Sorry, we ran into a problem"); //set an error for the user to see
                     e.printStackTrace();
                 }
             }
         });
         //on click listener for view
-        nView.findViewById(R.id.swipeView).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.swipeView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //call a profile view fragment with userOnDisplayLoc user
@@ -242,9 +241,9 @@ public class SwipeFragment extends Fragment {
      * @param js json object found in response
      */
     public static void saveNewObject(JSONObject js){
-        boolean success;
+        boolean success; //to hold the success value
         try{
-            success = (boolean) js.get("success");
+            success = (boolean) js.get("success"); //see what the success was
         }catch (JSONException e){
             e.printStackTrace();
             return;
@@ -255,8 +254,7 @@ public class SwipeFragment extends Fragment {
         else{
             userOnDisplayLoc = 0; //update place in array to 0
             try{
-                JSONArray u = js.getJSONArray("users");
-                users = u;
+                users = js.getJSONArray("users");  //set users to this array
                 len = users.length(); //set length of the array
             }catch (JSONException e){
                 e.printStackTrace();
@@ -264,6 +262,7 @@ public class SwipeFragment extends Fragment {
         }
         return;
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
