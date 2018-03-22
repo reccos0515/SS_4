@@ -18,7 +18,6 @@ public class SwipeStubs {
         } catch (JSONException e){
             e.printStackTrace();
         }
-
-        return null;
+        return obj;
     }
 }

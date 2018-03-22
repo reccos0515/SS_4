@@ -183,83 +183,67 @@ public class JsonRequest {
     }
 
 
-    public static void swipeRequest(JSONObject js, String url, Context context){
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  js,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
+
+    public static void swipeRequest(final View nView, String url, Context context){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                response = SwipeStubs.getFail(); //TODO delete this after testing
+                SwipeFragment.saveNewObject(response); //send this back to swipe fragment for saving
+                boolean success; //hold the success value
+                //set up the textviews
+                TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
+                TextView firstName = nView.findViewById(R.id.swipeFirstName);
+                TextView interest1 = nView.findViewById(R.id.swipeInterest1);
+                TextView interest2 = nView.findViewById(R.id.swipeInterest2);
+                TextView interest3 = nView.findViewById(R.id.swipeInterest3);
+                TextView interest4 = nView.findViewById(R.id.swipeInterest4);
+                TextView interest5 = nView.findViewById(R.id.swipeInterest5);
+
+
+                //check for success
+                try{
+                    success = (boolean) response.get("success"); //see if it succeeded or not
+                }catch (JSONException e){
+                    e.printStackTrace();
+                    return;
+                }
+                if(!success){
+                    //if failed, set text error message
+                    try {
+                        errorMessage.setText((String) response.get("message"));
+                    } catch (JSONException e){
+                        e.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
+                    //set all interests as blank
+                    firstName.setText("");
+                    interest1.setText("");
+                    interest2.setText("");
+                    interest3.setText("");
+                    interest4.setText("");
+                    interest5.setText("");
+                }
+                else{
+                    errorMessage.setText(""); //if succeeded, can make the text view invisible
+                    JSONObject user = new JSONObject(); //specific user
+                    try{
+                        JSONArray users = (JSONArray) response.get("users"); //pull the first user
+                        user = (JSONObject) users.get(0); //first user
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                    SwipeFragment.updateUI(user, nView); //update the UI
+                    UserUtil.setUserToView(user); //save this where profile view can access it if needed
+                }
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+        return;
     }
-
-
-//    public static void swipeRequest(final View nView, String url, Context context){
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                response = SwipeStubs.getFail(); //TODO delete this after testing
-//                SwipeFragment.saveNewObject(response); //send this back to swipe fragment for saving
-//                boolean success; //hold the success value
-//                //set up the textviews
-//                TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
-//                TextView firstName = nView.findViewById(R.id.swipeFirstName);
-//                TextView interest1 = nView.findViewById(R.id.swipeInterest1);
-//                TextView interest2 = nView.findViewById(R.id.swipeInterest2);
-//                TextView interest3 = nView.findViewById(R.id.swipeInterest3);
-//                TextView interest4 = nView.findViewById(R.id.swipeInterest4);
-//                TextView interest5 = nView.findViewById(R.id.swipeInterest5);
-//
-//
-//                //check for success
-//                try{
-//                    success = (boolean) response.get("success"); //see if it succeeded or not
-//                }catch (JSONException e){
-//                    e.printStackTrace();
-//                    return;
-//                }
-//                if(!success){
-//                    //if failed, set text error message
-//                    try {
-//                        errorMessage.setText((String) response.get("message"));
-//                    } catch (JSONException e){
-//                        e.printStackTrace();
-//                    }
-//                    //set all interests as blank
-//                    firstName.setText("");
-//                    interest1.setText("");
-//                    interest2.setText("");
-//                    interest3.setText("");
-//                    interest4.setText("");
-//                    interest5.setText("");
-//                }
-//                else{
-//                    errorMessage.setText(""); //if succeeded, can make the text view invisible
-//                    JSONObject user = new JSONObject(); //specific user
-//                    try{
-//                        JSONArray users = (JSONArray) response.get("users"); //pull the first user
-//                        user = (JSONObject) users.get(0); //first user
-//                    }catch (JSONException e){
-//                        e.printStackTrace();
-//                    }
-//                    SwipeFragment.updateUI(user, nView); //update the UI
-//                    UserUtil.setUserToView(user); //save this where profile view can access it if needed
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                error.printStackTrace();
-//            }
-//        });
-//        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
-//        return;
-//    }
 
 }
