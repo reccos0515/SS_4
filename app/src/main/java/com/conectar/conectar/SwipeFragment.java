@@ -98,6 +98,7 @@ public class SwipeFragment extends Fragment {
                 userOnDisplayLoc++; //go to next user
                 //if it has reached the end, return to 0
                 if(userOnDisplayLoc >= len){
+                    userOnDisplayLoc = 0;
                 }
                 try {
                     JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
@@ -108,6 +109,7 @@ public class SwipeFragment extends Fragment {
                     errorMessage.setText("Sorry, we ran into a problem");//set an error for the user to see
                     e.printStackTrace();
                 }
+
             }
         });
         //on click listener for prev
@@ -167,7 +169,7 @@ public class SwipeFragment extends Fragment {
         try{
             viewInterests = (String) user.get("interests");
             //TODO display picture
-            firstName.setText(user.get("userName").toString());
+            firstName.setText((String) user.get("userName"));
         }catch (JSONException e){
             errorMessage.setText("Sorry, we ran into a problem"); //set error message to show to user
             e.printStackTrace();
