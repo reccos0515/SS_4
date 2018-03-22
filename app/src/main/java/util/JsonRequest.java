@@ -2,6 +2,8 @@ package util;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -13,6 +15,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.conectar.conectar.ProfileViewFragment;
+import com.conectar.conectar.R;
+import com.conectar.conectar.SwipeFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -178,5 +182,73 @@ public class JsonRequest {
         Singleton.getmInstance(context).addToRequestQueue(stringRequest);
     }
 
+    public static JSONObject swipeRequest(final View nView, String url, Context context){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                response = SwipeStubs.getFail(); //TODO delete this after testing
+
+                boolean success; //hold the success value
+                TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
+                TextView firstName = nView.findViewById(R.id.swipeFirstName);
+                TextView interest1 = nView.findViewById(R.id.swipeInterest1);
+                TextView interest2 = nView.findViewById(R.id.swipeInterest2);
+                TextView interest3 = nView.findViewById(R.id.swipeInterest3);
+                TextView interest4 = nView.findViewById(R.id.swipeInterest4);
+                TextView interest5 = nView.findViewById(R.id.swipeInterest5);
+
+
+                //check for success
+                try{
+                    success = (boolean) response.get("success");
+                }catch (JSONException e){
+                    e.printStackTrace();
+                    return;
+                }
+                if(!success){
+                    //if failed, set text error message
+                    try {
+                        errorMessage.setText((String) response.get("message"));
+                    } catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                    //set all interests as blank
+                    firstName.setText("");
+                    interest1.setText("");
+                    interest2.setText("");
+                    interest3.setText("");
+                    interest4.setText("");
+                    interest5.setText("");
+//                            len = 0; // length of array is 0
+                }
+                else{
+                    //if succeeded, can make the text view invisible
+                    errorMessage.setText("");
+                    JSONObject user = new JSONObject(); //specific user
+                    //pull the first user
+                    try{
+                        JSONArray users = (JSONArray) response.get("users");
+                        user = (JSONObject) users.get(0); //first user
+//                               len = users.length(); //set length of the array
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
+
+//                            userOnDisplayLoc = 0; //update place in array to 0
+                    SwipeFragment.updateUI(user, nView); //update the UI
+                    UserUtil.setUserToView(user); //save this where profile view can access it if needed
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+        return null;
+    }
 
 }

@@ -42,8 +42,8 @@ public class SwipeFragment extends Fragment {
     private Context context; //context to be used to add JSONRequest to queue
     private static String url; //beginning of url
     private int userOnDisplayLoc; //int to hold the location in the array of the current user being viewed on the screen
-    private int numInterests; //number of interests of the logged in user
-    private String interests; //logged in user's interests
+    private static int numInterests; //number of interests of the logged in user
+    private static String interests; //logged in user's interests
     private JSONArray users; //array of users found in response
     private int len = 0; //length of array of users
 
@@ -93,131 +93,59 @@ public class SwipeFragment extends Fragment {
         //TODO move the jsonObjectRequest to JsonRequest, but leave the on click listeners
 
 
-
-
-
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1", null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        response = SwipeStubs.getFail(); //TODO delete this after testing
-//                        boolean success; //hold the success value
-//                        TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
-//                        TextView firstName = nView.findViewById(R.id.swipeFirstName);
-//
-//                        TextView interest1 = nView.findViewById(R.id.swipeInterest1);
-//                        TextView interest2 = nView.findViewById(R.id.swipeInterest2);
-//                        TextView interest3 = nView.findViewById(R.id.swipeInterest3);
-//                        TextView interest4 = nView.findViewById(R.id.swipeInterest4);
-//                        TextView interest5 = nView.findViewById(R.id.swipeInterest5);
-//
-//
-//                        //check for success
-//                        try{
-//                            success = (boolean) response.get("success");
-//                        }catch (JSONException e){
-//                            e.printStackTrace();
-//                            return;
-//                        }
-//                        if(!success){
-//                            //if failed, set text error message
-//                            try {
-//                                errorMessage.setText((String) response.get("message"));
-//                            } catch (JSONException e){
-//                                e.printStackTrace();
-//                            }
-//                            //set all interests as blank
-//                            firstName.setText("");
-//
-//                            interest1.setText("");
-//                            interest2.setText("");
-//                            interest3.setText("");
-//                            interest4.setText("");
-//                            interest5.setText("");
-//
-//                            len = 0; // length of array is 0
-//                        }
-//                        else{
-//                            //if succeeded, can make the text view invisible
-//                            errorMessage.setText("");
-//                            JSONObject user = new JSONObject(); //specific user
-//                            //pull the first user
-//                            try{
-//                                users = (JSONArray) response.get("users");
-//                                user = (JSONObject) users.get(0); //first user
-//                                len = users.length(); //set length of the array
-//                            }catch (JSONException e){
-//                                e.printStackTrace();
-//                            }                                    userOnDisplayLoc = 0;
-//
-//                            userOnDisplayLoc = 0; //update place in array to 0
-//                            updateUI(user, nView); //update the UI
-//                            UserUtil.setUserToView(user); //save this where profile view can access it if needed
-//                        }
-//
-//                        //on click listener for next
-//                        nView.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                userOnDisplayLoc++; //go to next user
-//                                //if it has reached the end, return to 0
-//                                if(userOnDisplayLoc >= len){
-//                                }
-//                                try {
-//                                    JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
-//                                    updateUI(user, view);
-//                                    UserUtil.setUserToView(user); //save this where profile view can access if needed
-//                                } catch (JSONException e){
-//                                    TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
-//                                    errorMessage.setText("Sorry, we ran into a problem");//set an error for the user to see
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        });
-//
-//                        //on click listener for prev
-//                        nView.findViewById(R.id.swipePrev).setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                userOnDisplayLoc--; //go to previous
-//                                //if it has passed the beginning, return to the end
-//                                if(userOnDisplayLoc < 0){
-//                                    userOnDisplayLoc = len - 1;
-//                                }
-//                                try{
-//                                    JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
-//                                    updateUI(user, view);
-//                                    UserUtil.setUserToView(user); //save this where profile view can access if needed
-//                                }catch (JSONException e){
-//                                    TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
-//                                    errorMessage.setText("Sorry, we ran into a problem"); //set an error for the user to see
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        });
-//
-//                        //on click listener for view
-//                        nView.findViewById(R.id.swipeView).setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                //call a profile view fragment with userOnDisplayLoc user
-//                                Fragment fragment = new ProfileViewFragment();
-//                                if(fragment != null){ //Changes the screens
-//                                    FragmentManager fragmentManager = getFragmentManager();
-//                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                                    fragmentTransaction.replace(R.id.screen_area, fragment);
-//                                    fragmentTransaction.commit();
-//                                }
-//                            }
-//                        });
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                error.printStackTrace();
-//            }
-//        });
-//        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+                        //on click listener for next
+        nView.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userOnDisplayLoc++; //go to next user
+                //if it has reached the end, return to 0
+                if(userOnDisplayLoc >= len){
+                }
+                try {
+                    JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
+                    updateUI(user, view);
+                    UserUtil.setUserToView(user); //save this where profile view can access if needed
+                } catch (JSONException e){
+                    TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
+                    errorMessage.setText("Sorry, we ran into a problem");//set an error for the user to see
+                    e.printStackTrace();
+                }
+            }
+        });
+        //on click listener for prev
+        nView.findViewById(R.id.swipePrev).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userOnDisplayLoc--; //go to previous
+                //if it has passed the beginning, return to the end
+                if(userOnDisplayLoc < 0){
+                    userOnDisplayLoc = len - 1;
+                }
+                try{
+                    JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
+                    updateUI(user, view);
+                    UserUtil.setUserToView(user); //save this where profile view can access if needed
+                }catch (JSONException e){
+                    TextView errorMessage = nView.findViewById(R.id.swipeMessage); //can print error message
+                    errorMessage.setText("Sorry, we ran into a problem"); //set an error for the user to see
+                    e.printStackTrace();
+                }
+            }
+        });
+        //on click listener for view
+        nView.findViewById(R.id.swipeView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //call a profile view fragment with userOnDisplayLoc user
+                Fragment fragment = new ProfileViewFragment();
+                if(fragment != null){ //Changes the screens
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.screen_area, fragment);
+                    fragmentTransaction.commit();
+                }
+            }
+        });
     }
 
     /**
@@ -225,7 +153,7 @@ public class SwipeFragment extends Fragment {
      * @param user object to be viewed
      * @param view from where it is called, to be able to update the ui
      */
-    private void updateUI(JSONObject user, View view){
+    public static void updateUI(JSONObject user, View view){
         //make all textviews
         TextView errorMessage = view.findViewById(R.id.swipeMessage);
         TextView firstName = view.findViewById(R.id.swipeFirstName);
