@@ -40,7 +40,7 @@ import util.UserUtil;
  * create an instance of this fragment.
  */
 public class SwipeFragment extends Fragment {
-    private Context context; //context to be used to add JSONRequest to queue
+    private Context context = getActivity().getApplicationContext(); //context to be used to add JSONRequest to queue
     private static String url; //beginning of url
     private static int userOnDisplayLoc; //int to hold the location in the array of the current user being viewed on the screen
     private static int numInterests; //number of interests of the logged in user
@@ -85,8 +85,7 @@ public class SwipeFragment extends Fragment {
         interests = "11200000000"; //TODO delete this
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
         url = "proj-309-ss-4.cs.iastate.edu:9002/ben/users/1"; //set the url TODO delete the 1ine
-        context = getActivity().getApplicationContext(); //get the context
-//      url += id + "/discovery"; //create full url TODO put this back in
+        //      url += id + "/discovery"; //create full url TODO put this back in
         JsonRequest.swipeRequest(view, url, context); //call this to send the request
 
 
