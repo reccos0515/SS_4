@@ -149,12 +149,7 @@ public class EditProfileFragment extends Fragment {
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
                     interests = String.valueOf(interestChars); //return to a string
-
-                    //-----------------------------pseudo code to be implemented---------------------------//
-                    //move every interest down one place starting at the first
-                    //decrement number of interests
-                    //update the server
-                    //-------------------------------------------------------------------------------------//
+                    updateInterestButtons();
                 }
             }
         });
@@ -172,12 +167,7 @@ public class EditProfileFragment extends Fragment {
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
                     interests = String.valueOf(interestChars); //return to a string
-                    //-----------------------------pseudo code to be implemented---------------------------//
-                    //move every interest down one place starting at the second
-                    //decrement number of interests
-                    //update server
-                    numInterests--;
-                    //------------------------------------------------------------------------------------//
+                    updateInterestButtons();
                 }
             }
         });
@@ -195,12 +185,7 @@ public class EditProfileFragment extends Fragment {
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
                     interests = String.valueOf(interestChars); //return to a string
-                    //-----------------------------pseudo code to be implemented---------------------------//
-                    //move every interest down one place starting at the third
-                    //decrement number of interests
-                    //update server
-                    numInterests--;
-                    //------------------------------------------------------------------------------------//
+                    updateInterestButtons();
                 }
             }
         });
@@ -218,11 +203,7 @@ public class EditProfileFragment extends Fragment {
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
                     interests = String.valueOf(interestChars); //return to a string
-                    //-----------------------------pseudo code to be implemented---------------------------//
-                    //move every interest down one place starting at the fourth
-                    //decrement number of interests
-                    //update server
-                    numInterests--;
+                    updateInterestButtons();
                 }
             }
         });
@@ -236,12 +217,7 @@ public class EditProfileFragment extends Fragment {
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
                     interests = String.valueOf(interestChars); //return to a string
-                    //-----------------------------pseudo code to be implemented---------------------------//
-                    //delete the last interest
-                    //decrement number of interests
-                    //update server
-                    //-------------------------------------------------------------------------------------//
-                    numInterests--;
+                    updateInterestButtons();
                 }
             }
         });
@@ -264,6 +240,9 @@ public class EditProfileFragment extends Fragment {
         });
     }
 
+    /**
+     * method to update the ui on the buttons after changing the interests
+     */
     public void updateInterestButtons(){
         String cur = interests.charAt(1) + "" + interests.charAt(2) + ""; //first interest chars
         if(InterestsUtil.getInterest(cur) != null){
