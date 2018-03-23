@@ -92,37 +92,8 @@ public class EditProfileFragment extends Fragment {
 //        interests = SessionUtil.getSessionInterests(); TODO put this back in once session variables work
         String defaultBio = "this is my bio"; //todo remove this
         bio.setText(defaultBio); //todo remove this
-        interests = "51213141516"; //todo remove this
-        String cur = interests.charAt(1) + "" + interests.charAt(2) + ""; //first interest chars
-        if(InterestsUtil.getInterest(cur) != null){
-            int1.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
-        }else{
-            int1.setText(empty); //if it doesn't exist, set the text to be empty
-        }
-        cur = interests.charAt(3) + "" + interests.charAt(4) + ""; //second interest chars
-        if(InterestsUtil.getInterest(cur) != null){
-            int2.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
-        }else{
-            int2.setText(empty); //if it doesn't exist, set the text to be empty
-        }
-        cur = interests.charAt(5) + "" + interests.charAt(6) + ""; //third interest chars
-        if(InterestsUtil.getInterest(cur) != null){
-            int3.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
-        }else{
-            int3.setText(empty); //if it doesn't exist, set the text to be empty
-        }
-        cur = interests.charAt(7) + "" + interests.charAt(8) + ""; //fourth interest chars
-        if(InterestsUtil.getInterest(cur) != null){
-            int4.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
-        }else{
-            int4.setText(empty); //if it doesn't exist, set the text to be empty
-        }
-        cur = interests.charAt(9) + "" + interests.charAt(10) + ""; //fifth interest chars
-        if(InterestsUtil.getInterest(cur) != null){
-            int5.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
-        }else{
-            int5.setText(empty); //if it doesn't exist, set the text to be empty
-        }
+        interests = "41213141500"; //todo remove this
+        updateInterestButtons();
 
 
 
@@ -142,10 +113,10 @@ public class EditProfileFragment extends Fragment {
                         interestChars[(2 * numInterests) + 1] = interestToAdd.charAt(0); //replace the old numbers with the new id
                         interestChars[(2 * numInterests) + 2] = interestToAdd.charAt(1);
                         numInterests++; //increment the number of interests
-                        interestChars[0] = (char) numInterests; //update numInterests in the string
+                        interestChars[0] = (char) (numInterests + '0'); //update numInterests in the string
                         interests = interestChars.toString(); //turn it back into a string
                         Toast.makeText(getContext(), "Successfully added " + InterestsUtil.getInterest(interestToAdd), Toast.LENGTH_SHORT); //toast to let the user know it worked
-                        //TODO update the server
+                        updateInterestButtons();
                     }
                     else{
                         //toast to tell the user it was not valid
@@ -299,6 +270,40 @@ public class EditProfileFragment extends Fragment {
             }
         });
     }
+
+    public void updateInterestButtons(){
+        String cur = interests.charAt(1) + "" + interests.charAt(2) + ""; //first interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int1.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int1.setText(empty); //if it doesn't exist, set the text to be empty
+        }
+        cur = interests.charAt(3) + "" + interests.charAt(4) + ""; //second interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int2.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int2.setText(empty); //if it doesn't exist, set the text to be empty
+        }
+        cur = interests.charAt(5) + "" + interests.charAt(6) + ""; //third interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int3.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int3.setText(empty); //if it doesn't exist, set the text to be empty
+        }
+        cur = interests.charAt(7) + "" + interests.charAt(8) + ""; //fourth interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int4.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int4.setText(empty); //if it doesn't exist, set the text to be empty
+        }
+        cur = interests.charAt(9) + "" + interests.charAt(10) + ""; //fifth interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int5.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int5.setText(empty); //if it doesn't exist, set the text to be empty
+        }
+    }
+
 
     @Override
     public void onAttach(Context context) {
