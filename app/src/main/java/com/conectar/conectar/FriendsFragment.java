@@ -103,6 +103,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         ArrayAdapter<Friend> adapter = new ArrayAdapter<Friend>(getActivity(), android.R.layout.simple_list_item_1, testFriends);
 
+        // listView.setOnItemClickListener(new ListClickHandler());
         listView.setAdapter(adapter);
 
         /*
@@ -123,6 +124,8 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 //        ListView listView = (ListView) view.findViewById(R.id.friendsListView); //grabs the list view our items will be in
 //        listView.setAdapter(listAdapter); //tells list view to use the items we have
     }
+
+
 
     @Override
     public void onAttach(Context context) {

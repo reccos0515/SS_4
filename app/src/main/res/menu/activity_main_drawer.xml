@@ -39,6 +39,9 @@
         android:title="Manage Account">
         <menu>
             <item
+                android:id="@+id/nav_login"
+                android:title="Login" />
+            <item
                 android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Settings" />
@@ -48,9 +51,6 @@
             <item
                 android:id="@+id/nav_report"
                 android:title="Report" />
-            <item
-                android:id="@+id/nav_login"
-                android:title="Login" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_exit_to_app_black_24dp"

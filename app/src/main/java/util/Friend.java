@@ -24,9 +24,17 @@ public class Friend {
         this.interests = interests;
     }
 
+    /**
+     * Lists all of the information regarding a Friend object
+     * @return string of all Friend object attributes
+     */
+    public String fullFriendInfo(){
+        return "Id: " + this.id + "   Username: " + this.username + "   Bio: " + this.bio + "   Interests: " + this.interests;
+    }
+
     @Override
     public String toString(){
-        return "Id: " + this.id + "   Username: " + this.username + "   Bio: " + this.bio + "   Interests: " + this.interests;
+        return this.username;
     }
 
 }
