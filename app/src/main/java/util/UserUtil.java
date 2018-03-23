@@ -170,8 +170,11 @@ public class UserUtil {
 
     public static void addLoginUser(String username, String password){
         url += "/login/add";
+        JSONObject user = new JSONObject();
         try {
-            userJSONObject.put("userName", username);
+            user.put("userName", username);
+            user.put("bio", "I am a cat");
+            userJSONObject.put("user", user);
             userJSONObject.put("password", password);
             Log.d("userJSONObject", "pre-post request: " + userJSONObject.toString());
         } catch (JSONException e) {
