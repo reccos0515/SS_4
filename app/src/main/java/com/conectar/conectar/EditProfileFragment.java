@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import util.InterestsUtil;
+import util.JsonRequest;
 import util.SessionUtil;
 
 
@@ -33,14 +34,17 @@ public class EditProfileFragment extends Fragment {
 
     private EditText bio; //bio to be edited by user
     private EditText newInterest; //todo this must be changed
-    private Button int1;
-    private Button int2;
-    private Button int3;
-    private Button int4;
-    private Button int5;
-    private String interests; //String with user's interest
+    private Button int1; //interest 1 button
+    private Button int2; //interest 2 button
+    private Button int3; //interest 3 button
+    private Button int4; //interest 4 button
+    private Button int5; //interest 5 button
+    private String interests; //String with user's interests
     private int numInterests; //int with number of interest user currently has
-    private final String empty = "(empty)";
+    private final int id = 1; //todo reset this to get from session variable
+    private final String empty = "(empty)"; //string to set text view to if empty
+    private final String username = "test"; //string with username todo reset this to get from session variable
+    private Context context; //application context
 
     private OnFragmentInteractionListener mListener;
 
@@ -86,6 +90,7 @@ public class EditProfileFragment extends Fragment {
         int4 = view.findViewById(R.id.interestFour);
         int5 = view.findViewById(R.id.interestFive);
 
+        context = getActivity().getApplicationContext(); //get the context
 
         //set all the user info
 //        bio.setText(SessionUtil.getSessionBio()); TODO put this back in once session variables work
@@ -93,20 +98,16 @@ public class EditProfileFragment extends Fragment {
         String defaultBio = "this is my bio"; //todo remove this
         bio.setText(defaultBio); //todo remove this
         interests = "41213141500"; //todo remove this
-        updateInterestButtons();
+        updateInterestButtons(); //update the ui on the buttons
 
-
-
-        //int to keep track of the current number of interests
-        numInterests = interests.charAt(0) - '0';
+        numInterests = interests.charAt(0) - '0'; //set the number of interests
         //create a button to add an interest
         view.findViewById(R.id.submitNewInterest).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                //todo update all of this
                 //if there are not yet 5 interests, it can try to be added
                 if(numInterests < 5){
-                    String interestToAdd = newInterest.getText().toString();
+                    String interestToAdd = newInterest.getText().toString(); //get the new interest number
                     //if this is a valid interest, it can be added
                     if(InterestsUtil.getInterest(interestToAdd) != null){
                         char[] interestChars = interests.toCharArray(); //convert interests to a char array
@@ -116,20 +117,14 @@ public class EditProfileFragment extends Fragment {
                         interestChars[0] = (char) (numInterests + '0'); //update numInterests in the string
                         interests = String.valueOf(interestChars); //turn it back into a string
                         Toast.makeText(getContext(), "Successfully added " + InterestsUtil.getInterest(interestToAdd), Toast.LENGTH_SHORT); //toast to let the user know it worked
-                        updateInterestButtons();
+                        updateInterestButtons(); //update the ui on the buttons to remove interests
                     }
                     else{
-                        //toast to tell the user it was not valid
-                        Toast.makeText(getContext(), "Please enter a valid interest number", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Please enter a valid interest number", Toast.LENGTH_SHORT).show(); //toast to tell the user the number was not valid
                     }
                 }
                 else{
-                    //let the user know there are too many interests to add another
-                    Context context = getActivity().getApplicationContext();
-                    CharSequence text = "Interests are full";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
+                    Toast.makeText(context, "Interests are full", Toast.LENGTH_SHORT).show(); //let the user know interests were full
                 }
             }
         });
@@ -149,7 +144,7 @@ public class EditProfileFragment extends Fragment {
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
                     interests = String.valueOf(interestChars); //return to a string
-                    updateInterestButtons();
+                    updateInterestButtons(); //update ui on buttons to remove interests
                 }
             }
         });
@@ -167,7 +162,7 @@ public class EditProfileFragment extends Fragment {
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
                     interests = String.valueOf(interestChars); //return to a string
-                    updateInterestButtons();
+                    updateInterestButtons(); //update ui on buttons to remove interests
                 }
             }
         });
@@ -185,7 +180,7 @@ public class EditProfileFragment extends Fragment {
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
                     interests = String.valueOf(interestChars); //return to a string
-                    updateInterestButtons();
+                    updateInterestButtons(); //update ui on buttons to remove interests
                 }
             }
         });
@@ -203,7 +198,7 @@ public class EditProfileFragment extends Fragment {
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
                     interests = String.valueOf(interestChars); //return to a string
-                    updateInterestButtons();
+                    updateInterestButtons(); //update ui on buttons to remove interests
                 }
             }
         });
@@ -217,7 +212,7 @@ public class EditProfileFragment extends Fragment {
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
                     interests = String.valueOf(interestChars); //return to a string
-                    updateInterestButtons();
+                    updateInterestButtons(); //update ui on buttons to remove interest
                 }
             }
         });
@@ -225,17 +220,17 @@ public class EditProfileFragment extends Fragment {
         view.findViewById(R.id.updateServer).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                JSONObject js = new JSONObject();
+                JSONObject js = new JSONObject(); //json object to send, fill will current fields
                 try{
                     js.put("interests", interests);
-                    js.put("bio", bio);
+                    js.put("bio", bio.getText().toString());
+                    js.put("id", id);
+                    js.put("userName", username);
                 } catch (JSONException e){
                     e.printStackTrace();
                 }
-                //-----------------------------pseudo code to be implemented---------------------------//
-                //save most recent list to user session variables
-                //update the server
-                //-------------------------------------------------------------------------------------//
+                JsonRequest.jsonObjectPutRequest(js, "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users", context); //send the new put request
+                //todo update session variables (use Maggie's method?)
             }
         });
     }
