@@ -100,19 +100,25 @@ public class MainActivity extends AppCompatActivity
     /**
      * Saves any information that needs to be kept when a user kills the application (maybe when they change fragments too?)
      */
-    private void saveSettings(){
-        SharedPreferences.Editor sharedEditor = getPreferences(Context.MODE_PRIVATE).edit();
-        sharedEditor.putString("USERNAME", currentUsername);
-        sharedEditor.putString("BIO", currentBio);
-        sharedEditor.putString("ID", currentId);
+    private void saveInfo(){
+        SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor preferencesEditor = getPreferences(Context.MODE_PRIVATE).edit();
+        /*
+        preferencesEditor.putString("USERNAME", currentUsername);
+        preferencesEditor.putString("BIO", currentBio);
+        preferencesEditor.putString("ID", currentId);
+        */
+        preferencesEditor.putString("USERNAME", "Andrew");
+
         //sharedEditor.commit();
         //commit writes to storage immediately and apply does it in the background, otherwise the same
-        sharedEditor.apply();
+        preferencesEditor.apply();
     }
 
     @Override
     protected void onStop() { //tells the app that it was force closed by the user
-        saveSettings(); //save the settings before actually killing the app
+        saveInfo(); //save the settings before actually killing the app
         super.onStop();
     }
 

@@ -1,6 +1,7 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -84,6 +85,12 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Set up shared preferences
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = preferences.edit();
+
+
+
         context = getContext(); //get the current context for use in Volley requests
 
         loginPassword = view.findViewById(R.id.loginPassword);
@@ -95,10 +102,15 @@ public class LoginFragment extends Fragment {
                 //to test whether the session can work
                 //session.createSession("username", "1", "1");
                 //Toast.makeText(getActivity(), "User Username" + session.getSessionusername(), Toast.LENGTH_LONG).show();
-                Toast.makeText(getActivity(), "Login attempt made", Toast.LENGTH_LONG).show();
+                /////Toast.makeText(getActivity(), "Login attempt made", Toast.LENGTH_LONG).show();
                 //TODO grab actual values from edittext???
                 String tempPassword = "Lena";
                 String tempUsernmae = "Lena";
+                editor.putString("USERNAME", tempUsernmae);
+                editor.apply();
+                String temp = preferences.getString("USERNAME", "empty");
+                Log.d("SharedPreferences", temp);
+                Toast.makeText(getActivity(), temp, Toast.LENGTH_SHORT).show();
                 UserUtil.addLoginUser(tempUsernmae, tempPassword);
                 tempJSONObject = UserUtil.sendLoginRequest(tempUsernmae, tempPassword, context); //returns JSONArray response to login request
                 //deal with whether or not the request was successful

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -23,6 +26,8 @@ import android.widget.Toast;
  * create an instance of this fragment.
  */
 public class LogoutFragment extends Fragment {
+
+
 
 
 
@@ -64,12 +69,15 @@ public class LogoutFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", MODE_PRIVATE);
 
         view.findViewById(R.id.logoutBtn).setOnClickListener(new View.OnClickListener() { //if logout button is pressed
             @Override
             public void onClick(View view) {
                 //TODO remove all session variables that keep user logged in
-                Toast.makeText(getActivity(), "You are logged out!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "You are logged out!", Toast.LENGTH_SHORT).show();
+                String temp = preferences.getString("USERNAME", "empty");
+                Toast.makeText(getActivity(), temp, Toast.LENGTH_SHORT).show();
 
                 destroySession(); //remove sharedPreferences session variables
 
