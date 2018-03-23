@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import util.Friend;
 import util.FriendsUtil;
 import util.JsonRequest;
 import util.Singleton;
@@ -90,7 +91,21 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         //TextView pendingFriend = view.findViewById(R.id.pendingFriend1); //First pending friend
         String id = "1";
 
+        ListView listView = (ListView) view.findViewById(R.id.friendsListView);
 
+        Friend[] testFriends = {
+            new Friend("4", "Lena", "I am a cat", "00000000000"),
+                new Friend("2", "Simon", "I am also a cat", "00000000000"),
+                new Friend("5", "Ollie", "I am a dog", "00000000000"),
+                new Friend("7", "Sparkle", "I do not know what I am", "00000000000"),
+                new Friend("12", "Pepper", "I am concerned", "00000000000"),
+        };
+
+        ArrayAdapter<Friend> adapter = new ArrayAdapter<Friend>(getActivity(), android.R.layout.simple_list_item_1, testFriends);
+
+        listView.setAdapter(adapter);
+
+        /*
         friends = FriendsUtil.getFriends(context, id);
         for(int i = 0; i < friends.length(); i++){ //set arrays for listing items
             JSONObject tempUser = new JSONObject();
@@ -102,6 +117,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 e.printStackTrace();
             }
         }
+        */
 
 //        ListAdapter listAdapter = new ArrayAdapter<String>(this, R.layout.fragment_friends, R.id.friendUsername, friendsUsernames);
 //        ListView listView = (ListView) view.findViewById(R.id.friendsListView); //grabs the list view our items will be in
