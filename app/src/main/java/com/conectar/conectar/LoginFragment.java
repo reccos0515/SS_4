@@ -97,15 +97,25 @@ public class LoginFragment extends Fragment {
                 //Toast.makeText(getActivity(), "User Username" + session.getSessionusername(), Toast.LENGTH_LONG).show();
                 Toast.makeText(getActivity(), "Login attempt made", Toast.LENGTH_LONG).show();
                 //TODO grab actual values from edittext???
-                tempJSONObject = UserUtil.sendLoginRequest(loginUsername.toString(), loginPassword.toString(), context); //returns JSONArray response to login request
+                String tempPassword = "Lena";
+                String tempUsernmae = "Lena";
+                UserUtil.addLoginUser(tempUsernmae, tempPassword);
+                tempJSONObject = UserUtil.sendLoginRequest(tempUsernmae, tempPassword, context); //returns JSONArray response to login request
                 //deal with whether or not the request was successful
                 Boolean success = false;
+                String username = "";
+                /*
                 try {
-                    success = tempJSONArray.getBoolean(0); //get whether or not the request was successful
+                    //success = tempJSONObject.getBoolean("success");
+                    //user = tempJSONObject.getJSONObject("user");
+                    username = tempJSONObject.getString("userName");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                */
+                Log.d("tempJSONObject", tempJSONObject.toString());
                 if(success){ //if the request was successful
+                    /*
                     try {
                         user = tempJSONArray.getJSONObject(1); //get the user
 
@@ -142,6 +152,7 @@ public class LoginFragment extends Fragment {
                     else{
                         Log.d("Login Error Message", message); //if it was an app/server error
                     }
+                    */
                 }
 
 

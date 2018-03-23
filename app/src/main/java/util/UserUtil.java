@@ -128,7 +128,6 @@ public class UserUtil {
         //probably needs special volley requests, not the premade volley methods
         Log.d("UserUtil", "sendLoginRequest entered");
         url += "/login";
-        clearuserJSONObject(); //double check that userJSONObject
 
         try { //TODO modify for how Ben wants info
             userJSONObject.put("username", username);
@@ -152,9 +151,47 @@ public class UserUtil {
         Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest);
         */
 
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, userJSONObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                    userJSONObject = response;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
 
 
         return userJSONObject;
+    }
+
+    public static void addLoginUser(String username, String password){
+        url += "/login/add";
+        try {
+            userJSONObject.put("userName", username);
+            userJSONObject.put("password", password);
+            Log.d("userJSONObject", "pre-post request: " + userJSONObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, userJSONObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                userJSONObject = response;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        Log.d("userJSONObject", "post-post request" + userJSONObject.toString());
+
     }
 
     /**
@@ -368,12 +405,7 @@ public class UserUtil {
         return;
     }
 
-    private static void clearuserJSONObject(){
-        Iterator keys = userJSONObject.keys();
-        while(keys.hasNext()){
-            userJSONObject.remove(keys.next().toString());
-        }
-    }
+
 
 
 }
