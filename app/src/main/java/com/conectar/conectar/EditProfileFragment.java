@@ -71,9 +71,11 @@ public class EditProfileFragment extends Fragment {
         //create variables that take input from UI
         bio = view.findViewById(R.id.bio);
         newInterest = view.findViewById(R.id.newInterest);
+        bio.setText("this is my bio");
+        interests = "00000000000";
         //set all the user info
-        bio.setText(SessionUtil.getSessionBio());
-        interests = SessionUtil.getSessionInterests();
+//        bio.setText(SessionUtil.getSessionBio()); TODO put this back in once session variables work
+//        interests = SessionUtil.getSessionInterests(); TODO put this back in once session variables work
         //int to keep track of the current number of interests
         numInterests = interests.charAt(0) - '0';
         //create a button to add an interest
