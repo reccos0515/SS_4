@@ -227,7 +227,7 @@ public class InterestsUtil {
             return "Laser Tag";
         }
         else if(i.equals("12")){
-            return "Painting pottery";
+            return "Pottery";
         }
         else if(i.equals("13")){
             return "Lunch";
