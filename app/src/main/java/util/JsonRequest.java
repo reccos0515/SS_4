@@ -79,47 +79,6 @@ public class JsonRequest {
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
     }
 
-
-//    /**
-//     * Method to receive a json array
-//     * @param url
-//     * @return
-//     */
-//    public static void jsonArrayRequest(String url){
-//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,  //may need typecasting to string on the null?
-//                new Response.Listener<JSONArray>() {
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                error.printStackTrace();
-//            }
-//        });
-//        Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest); //add json to queue
-//    }
-
-//    /**
-//     * method to recieve a json object
-//     */
-//    public static void jsonObjectRequest(String url){
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,  null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                error.printStackTrace();
-//            }
-//        });
-//        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
-//        return;
-//    }
-
     /**
      * Sends a PUT request for a JSONObject to the server.  Often used for updating a JSONObject.
      * @param js the JSONObject to be PUT

@@ -35,7 +35,7 @@ public class NewProfileFragment extends Fragment {
     private EditText username;
     private EditText password;
     private EditText confirmPassword;
-    private String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users";
+    private String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/login/add";
 
     private OnFragmentInteractionListener mListener;
 
@@ -89,16 +89,19 @@ public class NewProfileFragment extends Fragment {
                 int duration = Toast.LENGTH_SHORT;
                 if(password.getText().toString().equals(confirmPassword.getText().toString())){
                     JSONObject js = new JSONObject();
+                    JSONObject toSend = new JSONObject();
                     try {
                         js.put("id", 0);
                         js.put("userName", username.getText().toString());
                         js.put("bio", username.getText().toString() +" has not added a bio yet");
                         js.put("interests", "00000000000");
+                        toSend.put("user", js); //put this in the object to send
+                        toSend.put("password", password.getText().toString()); //put this in the object to send
                     } catch (JSONException e){
                         e.printStackTrace();
                     }
                     //make the post request
-                    JsonRequest.postRequest(js, url, getContext());
+                    JsonRequest.postRequest(toSend, url, getContext());
                     //if confirmPassword and password are the same, submit
                     text = "Successfully submitted";
                 }
