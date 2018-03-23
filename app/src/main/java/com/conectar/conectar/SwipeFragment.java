@@ -169,7 +169,13 @@ public class SwipeFragment extends Fragment {
         try{
             viewInterests = (String) user.get("interests");
             //TODO display picture
-            firstName.setText((String) user.get("userName"));
+            if(user.get("userName") != null) {
+                Log.d("In userName", (String) user.get("userName"));
+                firstName.setText((String) user.get("userName"));
+            }
+            else {
+                Log.d("In userName", (String) user.get("userName"));
+            }
         }catch (JSONException e){
             errorMessage.setText("Sorry, we ran into a problem"); //set error message to show to user
             e.printStackTrace();
