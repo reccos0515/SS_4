@@ -168,6 +168,11 @@ public class UserUtil {
         return userJSONObject;
     }
 
+    /**
+     * Adds a user using the login/add page.  Creates a login object with the new user object.
+     * @param username username of the new user
+     * @param password password of the new user
+     */
     public static void addLoginUser(String username, String password){
         url += "/login/add";
         JSONObject user = new JSONObject();

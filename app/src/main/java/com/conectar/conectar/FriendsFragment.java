@@ -86,8 +86,8 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         //Initialize the textviews on the friends page
         Context context = getContext();
-        TextView actualFriend = view.findViewById(R.id.friend1); //First full friend
-        TextView pendingFriend = view.findViewById(R.id.pendingFriend1); //First pending friend
+        //TextView actualFriend = view.findViewById(R.id.friend1); //First full friend
+        //TextView pendingFriend = view.findViewById(R.id.pendingFriend1); //First pending friend
         String id = "1";
 
 
