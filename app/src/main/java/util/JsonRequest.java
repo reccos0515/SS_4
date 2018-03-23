@@ -183,7 +183,12 @@ public class JsonRequest {
     }
 
 
-
+    /**
+     * Method to be used in Swipe Fragment to get the users to view
+     * @param nView view from that page
+     * @param url url to send the request to
+     * @param context context from that page
+     */
     public static void swipeRequest(final View nView, String url, Context context){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override

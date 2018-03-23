@@ -93,6 +93,7 @@ public class NewProfileFragment extends Fragment {
                         js.put("id", 0);
                         js.put("userName", username.getText().toString());
                         js.put("bio", username.getText().toString() +" has not added a bio yet");
+                        js.put("interests", "00000000000");
                     } catch (JSONException e){
                         e.printStackTrace();
                     }
