@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import util.InterestsUtil;
 import util.SessionUtil;
 
@@ -30,6 +33,11 @@ public class EditProfileFragment extends Fragment {
 
     private EditText bio; //bio to be edited by user
     private EditText newInterest; //todo this must be changed
+    private EditText int1;
+    private EditText int2;
+    private EditText int3;
+    private EditText int4;
+    private EditText int5;
     private String interests; //String with user's interest
     private int numInterests; //int with number of interest user currently has
 
@@ -71,11 +79,46 @@ public class EditProfileFragment extends Fragment {
         //create variables that take input from UI
         bio = view.findViewById(R.id.bio);
         newInterest = view.findViewById(R.id.newInterest);
-        bio.setText("this is my bio");
-        interests = "00000000000";
+
+
         //set all the user info
 //        bio.setText(SessionUtil.getSessionBio()); TODO put this back in once session variables work
 //        interests = SessionUtil.getSessionInterests(); TODO put this back in once session variables work
+        bio.setText("this is my bio"); //todo remove this
+        interests = "00000000000"; //todo remove this
+        String cur = interests.charAt(1) + "" + interests.charAt(2) + ""; //first interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int1.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int1.setText("(empty)"); //if it doesn't exist, set the text to be empty
+        }
+        cur = interests.charAt(3) + "" + interests.charAt(4) + ""; //second interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int2.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int2.setText("(empty)"); //if it doesn't exist, set the text to be empty
+        }
+        cur = interests.charAt(5) + "" + interests.charAt(6) + ""; //third interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int3.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int3.setText("(empty)"); //if it doesn't exist, set the text to be empty
+        }
+        cur = interests.charAt(7) + "" + interests.charAt(8) + ""; //fourth interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int4.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int4.setText("(empty)"); //if it doesn't exist, set the text to be empty
+        }
+        cur = interests.charAt(9) + "" + interests.charAt(10) + ""; //fifth interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int5.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int5.setText("(empty)"); //if it doesn't exist, set the text to be empty
+        }
+
+
+
         //int to keep track of the current number of interests
         numInterests = interests.charAt(0) - '0';
         //create a button to add an interest
@@ -235,6 +278,13 @@ public class EditProfileFragment extends Fragment {
         view.findViewById(R.id.updateServer).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                JSONObject js = new JSONObject();
+                try{
+                    js.put("interests", interests);
+                    js.put("bio", bio);
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
                 //-----------------------------pseudo code to be implemented---------------------------//
                 //save most recent list to user session variables
                 //update the server
