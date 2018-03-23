@@ -148,7 +148,7 @@ public class EditProfileFragment extends Fragment {
                     interestChars[10] = '0';
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
-                    interests = interestChars.toString(); //return to a string
+                    interests = String.valueOf(interestChars); //return to a string
 
                     //-----------------------------pseudo code to be implemented---------------------------//
                     //move every interest down one place starting at the first
@@ -171,7 +171,7 @@ public class EditProfileFragment extends Fragment {
                     interestChars[10] = '0';
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
-                    interests = interestChars.toString(); //return to a string
+                    interests = String.valueOf(interestChars); //return to a string
                     //-----------------------------pseudo code to be implemented---------------------------//
                     //move every interest down one place starting at the second
                     //decrement number of interests
@@ -194,7 +194,7 @@ public class EditProfileFragment extends Fragment {
                     interestChars[10] = '0';
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
-                    interests = interestChars.toString(); //return to a string
+                    interests = String.valueOf(interestChars); //return to a string
                     //-----------------------------pseudo code to be implemented---------------------------//
                     //move every interest down one place starting at the third
                     //decrement number of interests
@@ -217,7 +217,7 @@ public class EditProfileFragment extends Fragment {
                     interestChars[10] = '0';
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
-                    interests = interestChars.toString(); //return to a string
+                    interests = String.valueOf(interestChars); //return to a string
                     //-----------------------------pseudo code to be implemented---------------------------//
                     //move every interest down one place starting at the fourth
                     //decrement number of interests
@@ -235,7 +235,7 @@ public class EditProfileFragment extends Fragment {
                     interestChars[10] = '0';
                     numInterests--; //decrement number of interests
                     interestChars[0] = (char) numInterests; //reset the number of interests in the string
-                    interests = interestChars.toString(); //return to a string
+                    interests = String.valueOf(interestChars); //return to a string
                     //-----------------------------pseudo code to be implemented---------------------------//
                     //delete the last interest
                     //decrement number of interests
