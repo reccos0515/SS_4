@@ -114,7 +114,7 @@ public class EditProfileFragment extends Fragment {
                         interestChars[(2 * numInterests) + 2] = interestToAdd.charAt(1);
                         numInterests++; //increment the number of interests
                         interestChars[0] = (char) (numInterests + '0'); //update numInterests in the string
-                        interests = interestChars.toString(); //turn it back into a string
+                        interests = String.valueOf(interestChars); //turn it back into a string
                         Toast.makeText(getContext(), "Successfully added " + InterestsUtil.getInterest(interestToAdd), Toast.LENGTH_SHORT); //toast to let the user know it worked
                         updateInterestButtons();
                     }
@@ -122,13 +122,6 @@ public class EditProfileFragment extends Fragment {
                         //toast to tell the user it was not valid
                         Toast.makeText(getContext(), "Please enter a valid interest number", Toast.LENGTH_SHORT).show();
                     }
-                    //-------------------psuedo code to be implemented-------------------------------//
-                    //update the string to add the interest
-                    //increment the number of interests
-                    //update the string with new number of interests
-                    //toast to let the user know it worked
-                    //update the server
-                    //-------------------------------------------------------------------------------//
                 }
                 else{
                     //let the user know there are too many interests to add another
