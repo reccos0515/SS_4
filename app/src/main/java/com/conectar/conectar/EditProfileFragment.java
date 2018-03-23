@@ -39,12 +39,15 @@ public class EditProfileFragment extends Fragment {
     private Button int3; //interest 3 button
     private Button int4; //interest 4 button
     private Button int5; //interest 5 button
+
     private String interests; //String with user's interests
     private int numInterests; //int with number of interest user currently has
     private final int id = 1; //todo reset this to get from session variable
-    private final String empty = "(empty)"; //string to set text view to if empty
     private final String username = "test"; //string with username todo reset this to get from session variable
+
     private Context context; //application context
+    
+    private final String empty = "(empty)"; //string to set text view to if empty
 
     private OnFragmentInteractionListener mListener;
 
