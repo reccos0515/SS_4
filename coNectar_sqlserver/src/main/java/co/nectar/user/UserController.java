@@ -17,17 +17,17 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	// test add
-	@RequestMapping("/test")
-	public HtmlMessage getTest() {
-		User test = new User(0, "test", "hi","");
-		User test2 = new User(0, "blah", "hello","");
-		User test3 = new User(0, "Maggie", "I am Maggie","");
-		userService.addUser(test);
-		userService.addUser(test2);
-		userService.addUser(test3);
-		return userService.getAllUsers();
-	}
+//	// test add
+//	@RequestMapping("/test")
+//	public HtmlMessage getTest() {
+//		User test = new User(0, "test", "hi","");
+//		User test2 = new User(0, "blah", "hello","");
+//		User test3 = new User(0, "Maggie", "I am Maggie","");
+//		userService.addUser(test);
+//		userService.addUser(test2);
+//		userService.addUser(test3);
+//		return userService.getAllUsers();
+//	}
 
 	/**
 	 * Returns all users
@@ -153,6 +153,18 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/discovery")
 	public HtmlMessage getDiscovery(@PathVariable int userId) {
 		return userService.getDiscovery(userId);
+	}
+	
+	// get relevant people around me
+	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/relevant")
+	public HtmlMessage getRelevant(@PathVariable int userId) {
+		return userService.getRelevant(userId);
+	}
+	
+	// edit user status
+	@RequestMapping(method = RequestMethod.PUT, value = "/users/{userId}/status/{status}")
+	public HtmlMessage setStatus(@PathVariable int userId, @PathVariable int status) {
+		return userService.setStatus(userId, status);
 	}
 
 }

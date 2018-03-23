@@ -141,6 +141,27 @@ public class UserService {
 		}
 		return new HtmlError(success, error);
 	}
+	
+	/**
+	 * Updates a users status
+	 * 
+	 * @param userId
+	 *            The id of the user whose status is updated.
+	 * @param status
+	 *			  The value of the users new status.
+	 */
+	public HtmlMessage setStatus(Integer userId, int status) {
+		//error checking
+		if(!userRepo.exists(userId))
+			return new HtmlError(false, "userId not found");
+		else if(status != 0 || status != 1 || status != 2)
+			return new HtmlError(false, "incorrect status value, must be 1,2, or 3");
+		
+		//set status
+		userRepo.findOne(userId).setStatus(status);
+		return new HtmlError(true, "");
+
+	}
 
 	/**
 	 * returns if specified user's exists in db
@@ -153,8 +174,18 @@ public class UserService {
 	 */
 	
 	public boolean userExists(User user) {
-		// check to make sure id is not null
-		return userRepo.existsByUserName(user.getUserName()) || (user.getId() != null && userRepo.exists(user.getId()));
+		// check to make sure id or userName are not null
+		Integer id = user.getId();
+		String name = user.getUserName();
+		if(id == null && name == null)
+			return false;
+		else if(id != null && name == null)
+			return userRepo.exists(id);
+		else if(id == null && name != null)
+			return  userRepo.existsByUserName(name);
+		else
+			return userRepo.existsByUserName(name); 
+		
 	}
 
 	/**
@@ -213,10 +244,18 @@ public class UserService {
 		} else if (!this.userExists(user)) {
 			success = false;
 			error = "given user not found";
-		} else if (!user.isValid()) {
+		} else if (!user.isValid() || user.getUserName() == null) {
 			success = false;
 			error = "given user not completely filled";
 		} else {
+			//set id if not set
+			if(user.getId() == null || user.getId() <= 0)
+				user.setId(userRepo.findByUserName(user.getUserName()).getId());
+			//check if username is duplicated
+			User otherUser = userRepo.findByUserName(user.getUserName());
+			if(otherUser != null && user.getId() != otherUser.getId()) {
+				return new HtmlError(false, "new username exists already");
+			}
 			userRepo.save(user);
 		}
 
@@ -357,6 +396,7 @@ public class UserService {
 	public HtmlMessage removeFriendById(int userId, int friendId) {
 		HtmlMessage msg1 = this.getUserById(userId);
 		HtmlMessage msg2 = this.getUserById(friendId);
+
 
 		// check for errors
 		boolean success = true;
@@ -569,8 +609,9 @@ public class UserService {
 			//get user
 			User user = ((HtmlUserList) msg).getUsers().iterator().next();
 			
-			// get to and from friend lists
-			List<User> users = (List<User>) this.getAllUsers();
+			//get all users
+			List<User> users = (List<User>) ((HtmlUserList) this.getAllUsers()).getUsers();
+			// get all users sent a requests to from getSentRequestTo
 			List<User> to = user.getSentRequestTo();
 
 			//incoming requests are in not sentRequestTo but are in recievedRequestsFrom
@@ -579,9 +620,77 @@ public class UserService {
 					discovery.add(user_ele);// add if in both to and from lists
 			}
 			return new HtmlUserList(success, discovery);
+
 		}
 
 		return new HtmlError(success, error);
 	}
+	
+	//sending ten good people to the client
+	public HtmlMessage getRelevant(Integer userId) {
+		boolean success = true;
+		String error = "";
+		List<User> relevant = new ArrayList<User>();
+		HtmlMessage msg = this.getUserById(userId);
+		
+		//check user 
+		if (!msg.isSuccess()) {
+			success = false;
+			error = "error userId: " + ((HtmlError) msg).getMessage();
+		} else {
+			//get user
+			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			
+			//get all users
+			List<User> users = (List<User>) ((HtmlUserList) this.getAllUsers()).getUsers();
+			
+			//getting all outgoing requests
+			List<User> to = user.getSentRequestTo(); //list of users that I sent a request to
+			//getting all users that have been discovered
+			List<User> been = user.getBeenDiscovered();
+
+			
+			for (User user_ele : users) {
+				if (!to.contains(user_ele) && !user_ele.equals(user) && !been.contains(user_ele))
+					relevant.add(user_ele);// add if i have not added the user, and the user is not me.
+			}
+			//now i have a list of everyone that i dont know and have not discovered before (discover). 
+			List<User> send = makeSend(user, relevant);
+			return new HtmlUserList(success, send);
+		}
+
+		return new HtmlError(success, error);
+	}
+	
+	//we are going to need some list to keep track of who has been discovered (nevermind).
+	//this only works if there is ten users in the discover
+	public List<User> makeSend(User user, List<User> relevant){
+		//right now im just sending back the first ten, this will be improved soon.
+		List<User> send = new ArrayList<User>();
+		List<User> been = user.getBeenDiscovered();
+		for(int i = 0; i<10; i++){
+			send.add(relevant.get(i));
+			been.add(relevant.get(i));
+		}
+		user.setBeenDiscovered(been); //changes the users been discovered to include that which was just found.
+		userRepo.save(user);
+		
+		return send;
+		
+	}	
+	
+	//green people will see random green and yellow people. do not take their 
+	//interests into account. the expectation is that they are willing to do
+	//anything, so we show them random people, not people within a certain
+	//interest group.
+	
+	//yellow people see yellow and green people "equally" when both those 
+	//people share interests with the user. i.e. as long as they share 
+	//interests, it doesn't matter what the "discoverd" persons status is.
+	//once they have seen those that share their interests, they will be shown
+	//green people at random, because greens should be willing to do whatever.
+	
+	//red people will not be shown ever, and they will not be allowed to see others.
+	//this will be implemented as an error 
 
 }
