@@ -3,10 +3,12 @@ package co.nectar.user;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.UsesJava7;
 import org.springframework.stereotype.Service;
+
 
 import co.nectar.Message.*;;
 
@@ -665,8 +667,61 @@ public class UserService {
 		}
 
 		return new HtmlError(success, error);
+
+
 	}
+
 	
+	//we are going to need some list to keep track of who has been discovered (nevermind).
+	//this only works if there is ten users in the discover
+	public List<User> makeSend(User user, List<User> relevant){
+		//right now im just sending back the first ten, this will be improved soon.
+		List<User> send = new ArrayList<User>();
+		List<User> been = user.getBeenDiscovered();
+		List<Integer> interests = user.getInterestList();
+		int i = 0;
+		int count = 0;
+
+
+		int status = user.getStatus();
+
+		if(status == 2){
+			if(relevant.size() > 9){
+				for(i=0; i<10; i++){
+				send.add(relevant.get(i));
+				been.add(relevant.get(i));
+				}
+			}else{
+				for(i=0; i<relevant.size(); i++){
+				send.add(relevant.get(i));
+				been.add(relevant.get(i));
+				}
+			}
+		}else if(status == 1){
+			count = 0;
+			for(i=0; i<relevant.size(); i++){
+				if (count == 10){
+					user.setBeenDiscovered(been); //changes the users beendiscovered to include that which was just found.
+					userRepo.save(user);
+					return send;
+				}
+				if(!Collections.disjoint(interests, relevant.get(i).getInterestList()))
+					send.add(relevant.get(i));
+					been.add(relevant.get(i));
+					count ++;
+			}
+		}else if(status == 0){
+			return send;
+		}
+		
+		user.setBeenDiscovered(been); //changes the users beendiscovered to include that which was just found.
+		userRepo.save(user);
+		
+		return send;
+		
+	}
+
+	/*
 	//we are going to need some list to keep track of who has been discovered (nevermind).
 	//this only works if there is ten users in the discover
 	public List<User> makeSend(User user, List<User> relevant){
@@ -707,7 +762,9 @@ public class UserService {
 		
 		return send;
 		
-	}	
+	}
+
+	*/	
 	
 	//green people will see random green and yellow people. do not take their 
 	//interests into account. the expectation is that they are willing to do

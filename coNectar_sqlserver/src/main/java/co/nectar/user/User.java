@@ -172,6 +172,9 @@ public class User {
 	public String getInterests() {
 		return interests;
 	}
+	public List<Integer> getInterestList(){
+		return interestList;
+	}
 
 	//first 1,3 i = 0
 	//second 3,5 i = 1
