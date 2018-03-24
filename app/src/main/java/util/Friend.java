@@ -1,5 +1,11 @@
 package util;
 
+import android.content.Context;
+
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
+
 /**
  * Created by Maggie on 3/23/2018.
  * Friend objects represent friends of a user.  Having a friend object helps in creating listviews
@@ -30,6 +36,15 @@ public class Friend {
      */
     public String fullFriendInfo(){
         return "Id: " + this.id + "   Username: " + this.username + "   Bio: " + this.bio + "   Interests: " + this.interests;
+    }
+
+    public Friend[] getFriends(String id, Context context){
+        String url = "";
+        Friend[] friends = null;
+
+        //JsonObjectRequest = new JsonObjectRequest()
+
+        return friends;
     }
 
     @Override

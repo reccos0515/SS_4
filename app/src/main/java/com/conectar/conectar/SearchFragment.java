@@ -5,11 +5,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
+
+import util.Singleton;
 
 
 /**
@@ -63,6 +74,36 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+
+        view.findViewById(R.id.friendBtn1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final EditText personId1 = view.findViewById(R.id.editText1);
+                final EditText personId2 = view.findViewById(R.id.editText2);
+                final Context context = getContext();
+
+                final String id1 = personId1.getText().toString();
+                final String id2 = personId2.getText().toString();
+                String url = "https://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id1 + "/request_friend/" + id2;
+
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.d("Post Request Status", ("successful, response:" + response.toString()));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+                Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+            }
+        });
 
 
     }

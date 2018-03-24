@@ -114,61 +114,36 @@ public class LoginFragment extends Fragment {
 
 
                 tempJSONObject = UserUtil.sendLoginRequest(tempUsernmae, tempPassword, context); //returns JSONArray response to login request
-                //deal with whether or not the request was successful
-                Boolean success = false;
-                String username = "";
-                /*
-                try {
-                    //success = tempJSONObject.getBoolean("success");
-                    //user = tempJSONObject.getJSONObject("user");
-                    username = tempJSONObject.getString("userName");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                */
+                if(tempJSONObject != null){
+                    Log.d("LoginFragment", "sendLoginRequest was successful, updating session variables");
+                    String username = "";
+                    String bio = "";
+                    String id = "";
+                    String interests = "";
 
-                if(success){ //if the request was successful
-                    /*
-                    try {
-                        user = tempJSONArray.getJSONObject(1); //get the user
-
-                        String username = user.getString("username");
-                        String id = user.getString("id");
-                        String bio = user.getString("bio");
-                        Log.d("User Values", "username: " + username + "   id: " + id + "   bio: " + bio);
-                        JSONArray interests = user.getJSONArray("interests"); //TODO idk
-                        String status = Integer.toString(user.getInt("status"));
-
-                        //set session variables
-                        //session.createSession(username, id, status);
-
-                        //send user to swipe page
-                        Fragment fragment = new SwipeFragment();
-                        FragmentManager fragmentManager = getFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.screen_area, fragment);
-                        fragmentTransaction.commit();
+                    try { //grab user information
+                        username = tempJSONObject.getString("userName");
+                        id = tempJSONObject.getString("id");
+                        bio = tempJSONObject.getString("bio");
+                        interests = tempJSONObject.getString("interests");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                } else{
-                    String message = "";
-                    try {
-                        message = tempJSONArray.getString(1); //get error message
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    if(message.equals("incorrect login")){ //TODO change to whatever error messages there are
-                        //if user has incorrect credentials
-                        Toast.makeText(getActivity(), "Login Unsuccessful", Toast.LENGTH_LONG).show();
-                    }
-                    else{
-                        Log.d("Login Error Message", message); //if it was an app/server error
-                    }
-                    */
+
+                    //set session variables
+                    editor.putString("USERNAME", username);
+                    editor.putString("ID", id);
+                    editor.putString("BIO", bio);
+                    editor.putString("INTERESTS", interests);
+                    editor.apply();
+
+                    //send user to swipe page
+                    Fragment fragment = new SwipeFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.screen_area, fragment);
+                    fragmentTransaction.commit();
                 }
-
-
             }
         });
 
