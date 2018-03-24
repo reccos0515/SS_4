@@ -41,6 +41,7 @@ public class User {
 	//private Integer[numInterests] interests;
 	private String bio;
 
+
 	
 	
 	//ManyToMany Connecion having trouble with this
@@ -67,6 +68,11 @@ public class User {
 			joinColumns={@JoinColumn(name="userId",referencedColumnName = "id")},
 			inverseJoinColumns={@JoinColumn(name="discoveredId",referencedColumnName = "id")})
 	private List<User> beenDiscovered;
+
+	//ManyToMany Connecion having trouble with this
+	@ManyToOne
+	@JsonIgnore
+	private List<Integer> interestList;
 	
 	
 	

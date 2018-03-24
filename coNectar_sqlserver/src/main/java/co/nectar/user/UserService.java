@@ -626,6 +626,11 @@ public class UserService {
 		} else {
 			//get user
 			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			if(user.getStatus == 0){
+				success = false;
+				error = "User is RED";
+				return new HtmlError(success, error);
+			}
 			
 			List<User> to = user.getSentRequestTo(); //list of users that I sent a request to
 			List<User> been = user.getBeenDiscovered();
@@ -648,10 +653,34 @@ public class UserService {
 		//right now im just sending back the first ten, this will be improved soon.
 		List<User> send = new ArrayList<User>();
 		List<User> been = user.getBeenDiscovered();
-		for(int i = 0; i<10; i++){
-			send.add(discovery.get(i));
-			been.add(discovery.get(i));
+		int i = 0;
+		String interestOne = user.getInterest.substring(1,3);
+		String interestTwo = user.getInterest.substring(3,5);
+		String interestThree = user.getInterest.substring(5,7);
+		String interestFour = user.getInterest.substring(7,9);
+		String interestFive = user.getInterest.substring(9);
+
+
+		int status = user.getStatus;
+
+		if(status == 2){
+			if(relevant.size() > 9){
+				for(i=0; i<10; i++){
+				send.add(discovery.get(i));
+				been.add(discovery.get(i));
+				}
+			}else{
+				for(i=0; i<relevant.size(); i++){
+				send.add(discovery.get(i));
+				been.add(discovery.get(i));
+				}
+			}
+		}else if(status == 1){
+
+		}else if(status == 0){
+			return send;
 		}
+		
 		user.setBeenDiscovered(been); //changes the users beendiscovered to include that which was just found.
 		userRepo.save(user);
 		
