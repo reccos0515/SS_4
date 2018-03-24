@@ -165,6 +165,7 @@ public class LoginService {
 				error = "incorrect password";
 			}else {
 				ArrayList<User> users = new ArrayList<User>();
+				users.add(user);
 				return new HtmlUserList(success, users);
 			}
 		}
