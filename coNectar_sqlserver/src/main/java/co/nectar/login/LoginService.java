@@ -164,7 +164,8 @@ public class LoginService {
 				success = false;
 				error = "incorrect password";
 			}else {
-				return user;
+				ArrayList<User> users = new ArrayList<User>();
+				return new HtmlUserList(success, users);
 			}
 		}
 		
