@@ -42,8 +42,8 @@ public class EditProfileFragment extends Fragment {
 
     private String interests; //String with user's interests
     private int numInterests; //int with number of interest user currently has
-    private final int id = 1; //todo reset this to get from session variable
-    private final String username = "test"; //string with username todo reset this to get from session variable
+    private final int id = 3; //todo reset this to get from session variable
+    private final String username = "test2"; //string with username todo reset this to get from session variable
 
     private Context context; //application context
     

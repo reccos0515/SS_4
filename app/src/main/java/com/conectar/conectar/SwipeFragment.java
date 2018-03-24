@@ -47,6 +47,7 @@ public class SwipeFragment extends Fragment {
     private static String interests; //logged in user's interests
     private static JSONArray users; //array of users found in response
     private static int len = 0; //length of array of users
+    private static boolean success = false; //if the server could successfully send
 
     private OnFragmentInteractionListener mListener;
 
@@ -95,19 +96,21 @@ public class SwipeFragment extends Fragment {
         view.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userOnDisplayLoc++; //go to next user
-                //if it has reached the end, return to 0
-                if(userOnDisplayLoc >= len){
-                    userOnDisplayLoc = 0;
-                }
-                try {
-                    JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
-                    updateUI(user, view);
-                    UserUtil.setUserToView(user); //save this where profile view can access if needed
-                } catch (JSONException e){
-                    TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
-                    errorMessage.setText("Sorry, we ran into a problem");//set an error for the user to see
-                    e.printStackTrace();
+                if(success) {
+                    userOnDisplayLoc++; //go to next user
+                    //if it has reached the end, return to 0
+                    if (userOnDisplayLoc >= len) {
+                        userOnDisplayLoc = 0;
+                    }
+                    try {
+                        JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
+                        updateUI(user, view);
+                        UserUtil.setUserToView(user); //save this where profile view can access if needed
+                    } catch (JSONException e) {
+                        TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
+                        errorMessage.setText("Sorry, we ran into a problem");//set an error for the user to see
+                        e.printStackTrace();
+                    }
                 }
 
             }
@@ -116,19 +119,21 @@ public class SwipeFragment extends Fragment {
         view.findViewById(R.id.swipePrev).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userOnDisplayLoc--; //go to previous
-                //if it has passed the beginning, return to the end
-                if(userOnDisplayLoc < 0){
-                    userOnDisplayLoc = len - 1;
-                }
-                try{
-                    JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
-                    updateUI(user, view);
-                    UserUtil.setUserToView(user); //save this where profile view can access if needed
-                }catch (JSONException e){
-                    TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
-                    errorMessage.setText("Sorry, we ran into a problem"); //set an error for the user to see
-                    e.printStackTrace();
+                if(success) {
+                    userOnDisplayLoc--; //go to previous
+                    //if it has passed the beginning, return to the end
+                    if (userOnDisplayLoc < 0) {
+                        userOnDisplayLoc = len - 1;
+                    }
+                    try {
+                        JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
+                        updateUI(user, view);
+                        UserUtil.setUserToView(user); //save this where profile view can access if needed
+                    } catch (JSONException e) {
+                        TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
+                        errorMessage.setText("Sorry, we ran into a problem"); //set an error for the user to see
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -136,13 +141,15 @@ public class SwipeFragment extends Fragment {
         view.findViewById(R.id.swipeView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //call a profile view fragment with userOnDisplayLoc user
-                Fragment fragment = new ProfileViewFragment();
-                if(fragment != null){ //Changes the screens
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.screen_area, fragment);
-                    fragmentTransaction.commit();
+                if(success) {
+                    //call a profile view fragment with userOnDisplayLoc user
+                    Fragment fragment = new ProfileViewFragment();
+                    if (fragment != null) { //Changes the screens
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.screen_area, fragment);
+                        fragmentTransaction.commit();
+                    }
                 }
             }
         });
@@ -170,8 +177,8 @@ public class SwipeFragment extends Fragment {
             viewInterests = (String) user.get("interests");
             //TODO display picture
             if(user.get("userName") != null) {
-                Log.d("In userName", (String) user.get("userName"));
-                firstName.setText((String) user.get("userName"));
+                String s = user.getString("userName");
+                firstName.setText(s);
             }
             else {
                 Log.d("In userName", (String) user.get("userName"));
@@ -250,7 +257,6 @@ public class SwipeFragment extends Fragment {
      * @param js json object found in response
      */
     public static void saveNewObject(JSONObject js){
-        boolean success; //to hold the success value
         try{
             success = (boolean) js.get("success"); //see what the success was
         }catch (JSONException e){
