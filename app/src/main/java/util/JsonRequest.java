@@ -50,6 +50,16 @@ public class JsonRequest {
         return;
     }
 
+    public static void saveBool(Boolean bool){
+        success = bool;
+        Log.d("JsonRequest", "saveBool: " + success);
+        return;
+    }
+
+    public static Boolean getBool(){
+        return success;
+    }
+
     /**
      * method to get the first user's name
      * @return name of first user
@@ -97,9 +107,14 @@ public class JsonRequest {
                         String id = "";
                         String bio = "";
                         String interests = "";
+                        String status = "";
 
                         try {
                             username = response.getString("userName");
+                            id = response.getString("id");
+                            bio = response.getString("bio");
+                            interests = response.getString("interests");
+                            status = response.getString("status");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -107,10 +122,11 @@ public class JsonRequest {
                         editor.putString("ID", id);
                         editor.putString("BIO", bio);
                         editor.putString("INTERESTS", interests);
+                        editor.putString("STATUS", status);
+                        editor.putBoolean("ISLOGGEDIN", true);
                         editor.apply();
                         String test = preferences.getString("USERNAME", "empty");
                         Log.d("loginPostRequest", test);
-                        success = true;
                     }
                 }, new Response.ErrorListener() {
             @Override
