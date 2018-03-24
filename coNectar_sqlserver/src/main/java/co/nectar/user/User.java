@@ -80,7 +80,9 @@ public class User {
 
 
 	public User() {
-		
+		super();
+		this.status = 0;
+		this.interests = "000000000";
 	}
 	public User(int id,String userName, String bio, String interests) {
 		super();
@@ -91,6 +93,7 @@ public class User {
 		this.sentRequestTo = new ArrayList<User>();
 		this.recievedRequestFrom = new ArrayList<User>();
 		this.beenDiscovered = new ArrayList<User>();
+		this.status = 0;
 	}
 
 	
@@ -103,6 +106,11 @@ public class User {
 		this.sentRequestTo = sentRequestTo;
 		this.recievedRequestFrom = recievedRequestFrom;
 		this.beenDiscovered = new ArrayList<User>();
+		this.status = 0;
+//		if(status == null)
+//			this.status = 0;
+//		else
+//			this.status = status;
 	}
 
 	
@@ -133,14 +141,6 @@ public class User {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public String getInterests() {
-		return interests;
-	}
-	public void setInterests(String interests) {
-		this.interests = interests;
-	}
-
-
 	//friend list methods
 	public List<User> getSentRequestTo() {
 		return sentRequestTo;
@@ -153,8 +153,7 @@ public class User {
 	}
 	public void setRecievedRequestFrom(List<User> recievedRequestFrom) {
 		this.recievedRequestFrom = recievedRequestFrom;
-	}
-	
+	}	
 	//discovery
 	public List<User> getBeenDiscovered() {
 		return beenDiscovered;
@@ -162,9 +161,13 @@ public class User {
 	public void setBeenDiscovered(List<User> beenDiscovered) {
 		this.beenDiscovered = beenDiscovered;
 	}
+	public String getInterests() {
+		return interests;
+	}
+	public void setInterests(String interests) {
+		this.interests = interests;
+	}
 
-	
-	
 	/**
 	 * returns whether all required fields for user are complete
 	 * @param user user to be checked
@@ -174,6 +177,8 @@ public class User {
 	public boolean isValid() {
 		boolean valid = true;
 		if(this.id == null && this.userName == null)
+			valid = false;
+		else if (status == null || status < 0 || status > 2)
 			valid = false;
 		else if(this.bio == null || this.bio == "")
 			valid = false;

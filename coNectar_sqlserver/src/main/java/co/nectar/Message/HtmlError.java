@@ -8,7 +8,7 @@ package co.nectar.Message;
  * @author Ben
  *
  */
-public class HtmlError {
+public class HtmlError implements HtmlMessage{
 	boolean success;
 	String message;
 	
