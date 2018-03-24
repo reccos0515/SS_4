@@ -14,13 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
-                <!-- Allows user to scroll through more friends than a screen can list, regular scroll view
-                        breaks ListView and only lists one item -->
-                <android.support.v4.widget.NestedScrollView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
 
-                </android.support.v4.widget.NestedScrollView>
 
         </ListView>
 
