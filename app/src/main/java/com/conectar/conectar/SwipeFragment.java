@@ -40,6 +40,7 @@ import util.UserUtil;
  * create an instance of this fragment.
  */
 public class SwipeFragment extends Fragment {
+    private static View mainView;
     private Context context; //context to be used to add JSONRequest to queue
     private static String url; //beginning of url
     private static int userOnDisplayLoc; //int to hold the location in the array of the current user being viewed on the screen
@@ -90,7 +91,7 @@ public class SwipeFragment extends Fragment {
         //      url += id + "/discovery"; //create full url TODO put this back in
         context = getActivity().getApplicationContext(); //get the context
         JsonRequest.swipeRequest(view, url, context); //call this to send the request
-
+        mainView = view;
 
                         //on click listener for next
         view.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
@@ -104,7 +105,7 @@ public class SwipeFragment extends Fragment {
                     }
                     try {
                         JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
-                        updateUI(user, view);
+                        updateUI(user);
                         UserUtil.setUserToView(user); //save this where profile view can access if needed
                     } catch (JSONException e) {
                         TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
@@ -127,7 +128,7 @@ public class SwipeFragment extends Fragment {
                     }
                     try {
                         JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
-                        updateUI(user, view);
+                        updateUI(user);
                         UserUtil.setUserToView(user); //save this where profile view can access if needed
                     } catch (JSONException e) {
                         TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
@@ -158,19 +159,17 @@ public class SwipeFragment extends Fragment {
     /**
      * Helper method to update the ui to the right user
      * @param user object to be viewed
-     * @param view from where it is called, to be able to update the ui
+     * @param mainView from where it is called, to be able to update the ui
      */
-    public static void updateUI(JSONObject user, View view){
-        //make all textviews
-        TextView errorMessage = view.findViewById(R.id.swipeMessage);
-        TextView firstName = view.findViewById(R.id.swipeFirstName);
+    public static void updateUI(JSONObject user){
 
-        TextView interest1 = view.findViewById(R.id.swipeInterest1);
-        TextView interest2 = view.findViewById(R.id.swipeInterest2);
-        TextView interest3 = view.findViewById(R.id.swipeInterest3);
-        TextView interest4 = view.findViewById(R.id.swipeInterest4);
-        TextView interest5 = view.findViewById(R.id.swipeInterest5);
-
+        TextView errorMessage = mainView.findViewById(R.id.swipeMessage);
+        TextView firstName = mainView.findViewById(R.id.swipeFirstName);
+        TextView interest1 = mainView.findViewById(R.id.swipeInterest1);
+        TextView interest2 = mainView.findViewById(R.id.swipeInterest2);
+        TextView interest3 = mainView.findViewById(R.id.swipeInterest3);
+        TextView interest4 = mainView.findViewById(R.id.swipeInterest4);
+        TextView interest5 = mainView.findViewById(R.id.swipeInterest5);
 
         String viewInterests; //interests of the current user on display
         try{
