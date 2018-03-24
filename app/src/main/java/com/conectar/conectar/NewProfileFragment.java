@@ -1,6 +1,7 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -73,6 +74,10 @@ public class NewProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
+
         firstName = view.findViewById(R.id.firstName);
         lastName = view.findViewById(R.id.lastName);
         email = view.findViewById(R.id.email);
@@ -92,16 +97,21 @@ public class NewProfileFragment extends Fragment {
                     JSONObject toSend = new JSONObject();
                     try {
                         js.put("id", 0);
+                        //TODO add this
                         js.put("userName", username.getText().toString());
+                        editor.putString("USERNAME", username.getText().toString());
                         js.put("bio", username.getText().toString() +" has not added a bio yet");
+                        editor.putString("BIO", username.getText().toString() + " has not added a bio yet");
                         js.put("interests", "00000000000");
+                        editor.putString("INTERESTS", "00000000000");
                         toSend.put("user", js); //put this in the object to send
                         toSend.put("password", password.getText().toString()); //put this in the object to send
+                        editor.apply();
                     } catch (JSONException e){
                         e.printStackTrace();
                     }
                     //make the post request
-                    JsonRequest.postRequest(toSend, url, getContext());
+                    JsonRequest.postNewUserRequest(toSend, url, getContext());
                     //if confirmPassword and password are the same, submit
                     text = "Successfully submitted";
                 }

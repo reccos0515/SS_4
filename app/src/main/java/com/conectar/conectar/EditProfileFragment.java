@@ -1,6 +1,7 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,8 +43,8 @@ public class EditProfileFragment extends Fragment {
 
     private String interests; //String with user's interests
     private int numInterests; //int with number of interest user currently has
-    private final int id = 3; //todo reset this to get from session variable
-    private final String username = "test2"; //string with username todo reset this to get from session variable
+    private String id; //string with id
+    private String username; //string with username
 
     private Context context; //application context
     
@@ -84,6 +85,10 @@ public class EditProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
+
         //create variables that take input from UI
         bio = view.findViewById(R.id.bio);
         newInterest = view.findViewById(R.id.newInterest);
@@ -96,11 +101,10 @@ public class EditProfileFragment extends Fragment {
         context = getActivity().getApplicationContext(); //get the context
 
         //set all the user info
-//        bio.setText(SessionUtil.getSessionBio()); TODO put this back in once session variables work
-//        interests = SessionUtil.getSessionInterests(); TODO put this back in once session variables work
-        String defaultBio = "this is my bio"; //todo remove this
-        bio.setText(defaultBio); //todo remove this
-        interests = "41213141500"; //todo remove this
+        bio.setText(preferences.getString("BIO", "empty"));
+        interests = preferences.getString("INTERESTS", "00000000000");
+        id = preferences.getString("ID", "0");
+        username = preferences.getString("USERNAME", "none");
         updateInterestButtons(); //update the ui on the buttons
 
         numInterests = interests.charAt(0) - '0'; //set the number of interests

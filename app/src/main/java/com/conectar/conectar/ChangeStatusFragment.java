@@ -71,6 +71,7 @@ public class ChangeStatusFragment extends Fragment {
             @Override
             public void onClick(View view) { //set status to green
                 UserUtil.updateStatus(2, userId, getContext());
+
                 Toast.makeText(getActivity(), "Status set to green", Toast.LENGTH_LONG).show();
             }
         });
