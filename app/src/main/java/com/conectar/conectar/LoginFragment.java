@@ -115,7 +115,10 @@ public class LoginFragment extends Fragment {
                 Log.d("SharedPreferences", temp);
                 //Toast.makeText(getActivity(), temp, Toast.LENGTH_SHORT).show();
 
-                UserUtil.sendLoginRequest("George", "George", context);
+                //UserUtil.sendLoginRequest("George", "George", context);
+                fullJS = UserUtil.prepareLogin("George", "George", context);
+                String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/login";
+                JsonRequest.postRequest(fullJS, url, context);
             }
         });
 

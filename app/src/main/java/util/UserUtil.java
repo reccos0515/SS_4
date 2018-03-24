@@ -127,7 +127,8 @@ public class UserUtil {
     public static void sendLoginRequest(String username, String password, Context context){
         //probably needs special volley requests, not the premade volley methods
         Log.d("UserUtil", "sendLoginRequest entered");
-        url += "/login";
+        url += "/login/";
+        String thisURL = "https://proj-309-ss-4.cs.iastate.edu:9001/ben/login/";
         JSONObject fullJS = new JSONObject();
 
         try { //TODO modify for how Ben wants info
@@ -140,20 +141,8 @@ public class UserUtil {
         }
 
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, fullJS, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                   loginObject = response;
-                   Log.d("UserUtil", "sendLoginRequest response: " + response);
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+        JsonRequest.postRequest(fullJS, thisURL, context);
+        //Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
     }
 
     public static JSONObject prepareLogin(String username, String password, Context context){
