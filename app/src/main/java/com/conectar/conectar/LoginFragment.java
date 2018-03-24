@@ -118,7 +118,7 @@ public class LoginFragment extends Fragment {
                 //UserUtil.sendLoginRequest("George", "George", context);
                 fullJS = UserUtil.prepareLogin("George", "George", context);
                 String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/login";
-                JsonRequest.postRequest(fullJS, url, context);
+                JsonRequest.loginPostRequest(fullJS, url, context);
             }
         });
 

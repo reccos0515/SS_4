@@ -1,6 +1,10 @@
 package util;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -29,6 +33,7 @@ import org.json.JSONObject;
 
 public class JsonRequest {
     static String str;
+    static Boolean success;
     //String for Json Array Req to server for all users "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"
     //String for Adding 10 users to the DB "http://projec-309-ss-4.cs.iastate.edu:9002/ben/test"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
@@ -79,7 +84,42 @@ public class JsonRequest {
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
     }
 
-    
+    public static void loginPostRequest(JSONObject js, String url, Context context){
+        final Context context1 = context;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  js,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
+                        final SharedPreferences preferences = context1.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+                        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
+                        String username = "";
+                        String id = "";
+                        String bio = "";
+                        String interests = "";
+
+                        try {
+                            username = response.getString("userName");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        editor.putString("USERNAME", username);
+                        editor.putString("ID", id);
+                        editor.putString("BIO", bio);
+                        editor.putString("INTERESTS", interests);
+                        editor.apply();
+                        String test = preferences.getString("USERNAME", "empty");
+                        Log.d("loginPostRequest", test);
+                        success = true;
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+    }
 
     /**
      * Sends a PUT request for a JSONObject to the server.  Often used for updating a JSONObject.
