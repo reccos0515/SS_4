@@ -195,7 +195,7 @@ public class JsonRequest {
                     }catch (JSONException e){
                         e.printStackTrace();
                     }
-                    SwipeFragment.updateUI(user, nView); //update the UI
+                    SwipeFragment.updateUI(user); //update the UI
                     UserUtil.setUserToView(user); //save this where profile view can access it if needed
                 }
             }

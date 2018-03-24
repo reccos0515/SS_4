@@ -30,7 +30,6 @@ import util.UserUtil;
  */
 public class ProfileViewFragment extends Fragment {
 
-    private static String url = "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/"; //url to be modified
     private static int userIDNum = 1; //change this to a global variable of the logged in user
     private static JSONObject user; //user to display
     private Context context;
@@ -71,15 +70,14 @@ public class ProfileViewFragment extends Fragment {
         user = UserUtil.getUserToView(); //get the user that should be shown
         TextView username = view.findViewById(R.id.viewUsername);
         TextView bio = view.findViewById(R.id.viewBio);
-        //TODO remove comments
-        /*
+
         try {
             username.setText(user.get("userName").toString());
             bio.setText(user.get("bio").toString());
         } catch (JSONException e){
             e.printStackTrace();
         }
-        */
+
         //when the button is pressed will add friend
         view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener(){
             @Override
