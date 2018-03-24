@@ -27,6 +27,7 @@ public class UserUtil {
 
     private static String url = "http://proj-309-ss-4.iastate.edu:9001/ben"; //base url for server
     private static JSONObject userJSONObject = new JSONObject();
+    private static JSONObject loginObject = new JSONObject();
     private static JSONArray jsonArray = new JSONArray();
     private static JSONArray jsonArray2 = new JSONArray();
     private static JSONObject profView = null; //user that can be viewed in profile view next
@@ -123,7 +124,7 @@ public class UserUtil {
      * @param context the context in which this method is used
      * @return a JSONObject of a user
      */
-    public static JSONObject sendLoginRequest(String username, String password, Context context){
+    public static void sendLoginRequest(String username, String password, Context context){
         //probably needs special volley requests, not the premade volley methods
         Log.d("UserUtil", "sendLoginRequest entered");
         url += "/login";
@@ -133,7 +134,7 @@ public class UserUtil {
             userJSONObject.put("userName", username);
             fullJS.put("user", userJSONObject);
             fullJS.put("password", password);
-            Log.d("sendLoginRequest", "JSONObject prior to sending request: " + fullJS.toString());
+            Log.d("UserUtil", "JSONObject prior to sendLoginRequest: " + fullJS.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -142,8 +143,8 @@ public class UserUtil {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, fullJS, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                    //userJSONObject = response;
-                    Log.d("sendLoginRequest", "Server response: " + response);
+                   loginObject = response;
+                   Log.d("UserUtil", "sendLoginRequest response: " + response);
 
             }
         }, new Response.ErrorListener() {
@@ -153,10 +154,20 @@ public class UserUtil {
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
 
+    public static JSONObject prepareLogin(String username, String password, Context context){
+        JSONObject fullJS = new JSONObject();
 
-
-        return userJSONObject;
+        try { //TODO modify for how Ben wants info
+            userJSONObject.put("userName", username);
+            fullJS.put("user", userJSONObject);
+            fullJS.put("password", password);
+            Log.d("UserUtil", "JSONObject from prepareLogin " + fullJS.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return fullJS;
     }
 
 

@@ -48,7 +48,10 @@ public class LoginFragment extends Fragment {
     JSONObject user;
     JSONArray tempJSONArray = new JSONArray();
     JSONObject tempJSONObject = new JSONObject();
+    JSONObject fullJS = new JSONObject();
+    JSONObject loginObject = new JSONObject();
     //final SessionUtil session =  new SessionUtil(getContext());
+    Boolean loginFlag = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -94,7 +97,7 @@ public class LoginFragment extends Fragment {
         loginPassword = view.findViewById(R.id.loginPassword);
         loginUsername = view.findViewById(R.id.loginUsername);
 
-        view.findViewById(R.id.loginBtn).setOnClickListener(new View.OnClickListener(){ //if user clicks the button to log in
+        view.findViewById(R.id.loginBtn).setOnClickListener(new View.OnClickListener() { //if user clicks the button to log in
             @Override
             public void onClick(View view) { //TODO review whether or not this login stuff works
                 //to test whether the session can work
@@ -110,53 +113,9 @@ public class LoginFragment extends Fragment {
                 editor.apply(); //places all the changes we've made into shared preferences
                 String temp = preferences.getString("USERNAME", "empty"); //grabs the string under the key USERNAME, or sets temp = empty if there is nothing
                 Log.d("SharedPreferences", temp);
-                Toast.makeText(getActivity(), temp, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), temp, Toast.LENGTH_SHORT).show();
 
-
-                tempJSONObject = UserUtil.sendLoginRequest(tempUsernmae, tempPassword, context); //returns JSONArray response to login request
-                if(tempJSONObject != null){
-                    Log.d("LoginFragment", "sendLoginRequest was successful, updating session variables");
-                    String username = "";
-                    String bio = "";
-                    String id = "";
-                    String interests = "";
-
-                    try { //grab user information
-                        username = tempJSONObject.getString("userName");
-                        id = tempJSONObject.getString("id");
-                        bio = tempJSONObject.getString("bio");
-                        interests = tempJSONObject.getString("interests");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    //set session variables
-                    editor.putString("USERNAME", username);
-                    editor.putString("ID", id);
-                    editor.putString("BIO", bio);
-                    editor.putString("INTERESTS", interests);
-                    editor.apply();
-
-                    //send user to swipe page
-                    Fragment fragment = new SwipeFragment();
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.screen_area, fragment);
-                    fragmentTransaction.commit();
-                }
-            }
-        });
-
-        view.findViewById(R.id.createAccountBtn).setOnClickListener(new View.OnClickListener() { //if create account button is clicked
-            @Override
-            public void onClick(View view) { //change fragments to the new profile fragment
-
-                Fragment fragment = new NewProfileFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.screen_area, fragment);
-                fragmentTransaction.commit();
-
+                UserUtil.sendLoginRequest("George", "George", context);
             }
         });
 
