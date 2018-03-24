@@ -1,5 +1,7 @@
 package co.nectar.login;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +34,7 @@ public class LoginService {
 	 * @param login login to be added
 	 * @return htmlmessage indicating sucess or error
 	 */
-	public HtmlError addLogin(Login login) {
+	public HtmlMessage addLogin(Login login) {
 		boolean success = true;
 		String error = "";
 		if(login.getPassword().equals("") || login.getPassword() == null) {
@@ -54,6 +56,10 @@ public class LoginService {
 			User added = ((HtmlUserList) msg).getUsers().iterator().next();
 			login.setUser(added);
 			loginRepo.save(login);
+			
+			ArrayList<User> users = new ArrayList<>();
+			users.add(added);
+			return new HtmlUserList(success,users);
 		}
 		
 		
