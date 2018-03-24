@@ -77,35 +77,6 @@ public class SearchFragment extends Fragment {
 
 
 
-        view.findViewById(R.id.friendBtn1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                final EditText personId1 = view.findViewById(R.id.editText1);
-                final EditText personId2 = view.findViewById(R.id.editText2);
-                final Context context = getContext();
-
-                final String id1 = personId1.getText().toString();
-                final String id2 = personId2.getText().toString();
-                String url = "https://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id1 + "/request_friend/" + id2;
-
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  null,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                Log.d("Post Request Status", ("successful, response:" + response.toString()));
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                });
-                Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
-            }
-        });
-
-
     }
 
     @Override

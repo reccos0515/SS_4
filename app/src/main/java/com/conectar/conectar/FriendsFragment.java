@@ -93,6 +93,8 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         ListView listView = (ListView) view.findViewById(R.id.friendsListView);
 
+        Friend[] grabbedFriends = Friend.getFriends(id, context);
+
         Friend[] testFriends = {
             new Friend("4", "Lena", "I am a cat", "00000000000"),
                 new Friend("2", "Simon", "I am also a cat", "00000000000"),

@@ -23,8 +23,8 @@ public class Friend {
     private String username;
     private String bio;
     private String interests;
-    private JSONObject js = new JSONObject();
-    private JSONArray users = new JSONArray();
+    private static JSONObject js = new JSONObject();
+    private static JSONArray users = new JSONArray();
 
     public Friend(){
         super();
@@ -58,10 +58,11 @@ public class Friend {
         return "Id: " + this.id + "   Username: " + this.username + "   Bio: " + this.bio + "   Interests: " + this.interests;
     }
 
-    public Friend[] getFriends(String id, Context context){
-        String url = "https://proj-309-ss-4.cs.iastate.edu:9002/ben/users/" + id + "/friends";
+    public static Friend[] getFriends(String id, Context context){
+        String url = "https://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id + "/friends";
         Friend[] friends = null;
         String success = "";
+        Boolean s = false;
         String message = "";
 
         //get the object with the list of friends within it
@@ -80,12 +81,17 @@ public class Friend {
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
 
         try {
-            success = js.getString("success");
+            //success = js.getString("success");
+            s = js.getBoolean("success");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        if(success.equals("success")){ //if the request was successful
+        if(js == null){
+            Log.d("Friend", "getFriends no response from server");
+        }
+        if(s){ //if the request was successful
             try {
                 users = js.getJSONArray("users"); //get JSONArray of all users the user is friends with
                 friends = new Friend[users.length()]; //makes the array of friends the correct size
@@ -107,7 +113,7 @@ public class Friend {
             Log.d("Friend", "getFriends error message: " + message);
         }
 
-        Log.d("Friend", "List of friends: " + friends.toString());
+        //Log.d("Friend", "List of friends: " + friends.toString());
         return friends;
     }
 
