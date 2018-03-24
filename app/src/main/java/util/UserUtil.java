@@ -124,37 +124,27 @@ public class UserUtil {
      * @return a JSONObject of a user
      */
     public static JSONObject sendLoginRequest(String username, String password, Context context){
-        //TODO outer part is an object with a success field, user object, and password field.  Need to convert.
         //probably needs special volley requests, not the premade volley methods
         Log.d("UserUtil", "sendLoginRequest entered");
         url += "/login";
+        JSONObject fullJS = new JSONObject();
 
         try { //TODO modify for how Ben wants info
-            userJSONObject.put("username", username);
-            userJSONObject.put("password", password);
+            userJSONObject.put("userName", username);
+            fullJS.put("user", userJSONObject);
+            fullJS.put("password", password);
+            Log.d("sendLoginRequest", "JSONObject prior to sending request: " + fullJS.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        /*
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, url, userJSONObject, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                jsonArray = response;
-            }
-        }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonArrayRequest);
-        */
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, userJSONObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, fullJS, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                    userJSONObject = response;
+                    //userJSONObject = response;
+                    Log.d("sendLoginRequest", "Server response: " + response);
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -162,45 +152,13 @@ public class UserUtil {
 
             }
         });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
 
 
 
         return userJSONObject;
     }
 
-    /**
-     * Adds a user using the login/add page.  Creates a login object with the new user object.
-     * @param username username of the new user
-     * @param password password of the new user
-     */
-    public static void addLoginUser(String username, String password){
-        url += "/login/add";
-        JSONObject user = new JSONObject();
-        try {
-            user.put("userName", username);
-            user.put("bio", "I am a cat");
-            userJSONObject.put("user", user);
-            userJSONObject.put("password", password);
-            Log.d("userJSONObject", "pre-post request: " + userJSONObject.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, userJSONObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                userJSONObject = response;
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        Log.d("userJSONObject", "post-post request" + userJSONObject.toString());
-
-    }
 
     /**
      * Changes the user's status in the DB

@@ -74,12 +74,12 @@ public class LogoutFragment extends Fragment {
         view.findViewById(R.id.logoutBtn).setOnClickListener(new View.OnClickListener() { //if logout button is pressed
             @Override
             public void onClick(View view) {
-                //TODO remove all session variables that keep user logged in
+                //TODO change back to correct toast when done debugging
                 //Toast.makeText(getActivity(), "You are logged out!", Toast.LENGTH_SHORT).show();
                 String temp = preferences.getString("USERNAME", "empty");
                 Toast.makeText(getActivity(), temp, Toast.LENGTH_SHORT).show();
 
-                destroySession(); //remove sharedPreferences session variables
+                destroySession(preferences); //remove sharedPreferences session variables
 
                 //Send user to the login screen
                 //TODO make method for changing fragments?
@@ -94,8 +94,7 @@ public class LogoutFragment extends Fragment {
 
     }
 
-    public void destroySession(){
-        SharedPreferences preferences = getContext().getSharedPreferences("MyPref", 0);
+    public void destroySession(SharedPreferences preferences){
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.apply(); //or commit, but studio says apply??

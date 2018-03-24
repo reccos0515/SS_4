@@ -85,11 +85,9 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //Set up shared preferences
-        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = preferences.edit();
-
-
+        //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
         context = getContext(); //get the current context for use in Volley requests
 
@@ -106,12 +104,15 @@ public class LoginFragment extends Fragment {
                 //TODO grab actual values from edittext???
                 String tempPassword = "Lena";
                 String tempUsernmae = "Lena";
-                editor.putString("USERNAME", tempUsernmae);
-                editor.apply();
-                String temp = preferences.getString("USERNAME", "empty");
+
+                //shared preferences stuff
+                editor.putString("USERNAME", tempUsernmae); //adds the username into the key USERNAME
+                editor.apply(); //places all the changes we've made into shared preferences
+                String temp = preferences.getString("USERNAME", "empty"); //grabs the string under the key USERNAME, or sets temp = empty if there is nothing
                 Log.d("SharedPreferences", temp);
                 Toast.makeText(getActivity(), temp, Toast.LENGTH_SHORT).show();
-                UserUtil.addLoginUser(tempUsernmae, tempPassword);
+
+
                 tempJSONObject = UserUtil.sendLoginRequest(tempUsernmae, tempPassword, context); //returns JSONArray response to login request
                 //deal with whether or not the request was successful
                 Boolean success = false;
@@ -125,7 +126,7 @@ public class LoginFragment extends Fragment {
                     e.printStackTrace();
                 }
                 */
-                Log.d("tempJSONObject", tempJSONObject.toString());
+
                 if(success){ //if the request was successful
                     /*
                     try {
