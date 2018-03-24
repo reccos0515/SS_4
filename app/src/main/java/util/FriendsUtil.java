@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 public class FriendsUtil {
 
-    private static String url = ""; //TODO update with base for all other urls
+    private static String urlBase = "http://proj-309-ss-4.cs.iastate.edu:9001/ben"; //base for all urls
     private static JSONObject userJSONObject = new JSONObject();
     private static JSONArray tempArr;
 
@@ -31,7 +31,7 @@ public class FriendsUtil {
      * @return the list of friends
      */
     public static JSONArray getFriends(Context context, String id){ //TODO test
-        url = "/users/" + id + "/friends";
+        String url = urlBase + "/users/" + id + "/friends";
        tempArr = UserUtil.getArray(url, context);
         return tempArr;
     }
@@ -43,7 +43,7 @@ public class FriendsUtil {
      * @return the list of friends
      */
     public static JSONArray getFriends(Context context, int id){ //TODO test
-        url = "/users/" + id + "/friends";
+        String url = urlBase + "/users/" + id + "/friends";
         tempArr = UserUtil.getArray(url, context);
         return tempArr;
     }
@@ -55,7 +55,7 @@ public class FriendsUtil {
      * @return the list of friends
      */
     public static JSONArray getPending(Context context, String id){ //TODO revisit, don't think it works
-        url = "/users/" + id + "pending_friends"; //TODO review url
+        String url = urlBase + "/users/" + id + "pending_friends"; //TODO review url
         tempArr = UserUtil.getArray(url, context);
         return tempArr;
     }
@@ -67,7 +67,7 @@ public class FriendsUtil {
      * @return the list of friends
      */
     public static JSONArray getPending(Context context, int id){ //TODO revisit, don't think it works
-        url = "/users/" + id + "pending_friends"; //TODO review url
+        String url = urlBase + "/users/" + id + "pending_friends"; //TODO review url
         tempArr = UserUtil.getArray(url, context);
         return tempArr;
     }
@@ -79,7 +79,7 @@ public class FriendsUtil {
      * @param context context in which this method is used
      */
     public static void makeFriend(String userId, String friendId, Context context){
-        url += "/users/" + userId + "/request_friend/" + friendId + "";
+        String url = urlBase + "/users/" + userId + "/request_friend/" + friendId + "";
         UserUtil.postRequest(url, context);
     }
 
@@ -90,7 +90,7 @@ public class FriendsUtil {
      * @param context context in which this method is used
      */
     public static void makeFriend(int userId, int friendId, Context context){
-        url += "/users/" + userId + "/request_friend/" + friendId + "";
+        String url = urlBase + "/users/" + userId + "/request_friend/" + friendId + "";
         UserUtil.postRequest(url, context);
     }
 
@@ -101,7 +101,7 @@ public class FriendsUtil {
      * @param context the context in which this method is used
      */
     public static void removeFriend(String userId, String friendId, Context context){
-        url += "/users/" + userId + "/friends/" + friendId+ ""; //TODO review url
+        String url = urlBase + "/users/" + userId + "/friends/" + friendId+ ""; //TODO review url
         UserUtil.deleteRequest(url, context);
     }
 
@@ -112,7 +112,7 @@ public class FriendsUtil {
      * @param context the context in which this method is used
      */
     public static void removeFriend(int userId, int friendId, Context context){
-        url += "/users/" + userId + "/friends/" + friendId + ""; //TODO review url
+        String url = urlBase + "/users/" + userId + "/friends/" + friendId + ""; //TODO review url
         UserUtil.deleteRequest(url, context);
     }
 }

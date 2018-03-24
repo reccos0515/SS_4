@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
 
         //sets default page to the profile view page
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
-        tx.replace(R.id.screen_area, new ProfileViewFragment());
+        tx.replace(R.id.screen_area, new SwipeFragment());
         tx.commit();
 
     }
