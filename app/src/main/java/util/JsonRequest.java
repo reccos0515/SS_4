@@ -68,6 +68,38 @@ public class JsonRequest {
      * @param js json object to send
      * @param url url of where this request should be sent
      */
+    public static void postNewUserRequest(JSONObject js, String url, final Context context){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  js,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
+                        final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+                        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
+                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
+                        try {
+                            JSONObject js = (JSONObject) response.get("user");
+                            String id = js.getString("id");
+                            editor.putString("ID", id); //TODO change this to add id
+                            editor.apply();
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+    }
+
+    /**
+     * Sends a post request to a given url
+     * @param js json object to send
+     * @param url url of where this request should be sent
+     */
     public static void postRequest(JSONObject js, String url, Context context){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  js,
                 new Response.Listener<JSONObject>() {

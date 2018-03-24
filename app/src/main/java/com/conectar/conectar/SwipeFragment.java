@@ -1,6 +1,7 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -84,11 +85,15 @@ public class SwipeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        interests = SessionUtil.getSessionInterests(); //set logged in user's interests from session variables TODO comment back in
-        interests = "11200000000"; //TODO delete this
+
+        //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
+
+        interests = preferences.getString("INTERESTS", "empty"); //set logged in user's interests from session variables
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
-        url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/1/relevant"; //set the url TODO delete the 1ine
-        //      url += id + "/discovery"; //create full url TODO put this back in
+        String id = preferences.getString("ID", "0"); //set the id
+        url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id + "/relevant"; //set the url
         context = getActivity().getApplicationContext(); //get the context
         JsonRequest.swipeRequest(view, url, context); //call this to send the request
         mainView = view;
@@ -159,7 +164,6 @@ public class SwipeFragment extends Fragment {
     /**
      * Helper method to update the ui to the right user
      * @param user object to be viewed
-     * @param mainView from where it is called, to be able to update the ui
      */
     public static void updateUI(JSONObject user){
 
