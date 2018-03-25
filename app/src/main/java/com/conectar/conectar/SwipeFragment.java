@@ -92,15 +92,16 @@ public class SwipeFragment extends Fragment {
 
         //todo delete these
         editor.putString("INTERESTS", "00000000000");
-        editor.putString("ID", "3");
+        editor.putInt("ID", 3);
         editor.putString("USERNAME", "jabader");
         editor.putString("BIO", "none");
+        editor.putInt("STATUS", 0);
         editor.apply();
 
         interests = preferences.getString("INTERESTS", "empty"); //set logged in user's interests from session variables
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
-        String id = preferences.getString("ID", "0"); //set the id
-        url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id + "/relevant"; //set the url
+        int id = preferences.getInt("ID", 0); //set the id
+        url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id + "" + "/relevant"; //set the url
         context = getActivity().getApplicationContext(); //get the context
         JsonRequest.swipeRequest(view, url, context); //call this to send the request
         mainView = view;

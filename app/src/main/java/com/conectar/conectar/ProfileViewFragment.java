@@ -31,7 +31,7 @@ import util.UserUtil;
  */
 public class ProfileViewFragment extends Fragment {
 
-    private static String userIDNum; //change this to a global variable of the logged in user
+    private static int userIDNum; //change this to a global variable of the logged in user
     private static JSONObject user; //user to display
     private Context context;
     //TODO update this to work with swipe fragment
@@ -72,7 +72,7 @@ public class ProfileViewFragment extends Fragment {
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
-        userIDNum = preferences.getString("ID", "0");
+        userIDNum = preferences.getInt("ID", 0);
         user = UserUtil.getUserToView(); //get the user that should be shown
         TextView username = view.findViewById(R.id.viewUsername);
         TextView bio = view.findViewById(R.id.viewBio);
@@ -90,7 +90,7 @@ public class ProfileViewFragment extends Fragment {
             public void onClick(View view) {
                 //first id receives, second id sends
                 try{
-                    FriendsUtil.makeFriend(userIDNum, (int)user.get("id") + "", getContext());
+                    FriendsUtil.makeFriend(userIDNum + "", (int)user.get("id") + "", getContext());
                 } catch (JSONException e){
                     e.printStackTrace();
                 }

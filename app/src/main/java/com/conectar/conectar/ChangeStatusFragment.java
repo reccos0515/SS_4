@@ -72,12 +72,14 @@ public class ChangeStatusFragment extends Fragment {
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
-        String userId = preferences.getString("ID", "0");
+        final int userId = preferences.getInt("ID", 0);
 
         JSONObject js = new JSONObject();
         try{
             js.put("userName", preferences.getString("USERNAME", "empty"));
-            js.put()
+            js.put("bio", preferences.getString("BIO", "no bio"));
+            js.put("id", preferences.getInt("ID", 0));
+            js.put("interests", preferences.getString("INTERESTS", "00000000000"));
         }catch (JSONException e){
             e.printStackTrace();
         }
@@ -86,7 +88,11 @@ public class ChangeStatusFragment extends Fragment {
             @Override
             public void onClick(View view) { //set status to green
                 UserUtil.updateStatus(2, userId, getContext());
-
+//                try{
+//
+//                }catch (JSONException e){
+//                    e.printStackTrace();
+//                }
                 Toast.makeText(getActivity(), "Status set to green", Toast.LENGTH_LONG).show();
             }
         });

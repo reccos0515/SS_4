@@ -105,7 +105,7 @@ public class NewProfileFragment extends Fragment {
                         js.put("interests", "00000000000");
                         editor.putString("INTERESTS", "00000000000");
                         js.put("status", 0);
-                        editor.putString("STATUS", "0");
+                        editor.putInt("STATUS", 0);
                         toSend.put("user", js); //put this in the object to send
                         toSend.put("password", password.getText().toString()); //put this in the object to send
                         editor.apply();

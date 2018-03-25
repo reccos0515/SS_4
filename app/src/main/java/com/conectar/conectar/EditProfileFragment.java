@@ -43,7 +43,7 @@ public class EditProfileFragment extends Fragment {
 
     private String interests; //String with user's interests
     private int numInterests; //int with number of interest user currently has
-    private String id; //string with id
+    private int id; //int with id
     private String username; //string with username
 
     private Context context; //application context
@@ -103,7 +103,7 @@ public class EditProfileFragment extends Fragment {
         //set all the user info
         bio.setText(preferences.getString("BIO", "empty"));
         interests = preferences.getString("INTERESTS", "00000000000");
-        id = preferences.getString("ID", "0");
+        id = preferences.getInt("ID", 0);
         username = preferences.getString("USERNAME", "none");
         updateInterestButtons(); //update the ui on the buttons
 
@@ -230,15 +230,16 @@ public class EditProfileFragment extends Fragment {
                 JSONObject js = new JSONObject(); //json object to send, fill will current fields
                 try{
                     js.put("interests", interests);
+                    editor.putString("INTERESTS", interests);
                     js.put("bio", bio.getText().toString());
+                    editor.putString("BIO", bio.getText().toString());
                     js.put("id", id);
                     js.put("userName", username);
-                    js.put("status", preferences.getString("STATUS", "0"));
+                    js.put("status", preferences.getInt("STATUS", 0));
                 } catch (JSONException e){
                     e.printStackTrace();
                 }
                 JsonRequest.jsonObjectPutRequest(js, "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users", context); //send the new put request
-                //todo update session variables (use Maggie's method?)
             }
         });
     }
