@@ -43,7 +43,7 @@ import util.UserUtil;
 public class LoginFragment extends Fragment {
 
     Button loginBtn;
-    EditText loginUsername, loginPassword;
+    EditText editUsername, editPassword;
     Context context;
     JSONObject user;
     JSONArray tempJSONArray = new JSONArray();
@@ -92,11 +92,14 @@ public class LoginFragment extends Fragment {
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
+        editor.putBoolean("ISLOGGEDIN", false);
+        editor.apply();
 
         context = getContext(); //get the current context for use in Volley requests
 
-        loginPassword = view.findViewById(R.id.loginPassword);
-        loginUsername = view.findViewById(R.id.loginUsername);
+        editPassword = view.findViewById(R.id.loginPassword);
+        editUsername = view.findViewById(R.id.loginUsername);
+
 
         view.findViewById(R.id.loginBtn).setOnClickListener(new View.OnClickListener() { //if user clicks the button to log in
             @Override
@@ -106,18 +109,15 @@ public class LoginFragment extends Fragment {
                 //Toast.makeText(getActivity(), "User Username" + session.getSessionusername(), Toast.LENGTH_LONG).show();
                 /////Toast.makeText(getActivity(), "Login attempt made", Toast.LENGTH_LONG).show();
                 //TODO grab actual values from edittext???
-                String tempPassword = "Lena";
-                String tempUsernmae = "Lena";
+                String loginPassword = "";
+                String loginUsername = "";
 
-                //shared preferences stuff
-                editor.putString("USERNAME", tempUsernmae); //adds the username into the key USERNAME
-                editor.apply(); //places all the changes we've made into shared preferences
-                String temp = preferences.getString("USERNAME", "empty"); //grabs the string under the key USERNAME, or sets temp = empty if there is nothing
-                Log.d("SharedPreferences", temp);
-                //Toast.makeText(getActivity(), temp, Toast.LENGTH_SHORT).show();
+                loginPassword = editPassword.getText().toString();
+                loginUsername = editUsername.getText().toString();
+                Log.d("LoginFragment", "Input username: " + loginUsername + "   Input password: " + loginPassword);
 
                 //UserUtil.sendLoginRequest("George", "George", context);
-                fullJS = UserUtil.prepareLogin("George", "George", context);
+                fullJS = UserUtil.prepareLogin(loginUsername, loginPassword, context);
                 String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/login";
                 JsonRequest.loginPostRequest(fullJS, url, context);
 

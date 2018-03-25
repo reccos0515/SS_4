@@ -144,11 +144,14 @@ public class JsonRequest {
                             Log.d("loginPostRequest", "Entered success");
                             try {
                                 //error = response.getString("success");
-                                username = response.getString("userName");
-                                id = response.getString("id");
-                                bio = response.getString("bio");
-                                interests = response.getString("interests");
-                                status = response.getString("status");
+                                JSONArray userArr = response.getJSONArray("users");
+                                JSONObject user = userArr.getJSONObject(0);
+                                Log.d("loginPostRequest", "user: " + user.toString());
+                                username = user.getString("userName");
+                                id = user.getString("id");
+                                bio = user.getString("bio");
+                                interests = user.getString("interests");
+                                status = user.getString("status");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -160,7 +163,7 @@ public class JsonRequest {
                             editor.putBoolean("ISLOGGEDIN", true);
                             editor.apply();
                             String test = preferences.getString("USERNAME", "empty");
-                            Log.d("loginPostRequest", "Logged in user is" + test);
+                            Log.d("loginPostRequest", "Logged in user is: " + test);
                         }
 
 
