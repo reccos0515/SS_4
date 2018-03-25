@@ -68,11 +68,11 @@ public class JsonRequest {
                         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
                         Log.d("Post Request Status", ("successful, response:" + response.toString()));
                         try {
-                            JSONArray ja = response.getJSONArray("users");
-                            JSONObject js = ja.getJSONObject(0);
-                            String id = js.getString("id");
-                            editor.putString("ID", id);
-                            editor.apply();
+                            JSONArray ja = response.getJSONArray("users"); //get the json array with the user in it
+                            JSONObject js = ja.getJSONObject(0); //pull the user from the array
+                            String id = js.getString("id"); //pull the id from the user
+                            editor.putString("ID", id); //save this in preference variables
+                            editor.apply(); //apply this change
                         }catch (JSONException e){
                             e.printStackTrace();
                         }

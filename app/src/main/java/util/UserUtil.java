@@ -175,8 +175,7 @@ public class UserUtil {
         url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users";
         JSONObject js = new JSONObject();
         try {
-//            js.put("id", preferences.getInt("ID", 0)); //TODO put this back in
-            js.put("id", 3);
+            js.put("id", preferences.getInt("ID", 0));
             js.put("userName", preferences.getString("USERNAME", "empty"));
             js.put("bio", preferences.getString("BIO", "empty"));
             js.put("interests", preferences.getString("INTERESTS", "00000000000"));

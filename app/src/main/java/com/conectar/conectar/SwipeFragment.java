@@ -41,7 +41,7 @@ import util.UserUtil;
  * create an instance of this fragment.
  */
 public class SwipeFragment extends Fragment {
-    private static View mainView;
+    private static View mainView; //view from the main part of the fragment
     private Context context; //context to be used to add JSONRequest to queue
     private static String url; //beginning of url
     private static int userOnDisplayLoc; //int to hold the location in the array of the current user being viewed on the screen
@@ -90,21 +90,13 @@ public class SwipeFragment extends Fragment {
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
-        //todo delete these
-        editor.putString("INTERESTS", "00000000000");
-        editor.putInt("ID", 1);
-        editor.putString("USERNAME", "jabader");
-        editor.putString("BIO", "none");
-        editor.putInt("STATUS", 1);
-        editor.apply();
-
         interests = preferences.getString("INTERESTS", "empty"); //set logged in user's interests from session variables
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
         int id = preferences.getInt("ID", 0); //set the id
         url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id + "" + "/relevant"; //set the url
         context = getActivity().getApplicationContext(); //get the context
         JsonRequest.swipeRequest(view, url, context); //call this to send the request
-        mainView = view;
+        mainView = view; //set the view
 
                         //on click listener for next
         view.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
@@ -118,7 +110,7 @@ public class SwipeFragment extends Fragment {
                     }
                     try {
                         JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
-                        updateUI(user);
+                        updateUI(user); //update the ui with this user
                         UserUtil.setUserToView(user); //save this where profile view can access if needed
                     } catch (JSONException e) {
                         TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
@@ -141,7 +133,7 @@ public class SwipeFragment extends Fragment {
                     }
                     try {
                         JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
-                        updateUI(user);
+                        updateUI(user); //update the ui
                         UserUtil.setUserToView(user); //save this where profile view can access if needed
                     } catch (JSONException e) {
                         TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
@@ -175,6 +167,7 @@ public class SwipeFragment extends Fragment {
      */
     public static void updateUI(JSONObject user){
 
+        //set up all the textviews
         TextView errorMessage = mainView.findViewById(R.id.swipeMessage);
         TextView firstName = mainView.findViewById(R.id.swipeFirstName);
         TextView interest1 = mainView.findViewById(R.id.swipeInterest1);
@@ -187,13 +180,9 @@ public class SwipeFragment extends Fragment {
         try{
             viewInterests = (String) user.get("interests");
             //TODO display picture
-            if(user.get("userName") != null) {
-                String s = user.getString("userName");
-                firstName.setText(s);
-            }
-            else {
-                Log.d("In userName", (String) user.get("userName"));
-            }
+            String s = user.getString("userName"); //get the username
+            firstName.setText(s); //set the username
+
         }catch (JSONException e){
             errorMessage.setText("Sorry, we ran into a problem"); //set error message to show to user
             e.printStackTrace();
@@ -245,21 +234,6 @@ public class SwipeFragment extends Fragment {
         }
 
         errorMessage.setText(""); //set no error
-
-        //----------------------------------------------------pseudo code to be implemented later-----------------------------------------------//
-
-        //userOnDisplayID = id of this user
-        //display picture
-        //display name
-        //int currentInterestNumDisplayed = 0
-        //for(i = 0; i < numInterests of logged in user; i++)
-            //for(j = 0; j < numInterests of viewed user; j++)
-                //if(loggedInUserInterests[i] == viewedUserInterests[j])
-                //display this in interests[currentInterestNumDisplayed]
-        //if no common interests were found, set I1 to "no common interests"
-        //set everything left to ""
-
-        //-------------------------------------------------------------------------------------------------------------------------------------//
         return;
     }
 

@@ -89,7 +89,7 @@ public class EditProfileFragment extends Fragment {
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
-        //create variables that take input from UI
+        //set all views
         bio = view.findViewById(R.id.bio);
         newInterest = view.findViewById(R.id.newInterest);
         int1 = view.findViewById(R.id.interestOne);
@@ -230,7 +230,7 @@ public class EditProfileFragment extends Fragment {
                 JSONObject js = new JSONObject(); //json object to send, fill will current fields
                 try{
                     js.put("interests", interests);
-                    editor.putString("INTERESTS", interests);
+                    editor.putString("INTERESTS", interests); //set session variables as well
                     js.put("bio", bio.getText().toString());
                     editor.putString("BIO", bio.getText().toString());
                     js.put("id", id);
