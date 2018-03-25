@@ -120,17 +120,19 @@ public class LoginFragment extends Fragment {
                 fullJS = UserUtil.prepareLogin("George", "George", context);
                 String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/login";
                 JsonRequest.loginPostRequest(fullJS, url, context);
-                String temp2 = JsonRequest.getString();
 
-                success = preferences.getBoolean("ISLOGGEDIN", false);
-                Log.d("LoginFragment", "Boolean from login request: " + success);
-                if(success){
+
+                Boolean isLoggedIn = preferences.getBoolean("ISLOGGEDIN", false);
+                Log.d("LoginFragment", "ISLOGGEDIN: " + isLoggedIn);
+                if(isLoggedIn){
                     Fragment fragment = new SwipeFragment();
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.screen_area, fragment);
                     fragmentTransaction.commit();
                 }
+
+
             }
         });
 

@@ -91,7 +91,8 @@ public class SwipeFragment extends Fragment {
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
         interests = preferences.getString("INTERESTS", "empty"); //set logged in user's interests from session variables
-        numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
+        //TODO following line was leaving an app-crashing issue
+       // numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
         String id = preferences.getString("ID", "0"); //set the id
         url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id + "/relevant"; //set the url
         context = getActivity().getApplicationContext(); //get the context

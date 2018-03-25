@@ -33,7 +33,6 @@ import org.json.JSONObject;
 
 public class JsonRequest {
     static String str;
-    static Boolean success;
     //String for Json Array Req to server for all users "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"
     //String for Adding 10 users to the DB "http://projec-309-ss-4.cs.iastate.edu:9002/ben/test"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
@@ -50,15 +49,6 @@ public class JsonRequest {
         return;
     }
 
-    public static void saveBool(Boolean bool){
-        success = bool;
-        Log.d("JsonRequest", "saveBool: " + success);
-        return;
-    }
-
-    public static Boolean getBool(){
-        return success;
-    }
 
     /**
      * method to get the first user's name
@@ -140,25 +130,41 @@ public class JsonRequest {
                         String bio = "";
                         String interests = "";
                         String status = "";
-
+                        Boolean success = false;
+                        String message = "";
                         try {
-                            username = response.getString("userName");
-                            id = response.getString("id");
-                            bio = response.getString("bio");
-                            interests = response.getString("interests");
-                            status = response.getString("status");
+                            success = response.getBoolean("success");
+                            Log.d("loginPostRequest", "Success response from server: " + success);
+                            editor.putBoolean("ISLOGGEDIN", success);
+                            editor.apply();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        editor.putString("USERNAME", username);
-                        editor.putString("ID", id);
-                        editor.putString("BIO", bio);
-                        editor.putString("INTERESTS", interests);
-                        editor.putString("STATUS", status);
-                        editor.putBoolean("ISLOGGEDIN", true);
-                        editor.apply();
-                        String test = preferences.getString("USERNAME", "empty");
-                        Log.d("loginPostRequest", test);
+                        if(success){
+                            Log.d("loginPostRequest", "Entered success");
+                            try {
+                                //error = response.getString("success");
+                                username = response.getString("userName");
+                                id = response.getString("id");
+                                bio = response.getString("bio");
+                                interests = response.getString("interests");
+                                status = response.getString("status");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            editor.putString("USERNAME", username);
+                            editor.putString("ID", id);
+                            editor.putString("BIO", bio);
+                            editor.putString("INTERESTS", interests);
+                            editor.putString("STATUS", status);
+                            editor.putBoolean("ISLOGGEDIN", true);
+                            editor.apply();
+                            String test = preferences.getString("USERNAME", "empty");
+                            Log.d("loginPostRequest", "Logged in user is" + test);
+                        }
+
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
