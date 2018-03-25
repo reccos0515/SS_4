@@ -90,6 +90,13 @@ public class SwipeFragment extends Fragment {
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
+        //todo delete these
+        editor.putString("INTERESTS", "00000000000");
+        editor.putString("ID", "3");
+        editor.putString("USERNAME", "jabader");
+        editor.putString("BIO", "none");
+        editor.apply();
+
         interests = preferences.getString("INTERESTS", "empty"); //set logged in user's interests from session variables
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
         String id = preferences.getString("ID", "0"); //set the id

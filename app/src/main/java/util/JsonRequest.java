@@ -38,24 +38,6 @@ public class JsonRequest {
     //String for Adding 10 users to the DB "http://projec-309-ss-4.cs.iastate.edu:9002/ben/test"
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
 
-
-    /**
-     * Method to save the string taken from the response listener in a global variable that can be accessed elsewhere in the program
-     * This should be called within the onResponse listener, after the Array has been parsed
-     * @param str2
-     */
-    public static void saveString(String str2){
-        str = str2;
-        Log.d("Saved String", str);
-        return;
-    }
-
-    public static void saveBool(Boolean bool){
-        success = bool;
-        Log.d("JsonRequest", "saveBool: " + success);
-        return;
-    }
-
     public static Boolean getBool(){
         return success;
     }
@@ -70,8 +52,6 @@ public class JsonRequest {
        // }
         return str;
     }
-
-    public static void clearString(){ str = "Cleared";}
 
     /**
      * Sends a post request to a given url
@@ -88,13 +68,15 @@ public class JsonRequest {
                         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
                         Log.d("Post Request Status", ("successful, response:" + response.toString()));
                         try {
-                            JSONObject js = (JSONObject) response.get("user");
+                            JSONArray ja = response.getJSONArray("users");
+                            JSONObject js = ja.getJSONObject(0);
                             String id = js.getString("id");
-                            editor.putString("ID", id); //TODO change this to add id
+                            editor.putString("ID", id);
                             editor.apply();
                         }catch (JSONException e){
                             e.printStackTrace();
                         }
+                        //todo make swipe page
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -136,25 +118,25 @@ public class JsonRequest {
                         final SharedPreferences preferences = context1.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
                         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
                         String username = "";
-                        String id = "";
+                        int id = 0;
                         String bio = "";
                         String interests = "";
-                        String status = "";
+                        int status = 0;
 
                         try {
                             username = response.getString("userName");
-                            id = response.getString("id");
+                            id = response.getInt("id");
                             bio = response.getString("bio");
                             interests = response.getString("interests");
-                            status = response.getString("status");
+                            status = response.getInt("status");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                         editor.putString("USERNAME", username);
-                        editor.putString("ID", id);
+                        editor.putInt("ID", id);
                         editor.putString("BIO", bio);
                         editor.putString("INTERESTS", interests);
-                        editor.putString("STATUS", status);
+                        editor.putInt("STATUS", status);
                         editor.putBoolean("ISLOGGEDIN", true);
                         editor.apply();
                         String test = preferences.getString("USERNAME", "empty");
@@ -189,48 +171,6 @@ public class JsonRequest {
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
     }
-
-    /**
-     * Sends a GET request that waits to receive a string response from the server
-     * @param url url that the request will be sent to
-     */
-    public static void jsonStringRequest(String url, Context context){
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                saveString(response);
-                Log.d("String Request Status", "Success.  Response =" + response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("String Request Status", "Error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(stringRequest);
-    }
-
-    /**
-     * Sends a DELETE request to the server
-     * @param url url that the request will be sent to
-     */
-    public static void deleteRequest(String url, Context context){ //is a string delete request
-        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("Delete Request Status", "Success");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Delete Request Status", "Error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(stringRequest);
-    }
-
 
     /**
      * Method to be used in Swipe Fragment to get the users to view
