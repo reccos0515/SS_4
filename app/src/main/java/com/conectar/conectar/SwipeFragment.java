@@ -95,7 +95,8 @@ public class SwipeFragment extends Fragment {
 
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
         int id = preferences.getInt("ID", 0); //set the id
-        url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id + "" + "/relevant"; //set the url
+        String thisId = Integer.toString(id);
+        url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + thisId + "/relevant"; //set the url
 
         context = getActivity().getApplicationContext(); //get the context
         JsonRequest.swipeRequest(view, url, context); //call this to send the request

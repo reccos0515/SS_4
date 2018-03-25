@@ -127,7 +127,7 @@ public class JsonRequest {
                         final SharedPreferences preferences = context1.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
                         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
                         String username = "";
-                        String id = "";
+                        int id = 0;
                         String bio = "";
                         String interests = "";
                         String status = "";
@@ -144,12 +144,11 @@ public class JsonRequest {
                         if(success){
                             Log.d("loginPostRequest", "Entered success");
                             try {
-                                //error = response.getString("success");
                                 JSONArray userArr = response.getJSONArray("users");
                                 JSONObject user = userArr.getJSONObject(0);
                                 Log.d("loginPostRequest", "user: " + user.toString());
                                 username = user.getString("userName");
-                                id = user.getString("id");
+                                id = user.getInt("id");
                                 bio = user.getString("bio");
                                 interests = user.getString("interests");
                                 status = user.getString("status");
@@ -157,14 +156,14 @@ public class JsonRequest {
                                 e.printStackTrace();
                             }
                             editor.putString("USERNAME", username);
-                            editor.putString("ID", id);
+                            editor.putInt("ID", id);
                             editor.putString("BIO", bio);
                             editor.putString("INTERESTS", interests);
                             editor.putString("STATUS", status);
                             editor.putBoolean("ISLOGGEDIN", true);
                             editor.apply();
                             String test = preferences.getString("USERNAME", "empty");
-                            Log.d("loginPostRequest", "Logged in user is: " + test);
+                            Log.d("loginPostRequest", "Logged in user is: " + test + " with id: " + id);
                         }
 
                     }
