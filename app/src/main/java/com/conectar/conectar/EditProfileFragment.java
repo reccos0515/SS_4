@@ -236,6 +236,7 @@ public class EditProfileFragment extends Fragment {
                     js.put("id", id);
                     js.put("userName", username);
                     js.put("status", preferences.getInt("STATUS", 0));
+                    editor.apply();
                 } catch (JSONException e){
                     e.printStackTrace();
                 }
