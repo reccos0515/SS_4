@@ -92,7 +92,7 @@ public class SwipeFragment extends Fragment {
 
         //todo delete these
         editor.putString("INTERESTS", "00000000000");
-        editor.putInt("ID", 3);
+        editor.putInt("ID", 1);
         editor.putString("USERNAME", "jabader");
         editor.putString("BIO", "none");
         editor.putInt("STATUS", 1);

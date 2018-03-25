@@ -72,22 +72,11 @@ public class ChangeStatusFragment extends Fragment {
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
-        final int userId = preferences.getInt("ID", 0);
-
-        JSONObject js = new JSONObject();
-        try{
-            js.put("userName", preferences.getString("USERNAME", "empty"));
-            js.put("bio", preferences.getString("BIO", "no bio"));
-            js.put("id", preferences.getInt("ID", 0));
-            js.put("interests", preferences.getString("INTERESTS", "00000000000"));
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
 
         view.findViewById(R.id.greenStatusBtn).setOnClickListener(new View.OnClickListener() { //green button clicked
             @Override
             public void onClick(View view) { //set status to green
-                UserUtil.updateStatus(2, userId, getContext());
+                UserUtil.updateStatus(2, getContext());
 //                try{
 //
 //                }catch (JSONException e){
@@ -99,14 +88,14 @@ public class ChangeStatusFragment extends Fragment {
         view.findViewById(R.id.yellowStatusBtn).setOnClickListener(new View.OnClickListener(){ //yellow button clicked
             @Override
             public void onClick(View view){ //set status to yellow
-                UserUtil.updateStatus(1, userId, getContext());
+                UserUtil.updateStatus(1, getContext());
                 Toast.makeText(getActivity(), "Status set to yellow", Toast.LENGTH_LONG).show();
             }
         });
         view.findViewById(R.id.redStatusBtn).setOnClickListener(new View.OnClickListener() { //red button clicked
             @Override
             public void onClick(View view) { //set status to red
-                UserUtil.updateStatus(0, userId, getContext());
+                UserUtil.updateStatus(0, getContext());
                 Toast.makeText(getActivity(), "Status set to red", Toast.LENGTH_LONG).show();
             }
         });

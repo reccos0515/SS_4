@@ -167,15 +167,16 @@ public class UserUtil {
      * @param id the id number of the person changing their status
      * @param context the context in which this method is used
      */
-    public static void updateStatus(int status, int id, Context context){
+    public static void updateStatus(int status, Context context){
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
-        url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users"; //TODO update url
+        url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users";
         JSONObject js = new JSONObject();
         try {
-            js.put("id", preferences.getInt("ID", 0));
+//            js.put("id", preferences.getInt("ID", 0)); //TODO put this back in
+            js.put("id", 3);
             js.put("userName", preferences.getString("USERNAME", "empty"));
             js.put("bio", preferences.getString("BIO", "empty"));
             js.put("interests", preferences.getString("INTERESTS", "00000000000"));
@@ -213,9 +214,7 @@ public class UserUtil {
         else{
             Log.d("updateStatus", "wrong status input");
         }
-
-        //update the DB to reflect deleted interests
-        putUser(url, userJSONObject, context);
+        JsonRequest.jsonObjectPutRequest(js, url, context);
 
     }
 
