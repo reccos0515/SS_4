@@ -1,6 +1,7 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import util.UserUtil;
 
@@ -65,28 +69,28 @@ public class ChangeStatusFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final int userId = 0; //TODO update methods and this for current user using session variables
+        //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
 
         view.findViewById(R.id.greenStatusBtn).setOnClickListener(new View.OnClickListener() { //green button clicked
             @Override
             public void onClick(View view) { //set status to green
-                UserUtil.updateStatus(2, userId, getContext());
-
-                Toast.makeText(getActivity(), "Status set to green", Toast.LENGTH_LONG).show();
+                UserUtil.updateStatus(2, getContext()); //call this to update the status
+                Toast.makeText(getActivity(), "Status set to green", Toast.LENGTH_LONG).show(); //toast to tell user it worked
             }
         });
         view.findViewById(R.id.yellowStatusBtn).setOnClickListener(new View.OnClickListener(){ //yellow button clicked
             @Override
             public void onClick(View view){ //set status to yellow
-                UserUtil.updateStatus(1, userId, getContext());
-                Toast.makeText(getActivity(), "Status set to yellow", Toast.LENGTH_LONG).show();
+                UserUtil.updateStatus(1, getContext()); //call this to update the status
+                Toast.makeText(getActivity(), "Status set to yellow", Toast.LENGTH_LONG).show(); //toast to tell the user it worked
             }
         });
         view.findViewById(R.id.redStatusBtn).setOnClickListener(new View.OnClickListener() { //red button clicked
             @Override
             public void onClick(View view) { //set status to red
-                UserUtil.updateStatus(0, userId, getContext());
-                Toast.makeText(getActivity(), "Status set to red", Toast.LENGTH_LONG).show();
+                UserUtil.updateStatus(0, getContext()); //call this to update the status
+                Toast.makeText(getActivity(), "Status set to red", Toast.LENGTH_LONG).show(); //toast to let the user know it worked
             }
         });
 

@@ -38,6 +38,7 @@ public class JsonRequest {
     //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
 
 
+
     /**
      * Method to save the string taken from the response listener in a global variable that can be accessed elsewhere in the program
      * This should be called within the onResponse listener, after the Array has been parsed
@@ -61,8 +62,6 @@ public class JsonRequest {
         return str;
     }
 
-    public static void clearString(){ str = "Cleared";}
-
     /**
      * Sends a post request to a given url
      * @param js json object to send
@@ -78,13 +77,15 @@ public class JsonRequest {
                         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
                         Log.d("Post Request Status", ("successful, response:" + response.toString()));
                         try {
-                            JSONObject js = (JSONObject) response.get("user");
-                            String id = js.getString("id");
-                            editor.putString("ID", id); //TODO change this to add id
-                            editor.apply();
+                            JSONArray ja = response.getJSONArray("users"); //get the json array with the user in it
+                            JSONObject js = ja.getJSONObject(0); //pull the user from the array
+                            String id = js.getString("id"); //pull the id from the user
+                            editor.putString("ID", id); //save this in preference variables
+                            editor.apply(); //apply this change
                         }catch (JSONException e){
                             e.printStackTrace();
                         }
+                        //todo make swipe page
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -166,8 +167,6 @@ public class JsonRequest {
                             Log.d("loginPostRequest", "Logged in user is: " + test);
                         }
 
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -198,48 +197,6 @@ public class JsonRequest {
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
     }
-
-    /**
-     * Sends a GET request that waits to receive a string response from the server
-     * @param url url that the request will be sent to
-     */
-    public static void jsonStringRequest(String url, Context context){
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                saveString(response);
-                Log.d("String Request Status", "Success.  Response =" + response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("String Request Status", "Error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(stringRequest);
-    }
-
-    /**
-     * Sends a DELETE request to the server
-     * @param url url that the request will be sent to
-     */
-    public static void deleteRequest(String url, Context context){ //is a string delete request
-        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("Delete Request Status", "Success");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Delete Request Status", "Error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(stringRequest);
-    }
-
 
     /**
      * Method to be used in Swipe Fragment to get the users to view
