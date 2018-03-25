@@ -95,7 +95,7 @@ public class SwipeFragment extends Fragment {
         editor.putInt("ID", 3);
         editor.putString("USERNAME", "jabader");
         editor.putString("BIO", "none");
-        editor.putInt("STATUS", 0);
+        editor.putInt("STATUS", 1);
         editor.apply();
 
         interests = preferences.getString("INTERESTS", "empty"); //set logged in user's interests from session variables
