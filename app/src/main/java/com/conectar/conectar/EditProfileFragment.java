@@ -34,7 +34,7 @@ import util.SessionUtil;
 public class EditProfileFragment extends Fragment {
 
     private EditText bio; //bio to be edited by user
-    private EditText newInterest; //todo this must be changed
+    private EditText newInterest; //new interest to be added
     private Button int1; //interest 1 button
     private Button int2; //interest 2 button
     private Button int3; //interest 3 button
