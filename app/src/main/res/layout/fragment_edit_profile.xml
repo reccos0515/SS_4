@@ -36,10 +36,10 @@
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintHorizontal_bias="0.122"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.065" />
 
 
     <Button
@@ -151,7 +151,7 @@
         app:layout_constraintHorizontal_bias="0.963"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.015" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -165,13 +165,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.129" />
+        app:layout_constraintVertical_bias="0.295" />
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="352dp"
+        android:layout_width="338dp"
+        android:layout_height="227dp"
 
-        android:layout_height="339dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -184,11 +184,12 @@
         Swimming = 33, Spa = 34, Chess = 35,
         Basketball = 36, Hockey = 37, Skydiving = 38, Surfing = 39, Snorkeling = 40, Rock climbing = 41,
         Pool = 42, Playing cards = 43, Fishing 44, Golf = 45, Camping = 46, Triathlon = 47, Playing music = 48, Amusement parks = 49, Boating = 50, Kayaking = 51, Cooking = 52, Picnicking = 53"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.476" />
+        app:layout_constraintVertical_bias="0.583" />
 
     <EditText
         android:id="@+id/newInterest"
