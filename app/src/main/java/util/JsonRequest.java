@@ -271,8 +271,8 @@ public class JsonRequest {
         return;
     }
 
-    public static void getFriendsList(String id, String url, final Context context){
-
+    public static void getFriendsList(int id, final Context context){
+        String url =  "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id +"/friends";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

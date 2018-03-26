@@ -96,12 +96,12 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         final SharedPreferences.Editor editor = preferences.edit();
         //TextView actualFriend = view.findViewById(R.id.friend1); //First full friend
         //TextView pendingFriend = view.findViewById(R.id.pendingFriend1); //First pending friend
-        String id = "1";
+        int id = preferences.getInt("ID", 0);
 
         ListView listView = (ListView) view.findViewById(R.id.friendsListView);
 
         //Friend[] grabbedFriends = Friend.getFriends(id, context);
-        JsonRequest.getFriendsList("0", "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/1/friends", context);
+        JsonRequest.getFriendsList(id, context);
         Set<String> temp = preferences.getStringSet("FRIENDSLISTUSERNAMES", null);
         List<String> friends = new ArrayList<String>(temp);
         Friend[] friendsList = new Friend[friends.size()];
@@ -121,7 +121,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 new Friend("12", "Pepper", "I am concerned", "00000000000"),
         };
 
-        ArrayAdapter<Friend> adapter = new ArrayAdapter<Friend>(getActivity(), android.R.layout.simple_list_item_1, testFriends);
+        ArrayAdapter<Friend> adapter = new ArrayAdapter<Friend>(getActivity(), android.R.layout.simple_list_item_1, friendsList);
 
         // listView.setOnItemClickListener(new ListClickHandler());
         listView.setAdapter(adapter);
