@@ -59,7 +59,9 @@ public class Friend {
     }
 
     public static Friend[] getFriends(String id, Context context){
+        Log.d("Friend", "getFriends entered");
         String url = "https://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id + "/friends";
+        Log.d("Friend", "Url posted to in getFriends: " + url);
         Friend[] friends = null;
         String success = "";
         Boolean s = false;
