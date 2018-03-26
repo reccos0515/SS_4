@@ -130,7 +130,7 @@ public class JsonRequest {
                         int id = 0;
                         String bio = "";
                         String interests = "";
-                        String status = "";
+                        int status = 0;
                         Boolean success = false;
                         String message = "";
                         try {
@@ -151,7 +151,7 @@ public class JsonRequest {
                                 id = user.getInt("id");
                                 bio = user.getString("bio");
                                 interests = user.getString("interests");
-                                status = user.getString("status");
+                                status = user.getInt("status");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -159,7 +159,7 @@ public class JsonRequest {
                             editor.putInt("ID", id);
                             editor.putString("BIO", bio);
                             editor.putString("INTERESTS", interests);
-                            editor.putString("STATUS", status);
+                            editor.putInt("STATUS", status);
                             editor.putBoolean("ISLOGGEDIN", true);
                             editor.apply();
                             String test = preferences.getString("USERNAME", "empty");
