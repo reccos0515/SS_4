@@ -85,7 +85,7 @@ public class SwipeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Log.d("SwipeFragment", "Entered the swipe fragment");
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
@@ -106,6 +106,7 @@ public class SwipeFragment extends Fragment {
         view.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("SwipeFragment", "Clicked swipe next");
                 if(success) {
                     userOnDisplayLoc++; //go to next user
                     //if it has reached the end, return to 0
@@ -129,6 +130,7 @@ public class SwipeFragment extends Fragment {
         view.findViewById(R.id.swipePrev).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("SwipeFragment", "Clicked swipe previous");
                 if(success) {
                     userOnDisplayLoc--; //go to previous
                     //if it has passed the beginning, return to the end
@@ -151,6 +153,7 @@ public class SwipeFragment extends Fragment {
         view.findViewById(R.id.swipeView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("SwipeFragment", "Clicked view profile");
                 if(success) {
                     //call a profile view fragment with userOnDisplayLoc user
                     Fragment fragment = new ProfileViewFragment();

@@ -222,6 +222,7 @@ public class JsonRequest {
                 //check for success
                 try{
                     success = (boolean) response.get("success"); //see if it succeeded or not
+                    Log.d("swipeFragment", "Success status: " + success);
                 }catch (JSONException e){
                     e.printStackTrace();
                     return;
@@ -230,6 +231,7 @@ public class JsonRequest {
                     //if failed, set text error message
                     try {
                         errorMessage.setText((String) response.get("message"));
+                        Log.d("swipeFragment", "Error message from server: " + response.getString("message"));
                     } catch (JSONException e){
                         e.printStackTrace();
                     }
@@ -246,7 +248,9 @@ public class JsonRequest {
                     JSONObject user = new JSONObject(); //specific user
                     try{
                         JSONArray users = (JSONArray) response.get("users"); //pull the first user
+                        Log.d("swipeRequest","Array of users from server: " + users.toString());
                         user = (JSONObject) users.get(0); //first user
+                        Log.d("swipeRequest", "User from JSONArray: " + user.toString());
                     }catch (JSONException e){
                         e.printStackTrace();
                     }
