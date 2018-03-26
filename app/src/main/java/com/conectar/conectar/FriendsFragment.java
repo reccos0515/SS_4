@@ -1,6 +1,7 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,6 +24,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import util.Friend;
 import util.FriendsUtil;
@@ -87,14 +92,26 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         //Initialize the textviews on the friends page
         Context context = getContext();
+        final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = preferences.edit();
         //TextView actualFriend = view.findViewById(R.id.friend1); //First full friend
         //TextView pendingFriend = view.findViewById(R.id.pendingFriend1); //First pending friend
         String id = "1";
 
         ListView listView = (ListView) view.findViewById(R.id.friendsListView);
 
-        Friend[] grabbedFriends = Friend.getFriends(id, context);
-        Log.d("FriendsFragment", "Grabbed friends list: " + grabbedFriends.toString());
+        //Friend[] grabbedFriends = Friend.getFriends(id, context);
+        JsonRequest.getFriendsList("0", "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/1/friends", context);
+        Set<String> temp = preferences.getStringSet("FRIENDSLISTUSERNAMES", null);
+        List<String> friends = new ArrayList<String>(temp);
+        Friend[] friendsList = new Friend[friends.size()];
+        for(int i = 0; i < friends.size(); i++){
+            Friend newFriend = new Friend(friends.get(i));
+            friendsList[i] = newFriend;
+        }
+        Log.d("FriendsFragment", "Friendslist: " + friendsList.toString());
+
+        //Log.d("FriendsFragment", "Grabbed friends list: " + grabbedFriends.toString());
 
         Friend[] testFriends = {
             new Friend("4", "Lena", "I am a cat", "00000000000"),

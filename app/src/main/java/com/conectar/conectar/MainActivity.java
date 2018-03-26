@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import util.Friend;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,LogoutFragment.OnFragmentInteractionListener,
@@ -159,7 +161,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) { //tells the app to switch screens if certain menu buttons are pressed
         // Handle navigation view item clicks here.
         Fragment fragment = null;
-
+        Context context = getApplicationContext();
+        final SharedPreferences preferences = getSharedPreferences("coNECTAR", MODE_PRIVATE);
         int id = item.getItemId();
 
         //if nav______ is clicked, switch to its corresponding fragment page
@@ -186,6 +189,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_report) {
             //waiting for xml implementation
         } else if (id == R.id.nav_friends) {
+            //Friend[] friends = Friend.getFriends("0", context);
             fragment = new FriendsFragment();
         }
 

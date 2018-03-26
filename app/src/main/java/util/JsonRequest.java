@@ -26,6 +26,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by Jessie on 2/19/2018.
  * Methods for sending volley requests to the server for JSONObjects, JSONArrays, and Strings
@@ -256,6 +259,74 @@ public class JsonRequest {
                     }
                     SwipeFragment.updateUI(user); //update the UI
                     UserUtil.setUserToView(user); //save this where profile view can access it if needed
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+        return;
+    }
+
+    public static void getFriendsList(String id, String url, final Context context){
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+               Log.d("JsonRequest", "This one works?");
+                JSONObject js = new JSONObject();
+                js = response;
+                Log.d("Friend", "getFriends response from GET: " + response);
+                Boolean s = false;
+                JSONArray users;
+                Friend[] friends = null;
+                String message = "";
+                Context context1 = context;
+                final SharedPreferences preferences = context1.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
+                final SharedPreferences.Editor editor = preferences.edit();
+
+                try {
+                    //success = js.getString("success");
+                    s = js.getBoolean("success");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if(js == null){
+                    Log.d("Friend", "getFriends no response from server");
+                }
+                if(s){ //if the request was successful
+                    try {
+                        users = js.getJSONArray("users"); //get JSONArray of all users the user is friends with
+                        friends = new Friend[users.length()]; //makes the array of friends the correct size
+                        Log.d("Friend", "Grabbing users, looks like: " + users.toString());
+                        Set<String> friendsList = new HashSet<String>();
+                        for(int i = 0; i < users.length(); i++){ //grab all friends out of the array
+                            Friend newFriend = new Friend(users.getJSONObject(i)); //convert them to friend objects
+                            JSONObject thisFriend = users.getJSONObject(i);
+                            String thisUsername = thisFriend.getString("userName");
+                            friends[i] = newFriend; //store them in friends
+                            friendsList.add(thisUsername);
+
+                        }
+                        editor.putStringSet("FRIENDSLISTUSERNAMES", friendsList);
+                        editor.apply();
+                        Log.d("JsonRequest", "Friendslistusernames set: " + preferences.getStringSet("FRIENDSLISTUSERNAMES", null));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{ //if the server returns an error, display it in logs
+                    try {
+                        js.getString("message");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("Friend", "getFriends error message: " + message);
                 }
             }
         }, new Response.ErrorListener() {
