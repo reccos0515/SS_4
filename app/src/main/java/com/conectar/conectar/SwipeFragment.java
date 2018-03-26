@@ -109,7 +109,7 @@ public class SwipeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d("SwipeFragment", "Clicked swipe next");
-                if(success) {
+                if(success && users.length() > 0) {
                     userOnDisplayLoc++; //go to next user
                     //if it has reached the end, return to 0
                     if (userOnDisplayLoc >= len) {
@@ -133,7 +133,7 @@ public class SwipeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d("SwipeFragment", "Clicked swipe previous");
-                if(success) {
+                if(success && users.length() > 0) {
                     userOnDisplayLoc--; //go to previous
                     //if it has passed the beginning, return to the end
                     if (userOnDisplayLoc < 0) {
@@ -156,7 +156,7 @@ public class SwipeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d("SwipeFragment", "Clicked view profile");
-                if(success) {
+                if(success && users.length() > 0) {
                     //call a profile view fragment with userOnDisplayLoc user
                     Fragment fragment = new ProfileViewFragment();
                     if (fragment != null) { //Changes the screens
