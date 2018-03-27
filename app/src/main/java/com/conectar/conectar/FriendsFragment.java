@@ -93,22 +93,21 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         Context context = getContext();
         final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
-        //final SharedPreferences.Editor editor = preferences.edit();
         int id = preferences.getInt("ID", 0);
 
         ListView listView = (ListView) view.findViewById(R.id.friendsListView);
         JsonRequest.getFriendsList(id, context); //get a list of friends and store in sharedpreferences
 
-        //Friend[] grabbedFriends = Friend.getFriends(id, context);
         Friend[] friendsList = {new Friend("empty")}; //put a default value to be grabbed in case user doesn't have friends
         JSONObject initial = new JSONObject();
-        final JSONObject[] friendsJSONObjects = {initial};
+
         Set<String> temp = preferences.getStringSet("FRIENDSLISTUSERNAMES", null); //get the list of usernames from shared preferences
 
         //a bunch of garbage to initialize temp2 so friendsObjects doesn't bug out
         String[] fake = new String[]{"empty"};
-        Set<String> empty = new HashSet<>(Arrays.asList(fake));
-        Set<String> temp2 = preferences.getStringSet("FRIENDJSON", empty);
+        final Set<String> empty = new HashSet<>(Arrays.asList(fake));
+        final Set<String> temp2 = preferences.getStringSet("FRIENDJSON", empty);
+        final JSONObject[] friendsJSONObjects = new JSONObject[temp2.size()];
         Log.d("FriendsFragment", "FRIENDSLISTJSONOBJECTS: " + temp2.toString());
 
         if(temp != null){ //gets cranky trying to typecast null
@@ -122,7 +121,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             }
         }
-        if(temp2 != null){
+        if(temp2 != empty){
             List<String> friendsObjects = new ArrayList<String>(temp2);
             for(int i = 0; i < temp2.size(); i++){
                 try {
@@ -145,13 +144,19 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), ((TextView) view).getText() + " " + Integer.toString(i) , Toast.LENGTH_LONG).show();
-                UserUtil.setUserToView(friendsJSONObjects[i]);
-                Fragment fragment = new ProfileViewFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.screen_area, fragment);
-                fragmentTransaction.commit();
+                if(temp2 != empty){
+                    Toast.makeText(getActivity(), ((TextView) view).getText(), Toast.LENGTH_LONG).show();
+                    UserUtil.setUserToView(friendsJSONObjects[i]);
+                    Fragment fragment = new ProfileViewFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.screen_area, fragment);
+                    fragmentTransaction.commit();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Error", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
