@@ -769,6 +769,8 @@ public class UserService {
 		}
 
 		score = 5 - (one.size() - score);
+
+		return score;
 		
 	}
 
