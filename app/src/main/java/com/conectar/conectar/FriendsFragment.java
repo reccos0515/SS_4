@@ -50,7 +50,7 @@ import util.UserUtil;
  * create an instance of this fragment.
  */
 public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-
+    Friend[] friendsList = {new Friend("empty")}; //put a default value to be grabbed in case user doesn't have friends
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private OnFragmentInteractionListener mListener;
@@ -98,7 +98,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         ListView listView = (ListView) view.findViewById(R.id.friendsListView);
         JsonRequest.getFriendsList(id, context); //get a list of friends and store in sharedpreferences
 
-        Friend[] friendsList = {new Friend("empty")}; //put a default value to be grabbed in case user doesn't have friends
+
         JSONObject initial = new JSONObject();
 
         Set<String> temp = preferences.getStringSet("FRIENDSLISTUSERNAMES", null); //get the list of usernames from shared preferences
@@ -126,13 +126,13 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
             for(int i = 0; i < temp2.size(); i++){
                 try {
                     JSONObject user = new JSONObject(friendsObjects.get(i));
-                    Log.d("FriendsFragment", "User conversion: " + user);
+                    //Log.d("FriendsFragment", "User conversion: " + user);
                     friendsJSONObjects[i] = user;
-                    Log.d("FriendsFragment", "friendsJSONObjects: "+ friendsJSONObjects.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
+            Log.d("FriendsFragment", "friendsJSONObjects: "+ friendsJSONObjects.toString());
         }
 
 
@@ -146,7 +146,18 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if(temp2 != empty){
                     Toast.makeText(getActivity(), ((TextView) view).getText(), Toast.LENGTH_LONG).show();
-                    UserUtil.setUserToView(friendsJSONObjects[i]);
+                    Log.d("FriendsFragment", "friendsJSONObjects prior to setting user to view" + friendsJSONObjects[i] + "Person clicked on: " + friendsList[i]);
+                    String thisUsername = "";
+                    for(int j = 0; j < friendsList.length; j++){
+                        try {
+                            thisUsername = friendsJSONObjects[j].getString("userName");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if(thisUsername.equals(friendsList[i].toString())){
+                            UserUtil.setUserToView(friendsJSONObjects[j]);
+                        }
+                    }
                     Fragment fragment = new ProfileViewFragment();
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
