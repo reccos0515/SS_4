@@ -678,11 +678,11 @@ public class UserService {
 
 			//if there is no one to discover, send an error that there was no one to discover,
 			//but also reset the list so that they get a wrap around next time.
-			if(send.size() == 0){
+			if(relevant.size() == 0){
 				success = false;
 				error = "User has discovered everyone";
-				List<User> been = new ArrayList<User>();
-				user.setBeenDiscovered(been);
+				List<User> empty = new ArrayList<User>();
+				user.setBeenDiscovered(empty);
 				return new HtmlError(success, error);
 			}
 
@@ -747,22 +747,22 @@ public class UserService {
 		
 	}
 
-	public Integer getScore(User one, User two){
+	public Integer getScore(User o, User t){
 		//Assume user one is the one that wants to know
 		//how good user two is.
-		List<Integer> one = one.getInterestList();
-		List<Integer> two = two.getInterestList();
+		List<Integer> one = o.getInterestList();
+		List<Integer> two = t.getInterestList();
 		int score = 0;
 
 		if(one.size() > two.size()){
-			for(int i = 0; i < one.size(); i++{
+			for(int i = 0; i < one.size(); i++){
 				if(two.contains(one.get(i))){
 					score++;
 				}
 			}
 		} else {
 			for (int i = 0; i<two.size(); i++){
-				if one.contains(two.get(i)){
+				if(one.contains(two.get(i))){
 					score++;
 				}
 			}
