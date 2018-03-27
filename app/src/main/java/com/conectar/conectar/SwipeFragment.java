@@ -94,8 +94,9 @@ public class SwipeFragment extends Fragment {
 
 
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
-        int id = preferences.getInt("ID", 0); //set the id
-        String thisId = Integer.toString(id);
+        String id = preferences.getString("ID", "0"); //set the id todo fix this line
+//        String thisId = Integer.toString(id);
+        String thisId = id;
         Log.d("SwipeFragment", "Id of user: " + thisId);
         url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + thisId + "/relevant"; //set the url
         Log.d("SwipeFragment", "Url posted to: " + url);
@@ -121,7 +122,19 @@ public class SwipeFragment extends Fragment {
                         UserUtil.setUserToView(user); //save this where profile view can access if needed
                     } catch (JSONException e) {
                         TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
+                        TextView username = view.findViewById(R.id.swipeFirstName);
+                        TextView int1 = view.findViewById(R.id.interestOne);
+                        TextView int2 = view.findViewById(R.id.interestTwo);
+                        TextView int3 = view.findViewById(R.id.interestThree);
+                        TextView int4 = view.findViewById(R.id.interestFour);
+                        TextView int5 = view.findViewById(R.id.interestFive);
                         errorMessage.setText("Sorry, we ran into a problem");//set an error for the user to see
+                        username.setText("");
+                        int1.setText("");
+                        int2.setText("");
+                        int3.setText("");
+                        int4.setText("");
+                        int5.setText("");
                         e.printStackTrace();
                     }
                 }
@@ -146,6 +159,7 @@ public class SwipeFragment extends Fragment {
                     } catch (JSONException e) {
                         TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
                         errorMessage.setText("Sorry, we ran into a problem"); //set an error for the user to see
+
                         e.printStackTrace();
                     }
                 }
