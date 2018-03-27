@@ -6,11 +6,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -26,6 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,6 +38,7 @@ import util.Friend;
 import util.FriendsUtil;
 import util.JsonRequest;
 import util.Singleton;
+import util.UserUtil;
 
 
 /**
@@ -44,11 +50,6 @@ import util.Singleton;
  * create an instance of this fragment.
  */
 public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-
-    private static JSONArray friends;
-    private static JSONArray pending;
-    String[] friendsUsernames;
-    int[] friendsIds;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -90,59 +91,73 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //Initialize the textviews on the friends page
         Context context = getContext();
         final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = preferences.edit();
-        //TextView actualFriend = view.findViewById(R.id.friend1); //First full friend
-        //TextView pendingFriend = view.findViewById(R.id.pendingFriend1); //First pending friend
+        //final SharedPreferences.Editor editor = preferences.edit();
         int id = preferences.getInt("ID", 0);
 
         ListView listView = (ListView) view.findViewById(R.id.friendsListView);
+        JsonRequest.getFriendsList(id, context); //get a list of friends and store in sharedpreferences
 
         //Friend[] grabbedFriends = Friend.getFriends(id, context);
-        JsonRequest.getFriendsList(id, context);
-        Set<String> temp = preferences.getStringSet("FRIENDSLISTUSERNAMES", null);
-        List<String> friends = new ArrayList<String>(temp);
-        Friend[] friendsList = new Friend[friends.size()];
-        for(int i = 0; i < friends.size(); i++){
-            Friend newFriend = new Friend(friends.get(i));
-            friendsList[i] = newFriend;
+        Friend[] friendsList = {new Friend("empty")}; //put a default value to be grabbed in case user doesn't have friends
+        JSONObject initial = new JSONObject();
+        final JSONObject[] friendsJSONObjects = {initial};
+        Set<String> temp = preferences.getStringSet("FRIENDSLISTUSERNAMES", null); //get the list of usernames from shared preferences
+
+        //a bunch of garbage to initialize temp2 so friendsObjects doesn't bug out
+        String[] fake = new String[]{"empty"};
+        Set<String> empty = new HashSet<>(Arrays.asList(fake));
+        Set<String> temp2 = preferences.getStringSet("FRIENDJSON", empty);
+        Log.d("FriendsFragment", "FRIENDSLISTJSONOBJECTS: " + temp2.toString());
+
+        if(temp != null){ //gets cranky trying to typecast null
+            List<String> friends = new ArrayList<String>(temp);
+
+            friendsList = new Friend[friends.size()];
+            for(int i = 0; i < friends.size(); i++){
+                Friend newFriend = new Friend(friends.get(i));
+                friendsList[i] = newFriend;
+
+
+            }
         }
+        if(temp2 != null){
+            List<String> friendsObjects = new ArrayList<String>(temp2);
+            for(int i = 0; i < temp2.size(); i++){
+                try {
+                    JSONObject user = new JSONObject(friendsObjects.get(i));
+                    Log.d("FriendsFragment", "User conversion: " + user);
+                    friendsJSONObjects[i] = user;
+                    Log.d("FriendsFragment", "friendsJSONObjects: "+ friendsJSONObjects.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+
         Log.d("FriendsFragment", "Friendslist: " + friendsList.toString());
-
-        //Log.d("FriendsFragment", "Grabbed friends list: " + grabbedFriends.toString());
-
-        Friend[] testFriends = {
-            new Friend("4", "Lena", "I am a cat", "00000000000"),
-                new Friend("2", "Simon", "I am also a cat", "00000000000"),
-                new Friend("5", "Ollie", "I am a dog", "00000000000"),
-                new Friend("7", "Sparkle", "I do not know what I am", "00000000000"),
-                new Friend("12", "Pepper", "I am concerned", "00000000000"),
-        };
 
         ArrayAdapter<Friend> adapter = new ArrayAdapter<Friend>(getActivity(), android.R.layout.simple_list_item_1, friendsList);
 
-        // listView.setOnItemClickListener(new ListClickHandler());
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getActivity(), ((TextView) view).getText() + " " + Integer.toString(i) , Toast.LENGTH_LONG).show();
+                UserUtil.setUserToView(friendsJSONObjects[i]);
+                Fragment fragment = new ProfileViewFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area, fragment);
+                fragmentTransaction.commit();
+            }
+        });
+
         listView.setAdapter(adapter);
 
-        /*
-        friends = FriendsUtil.getFriends(context, id);
-        for(int i = 0; i < friends.length(); i++){ //set arrays for listing items
-            JSONObject tempUser = new JSONObject();
-            try {
-                tempUser = friends.getJSONObject(i);
-                friendsUsernames[i] = tempUser.getString("username");
-                friendsIds[i] = tempUser.getInt("id"); //TODO is id an int or string?
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        */
 
-//        ListAdapter listAdapter = new ArrayAdapter<String>(this, R.layout.fragment_friends, R.id.friendUsername, friendsUsernames);
-//        ListView listView = (ListView) view.findViewById(R.id.friendsListView); //grabs the list view our items will be in
-//        listView.setAdapter(listAdapter); //tells list view to use the items we have
     }
 
 

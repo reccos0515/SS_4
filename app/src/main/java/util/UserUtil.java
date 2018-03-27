@@ -28,38 +28,9 @@ public class UserUtil {
 
     private static String url = "http://proj-309-ss-4.iastate.edu:9001/ben"; //base url for server
     private static JSONObject userJSONObject = new JSONObject();
-    private static JSONObject loginObject = new JSONObject();
     private static JSONArray jsonArray = new JSONArray();
     private static JSONArray jsonArray2 = new JSONArray();
     private static JSONObject profView = null; //user that can be viewed in profile view next
-
-//    /**
-//     * Updates the user's bio in the DB
-//     * @param bio a string of the typed bio from the user
-//     * @param context the context in which this method is used
-//     */
-//    public static void setBio(String bio, Context context){
-//        url = "";
-//        try {
-//            userJSONObject.put("bio", bio);
-//        } catch (JSONException e) {
-//            Log.d("JSONObject Put Status", "Bio put failed");
-//            e.printStackTrace();
-//        }
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                Log.d("Object Put Status", "Successful Request");
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.d("Object Put Status", "error");
-//                error.printStackTrace();
-//            }
-//        });
-//        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
-//    }
 
     /**
      * Updates the user's bio in the DB
@@ -78,33 +49,6 @@ public class UserUtil {
         putUser(url, userJSONObject, context);
     }
 
-//    /**
-//     * Sets the user's password in the DB
-//     * @param pwd the new password that the user would like
-//     * @param context context in which this method is used
-//     */
-//    public static void setPassword(String pwd, Context context){
-//        String url = "";
-//        try {
-//            userJSONObject.put("password", pwd);
-//        } catch (JSONException e) {
-//            Log.d("JSONObject Put Status", "Password put failed");
-//            e.printStackTrace();
-//        }
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, userJSONObject, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                Log.d("Object Put Status", "Successful Request");
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.d("Object Put Status", "error");
-//                error.printStackTrace();
-//            }
-//        });
-//        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);
-//    }
 
     public static void setPassword(String pwd, String id, Context context){
         String url = "/users/" + id; //TODO verify url
@@ -118,33 +62,6 @@ public class UserUtil {
         putUser(url, userJSONObject, context);
     }
 
-    /**
-     * Sends the request to get a user object back when logging a user in
-     * @param username the username the user inputs
-     * @param password the password the user inputs
-     * @param context the context in which this method is used
-     * @return a JSONObject of a user
-     */
-    public static void sendLoginRequest(String username, String password, Context context){
-        //probably needs special volley requests, not the premade volley methods
-        Log.d("UserUtil", "sendLoginRequest entered");
-        url += "/login/";
-        String thisURL = "https://proj-309-ss-4.cs.iastate.edu:9001/ben/login/";
-        JSONObject fullJS = new JSONObject();
-
-        try { //TODO modify for how Ben wants info
-            userJSONObject.put("userName", username);
-            fullJS.put("user", userJSONObject);
-            fullJS.put("password", password);
-            Log.d("UserUtil", "JSONObject prior to sendLoginRequest: " + fullJS.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        JsonRequest.postRequest(fullJS, thisURL, context);
-        //Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
-    }
 
     public static JSONObject prepareLogin(String username, String password, Context context){
         JSONObject fullJS = new JSONObject();

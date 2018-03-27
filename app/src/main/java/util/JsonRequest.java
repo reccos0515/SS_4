@@ -276,8 +276,7 @@ public class JsonRequest {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-               Log.d("JsonRequest", "This one works?");
-                JSONObject js = new JSONObject();
+                JSONObject js;
                 js = response;
                 Log.d("Friend", "getFriends response from GET: " + response);
                 Boolean s = false;
@@ -302,20 +301,23 @@ public class JsonRequest {
                 if(s){ //if the request was successful
                     try {
                         users = js.getJSONArray("users"); //get JSONArray of all users the user is friends with
-                        friends = new Friend[users.length()]; //makes the array of friends the correct size
+
                         Log.d("Friend", "Grabbing users, looks like: " + users.toString());
-                        Set<String> friendsList = new HashSet<String>();
+                        Set<String> friendsList = new HashSet<>();
+                        Set<String> friendsJSON = new HashSet<>();
                         for(int i = 0; i < users.length(); i++){ //grab all friends out of the array
-                            Friend newFriend = new Friend(users.getJSONObject(i)); //convert them to friend objects
-                            JSONObject thisFriend = users.getJSONObject(i);
-                            String thisUsername = thisFriend.getString("userName");
-                            friends[i] = newFriend; //store them in friends
+                            JSONObject thisFriend = users.getJSONObject(i); //get the user we're talking about
+                            String thisUser = thisFriend.toString(); //convert it to a string for FRIENDSLISTJSONOBJECTS
+                            String thisUsername = thisFriend.getString("userName"); //get the username
                             friendsList.add(thisUsername);
+                            friendsJSON.add(thisUser);
 
                         }
-                        editor.putStringSet("FRIENDSLISTUSERNAMES", friendsList);
+                        editor.putStringSet("FRIENDSLISTUSERNAMES", friendsList);//shared pref variable for string usernames
+                        editor.putStringSet("FRIENDJSON", friendsJSON); //sharedpref variable for string versions of all user objects for friends
                         editor.apply();
                         Log.d("JsonRequest", "Friendslistusernames set: " + preferences.getStringSet("FRIENDSLISTUSERNAMES", null));
+                        Log.d("JsonRequest", "FRIENDSLISTJSONOBJECTS: " + preferences.getStringSet("FRIENDJSON", null));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
