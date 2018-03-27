@@ -713,7 +713,9 @@ public class UserService {
 			for(i=0; i<relevant.size(); i++){
 				if (count == 10){
 					user.setBeenDiscovered(been); //changes the users beendiscovered to include that which was just found.
-					userRepo.save(user);e
+
+					userRepo.save(user);
+
 					return send;
 				}
 				if(!Collections.disjoint(interests, relevant.get(i).getInterestList()))
@@ -756,6 +758,7 @@ public class UserService {
 		score = 5 - (one.size() - score);
 		
 	}
+
 
 	/*
 	//we are going to need some list to keep track of who has been discovered (nevermind).
