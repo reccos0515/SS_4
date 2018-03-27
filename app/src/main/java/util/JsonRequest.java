@@ -82,8 +82,8 @@ public class JsonRequest {
                         try {
                             JSONArray ja = response.getJSONArray("users"); //get the json array with the user in it
                             JSONObject js = ja.getJSONObject(0); //pull the user from the array
-                            String id = js.getString("id"); //pull the id from the user
-                            editor.putString("ID", id); //save this in preference variables
+                            int id = js.getInt("id"); //pull the id from the user
+                            editor.putInt("ID", id); //save this in preference variables
                             editor.apply(); //apply this change
                         }catch (JSONException e){
                             e.printStackTrace();

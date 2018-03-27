@@ -94,9 +94,8 @@ public class SwipeFragment extends Fragment {
 
 
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
-        String id = preferences.getString("ID", "0"); //set the id todo fix this line
-//        String thisId = Integer.toString(id);
-        String thisId = id;
+        int id = preferences.getInt("ID", 0); //set the id todo fix this line
+        String thisId = Integer.toString(id);
         Log.d("SwipeFragment", "Id of user: " + thisId);
         url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + thisId + "/relevant"; //set the url
         Log.d("SwipeFragment", "Url posted to: " + url);
