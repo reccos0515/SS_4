@@ -166,5 +166,4 @@ public class UserController {
 	public HtmlMessage setStatus(@PathVariable int userId, @PathVariable int status) {
 		return userService.setStatus(userId, status);
 	}
-
 }
