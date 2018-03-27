@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import util.FriendsUtil;
+import util.InterestsUtil;
 import util.Singleton;
 import util.UserUtil;
 
@@ -74,14 +75,53 @@ public class ProfileViewFragment extends Fragment {
 
         userIDNum = preferences.getInt("ID", 0);
         user = UserUtil.getUserToView(); //get the user that should be shown
+        TextView int1 = view.findViewById(R.id.prof_int1);
+        TextView int2 = view.findViewById(R.id.prof_int2);
+        TextView int3 = view.findViewById(R.id.prof_int3);
+        TextView int4 = view.findViewById(R.id.prof_int4);
+        TextView int5 = view.findViewById(R.id.prof_int5);
         TextView username = view.findViewById(R.id.viewUsername);
         TextView bio = view.findViewById(R.id.viewBio);
+        String interests = "00000000000";
+        int numInterests;
 
         try {
             username.setText(user.get("userName").toString());
             bio.setText(user.get("bio").toString());
+            interests = user.getString("interests");
         } catch (JSONException e){
             e.printStackTrace();
+        }
+        numInterests = interests.charAt(0) - '0';
+        if(numInterests > 0){
+            int1.setText(InterestsUtil.getInterest(interests.charAt(1) + "" + interests.charAt(2) + ""));
+        }
+        else{
+            int1.setText("");
+        }
+        if(numInterests > 1){
+            int2.setText(InterestsUtil.getInterest(interests.charAt(3) + "" + interests.charAt(4) + ""));
+        }
+        else{
+            int2.setText("");
+        }
+        if(numInterests > 2){
+            int3.setText(InterestsUtil.getInterest(interests.charAt(5) + "" + interests.charAt(6) + ""));
+        }
+        else{
+            int3.setText("");
+        }
+        if(numInterests > 3){
+            int4.setText(InterestsUtil.getInterest(interests.charAt(7) + "" + interests.charAt(8) + ""));
+        }
+        else{
+            int4.setText("");
+        }
+        if(numInterests > 4){
+            int5.setText(InterestsUtil.getInterest(interests.charAt(9) + "" + interests.charAt(10) + ""));
+        }
+        else{
+            int5.setText("");
         }
 
         //when the button is pressed will add friend
