@@ -733,6 +733,8 @@ public class UserService {
 	}
 
 	public Integer getScore(User one, User two){
+		//Assume user one is the one that wants to know
+		//how good user two is.
 		List<Integer> one = one.getInterestList();
 		List<Integer> two = two.getInterestList();
 		int score = 0;
@@ -750,6 +752,8 @@ public class UserService {
 				}
 			}
 		}
+
+		score = 5 - (one.size() - score);
 		
 	}
 
