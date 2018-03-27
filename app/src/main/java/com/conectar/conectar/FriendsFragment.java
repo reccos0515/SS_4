@@ -93,9 +93,9 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         Context context = getContext();
         final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
-        int id = preferences.getInt("ID", 0);
+        int id = preferences.getInt("ID", 0); //get the logged in user's id
 
-        ListView listView = (ListView) view.findViewById(R.id.friendsListView);
+        ListView listView = (ListView) view.findViewById(R.id.friendsListView); //grabs the listview from the xml layout
         JsonRequest.getFriendsList(id, context); //get a list of friends and store in sharedpreferences
 
 
@@ -108,56 +108,56 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         final Set<String> empty = new HashSet<>(Arrays.asList(fake));
         final Set<String> temp2 = preferences.getStringSet("FRIENDJSON", empty);
         final JSONObject[] friendsJSONObjects = new JSONObject[temp2.size()];
-        Log.d("FriendsFragment", "FRIENDSLISTJSONOBJECTS: " + temp2.toString());
+        //Log.d("FriendsFragment", "FRIENDSLISTJSONOBJECTS: " + temp2.toString());
 
         if(temp != null){ //gets cranky trying to typecast null
-            List<String> friends = new ArrayList<String>(temp);
-
+            List<String> friends = new ArrayList<String>(temp); //convert the set of usernames to a list for easier manipulation
             friendsList = new Friend[friends.size()];
-            for(int i = 0; i < friends.size(); i++){
+            for(int i = 0; i < friends.size(); i++){ //TODO figure out if this is necessary
                 Friend newFriend = new Friend(friends.get(i));
                 friendsList[i] = newFriend;
-
-
             }
         }
         if(temp2 != empty){
-            List<String> friendsObjects = new ArrayList<String>(temp2);
+            List<String> friendsObjects = new ArrayList<String>(temp2); //convert the list of JSONObjects of users to an arraylist
             for(int i = 0; i < temp2.size(); i++){
                 try {
                     JSONObject user = new JSONObject(friendsObjects.get(i));
                     //Log.d("FriendsFragment", "User conversion: " + user);
-                    friendsJSONObjects[i] = user;
+                    friendsJSONObjects[i] = user; //TODO figure out if this is necessary
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-            Log.d("FriendsFragment", "friendsJSONObjects: "+ friendsJSONObjects.toString());
+            //Log.d("FriendsFragment", "friendsJSONObjects: "+ friendsJSONObjects.toString());
         }
 
 
 
-        Log.d("FriendsFragment", "Friendslist: " + friendsList.toString());
+        //Log.d("FriendsFragment", "Friendslist: " + friendsList.toString());
 
-        ArrayAdapter<Friend> adapter = new ArrayAdapter<Friend>(getActivity(), android.R.layout.simple_list_item_1, friendsList);
+        ArrayAdapter<Friend> adapter = new ArrayAdapter<Friend>(getActivity(), android.R.layout.simple_list_item_1, friendsList); //tell the xml to use friendsList for items on they layout
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //if a person in the list is clicked
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(temp2 != empty){
-                    Toast.makeText(getActivity(), ((TextView) view).getText(), Toast.LENGTH_LONG).show();
+                if(temp2 != empty){ //if there are users sent back and not the garbage initialized user
+                    Toast.makeText(getActivity(), ((TextView) view).getText(), Toast.LENGTH_LONG).show(); //who was clicked on
                     Log.d("FriendsFragment", "friendsJSONObjects prior to setting user to view" + friendsJSONObjects[i] + "Person clicked on: " + friendsList[i]);
                     String thisUsername = "";
+
                     for(int j = 0; j < friendsList.length; j++){
                         try {
                             thisUsername = friendsJSONObjects[j].getString("userName");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        if(thisUsername.equals(friendsList[i].toString())){
-                            UserUtil.setUserToView(friendsJSONObjects[j]);
+                        if(thisUsername.equals(friendsList[i].toString())){ //if the JSONObject matches the person you clicked on
+                            UserUtil.setUserToView(friendsJSONObjects[j]); //tell ProfileViewFragment who to show
                         }
                     }
+
+                    //pull up the profile of the friend that's clicked on
                     Fragment fragment = new ProfileViewFragment();
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
