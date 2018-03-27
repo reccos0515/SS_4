@@ -3,10 +3,12 @@ package co.nectar.user;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.UsesJava7;
 import org.springframework.stereotype.Service;
+
 
 import co.nectar.Message.*;;
 
@@ -640,6 +642,11 @@ public class UserService {
 		} else {
 			//get user
 			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			if(user.getStatus() == 0){
+				success = false;
+				error = "User is RED";
+				return new HtmlError(success, error);
+			}
 			
 			//get all users
 			List<User> users = (List<User>) ((HtmlUserList) this.getAllUsers()).getUsers();
@@ -660,7 +667,10 @@ public class UserService {
 		}
 
 		return new HtmlError(success, error);
+
+
 	}
+
 	
 	//we are going to need some list to keep track of who has been discovered (nevermind).
 	//this only works if there is ten users in the discover
@@ -668,16 +678,108 @@ public class UserService {
 		//right now im just sending back the first ten, this will be improved soon.
 		List<User> send = new ArrayList<User>();
 		List<User> been = user.getBeenDiscovered();
-		for(int i = 0; i<10; i++){
-			send.add(relevant.get(i));
-			been.add(relevant.get(i));
+		List<Integer> interests = user.getInterestList();
+		int i = 0;
+		int count = 0;
+
+
+		int status = user.getStatus();
+
+		if(status == 2){
+			if(relevant.size() > 9){
+				for(i=0; i<10; i++){
+				send.add(relevant.get(i));
+				been.add(relevant.get(i));
+				}
+			}else{
+				for(i=0; i<relevant.size(); i++){
+				send.add(relevant.get(i));
+				been.add(relevant.get(i));
+				}
+			}
+		}else if(status == 1){
+			count = 0;
+			for(i=0; i<relevant.size(); i++){
+				if (count == 10){
+					user.setBeenDiscovered(been); //changes the users beendiscovered to include that which was just found.
+					userRepo.save(user);e
+					return send;
+				}
+				if(!Collections.disjoint(interests, relevant.get(i).getInterestList()))
+					send.add(relevant.get(i));
+					been.add(relevant.get(i));
+					count ++;
+			}
+		}else if(status == 0){
+			return send;
 		}
-		user.setBeenDiscovered(been); //changes the users been discovered to include that which was just found.
+		
+		user.setBeenDiscovered(been); //changes the users beendiscovered to include that which was just found.
 		userRepo.save(user);
 		
 		return send;
 		
-	}	
+	}
+
+	public Integer getScore(User one, User two){
+		List<Integer> one = one.getInterestList();
+		List<Integer> two = two.getInterestList();
+		int score = 0;
+
+		if(one.size() > two.size()){
+			for(int i = 0; i < one.size(); i++{
+				if(two.contains(one.get(i))){
+					score++;
+				}
+			}
+		}
+		
+	}
+
+	/*
+	//we are going to need some list to keep track of who has been discovered (nevermind).
+	//this only works if there is ten users in the discover
+	public List<User> makeSend(User user, List<User> relevant){
+		//right now im just sending back the first ten, this will be improved soon.
+		List<User> send = new ArrayList<User>();
+		List<User> been = user.getBeenDiscovered();
+
+		int i = 0;
+		String interestOne = user.getInterests().substring(1,3);
+		String interestTwo = user.getInterests().substring(3,5);
+		String interestThree = user.getInterests().substring(5,7);
+		String interestFour = user.getInterests().substring(7,9);
+		String interestFive = user.getInterests().substring(9);
+
+
+		int status = user.getStatus();
+
+		if(status == 2){
+			if(relevant.size() > 9){
+				for(i=0; i<10; i++){
+				send.add(relevant.get(i));
+				been.add(relevant.get(i));
+				}
+			}else{
+				for(i=0; i<relevant.size(); i++){
+				send.add(relevant.get(i));
+				been.add(relevant.get(i));
+				}
+			}
+		}else if(status == 1){
+
+		}else if(status == 0){
+			return send;
+		}
+		
+		user.setBeenDiscovered(been); //changes the users beendiscovered to include that which was just found.
+		userRepo.save(user);
+		
+		return send;
+		
+	}
+
+	*/	
 	
 	//green people will see random green and yellow people. do not take their 
 	//interests into account. the expectation is that they are willing to do
