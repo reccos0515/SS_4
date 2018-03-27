@@ -258,6 +258,19 @@ public class UserService {
 			if(otherUser != null && user.getId() != otherUser.getId()) {
 				return new HtmlError(false, "new username exists already");
 			}
+			User oldUser = userRepo.findOne(user.getId());
+			
+			//keep sentrequest and recieved request for friends
+			user.setSentRequestTo(oldUser.getSentRequestTo());
+			user.setRecievedRequestFrom(oldUser.getRecievedRequestFrom());
+			
+			//keep been discovederd if status is the same
+			//clears otherwise
+			if(user.getStatus() == oldUser.getStatus())
+				user.setBeenDiscovered(oldUser.getBeenDiscovered());
+			else
+				user.setBeenDiscovered(new ArrayList<User>());
+			
 			userRepo.save(user);
 		}
 
