@@ -662,6 +662,17 @@ public class UserService {
 					relevant.add(user_ele);// add if i have not added the user, and the user is not me.
 			}
 			//now i have a list of everyone that i dont know and have not discovered before (discover). 
+
+			//if there is no one to discover, send an error that there was no one to discover,
+			//but also reset the list so that they get a wrap around next time.
+			if(send.size() == 0){
+				success = false;
+				error = "User has discovered everyone";
+				List<User> been = new ArrayList<User>();
+				user.setBeenDiscovered(been);
+				return new HtmlError(success, error);
+			}
+
 			List<User> send = makeSend(user, relevant);
 			return new HtmlUserList(success, send);
 		}
@@ -729,6 +740,12 @@ public class UserService {
 		if(one.size() > two.size()){
 			for(int i = 0; i < one.size(); i++{
 				if(two.contains(one.get(i))){
+					score++;
+				}
+			}
+		} else {
+			for (int i = 0; i<two.size(); i++){
+				if one.contains(two.get(i)){
 					score++;
 				}
 			}
