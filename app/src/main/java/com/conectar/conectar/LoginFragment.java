@@ -135,6 +135,16 @@ public class LoginFragment extends Fragment {
 
             }
         });
+        view.findViewById(R.id.createAccountBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new NewProfileFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area, fragment);
+                fragmentTransaction.commit();
+            }
+        });
 
     }
 
