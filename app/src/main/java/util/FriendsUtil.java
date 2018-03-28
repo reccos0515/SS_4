@@ -21,56 +21,6 @@ import org.json.JSONObject;
 public class FriendsUtil {
 
     private static String urlBase = "http://proj-309-ss-4.cs.iastate.edu:9001/ben"; //base for all urls
-    private static JSONObject userJSONObject = new JSONObject();
-    private static JSONArray tempArr;
-
-    /**
-     * Returns a JSONArray of all the friends a specific user has
-     * @param context the context in which this method is used
-     * @param id the id number of the friend whose friends list is wanted
-     * @return the list of friends
-     */
-    public static JSONArray getFriends(Context context, String id){ //TODO test
-        String url = urlBase + "/users/" + id + "/friends";
-       tempArr = UserUtil.getArray(url, context);
-        return tempArr;
-    }
-
-    /**
-     * Returns a JSONArray of all the friends a specific user has
-     * @param context the context in which this method is used
-     * @param id the id number of the friend whose friends list is wanted
-     * @return the list of friends
-     */
-    public static JSONArray getFriends(Context context, int id){ //TODO test
-        String url = urlBase + "/users/" + id + "/friends";
-        tempArr = UserUtil.getArray(url, context);
-        return tempArr;
-    }
-
-    /**
-     * Returns a JSONArray of all the pending friend requests a specific user has
-     * @param context the context in which this method is used
-     * @param id the id number of the friend whose friends list is wanted
-     * @return the list of friends
-     */
-    public static JSONArray getPending(Context context, String id){ //TODO revisit, don't think it works
-        String url = urlBase + "/users/" + id + "pending_friends"; //TODO review url
-        tempArr = UserUtil.getArray(url, context);
-        return tempArr;
-    }
-
-    /**
-     * Returns a JSONArray of all the pending friend requests a specific user has
-     * @param context the context in which this method is used
-     * @param id the id number of the friend whose friends list is wanted
-     * @return the list of friends
-     */
-    public static JSONArray getPending(Context context, int id){ //TODO revisit, don't think it works
-        String url = urlBase + "/users/" + id + "pending_friends"; //TODO review url
-        tempArr = UserUtil.getArray(url, context);
-        return tempArr;
-    }
 
     /**
      * Sends a friend request to a specific user using string ids
@@ -94,6 +44,7 @@ public class FriendsUtil {
         UserUtil.postRequest(url, context);
     }
 
+    //TODO implement functionality to delete a friend
     /**
      * Removes a friend from a user's friends list
      * @param userId the user who is deleting the friend
@@ -105,6 +56,7 @@ public class FriendsUtil {
         UserUtil.deleteRequest(url, context);
     }
 
+    //TODO implement functionality to delete a friend
     /**
      * Removes a friend from a user's friends list
      * @param userId the user who is deleting the friend

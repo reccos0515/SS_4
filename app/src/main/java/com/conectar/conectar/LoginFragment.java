@@ -10,25 +10,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import util.JsonRequest;
-import util.SessionUtil;
-import util.Singleton;
 import util.UserUtil;
 
 
@@ -42,17 +30,9 @@ import util.UserUtil;
  */
 public class LoginFragment extends Fragment {
 
-    Button loginBtn;
     EditText editUsername, editPassword;
     Context context;
-    JSONObject user;
-    JSONArray tempJSONArray = new JSONArray();
-    JSONObject tempJSONObject = new JSONObject();
     JSONObject fullJS = new JSONObject();
-    JSONObject loginObject = new JSONObject();
-    //final SessionUtil session =  new SessionUtil(getContext());
-    Boolean loginFlag = false;
-    Boolean success = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -104,11 +84,7 @@ public class LoginFragment extends Fragment {
         view.findViewById(R.id.loginBtn).setOnClickListener(new View.OnClickListener() { //if user clicks the button to log in
             @Override
             public void onClick(View view) { //TODO review whether or not this login stuff works
-                //to test whether the session can work
-                //session.createSession("username", "1", "1");
-                //Toast.makeText(getActivity(), "User Username" + session.getSessionusername(), Toast.LENGTH_LONG).show();
-                /////Toast.makeText(getActivity(), "Login attempt made", Toast.LENGTH_LONG).show();
-                //TODO grab actual values from edittext???
+
                 String loginPassword = "";
                 String loginUsername = "";
 
@@ -116,7 +92,6 @@ public class LoginFragment extends Fragment {
                 loginUsername = editUsername.getText().toString();
                 Log.d("LoginFragment", "Input username: " + loginUsername + "   Input password: " + loginPassword);
 
-                //UserUtil.sendLoginRequest("George", "George", context);
                 fullJS = UserUtil.prepareLogin(loginUsername, loginPassword, context);
                 String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/login";
                 JsonRequest.loginPostRequest(fullJS, url, context);

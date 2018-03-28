@@ -120,6 +120,13 @@ public class JsonRequest {
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
     }
 
+    /**
+     * Sends the server a post request to verify a user's login information.  If the post is
+     * successful, the user's session variables are set and they are "logged in"
+     * @param js the formatted user object to be posted
+     * @param url the url the user object will be posted to
+     * @param context the context in which this method is used
+     */
     public static void loginPostRequest(JSONObject js, String url, Context context){
         final Context context1 = context;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  js,
@@ -137,16 +144,16 @@ public class JsonRequest {
                         Boolean success = false;
                         String message = "";
                         try {
-                            success = response.getBoolean("success");
+                            success = response.getBoolean("success"); //get whether or not the request was successful from server
                             Log.d("loginPostRequest", "Success response from server: " + success);
                             editor.putBoolean("ISLOGGEDIN", success);
                             editor.apply();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        if(success){
+                        if(success){ //If server said it was successful
                             Log.d("loginPostRequest", "Entered success");
-                            try {
+                            try { //grab the user's info from response object
                                 JSONArray userArr = response.getJSONArray("users");
                                 JSONObject user = userArr.getJSONObject(0);
                                 Log.d("loginPostRequest", "user: " + user.toString());
@@ -158,15 +165,24 @@ public class JsonRequest {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            editor.putString("USERNAME", username);
+                            editor.putString("USERNAME", username); //set the session variables
                             editor.putInt("ID", id);
                             editor.putString("BIO", bio);
                             editor.putString("INTERESTS", interests);
                             editor.putInt("STATUS", status);
                             editor.putBoolean("ISLOGGEDIN", true);
                             editor.apply();
+                            //test whether or not the session variables are set and log it
                             String test = preferences.getString("USERNAME", "empty");
                             Log.d("loginPostRequest", "Logged in user is: " + test + " with id: " + id);
+                        }
+                        else{ //if the server sends back an error
+                            try {
+                                message = response.getString("message");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Log.d("loginPostRequest", "Error message from server: " + message);
                         }
 
                     }
@@ -271,6 +287,12 @@ public class JsonRequest {
         return;
     }
 
+    /**
+     * Sends a GET request to the server to obtain a list of friends that a certain user has.  The list
+     * of users are stored in session variables to be used elsewhere
+     * @param id the id number of the user who's friends we want a list of
+     * @param context the context in which this method is used
+     */
     public static void getFriendsList(int id, final Context context){
         String url =  "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id +"/friends";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -281,14 +303,12 @@ public class JsonRequest {
                 Log.d("Friend", "getFriends response from GET: " + response);
                 Boolean s = false;
                 JSONArray users;
-                Friend[] friends = null;
                 String message = "";
                 Context context1 = context;
                 final SharedPreferences preferences = context1.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
                 final SharedPreferences.Editor editor = preferences.edit();
 
                 try {
-                    //success = js.getString("success");
                     s = js.getBoolean("success");
 
                 } catch (JSONException e) {

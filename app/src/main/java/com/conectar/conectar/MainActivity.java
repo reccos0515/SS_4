@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //TODO figure out what of this is actually necessary
         //grabs the variables stored from the app killing itself
         if(savedInstanceState != null){
            //currentUsername = savedInstanceState.getString("USERNAME");

@@ -91,6 +91,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //TODO try to make code more modular/readable
         Context context = getContext();
         final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
         int id = preferences.getInt("ID", 0); //get the logged in user's id

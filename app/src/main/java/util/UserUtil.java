@@ -32,37 +32,6 @@ public class UserUtil {
     private static JSONArray jsonArray2 = new JSONArray();
     private static JSONObject profView = null; //user that can be viewed in profile view next
 
-    /**
-     * Updates the user's bio in the DB
-     * @param bio a string of the typed bio from the user
-     * @param context the context in which this method is used
-     */
-    public static void setBio(String bio, String id, Context context){
-        url += "/users/" + id; //TODO verify url
-        userJSONObject = getUser(url, context);
-        try {
-            userJSONObject.put("bio", bio);
-        } catch (JSONException e) {
-            Log.d("JSONObject Put Status", "Bio put failed");
-            e.printStackTrace();
-        }
-        putUser(url, userJSONObject, context);
-    }
-
-
-    public static void setPassword(String pwd, String id, Context context){
-        String url = "/users/" + id; //TODO verify url
-        getUser(url, context);
-        try {
-            userJSONObject.put("password", pwd);
-        } catch (JSONException e) {
-            Log.d("JSONObject Put Status", "Password put failed");
-            e.printStackTrace();
-        }
-        putUser(url, userJSONObject, context);
-    }
-
-
     public static JSONObject prepareLogin(String username, String password, Context context){
         JSONObject fullJS = new JSONObject();
 
@@ -81,7 +50,6 @@ public class UserUtil {
     /**
      * Changes the user's status in the DB
      * @param status the new status the user wishes to switch to
-     * @param id the id number of the person changing their status
      * @param context the context in which this method is used
      */
     public static void updateStatus(int status, Context context){

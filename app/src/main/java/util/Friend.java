@@ -26,21 +26,19 @@ public class Friend {
     private String username;
     private String bio;
     private String interests;
-    private static JSONObject js = new JSONObject();
-    private static JSONArray users = new JSONArray();
 
+    /**
+     * Constructor for a friend
+     */
     public Friend(){
         super();
     }
 
-    public Friend(String id, String username, String bio, String interests){
-        super();
-        this.bio = bio;
-        this.id = id;
-        this.username = username;
-        this.interests = interests;
-    }
 
+    /**
+     * Constructor for a friend
+     * @param username the username of the friend
+     */
     public Friend(String username){
         super();
         this.username = username;
@@ -49,6 +47,10 @@ public class Friend {
         this.interests = "empty";
     }
 
+    /**
+     * Constructor for a friend
+     * @param js a JSONObject of a friend
+     */
     public Friend(JSONObject js){
         super();
         try {

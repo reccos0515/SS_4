@@ -82,7 +82,6 @@ public class LogoutFragment extends Fragment {
                 Log.d("LogoutFragment", "User logged out, proof: " + preferences.getString("USERNAME", "empty"));
 
                 //Send user to the login screen
-                //TODO make method for changing fragments?
                 Fragment fragment = new LoginFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -94,10 +93,14 @@ public class LogoutFragment extends Fragment {
 
     }
 
+    /**
+     * Destroys all session variables for the current session
+     * @param preferences the instance of sharedPreferences from which the variables will be destroyed
+     */
     public void destroySession(SharedPreferences preferences){
         SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
-        editor.apply(); //or commit, but studio says apply??
+        editor.clear(); //destroy the session variables
+        editor.apply();
     }
 
 
