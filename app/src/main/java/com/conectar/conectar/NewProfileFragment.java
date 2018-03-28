@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,6 +110,9 @@ public class NewProfileFragment extends Fragment {
                         editor.putString("INTERESTS", "00000000000");
                         js.put("status", 0);
                         editor.putInt("STATUS", 0);
+                        editor.putBoolean("ISLOGGEDIN", true); //also logs the user in
+                        Boolean isLoggedIn = preferences.getBoolean("ISLOGGEDIN", false);
+                        Log.d("NewProfileFragment", "ISLOGGEDIN: " + isLoggedIn.toString());
                         toSend.put("user", js); //put this in the object to send
                         toSend.put("password", password.getText().toString()); //put this in the object to send
                         editor.apply();
