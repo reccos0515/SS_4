@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity
             FriendsFragment.OnFragmentInteractionListener, MessagesFragment.OnFragmentInteractionListener,
             NewProfileFragment.OnFragmentInteractionListener, SearchFragment.OnFragmentInteractionListener,
             SwipeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener,
-            ProfileViewFragment.OnFragmentInteractionListener{
+            ProfileViewFragment.OnFragmentInteractionListener, AboutFragment.OnFragmentInteractionListener{
     /*Added Logout, Edit Profile, Change Status, Friends, Messages, New Profile, Search, Swipe Screen/Home, Login
     to drawer navigation */
 
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_newProfile) {
             fragment = new NewProfileFragment();
         } else if (id == R.id.nav_about) { //TODO fix
-
+            fragment = new AboutFragment();
         } else if (id == R.id.nav_report) {
             //waiting for xml implementation
         } else if (id == R.id.nav_friends) {

@@ -96,12 +96,14 @@
         <item>Snowboarding</item>
         <item>Board Games</item>
         <item>Music</item>
-        <item>Shopping</item> //10
+        <item>Shopping</item>
+        //10
         <item>Basketball</item>
         <item>Swimming</item>
         <item>Working Out</item>
         <item>Hiking</item>
-        <item>Volunteering</item> //15
+        <item>Volunteering</item>
+        //15
     </string-array>
 
 
@@ -119,5 +121,6 @@
     <string name="title_activity_main">MainActivity</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="conectar_about">coNECTAR is an app designed to bring people together. It aims to pair people who wouldn\'t have met otherwise and inspire people to try new things.</string>
 
 </resources>
