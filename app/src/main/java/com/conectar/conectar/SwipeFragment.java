@@ -81,6 +81,17 @@ public class SwipeFragment extends Fragment {
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
+        //sends the user to the login page if they aren't logged in
+        Boolean isLoggedIn = preferences.getBoolean("ISLOGGEDIN", false);
+        Log.d("SwipeFragment", "ISLOGGEDIN: " + isLoggedIn);
+        if(!isLoggedIn){ //if user isn't already logged in
+            Fragment fragment = new LoginFragment();
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.screen_area, fragment);
+            fragmentTransaction.commit();
+        }
+
         interests = preferences.getString("INTERESTS", "empty"); //set logged in user's interests from session variables
 
 
