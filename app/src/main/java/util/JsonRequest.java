@@ -361,4 +361,46 @@ public class JsonRequest {
         return;
     }
 
+    public static void deleteUserRequest(JSONObject js, String url, Context context){
+        final Context context1 = context;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url,  js,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
+                        final SharedPreferences preferences = context1.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+                        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
+                        Boolean success = false;
+                        String message = "";
+
+                        try {
+                            success = response.getBoolean("success"); //get whether or not the request was successful from server
+                            Log.d("deleteUserRequest", "Success response from server: " + success);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if(success){ //If server said it was successful
+                            Log.d("loginPostRequest", "Entered success");
+                            editor.clear();
+                            editor.apply();
+                        }
+                        else{ //if the server sends back an error
+                            try {
+                                message = response.getString("message");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Log.d("loginPostRequest", "Error message from server: " + message);
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+    }
+
 }

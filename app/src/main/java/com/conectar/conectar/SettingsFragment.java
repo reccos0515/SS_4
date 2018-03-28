@@ -1,12 +1,20 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import org.json.JSONObject;
+
+import util.JsonRequest;
+import util.UserUtil;
 
 
 /**
@@ -67,11 +75,26 @@ public class SettingsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        view.findViewById(R.id.deleteAccountBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { //TODO add another button to verify they do wan't to delete account??
+                Toast.makeText(getActivity(), "Account Deleted!", Toast.LENGTH_LONG).show();
+                Context context = getContext();
+                final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+
+                String thisUsername = preferences.getString("USERNAME", "emtpy");
+                String thisPassword = "test"; //TODO get from edittext
+                String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/login";
+
+                JSONObject json = UserUtil.prepareLogin(thisUsername, thisPassword, context);
+                JsonRequest.deleteUserRequest(json, url, context);
+            }
+        });
+
     }
 
     @Override
