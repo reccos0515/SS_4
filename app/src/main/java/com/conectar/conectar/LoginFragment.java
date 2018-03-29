@@ -28,6 +28,7 @@ import util.UserUtil;
  * to handle interaction events.
  * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * This class is used to facilitate user log in
  */
 public class LoginFragment extends Fragment {
 
@@ -53,11 +54,22 @@ public class LoginFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * method to be called when the fragment is being created
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * method to be called in order to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,6 +78,12 @@ public class LoginFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_login, null); //opens the logout screen
     }
 
+    /**
+     * method to be called once the view has been created. This is where the Ui and button
+     * listeners are set up, as well as most of the code specific to this page
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -124,20 +142,28 @@ public class LoginFragment extends Fragment {
 
     }
 
-    //hides the toolbar so that the user can't go to another page before logging in (hide the menu)
+    /**
+     * hides the toolbar so that the user can't go to another page before logging in (hide the menu)
+     */
     @Override
     public void onResume() {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
-    //shows the toolbar again once the user leaves LoginFragment so that they have access to the menu again
+    /**
+     * shows the toolbar again once the user leaves LoginFragment so that they have access to the menu again
+     */
     @Override
     public void onStop() {
         super.onStop();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 
+    /**
+     * method to be called when the fragment is being attached
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -149,6 +175,9 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    /**
+     * method to call when the fragment is being detached
+     */
     @Override
     public void onDetach() {
         super.onDetach();

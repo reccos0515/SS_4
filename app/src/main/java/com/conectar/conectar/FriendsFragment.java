@@ -40,6 +40,7 @@ import util.UserUtil;
  * to handle interaction events.
  * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * This class is used to view the friends the user has
  */
 public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     Friend[] friendsList = {new Friend("empty")}; //put a default value to be grabbed in case user doesn't have friends
@@ -64,11 +65,22 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         return fragment;
     }
 
+    /**
+     * method to be called when the fragment is first created
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * method to call to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,6 +91,13 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     }
 
+    /**
+     * method to be call once the view has been created
+     * This is where the UI and button listeners are set up, as well as
+     * most of the code specific to this page
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -169,8 +188,10 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     }
 
-
-
+    /**
+     * method to be called when the fragment is being attached
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -182,6 +203,9 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         }
     }
 
+    /**
+     * method to call when the fragment is being detached
+     */
     @Override
     public void onDetach() {
         super.onDetach();

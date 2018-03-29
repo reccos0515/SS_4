@@ -27,7 +27,7 @@ import util.JsonRequest;
  * to handle interaction events.
  * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
- *
+ * This class is used to allow the user to edit their profile
  */
 public class EditProfileFragment extends Fragment {
 
@@ -66,12 +66,23 @@ public class EditProfileFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * method to be called when the fragment is created
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) { //------------------------------------------------------------------------------onCreate
         super.onCreate(savedInstanceState);
 
     }
 
+    /**
+     * method to be used in order to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,6 +90,13 @@ public class EditProfileFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_edit_profile, null);
     }
 
+    /**
+     * method to be used once the view has been created
+     * This is where the UI is set up as well as the button listeners, and
+     * most of the code specific to this page is implemented
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -280,6 +298,10 @@ public class EditProfileFragment extends Fragment {
     }
 
 
+    /**
+     * method to be called when the fragment is being attached
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -291,6 +313,9 @@ public class EditProfileFragment extends Fragment {
         }
     }
 
+    /**
+     * method to be called when the fragment is being detached
+     */
     @Override
     public void onDetach() {
         super.onDetach();

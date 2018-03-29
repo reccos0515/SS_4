@@ -25,12 +25,9 @@ import static android.content.Context.MODE_PRIVATE;
  * to handle interaction events.
  * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * This class facilitates log out for the user
  */
 public class LogoutFragment extends Fragment {
-
-
-
-
 
     private OnFragmentInteractionListener mListener;
 
@@ -54,11 +51,22 @@ public class LogoutFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * method to be called when the fragment is being created
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * method to be called to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +75,12 @@ public class LogoutFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_logout, null); //opens the logout screen
     }
 
+    /**
+     * method to be called after the view has been created. This sets up the UI and the button listeners
+     * as well as includes most of the code specific to this page
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -103,7 +117,10 @@ public class LogoutFragment extends Fragment {
         editor.apply();
     }
 
-
+    /**
+     * method to be called to attach the fragment
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -115,6 +132,9 @@ public class LogoutFragment extends Fragment {
         }
     }
 
+    /**
+     * method to be called to detach the fragment
+     */
     @Override
     public void onDetach() {
         super.onDetach();

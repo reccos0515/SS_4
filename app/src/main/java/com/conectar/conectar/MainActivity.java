@@ -18,7 +18,10 @@ import android.view.MenuItem;
 
 import util.Friend;
 
-
+/**
+ * this class is used to set up the drawer in order to navigate between fragments as well as
+ * start the first fragment
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,LogoutFragment.OnFragmentInteractionListener,
             EditProfileFragment.OnFragmentInteractionListener, ChangeStatusFragment.OnFragmentInteractionListener,
@@ -33,12 +36,20 @@ public class MainActivity extends AppCompatActivity
     String currentUsername, currentId, currentBio;
     String prefUsername, prefId, prefBio; //temp variable that is set based on whether or not there are stored preferences
 
+    /**
+     * this is empty
+     * @param uri
+     */
     @Override
     public void onFragmentInteraction(Uri uri){
         //empty
     }
 
 
+    /**
+     * method to be called to create this fragment
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,8 +104,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /**
+     * called when the app kills itself that it saves information (also for orientation changes)
+     * @param outState
+     */
     @Override
-    protected void onSaveInstanceState(Bundle outState) { //called when the app kills itself that it saves information (also for orientation changes)
+    protected void onSaveInstanceState(Bundle outState) {
         outState.putString("USERNAME", currentUsername); //saves last value
         outState.putString("BIO", currentBio);
         outState.putString("ID", currentId);
@@ -120,12 +135,18 @@ public class MainActivity extends AppCompatActivity
         preferencesEditor.apply();
     }
 
+    /**
+     * tells the app that it was force closed by the user
+     */
     @Override
-    protected void onStop() { //tells the app that it was force closed by the user
+    protected void onStop() {
         saveInfo(); //save the settings before actually killing the app
         super.onStop();
     }
 
+    /**
+     * called to return to the last page
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -136,6 +157,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * inflate the menu
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -143,11 +169,16 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Handle action bar item clicks here. The action bar will
+     * automatically handle clicks on the Home/Up button, so long
+     * as you specify a parent activity in AndroidManifest.xml.
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -158,9 +189,14 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * tells the app to switch screens if certain menu buttons are pressed
+     * @param item
+     * @return
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) { //tells the app to switch screens if certain menu buttons are pressed
+    public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         Fragment fragment = null;
         Context context = getApplicationContext();
