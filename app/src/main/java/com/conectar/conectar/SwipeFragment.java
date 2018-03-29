@@ -30,6 +30,7 @@ import util.UserUtil;
  * to handle interaction events.
  * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * Class to be used to look through other user the logged in user has matched with
  */
 public class SwipeFragment extends Fragment {
     private static View mainView; //view from the main part of the fragment
@@ -53,18 +54,27 @@ public class SwipeFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      */
-    //Rename and change types and number of parameters
     public static SwipeFragment newInstance() {
         SwipeFragment fragment = new SwipeFragment();
-        Bundle args = new Bundle();
         return fragment;
     }
 
+    /**
+     * method to create the fragment
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * method to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,6 +83,12 @@ public class SwipeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_swipe, null); //opens the logout screen
     }
 
+    /**
+     * method to be called once the view is created to set up the UI and button listeners
+     * Most of the code specific to this page is implemented here
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -287,6 +303,10 @@ public class SwipeFragment extends Fragment {
         return;
     }
 
+    /**
+     * method to attach fragment
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -298,6 +318,9 @@ public class SwipeFragment extends Fragment {
         }
     }
 
+    /**
+     * method to detach fragment
+     */
     @Override
     public void onDetach() {
         super.onDetach();

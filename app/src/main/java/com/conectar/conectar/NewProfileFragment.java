@@ -54,18 +54,28 @@ public class NewProfileFragment extends Fragment {
      *
      * @return A new instance of fragment NewProfileFragment
      */
-
     public static NewProfileFragment newInstance() {
         NewProfileFragment fragment = new NewProfileFragment();
         Bundle args = new Bundle();
         return fragment;
     }
 
+    /**
+     * method to create the fragment
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * method to be called in order to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,6 +84,12 @@ public class NewProfileFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_new_profile, null); //opens the logout screen
     }
 
+    /**
+     * method to be called after the view has been created to set up the UI and button listeners
+     * This is where most of the code specific to this page is
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -143,20 +159,28 @@ public class NewProfileFragment extends Fragment {
 
     }
 
-    //hides toolbar so user can't navigate to other fragments
+    /**
+     * hides toolbar so user can't navigate to other fragments
+     */
     @Override
     public void onResume() {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
-    //shows toolbar so user has access to the main menu again
+    /**
+     * shows toolbar so user has access to the main menu again
+     */
     @Override
     public void onStop() {
         super.onStop();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 
+    /**
+     * method to be called to attach the fragment
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -168,6 +192,9 @@ public class NewProfileFragment extends Fragment {
         }
     }
 
+    /**
+     * method to be called when the view is detached
+     */
     @Override
     public void onDetach() {
         super.onDetach();

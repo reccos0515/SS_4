@@ -48,11 +48,22 @@ public class ProfileViewFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * method to create the fragment
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * method to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,6 +71,12 @@ public class ProfileViewFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_profile_view, container, false);
     }
 
+    /**
+     * method to be called once the view has been created to set up the UI and the button listeners
+     * This is where most of the code specific to this page is implemented
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -132,6 +149,11 @@ public class ProfileViewFragment extends Fragment {
             }
         });
     }
+
+    /**
+     * method to attach fragment
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -143,6 +165,9 @@ public class ProfileViewFragment extends Fragment {
         }
     }
 
+    /**
+     * method to detach fragment
+     */
     @Override
     public void onDetach() {
         super.onDetach();

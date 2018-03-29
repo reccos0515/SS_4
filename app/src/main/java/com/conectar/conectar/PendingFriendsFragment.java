@@ -16,6 +16,7 @@ import android.view.ViewGroup;
  * to handle interaction events.
  * Use the {@link PendingFriendsFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * This class is to view pending friend requests to the logged in user
  */
 public class PendingFriendsFragment extends Fragment {
 
@@ -41,11 +42,22 @@ public class PendingFriendsFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * method to be called to create the fragment
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * method to be called to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,6 +66,10 @@ public class PendingFriendsFragment extends Fragment {
     }
 
 
+    /**
+     * method to be called to attach the fragment
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -65,6 +81,9 @@ public class PendingFriendsFragment extends Fragment {
         }
     }
 
+    /**
+     * method to be called to detach the fragment
+     */
     @Override
     public void onDetach() {
         super.onDetach();

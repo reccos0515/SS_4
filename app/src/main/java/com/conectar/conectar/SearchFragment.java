@@ -30,6 +30,7 @@ import util.Singleton;
  * to handle interaction events.
  * Use the {@link SearchFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * Class to search for a user
  */
 public class SearchFragment extends Fragment {
 
@@ -44,23 +45,30 @@ public class SearchFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment SearchFragment.
      */
     // Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
+    public static SearchFragment newInstance() {
         SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
+    /**
+     * method to be used to create the fragment
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * method to be used to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,6 +79,12 @@ public class SearchFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_help, null); //opens the logout screen
     }
 
+    /**
+     * method to be used once the view has been created to set up the UI and button listeners
+     * This is where most of the code specific to this page is implemented
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -79,6 +93,10 @@ public class SearchFragment extends Fragment {
 
     }
 
+    /**
+     * method to be called to attach the fragment
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -90,6 +108,9 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    /**
+     * method to be called to detach the fragment
+     */
     @Override
     public void onDetach() {
         super.onDetach();
