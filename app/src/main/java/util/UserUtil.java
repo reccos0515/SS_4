@@ -48,7 +48,7 @@ public class UserUtil {
 
 
     /**
-     * Changes the user's status in the DB
+     * Changes the user's status in the DB and updates the session variables
      * @param status the new status the user wishes to switch to
      * @param context the context in which this method is used
      */
@@ -222,6 +222,11 @@ public class UserUtil {
         return jsonArray2;
     }
 
+    /**
+     * sends a post request to the server. Used for activities such as make friend
+     * @param url to send the post request to
+     * @param context of the activity the is being called from
+     */
     public static void postRequest(String url, Context context){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  null,
                 new Response.Listener<JSONObject>() {
@@ -238,6 +243,11 @@ public class UserUtil {
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
     }
 
+    /**
+     * Request to delete, used for activities such as deleting a user or friend
+     * @param url to send the request to
+     * @param context of the activity this is being called from
+     */
     public static void deleteRequest(String url, Context context){
         StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
             @Override
@@ -264,7 +274,8 @@ public class UserUtil {
 
     /**
      * method to set the user that would be viewed in Profile View
-     * Called from other methods
+     * Called from other methods when there is a situation this user may
+     * be viewed in, such as swipe or page to view own profile
      * @param user that would be viewed
      */
     public static void setUserToView(JSONObject user){

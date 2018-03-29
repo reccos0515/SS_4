@@ -18,6 +18,7 @@ import org.json.JSONObject;
 /**
  * Created by Maggie on 3/23/2018.
  * Friend objects represent friends of a user.  Having a friend object helps in creating listviews
+ * Also includes functionality to add or delete a friend
  * that have custom update-able items
  */
 
@@ -26,6 +27,7 @@ public class Friend {
     private String username;
     private String bio;
     private String interests;
+    private static String urlBase = "http://proj-309-ss-4.cs.iastate.edu:9001/ben"; //base for all urls
 
     /**
      * Constructor for a friend
@@ -69,6 +71,30 @@ public class Friend {
      */
     public String fullFriendInfo(){
         return "Id: " + this.id + "   Username: " + this.username + "   Bio: " + this.bio + "   Interests: " + this.interests;
+    }
+
+    /**
+     * Sends a friend request to a specific user using integer ids
+     * @param userId user that the request is coming from
+     * @param friendId user that the request is going to
+     * @param context context in which this method is used
+     */
+    public static void makeFriend(int userId, int friendId, Context context){
+        String url = urlBase + "/users/" + userId + "" + "/request_friend/" + friendId + "";
+        UserUtil.postRequest(url, context);
+    }
+
+
+    //TODO implement functionality to delete a friend
+    /**
+     * Removes a friend from a user's friends list
+     * @param userId the user who is deleting the friend
+     * @param friendId the friend to be deleted from the user's list
+     * @param context the context in which this method is used
+     */
+    public static void removeFriend(int userId, int friendId, Context context){
+        String url = urlBase + "/users/" + userId + "/friends/" + friendId + ""; //TODO review url
+        UserUtil.deleteRequest(url, context);
     }
 
 

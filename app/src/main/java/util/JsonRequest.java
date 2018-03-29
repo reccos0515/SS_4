@@ -32,41 +32,14 @@ import java.util.Set;
 /**
  * Created by Jessie on 2/19/2018.
  * Methods for sending volley requests to the server for JSONObjects, JSONArrays, and Strings
+ * This also holds methods held in specific fragments to edit their UIs, because fragments
+ * cannot send volley requests
  */
 
 public class JsonRequest {
-    static String str;
-    //String for Json Array Req to server for all users "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users"
-    //String for Adding 10 users to the DB "http://projec-309-ss-4.cs.iastate.edu:9002/ben/test"
-    //String for Json Array Req to server to see a certain user's friends "http://proj-309-ss-4.cs.iastate.edu:9002/ben/users/<useridnumber>/friends"
-
-
 
     /**
-     * Method to save the string taken from the response listener in a global variable that can be accessed elsewhere in the program
-     * This should be called within the onResponse listener, after the Array has been parsed
-     * @param str2
-     */
-    public static void saveString(String str2){
-        str = str2;
-        Log.d("Saved String", str);
-        return;
-    }
-
-
-    /**
-     * method to get the first user's name
-     * @return name of first user
-     */
-    public static String getString() {
-       // while(!ready){
-            //implement something here?
-       // }
-        return str;
-    }
-
-    /**
-     * Sends a post request to a given url
+     * Sends a post request to a given url to add a new user
      * @param js json object to send
      * @param url url of where this request should be sent
      */
@@ -89,27 +62,6 @@ public class JsonRequest {
                             e.printStackTrace();
                         }
                         //todo make swipe page
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
-    }
-
-    /**
-     * Sends a post request to a given url
-     * @param js json object to send
-     * @param url url of where this request should be sent
-     */
-    public static void postRequest(JSONObject js, String url, Context context){
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  js,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -218,7 +170,8 @@ public class JsonRequest {
 
     /**
      * Method to be used in Swipe Fragment to get the users to view
-     * @param nView view from that page
+     * and to show them on the UI
+     * @param nView view from that page so the UI can be updated
      * @param url url to send the request to
      * @param context context from that page
      */
@@ -361,6 +314,12 @@ public class JsonRequest {
         return;
     }
 
+    /**
+     * method used to delete a user
+     * @param js user to be deleted
+     * @param url url to send this request to
+     * @param context context from the activity where this is called
+     */
     public static void deleteUserRequest(JSONObject js, String url, Context context){
         final Context context1 = context;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url,  js,

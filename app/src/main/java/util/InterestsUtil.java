@@ -14,7 +14,9 @@ import org.json.JSONObject;
 
 /**
  * Created by Maggie on 3/7/2018.
- * Methods pertaining to a user's interests
+ * Methods pertaining to a user's interests, such as getting the string that corresponds to the number value
+ * Interests are stored in the server as two digit strings of numbers, and this can convert that into the
+ * activity for the user to view
  */
 
 public class InterestsUtil {

@@ -11,17 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import util.FriendsUtil;
+import util.Friend;
 import util.InterestsUtil;
-import util.Singleton;
 import util.UserUtil;
 
 
@@ -130,7 +124,7 @@ public class ProfileViewFragment extends Fragment {
             public void onClick(View view) {
                 //first id receives, second id sends
                 try{
-                    FriendsUtil.makeFriend(userIDNum + "", (int)user.get("id") + "", getContext());
+                    Friend.makeFriend(userIDNum , user.getInt("id"), getContext());
                 } catch (JSONException e){
                     e.printStackTrace();
                 }

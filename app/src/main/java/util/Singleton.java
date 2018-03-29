@@ -8,6 +8,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 /**
+ * Class used to assist volley requests by creating the queue
  * Created by Maggie on 2/17/2018.
  * A class that manages the request queue for JSON requests
  */
