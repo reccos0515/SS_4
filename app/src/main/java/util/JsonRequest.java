@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -189,6 +190,7 @@ public class JsonRequest {
                 TextView interest3 = nView.findViewById(R.id.swipeInterest3);
                 TextView interest4 = nView.findViewById(R.id.swipeInterest4);
                 TextView interest5 = nView.findViewById(R.id.swipeInterest5);
+                Button button = nView.findViewById(R.id.swipeView);
 
 
                 //check for success
@@ -214,6 +216,10 @@ public class JsonRequest {
                     interest3.setText("");
                     interest4.setText("");
                     interest5.setText("");
+                    //if the problem is the user is red, the button will be used to change the status
+                    if(errorMessage.getText().toString().equals("User is RED")){
+                        button.setText("Change status");
+                    }
                 }
                 else{
                     errorMessage.setText(""); //if succeeded, can make the text view invisible

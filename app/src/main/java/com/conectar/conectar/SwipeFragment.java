@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -187,6 +188,8 @@ public class SwipeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d("SwipeFragment", "Clicked view profile");
+                TextView errorMessage = mainView.findViewById(R.id.swipeMessage);
+                Button button = mainView.findViewById(R.id.swipeView);
                 if(success && users.length() > 0) {
                     //call a profile view fragment with userOnDisplayLoc user
                     Fragment fragment = new ProfileViewFragment();
@@ -196,6 +199,11 @@ public class SwipeFragment extends Fragment {
                         fragmentTransaction.replace(R.id.screen_area, fragment);
                         fragmentTransaction.commit();
                     }
+                } else if(errorMessage.getText().toString().equals("User is RED")){
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.screen_area, new ChangeStatusFragment());
+                    fragmentTransaction.commit();
                 }
             }
         });
