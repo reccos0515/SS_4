@@ -1,34 +1,35 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import util.UserUtil;
+
+//import org.omg.CORBA.Current;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link LogoutFragment.OnFragmentInteractionListener} interface
+ * {@link ChangeStatusFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link LogoutFragment#newInstance} factory method to
+ * Use the {@link ChangeStatusFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * This class allows the user to change their current status between red,
+ * yellow, and green
  */
 public class ChangeStatusFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -40,29 +41,32 @@ public class ChangeStatusFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LogoutFragment.
+     * @return A new instance of fragment ChangeStatusFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ChangeStatusFragment newInstance(String param1, String param2) {
+    //Rename and change types and number of parameters
+    public static ChangeStatusFragment newInstance() {
         ChangeStatusFragment fragment = new ChangeStatusFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
+    /**
+     * method to be called when the fragment is fist created
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
+    /**
+     * Method to be called when the view is being created.
+     * Creates the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,26 +75,48 @@ public class ChangeStatusFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_change_status, null); //opens the change status screen
     }
 
+    /**
+     * Method to be called once the view has been created. This sets up the UI
+     * and all buttons that will be used
+     * This is where most of the specific page code is implemented
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        
-        /*
-        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener(){
+
+        //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+
+        view.findViewById(R.id.greenStatusBtn).setOnClickListener(new View.OnClickListener() { //green button clicked
             @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "You are inside the logout fragment", Toast.LENGTH_LONG);
+            public void onClick(View view) { //set status to green
+                UserUtil.updateStatus(2, getContext()); //call this to update the status
+                Toast.makeText(getActivity(), "Status set to green", Toast.LENGTH_LONG).show(); //toast to tell user it worked
             }
-        }); */
+        });
+        view.findViewById(R.id.yellowStatusBtn).setOnClickListener(new View.OnClickListener(){ //yellow button clicked
+            @Override
+            public void onClick(View view){ //set status to yellow
+                UserUtil.updateStatus(1, getContext()); //call this to update the status
+                Toast.makeText(getActivity(), "Status set to yellow", Toast.LENGTH_LONG).show(); //toast to tell the user it worked
+            }
+        });
+        view.findViewById(R.id.redStatusBtn).setOnClickListener(new View.OnClickListener() { //red button clicked
+            @Override
+            public void onClick(View view) { //set status to red
+                UserUtil.updateStatus(0, getContext()); //call this to update the status
+                Toast.makeText(getActivity(), "Status set to red", Toast.LENGTH_LONG).show(); //toast to let the user know it worked
+            }
+        });
+
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
+    /**
+     * method to be called when the fragment is being attached
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -102,12 +128,18 @@ public class ChangeStatusFragment extends Fragment {
         }
     }
 
+    /**
+     * Method to be called when the fragment is being detached (closing)
+     */
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+    /**
+     * interface for the interaction listener
+     */
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -119,7 +151,7 @@ public class ChangeStatusFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        //Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

@@ -1,15 +1,36 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import util.Friend;
+import util.JsonRequest;
+import util.UserUtil;
 
 
 /**
@@ -19,16 +40,11 @@ import android.widget.Toast;
  * to handle interaction events.
  * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * This class is used to view the friends the user has
  */
-public class FriendsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+    Friend[] friendsList = {new Friend("empty")}; //put a default value to be grabbed in case user doesn't have friends
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private OnFragmentInteractionListener mListener;
 
@@ -40,63 +56,142 @@ public class FriendsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment LogoutFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static FriendsFragment newInstance(String param1, String param2) {
+    public static FriendsFragment newInstance() {
         FriendsFragment fragment = new FriendsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
 
+    /**
+     * method to be called when the fragment is first created
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
+    /**
+     * method to call to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_friends, null); //opens the logout screen
+        return inflater.inflate(R.layout.fragment_friends, container, false); //opens the logout screen
+
+
     }
 
+    /**
+     * method to be call once the view has been created
+     * This is where the UI and button listeners are set up, as well as
+     * most of the code specific to this page
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener() {
+        //TODO try to make code more modular/readable
+        Context context = getContext();
+        final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
+        int id = preferences.getInt("ID", 0); //get the logged in user's id
+
+        ListView listView = (ListView) view.findViewById(R.id.friendsListView); //grabs the listview from the xml layout
+        JsonRequest.getFriendsList(id, context); //get a list of friends and store in sharedpreferences
+
+
+        JSONObject initial = new JSONObject();
+
+        Set<String> temp = preferences.getStringSet("FRIENDSLISTUSERNAMES", null); //get the list of usernames from shared preferences
+
+        //a bunch of garbage to initialize temp2 so friendsObjects doesn't bug out
+        String[] fake = new String[]{"empty"};
+        final Set<String> empty = new HashSet<>(Arrays.asList(fake));
+        final Set<String> temp2 = preferences.getStringSet("FRIENDJSON", empty);
+        final JSONObject[] friendsJSONObjects = new JSONObject[temp2.size()];
+        //Log.d("FriendsFragment", "FRIENDSLISTJSONOBJECTS: " + temp2.toString());
+
+        if(temp != null){ //gets cranky trying to typecast null
+            List<String> friends = new ArrayList<String>(temp); //convert the set of usernames to a list for easier manipulation
+            friendsList = new Friend[friends.size()];
+            for(int i = 0; i < friends.size(); i++){ //TODO figure out if this is necessary
+                Friend newFriend = new Friend(friends.get(i));
+                friendsList[i] = newFriend;
+            }
+        }
+        if(temp2 != empty){
+            List<String> friendsObjects = new ArrayList<String>(temp2); //convert the list of JSONObjects of users to an arraylist
+            for(int i = 0; i < temp2.size(); i++){
+                try {
+                    JSONObject user = new JSONObject(friendsObjects.get(i));
+                    //Log.d("FriendsFragment", "User conversion: " + user);
+                    friendsJSONObjects[i] = user; //TODO figure out if this is necessary
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            //Log.d("FriendsFragment", "friendsJSONObjects: "+ friendsJSONObjects.toString());
+        }
+
+
+
+        //Log.d("FriendsFragment", "Friendslist: " + friendsList.toString());
+
+        ArrayAdapter<Friend> adapter = new ArrayAdapter<Friend>(getActivity(), android.R.layout.simple_list_item_1, friendsList); //tell the xml to use friendsList for items on they layout
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //if a person in the list is clicked
             @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "You pressed logout", Toast.LENGTH_SHORT);
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(temp2 != empty){ //if there are users sent back and not the garbage initialized user
+                    Toast.makeText(getActivity(), ((TextView) view).getText(), Toast.LENGTH_LONG).show(); //who was clicked on
+                    Log.d("FriendsFragment", "friendsJSONObjects prior to setting user to view" + friendsJSONObjects[i] + "Person clicked on: " + friendsList[i]);
+                    String thisUsername = "";
+
+                    for(int j = 0; j < friendsList.length; j++){
+                        try {
+                            thisUsername = friendsJSONObjects[j].getString("userName");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if(thisUsername.equals(friendsList[i].toString())){ //if the JSONObject matches the person you clicked on
+                            UserUtil.setUserToView(friendsJSONObjects[j]); //tell ProfileViewFragment who to show
+                        }
+                    }
+
+                    //pull up the profile of the friend that's clicked on
+                    Fragment fragment = new ProfileViewFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.screen_area, fragment);
+                    fragmentTransaction.commit();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Error", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
-        /*
-        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "You are inside the logout fragment", Toast.LENGTH_LONG);
-            }
-        }); */
+
+        listView.setAdapter(adapter);
+
+
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
+    /**
+     * method to be called when the fragment is being attached
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -108,10 +203,18 @@ public class FriendsFragment extends Fragment {
         }
     }
 
+    /**
+     * method to call when the fragment is being detached
+     */
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onRefresh() {
+        Toast.makeText(getActivity(), "Refreshed", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -125,7 +228,7 @@ public class FriendsFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        //Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

@@ -3,41 +3,26 @@ package com.conectar.conectar;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONObject;
-
-import util.Singleton;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SearchFragment.OnFragmentInteractionListener} interface
+ * {@link PendingFriendsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link SearchFragment#newInstance} factory method to
+ * Use the {@link PendingFriendsFragment#newInstance} factory method to
  * create an instance of this fragment.
- * Class to search for a user
+ * This class is to view pending friend requests to the logged in user
  */
-public class SearchFragment extends Fragment {
-
+public class PendingFriendsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public SearchFragment() {
+    public PendingFriendsFragment() {
         // Required empty public constructor
     }
 
@@ -45,16 +30,20 @@ public class SearchFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment SearchFragment.
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment PendingFriendsFragment.
      */
-    // Rename and change types and number of parameters
-    public static SearchFragment newInstance() {
-        SearchFragment fragment = new SearchFragment();
+
+    public static PendingFriendsFragment newInstance(String param1, String param2) {
+        PendingFriendsFragment fragment = new PendingFriendsFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
         return fragment;
     }
 
     /**
-     * method to be used to create the fragment
+     * method to be called to create the fragment
      * @param savedInstanceState
      */
     @Override
@@ -63,35 +52,19 @@ public class SearchFragment extends Fragment {
     }
 
     /**
-     * method to be used to create the view
+     * method to be called to create the view
      * @param inflater
      * @param container
      * @param savedInstanceState
      * @return
      */
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        //TODO FIX
-        return inflater.inflate(R.layout.fragment_help, null); //opens the logout screen
+        return inflater.inflate(R.layout.fragment_pending_friends, container, false);
     }
 
-    /**
-     * method to be used once the view has been created to set up the UI and button listeners
-     * This is where most of the code specific to this page is implemented
-     * @param view
-     * @param savedInstanceState
-     */
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-
-    }
 
     /**
      * method to be called to attach the fragment
@@ -131,6 +104,4 @@ public class SearchFragment extends Fragment {
         //Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-
 }

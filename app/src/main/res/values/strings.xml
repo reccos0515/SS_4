@@ -86,6 +86,26 @@
         <item>I do not want to hangout now</item>
     </string-array>
 
+    <string-array name="possible_interests">
+        <item>Reading</item>
+        <item>Cooking</item>
+        <item>Football</item>
+        <item>Soccer</item>
+        <item>Crafts</item>
+        <item>Movies</item>
+        <item>Snowboarding</item>
+        <item>Board Games</item>
+        <item>Music</item>
+        <item>Shopping</item>
+        //10
+        <item>Basketball</item>
+        <item>Swimming</item>
+        <item>Working Out</item>
+        <item>Hiking</item>
+        <item>Volunteering</item>
+        //15
+    </string-array>
+
 
     <!-- Strings for the main menu -->
     <string name="menu_messages">Messages</string>
@@ -100,7 +120,7 @@
     <string name="menu_managementHeader">Account Management</string>
     <string name="title_activity_main">MainActivity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="conectar_about">coNECTAR is an app designed to bring people together. It aims to pair people who wouldn\'t have met otherwise and inspire people to try new things.</string>
 
 </resources>

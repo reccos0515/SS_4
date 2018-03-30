@@ -1,15 +1,21 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -19,16 +25,9 @@ import android.widget.Toast;
  * to handle interaction events.
  * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * This class facilitates log out for the user
  */
 public class LogoutFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -44,25 +43,30 @@ public class LogoutFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment LogoutFragment.
      */
-    // TODO: Rename and change types and number of parameters
+    //Rename and change types and number of parameters
     public static LogoutFragment newInstance(String param1, String param2) {
         LogoutFragment fragment = new LogoutFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
 
+    /**
+     * method to be called when the fragment is being created
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
+    /**
+     * method to be called to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,32 +75,52 @@ public class LogoutFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_logout, null); //opens the logout screen
     }
 
+    /**
+     * method to be called after the view has been created. This sets up the UI and the button listeners
+     * as well as includes most of the code specific to this page
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", MODE_PRIVATE);
 
-        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.logoutBtn).setOnClickListener(new View.OnClickListener() { //if logout button is pressed
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "You pressed logout", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(getActivity(), "You are logged out!", Toast.LENGTH_SHORT).show();
+                Log.d("LogoutFragment", "User was logged in, proof prior to destruction of session: " + preferences.getString("USERNAME", "empty"));
+                destroySession(preferences); //remove sharedPreferences session variables
+                Log.d("LogoutFragment", "User logged out, proof: " + preferences.getString("USERNAME", "empty"));
+
+                //Send user to the login screen
+                Fragment fragment = new LoginFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area, fragment);
+                fragmentTransaction.commit();
             }
         });
-        /*
-        view.findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "You are inside the logout fragment", Toast.LENGTH_LONG);
-            }
-        }); */
+
+
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    /**
+     * Destroys all session variables for the current session
+     * @param preferences the instance of sharedPreferences from which the variables will be destroyed
+     */
+    public void destroySession(SharedPreferences preferences){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear(); //destroy the session variables
+        editor.apply();
     }
 
+    /**
+     * method to be called to attach the fragment
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -108,6 +132,9 @@ public class LogoutFragment extends Fragment {
         }
     }
 
+    /**
+     * method to be called to detach the fragment
+     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -125,7 +152,7 @@ public class LogoutFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        //Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

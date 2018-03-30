@@ -3,10 +3,14 @@ package com.conectar.conectar;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import util.InterestsUtil;
 
 
 /**
@@ -18,16 +22,10 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class MessagesFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnFragmentInteractionListener mListener; //TODO figure out if this is necessary
+
 
     public MessagesFragment() {
         // Required empty public constructor
@@ -37,27 +35,17 @@ public class MessagesFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+
      * @return A new instance of fragment MessagesFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static MessagesFragment newInstance(String param1, String param2) {
+    public static MessagesFragment newInstance() {
         MessagesFragment fragment = new MessagesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -67,11 +55,48 @@ public class MessagesFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_messages, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+
+    @Override
+    public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.findViewById(R.id.testButton).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                String interests = "52345121314";
+                String viewInterests = "51314122345";
+                int numInterests = interests.charAt(0) - '0';
+                int viewNumInterests = viewInterests.charAt(0) - '0';
+                int currentCommonIntsDisplayed = 0;
+                String[] views = new String[5];
+                if(numInterests > 0 && viewNumInterests > 0) {
+                    for (int i = 0; i < numInterests; i++) {
+                        for (int j = 0; j < viewNumInterests; j++) {
+                            //compare interests
+                            if (interests.charAt(2 * i + 1) == viewInterests.charAt(2 * j + 1) && interests.charAt(2 * i + 2) == viewInterests.charAt(2 * j + 2)) {
+                                //update the correct interest
+                                if (currentCommonIntsDisplayed == 0) {
+                                    views[0] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                } else if (currentCommonIntsDisplayed == 1) {
+                                    views[1] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                } else if (currentCommonIntsDisplayed == 2) {
+                                    views[2] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                } else if (currentCommonIntsDisplayed == 3) {
+                                    views[3] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                } else if (currentCommonIntsDisplayed == 4) {
+                                    views[4] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
+                                }
+                                currentCommonIntsDisplayed++;
+                            }
+                        }
+                    }
+                }
+                String msg = "";
+                for(int i = 0; i < currentCommonIntsDisplayed; i++){
+                    msg += views[i] + " ";
+                }
+                Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -102,7 +127,7 @@ public class MessagesFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        // Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

@@ -1,15 +1,24 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.EditText;
+
+import org.json.JSONObject;
+
+import util.JsonRequest;
+import util.UserUtil;
 
 
 /**
@@ -19,16 +28,13 @@ import android.widget.Toast;
  * to handle interaction events.
  * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * This class is used to facilitate user log in
  */
 public class LoginFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    EditText editUsername, editPassword;
+    Context context;
+    JSONObject fullJS = new JSONObject();
 
     private OnFragmentInteractionListener mListener;
 
@@ -40,51 +46,124 @@ public class LoginFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment LogoutFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static LoginFragment newInstance(String param1, String param2) {
+    public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
+    /**
+     * method to be called when the fragment is being created
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
+    /**
+     * method to be called in order to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_logout, null); //opens the logout screen
+        return inflater.inflate(R.layout.fragment_login, null); //opens the logout screen
     }
 
+    /**
+     * method to be called once the view has been created. This is where the Ui and button
+     * listeners are set up, as well as most of the code specific to this page
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
+        editor.putBoolean("ISLOGGEDIN", false);
+        editor.apply();
+
+        context = getContext(); //get the current context for use in Volley requests
+
+        editPassword = view.findViewById(R.id.loginPassword);
+        editUsername = view.findViewById(R.id.loginUsername);
+
+
+        view.findViewById(R.id.loginBtn).setOnClickListener(new View.OnClickListener() { //if user clicks the button to log in
+            @Override
+            public void onClick(View view) { //TODO review whether or not this login stuff works
+
+                String loginPassword = "";
+                String loginUsername = "";
+
+                loginPassword = editPassword.getText().toString();
+                loginUsername = editUsername.getText().toString();
+                Log.d("LoginFragment", "Input username: " + loginUsername + "   Input password: " + loginPassword);
+
+                fullJS = UserUtil.prepareLogin(loginUsername, loginPassword, context);
+                String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/login";
+                JsonRequest.loginPostRequest(fullJS, url, context);
+
+
+                Boolean isLoggedIn = preferences.getBoolean("ISLOGGEDIN", false);
+                Log.d("LoginFragment", "ISLOGGEDIN: " + isLoggedIn);
+                if(isLoggedIn){
+                    Fragment fragment = new SwipeFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.screen_area, fragment);
+                    fragmentTransaction.commit();
+                }
+
+
+            }
+        });
+        view.findViewById(R.id.createAccountBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new NewProfileFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area, fragment);
+                fragmentTransaction.commit();
+            }
+        });
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    /**
+     * hides the toolbar so that the user can't go to another page before logging in (hide the menu)
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
+    /**
+     * shows the toolbar again once the user leaves LoginFragment so that they have access to the menu again
+     */
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+    }
+
+    /**
+     * method to be called when the fragment is being attached
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -96,6 +175,9 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    /**
+     * method to call when the fragment is being detached
+     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -113,7 +195,7 @@ public class LoginFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        //Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

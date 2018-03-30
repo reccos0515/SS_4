@@ -1,17 +1,23 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import util.InterestsUtil;
+import util.JsonRequest;
 
 
 /**
@@ -21,21 +27,26 @@ import android.widget.Toast;
  * to handle interaction events.
  * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * This class is used to allow the user to edit their profile
  */
 public class EditProfileFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    private EditText bio;
-    private EditText newInterest;
-    //TODO figure out how to use delete interest buttons with interests at size 5.  Extra space here is unideal
-    private String[] interests = new String[6];
-    private int numInterests;
+    private EditText bio; //bio to be edited by user
+    private EditText newInterest; //new interest to be added
+    private Button int1; //interest 1 button
+    private Button int2; //interest 2 button
+    private Button int3; //interest 3 button
+    private Button int4; //interest 4 button
+    private Button int5; //interest 5 button
+
+    private String interests; //String with user's interests
+    private int numInterests; //int with number of interest user currently has
+    private int id; //int with id
+    private String username; //string with username
+
+    private Context context; //application context
+    
+    private final String empty = "(empty)"; //string to set text view to if empty
 
     private OnFragmentInteractionListener mListener;
 
@@ -47,32 +58,31 @@ public class EditProfileFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment LogoutFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static EditProfileFragment newInstance(String param1, String param2) {
+    //Rename and change types and number of parameters
+    public static EditProfileFragment newInstance() {
         EditProfileFragment fragment = new EditProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
+    /**
+     * method to be called when the fragment is created
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) { //------------------------------------------------------------------------------onCreate
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-
 
     }
 
+    /**
+     * method to be used in order to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,54 +90,84 @@ public class EditProfileFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_edit_profile, null);
     }
 
+    /**
+     * method to be used once the view has been created
+     * This is where the UI is set up as well as the button listeners, and
+     * most of the code specific to this page is implemented
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //create variables that take input from UI
+        //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
+
+        //set all views
         bio = view.findViewById(R.id.bio);
         newInterest = view.findViewById(R.id.newInterest);
-        //int to keep track of the current number of interests
-        numInterests = 0;
+        int1 = view.findViewById(R.id.interestOne);
+        int2 = view.findViewById(R.id.interestTwo);
+        int3 = view.findViewById(R.id.interestThree);
+        int4 = view.findViewById(R.id.interestFour);
+        int5 = view.findViewById(R.id.interestFive);
+
+        context = getActivity().getApplicationContext(); //get the context
+
+        //set all the user info
+        bio.setText(preferences.getString("BIO", "empty"));
+        interests = preferences.getString("INTERESTS", "00000000000");
+        id = preferences.getInt("ID", 0);
+        username = preferences.getString("USERNAME", "none");
+        updateInterestButtons(); //update the ui on the buttons
+
+        numInterests = interests.charAt(0) - '0'; //set the number of interests
         //create a button to add an interest
-        view.findViewById(R.id.submitInterest).setOnClickListener(new View.OnClickListener(){
+        view.findViewById(R.id.submitNewInterest).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                //if there are not yet 5 interests, it can be added
+                //if there are not yet 5 interests, it can try to be added
                 if(numInterests < 5){
-                    //toast to let the user know it worked
-                    Context context = getActivity().getApplicationContext();
-                    CharSequence text = "Interests are not full";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                    //add the interest
-                    interests[numInterests] = newInterest.getText().toString();
-                    //increment the number of interests
-                    numInterests++;
+                    String interestToAdd = newInterest.getText().toString(); //get the new interest number
+                    //if this is a valid interest, it can be added
+                    if(InterestsUtil.getInterest(interestToAdd) != null){
+                        char[] interestChars = interests.toCharArray(); //convert interests to a char array
+                        interestChars[(2 * numInterests) + 1] = interestToAdd.charAt(0); //replace the old numbers with the new id
+                        interestChars[(2 * numInterests) + 2] = interestToAdd.charAt(1);
+                        numInterests++; //increment the number of interests
+                        interestChars[0] = (char) (numInterests + '0'); //update numInterests in the string
+                        interests = String.valueOf(interestChars); //turn it back into a string
+                        Toast.makeText(getContext(), "Successfully added " + InterestsUtil.getInterest(interestToAdd), Toast.LENGTH_SHORT); //toast to let the user know it worked
+                        updateInterestButtons(); //update the ui on the buttons to remove interests
+                    }
+                    else{
+                        Toast.makeText(getContext(), "Please enter a valid interest number", Toast.LENGTH_SHORT).show(); //toast to tell the user the number was not valid
+                    }
                 }
                 else{
-                    //let the user know there are too many interests to add another
-                    Context context = getActivity().getApplicationContext();
-                    CharSequence text = "Interests are full";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
+                    Toast.makeText(context, "Interests are full", Toast.LENGTH_SHORT).show(); //let the user know interests were full
                 }
             }
         });
+
 
         view.findViewById(R.id.interestOne).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 if(numInterests >= 1){
-                    //move every interest down one place
-                    for(int i = 0; i < numInterests; i++){
-                        interests[i] = interests[i + 1];
-                        Toast.makeText(getActivity(), "Interest One Removed", Toast.LENGTH_SHORT).show();
+                    char[] interestChars = interests.toCharArray(); //convert interests to a char array
+                    //move every interest down in the string
+                    for(int i = 1; i < 9; i++){
+                        interestChars[i] = interestChars[i + 2];
                     }
-                    //decrement number of interests
-                    numInterests--;
+                    interestChars[9] = '0'; //fill in last interest as 0
+                    interestChars[10] = '0';
+                    numInterests--; //decrement number of interests
+                    interestChars[0] = (char) numInterests; //reset the number of interests in the string
+                    interests = String.valueOf(interestChars); //return to a string
+                    updateInterestButtons(); //update ui on buttons to remove interests
                 }
             }
         });
@@ -135,13 +175,17 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(numInterests >= 2){
-                    //move every interest down one place
-                    for(int i = 1; i < numInterests; i++){
-                        interests[i] = interests[i + 1];
-                        Toast.makeText(getActivity(), "Interest Two Removed", Toast.LENGTH_SHORT).show();
+                    char[] interestChars = interests.toCharArray(); //convert interests to a char array
+                    //move every interest down in the string
+                    for(int i = 3; i < 9; i++){
+                        interestChars[i] = interestChars[i + 2];
                     }
-                    //decrement number of interests
-                    numInterests--;
+                    interestChars[9] = '0'; //fill in last interest as 0
+                    interestChars[10] = '0';
+                    numInterests--; //decrement number of interests
+                    interestChars[0] = (char) numInterests; //reset the number of interests in the string
+                    interests = String.valueOf(interestChars); //return to a string
+                    updateInterestButtons(); //update ui on buttons to remove interests
                 }
             }
         });
@@ -149,13 +193,17 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(numInterests >= 3){
-                    //move every interest down one place
-                    for(int i = 2; i < numInterests; i++){
-                        interests[i] = interests[i + 1];
-                        Toast.makeText(getActivity(), "Interest Three Removed", Toast.LENGTH_SHORT).show();
+                    char[] interestChars = interests.toCharArray(); //convert interests to a char array
+                    //move every interest down in the string
+                    for(int i = 5; i < 9; i++){
+                        interestChars[i] = interestChars[i + 2];
                     }
-                    //decrement number of interests
-                    numInterests--;
+                    interestChars[9] = '0'; //fill in last interest as 0
+                    interestChars[10] = '0';
+                    numInterests--; //decrement number of interests
+                    interestChars[0] = (char) numInterests; //reset the number of interests in the string
+                    interests = String.valueOf(interestChars); //return to a string
+                    updateInterestButtons(); //update ui on buttons to remove interests
                 }
             }
         });
@@ -163,13 +211,17 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(numInterests >= 4){
-                    //move every interest down one place
-                    for(int i = 3; i < numInterests; i++){
-                        interests[i] = interests[i + 1];
-                        Toast.makeText(getActivity(), "Interest Four Removed", Toast.LENGTH_SHORT).show();
+                    char[] interestChars = interests.toCharArray(); //convert interests to a char array
+                    //move every interest down in the string
+                    for(int i = 7; i < 9; i++){
+                        interestChars[i] = interestChars[i + 2];
                     }
-                    //decrement number of interests
-                    numInterests--;
+                    interestChars[9] = '0'; //fill in last interest as 0
+                    interestChars[10] = '0';
+                    numInterests--; //decrement number of interests
+                    interestChars[0] = (char) numInterests; //reset the number of interests in the string
+                    interests = String.valueOf(interestChars); //return to a string
+                    updateInterestButtons(); //update ui on buttons to remove interests
                 }
             }
         });
@@ -177,36 +229,79 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(numInterests >= 5){
-                    //move every interest down one place
-                    for(int i = 4; i < numInterests; i++){
-                        interests[i] = interests[i + 1];
-                        Toast.makeText(getActivity(), "Interest Five Removed", Toast.LENGTH_SHORT).show();
-                    }
-                    //decrement number of interests
-                    numInterests--;
+                    char[] interestChars = interests.toCharArray(); //convert interests to a char array
+                    interestChars[9] = '0'; //fill in last interest as 0
+                    interestChars[10] = '0';
+                    numInterests--; //decrement number of interests
+                    interestChars[0] = (char) numInterests; //reset the number of interests in the string
+                    interests = String.valueOf(interestChars); //return to a string
+                    updateInterestButtons(); //update ui on buttons to remove interest
                 }
             }
         });
         //For debugging, outputs all the current values in interests
-        view.findViewById(R.id.debugButton).setOnClickListener(new View.OnClickListener(){
+        view.findViewById(R.id.updateServer).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Context context = getActivity().getApplicationContext();
-                CharSequence text = (CharSequence)(interests[0] + interests[1] + interests[2] + interests[3] + interests[4]);
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                JSONObject js = new JSONObject(); //json object to send, fill will current fields
+                try{
+                    js.put("interests", interests);
+                    editor.putString("INTERESTS", interests); //set session variables as well
+                    js.put("bio", bio.getText().toString());
+                    editor.putString("BIO", bio.getText().toString());
+                    js.put("id", id);
+                    js.put("userName", username);
+                    js.put("status", preferences.getInt("STATUS", 0));
+                    editor.apply();
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+                JsonRequest.jsonObjectPutRequest(js, "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users", context); //send the new put request
             }
         });
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    /**
+     * method to update the ui on the buttons after changing the interests
+     */
+    public void updateInterestButtons(){
+        String cur = interests.charAt(1) + "" + interests.charAt(2) + ""; //first interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int1.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int1.setText(empty); //if it doesn't exist, set the text to be empty
+        }
+        cur = interests.charAt(3) + "" + interests.charAt(4) + ""; //second interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int2.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int2.setText(empty); //if it doesn't exist, set the text to be empty
+        }
+        cur = interests.charAt(5) + "" + interests.charAt(6) + ""; //third interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int3.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int3.setText(empty); //if it doesn't exist, set the text to be empty
+        }
+        cur = interests.charAt(7) + "" + interests.charAt(8) + ""; //fourth interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int4.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int4.setText(empty); //if it doesn't exist, set the text to be empty
+        }
+        cur = interests.charAt(9) + "" + interests.charAt(10) + ""; //fifth interest chars
+        if(InterestsUtil.getInterest(cur) != null){
+            int5.setText(InterestsUtil.getInterest(cur)); //if it exists, set the text to be the interest
+        }else{
+            int5.setText(empty); //if it doesn't exist, set the text to be empty
         }
     }
 
+
+    /**
+     * method to be called when the fragment is being attached
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -218,6 +313,9 @@ public class EditProfileFragment extends Fragment {
         }
     }
 
+    /**
+     * method to be called when the fragment is being detached
+     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -235,7 +333,7 @@ public class EditProfileFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        // Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

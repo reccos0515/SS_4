@@ -1,43 +1,36 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
-import util.Singleton;
+import util.JsonRequest;
+import util.UserUtil;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SearchFragment.OnFragmentInteractionListener} interface
+ * {@link SettingsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link SearchFragment#newInstance} factory method to
+ * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
- * Class to search for a user
+ * This class is used to change user settings
  */
-public class SearchFragment extends Fragment {
-
+public class SettingsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public SearchFragment() {
+    public SettingsFragment() {
         // Required empty public constructor
     }
 
@@ -45,16 +38,15 @@ public class SearchFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment SearchFragment.
+     * @return A new instance of fragment SettingsFragment.
      */
-    // Rename and change types and number of parameters
-    public static SearchFragment newInstance() {
-        SearchFragment fragment = new SearchFragment();
+    public static SettingsFragment newInstance() {
+        SettingsFragment fragment = new SettingsFragment();
         return fragment;
     }
 
     /**
-     * method to be used to create the fragment
+     * method to be called to create the fragment
      * @param savedInstanceState
      */
     @Override
@@ -63,25 +55,22 @@ public class SearchFragment extends Fragment {
     }
 
     /**
-     * method to be used to create the view
+     * method to be called to create the view
      * @param inflater
      * @param container
      * @param savedInstanceState
      * @return
      */
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        //TODO FIX
-        return inflater.inflate(R.layout.fragment_help, null); //opens the logout screen
+        return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
     /**
-     * method to be used once the view has been created to set up the UI and button listeners
-     * This is where most of the code specific to this page is implemented
+     * method to be called once the view is created. This updates the UI and button listeners. Most
+     * of the code specific to this page is implemented here
      * @param view
      * @param savedInstanceState
      */
@@ -89,12 +78,26 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        view.findViewById(R.id.deleteAccountBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { //TODO add another button to verify they do wan't to delete account??
+                Toast.makeText(getActivity(), "Account Deleted!", Toast.LENGTH_LONG).show();
+                Context context = getContext();
+                final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
 
+                String thisUsername = preferences.getString("USERNAME", "emtpy");
+                String thisPassword = "test"; //TODO get from edittext
+                String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/login";
+
+                JSONObject json = UserUtil.prepareLogin(thisUsername, thisPassword, context);
+                JsonRequest.deleteUserRequest(json, url, context);
+            }
+        });
 
     }
 
     /**
-     * method to be called to attach the fragment
+     * method to attach fragment
      * @param context
      */
     @Override
@@ -109,7 +112,7 @@ public class SearchFragment extends Fragment {
     }
 
     /**
-     * method to be called to detach the fragment
+     * method to detach fragment
      */
     @Override
     public void onDetach() {
@@ -128,9 +131,7 @@ public class SearchFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        //Update argument type and name
+        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-
 }

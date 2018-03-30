@@ -1,16 +1,25 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import util.JsonRequest;
 
 
 /**
@@ -20,16 +29,10 @@ import android.widget.Toast;
  * to handle interaction events.
  * Use the {@link LogoutFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * This class is used to create a new profile for a new user
  */
 public class NewProfileFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private EditText firstName;
     private EditText lastName;
@@ -37,6 +40,7 @@ public class NewProfileFragment extends Fragment {
     private EditText username;
     private EditText password;
     private EditText confirmPassword;
+    private String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/login/add";
 
     private OnFragmentInteractionListener mListener;
 
@@ -46,31 +50,32 @@ public class NewProfileFragment extends Fragment {
 
     /**
      * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * the new profile fragment to make a new profile
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LogoutFragment.
+     * @return A new instance of fragment NewProfileFragment
      */
-    // TODO: Rename and change types and number of parameters
-    public static NewProfileFragment newInstance(String param1, String param2) {
+    public static NewProfileFragment newInstance() {
         NewProfileFragment fragment = new NewProfileFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
+    /**
+     * method to create the fragment
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
+    /**
+     * method to be called in order to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,9 +84,19 @@ public class NewProfileFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_new_profile, null); //opens the logout screen
     }
 
+    /**
+     * method to be called after the view has been created to set up the UI and button listeners
+     * This is where most of the code specific to this page is
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
         firstName = view.findViewById(R.id.firstName);
         lastName = view.findViewById(R.id.lastName);
@@ -98,8 +113,39 @@ public class NewProfileFragment extends Fragment {
                 CharSequence text;
                 int duration = Toast.LENGTH_SHORT;
                 if(password.getText().toString().equals(confirmPassword.getText().toString())){
+                    JSONObject js = new JSONObject();
+                    JSONObject toSend = new JSONObject();
+                    try {
+                        js.put("id", 0);
+                        //TODO add this
+                        js.put("userName", username.getText().toString());
+                        editor.putString("USERNAME", username.getText().toString());
+                        js.put("bio", username.getText().toString() +" has not added a bio yet");
+                        editor.putString("BIO", username.getText().toString() + " has not added a bio yet");
+                        js.put("interests", "00000000000");
+                        editor.putString("INTERESTS", "00000000000");
+                        js.put("status", 0);
+                        editor.putInt("STATUS", 0);
+                        editor.putBoolean("ISLOGGEDIN", true); //also logs the user in
+                        Boolean isLoggedIn = preferences.getBoolean("ISLOGGEDIN", false);
+                        Log.d("NewProfileFragment", "ISLOGGEDIN: " + isLoggedIn.toString());
+                        toSend.put("user", js); //put this in the object to send
+                        toSend.put("password", password.getText().toString()); //put this in the object to send
+                        editor.apply();
+                    } catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                    //make the post request
+                    JsonRequest.postNewUserRequest(toSend, url, getContext());
                     //if confirmPassword and password are the same, submit
                     text = "Successfully submitted";
+
+                    //change fragments to edit profile so user can input fields
+                    Fragment fragment = new EditProfileFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.screen_area, fragment);
+                    fragmentTransaction.commit();
                 }
                 else{
                     //if confirmPassword and password are different, do not submit
@@ -113,13 +159,28 @@ public class NewProfileFragment extends Fragment {
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    /**
+     * hides toolbar so user can't navigate to other fragments
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
+    /**
+     * shows toolbar so user has access to the main menu again
+     */
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+    }
+
+    /**
+     * method to be called to attach the fragment
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -131,6 +192,9 @@ public class NewProfileFragment extends Fragment {
         }
     }
 
+    /**
+     * method to be called when the view is detached
+     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -148,7 +212,7 @@ public class NewProfileFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        //Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
