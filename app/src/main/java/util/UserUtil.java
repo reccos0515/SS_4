@@ -63,7 +63,6 @@ public class UserUtil {
             js.put("id", preferences.getInt("ID", 0));
             js.put("userName", preferences.getString("USERNAME", "empty"));
             js.put("bio", preferences.getString("BIO", "empty"));
-            //todo at this point, interests is pulling "\u00000000000000"
             js.put("interests", preferences.getString("INTERESTS", "00000000000"));
         }catch (JSONException e){
             e.printStackTrace();
@@ -99,7 +98,6 @@ public class UserUtil {
         else{
             Log.d("updateStatus", "wrong status input");
         }
-        //todo getting an error on this
         JsonRequest.jsonObjectPutRequest(js, url, context);
 
     }
