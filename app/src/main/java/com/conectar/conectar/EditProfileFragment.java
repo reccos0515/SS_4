@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import org.json.JSONObject;
 
 import util.InterestsUtil;
 import util.JsonRequest;
+import util.UserUtil;
 
 
 /**
@@ -257,6 +260,13 @@ public class EditProfileFragment extends Fragment {
                     e.printStackTrace();
                 }
                 JsonRequest.jsonObjectPutRequest(js, "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users", context); //send the new put request
+                UserUtil.setUserToView(js); //update what the user will see
+                //create the new profile view fragment
+                Fragment fragment = new ProfileViewFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area, fragment);
+                fragmentTransaction.commit();
             }
         });
     }

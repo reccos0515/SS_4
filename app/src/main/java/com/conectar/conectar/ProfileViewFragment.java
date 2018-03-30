@@ -163,8 +163,7 @@ public class ProfileViewFragment extends Fragment {
             view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //first id receives, second id sends
-                    //create the new profile view fragment
+                    //create the new edit profile fragment
                     Fragment fragment = new EditProfileFragment();
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
