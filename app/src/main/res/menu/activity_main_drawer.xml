@@ -27,7 +27,7 @@
         <item
             android:id="@+id/nav_editProfile"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Edit Profile" />
+            android:title="Profile" />
         <item
             android:id="@+id/nav_newProfile"
             android:icon="@android:drawable/ic_input_add"

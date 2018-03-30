@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_changeStatus) {
             fragment = new ChangeStatusFragment();
         } else if (id == R.id.nav_editProfile) {
-            fragment = new EditProfileFragment();
+            fragment = new SelfProfileViewFragment();
         } else if (id == R.id.nav_settings) { //needs fragment implementation
             fragment = new SettingsFragment();
         } else if (id == R.id.nav_logout) {

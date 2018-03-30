@@ -6,9 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -93,6 +96,7 @@ public class ProfileViewFragment extends Fragment {
         TextView int5 = view.findViewById(R.id.prof_int5);
         TextView username = view.findViewById(R.id.viewUsername);
         TextView bio = view.findViewById(R.id.viewBio);
+        Button button = view.findViewById(R.id.addFriend);
         String interests = "00000000000";
         int numInterests;
         int id = 0;
@@ -137,8 +141,9 @@ public class ProfileViewFragment extends Fragment {
             int5.setText("");
         }
         //make the add friend button as long as it is not their own page
-        if(id != preferences.getInt("ID", 0)) {
-            //when the button is pressed will add friend
+        int selfId = preferences.getInt("ID", 0);
+        if(id != selfId) {
+            //if it is a different person, when the button is pressed will add friend
             view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -148,6 +153,23 @@ public class ProfileViewFragment extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
+                }
+            });
+        }
+        else{
+            button.setText("Edit");
+            //if it is the same person, when the button is pressed will pull up edit profile
+            view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //first id receives, second id sends
+                    //create the new profile view fragment
+                    Fragment fragment = new EditProfileFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.screen_area, fragment);
+                    fragmentTransaction.commit();
 
                 }
             });
