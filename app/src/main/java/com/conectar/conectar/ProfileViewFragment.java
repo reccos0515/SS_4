@@ -137,7 +137,7 @@ public class ProfileViewFragment extends Fragment {
             int5.setText("");
         }
         //make the add friend button as long as it is not their own page
-        if(id != preferences.getInt("id", 0)) {
+        if(id != preferences.getInt("ID", 0)) {
             //when the button is pressed will add friend
             view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener() {
                 @Override
