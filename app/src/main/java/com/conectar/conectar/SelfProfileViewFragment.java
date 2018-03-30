@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,8 @@ import util.UserUtil;
  * to handle interaction events.
  * Use the {@link SelfProfileViewFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * This class is used to set the user as their own user to view then create a profile view fragment for them to see their own profile
  */
 public class SelfProfileViewFragment extends Fragment {
 
@@ -43,19 +47,32 @@ public class SelfProfileViewFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * method to create the new fragment
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-
-
+    /**
+     * method to create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_self_profile_view, container, false);
     }
+
+    /**
+     * method to set up the UI and buttons. This is where most of the code unique to this class is located
+     */
     /**
      * method to be used once the view has been created to set up the UI and button listeners
      * This is where most of the code specific to this page is implemented
@@ -69,11 +86,13 @@ public class SelfProfileViewFragment extends Fragment {
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
+        //pull all of the user's information
         int id = preferences.getInt("ID", 0);
         String bio = preferences.getString("BIO", "");
         int status = preferences.getInt("STATUS", 0);
         String username = preferences.getString("USERNAME", "");
         String interests = preferences.getString("INTERESTS", "00000000000");
+        //put it in a json object
         JSONObject user = new JSONObject();
         try{
             user.put("id", id);
@@ -85,8 +104,14 @@ public class SelfProfileViewFragment extends Fragment {
 
             e.printStackTrace();
         }
+        //set this as the user to view
         UserUtil.setUserToView(user);
-
+        //create the new profile view fragment
+        Fragment fragment = new ProfileViewFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.screen_area, fragment);
+        fragmentTransaction.commit();
 
     }
 
@@ -98,6 +123,10 @@ public class SelfProfileViewFragment extends Fragment {
         }
     }
 
+    /**
+     * method to attach the fragment
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -109,6 +138,9 @@ public class SelfProfileViewFragment extends Fragment {
         }
     }
 
+    /**
+     * method to detach the fragment
+     */
     @Override
     public void onDetach() {
         super.onDetach();
