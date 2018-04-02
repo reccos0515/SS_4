@@ -95,7 +95,7 @@ public class SettingsFragment extends Fragment {
         });
 
     }
-    
+
     /**
      * method to attach fragment
      * @param context
