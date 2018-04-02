@@ -1,13 +1,20 @@
 package com.conectar.conectar;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -35,6 +42,8 @@ public class MainActivity extends AppCompatActivity
 
     String currentUsername, currentId, currentBio;
     String prefUsername, prefId, prefBio; //temp variable that is set based on whether or not there are stored preferences
+
+
 
     /**
      * this is empty
@@ -102,7 +111,11 @@ public class MainActivity extends AppCompatActivity
         tx.replace(R.id.screen_area, new SwipeFragment());
         tx.commit();
 
+
+
     }
+
+
 
     /**
      * called when the app kills itself that it saves information (also for orientation changes)

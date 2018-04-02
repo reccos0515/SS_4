@@ -59,44 +59,7 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.testButton).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                String interests = "52345121314";
-                String viewInterests = "51314122345";
-                int numInterests = interests.charAt(0) - '0';
-                int viewNumInterests = viewInterests.charAt(0) - '0';
-                int currentCommonIntsDisplayed = 0;
-                String[] views = new String[5];
-                if(numInterests > 0 && viewNumInterests > 0) {
-                    for (int i = 0; i < numInterests; i++) {
-                        for (int j = 0; j < viewNumInterests; j++) {
-                            //compare interests
-                            if (interests.charAt(2 * i + 1) == viewInterests.charAt(2 * j + 1) && interests.charAt(2 * i + 2) == viewInterests.charAt(2 * j + 2)) {
-                                //update the correct interest
-                                if (currentCommonIntsDisplayed == 0) {
-                                    views[0] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
-                                } else if (currentCommonIntsDisplayed == 1) {
-                                    views[1] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
-                                } else if (currentCommonIntsDisplayed == 2) {
-                                    views[2] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
-                                } else if (currentCommonIntsDisplayed == 3) {
-                                    views[3] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
-                                } else if (currentCommonIntsDisplayed == 4) {
-                                    views[4] = (InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
-                                }
-                                currentCommonIntsDisplayed++;
-                            }
-                        }
-                    }
-                }
-                String msg = "";
-                for(int i = 0; i < currentCommonIntsDisplayed; i++){
-                    msg += views[i] + " ";
-                }
-                Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-            }
-        });
+
     }
 
     @Override

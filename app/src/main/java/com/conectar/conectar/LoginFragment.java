@@ -102,7 +102,7 @@ public class LoginFragment extends Fragment {
 
         view.findViewById(R.id.loginBtn).setOnClickListener(new View.OnClickListener() { //if user clicks the button to log in
             @Override
-            public void onClick(View view) { //TODO review whether or not this login stuff works
+            public void onClick(View view) {
 
                 String loginPassword = "";
                 String loginUsername = "";
