@@ -647,6 +647,7 @@ public class UserService {
 		String error = "";
 		List<User> relevant = new ArrayList<User>();
 		HtmlMessage msg = this.getUserById(userId);
+		List<User> send = new ArrayList<User>();
 		
 		//check user 
 		if (!msg.isSuccess()) {
@@ -663,7 +664,6 @@ public class UserService {
 			
 			//get all users
 			List<User> users = (List<User>) ((HtmlUserList) this.getAllUsers()).getUsers();
-			
 			//getting all outgoing requests
 			List<User> to = user.getSentRequestTo(); //list of users that I sent a request to
 			//getting all users that have been discovered
@@ -681,12 +681,12 @@ public class UserService {
 			if(send.size() == 0){
 				success = false;
 				error = "User has discovered everyone";
-				List<User> been = new ArrayList<User>();
+				been = new ArrayList<User>();
 				user.setBeenDiscovered(been);
 				return new HtmlError(success, error);
 			}
 
-			List<User> send = makeSend(user, relevant);
+			send = makeSend(user, relevant);
 			return new HtmlUserList(success, send);
 		}
 
@@ -748,22 +748,24 @@ public class UserService {
 		
 	}
 
-	public Integer getScore(User one, User two){
+	//public List<Integer> scoreList
+
+	public Integer getScore(User o, User t){
 		//Assume user one is the one that wants to know
 		//how good user two is.
-		List<Integer> one = one.getInterestList();
-		List<Integer> two = two.getInterestList();
+		List<Integer> one = o.getInterestList();
+		List<Integer> two = t.getInterestList();
 		int score = 0;
 
 		if(one.size() > two.size()){
-			for(int i = 0; i < one.size(); i++{
+			for(int i = 0; i < one.size(); i++){
 				if(two.contains(one.get(i))){
 					score++;
 				}
 			}
 		} else {
 			for (int i = 0; i<two.size(); i++){
-				if one.contains(two.get(i)){
+				if(one.contains(two.get(i)))	{
 					score++;
 				}
 			}
@@ -771,6 +773,7 @@ public class UserService {
 
 		score = 5 - (one.size() - score); //Basic scoring showing how many interests you share vs how many interests you have. 	
 		
+		return score;
 	}
 
 
