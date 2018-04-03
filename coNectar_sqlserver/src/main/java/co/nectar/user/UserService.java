@@ -731,10 +731,11 @@ public class UserService {
 
 					return send;
 				}
-				if(!Collections.disjoint(interests, relevant.get(i).getInterestList()))
+				if(!Collections.disjoint(interests, relevant.get(i).getInterestList())){
 					send.add(relevant.get(i));
 					been.add(relevant.get(i));
 					count ++;
+				}
 			}
 		}else if(status == 0){
 			return send;
@@ -768,7 +769,7 @@ public class UserService {
 			}
 		}
 
-		score = 5 - (one.size() - score);
+		score = 5 - (one.size() - score); //Basic scoring showing how many interests you share vs how many interests you have. 	
 		
 	}
 
