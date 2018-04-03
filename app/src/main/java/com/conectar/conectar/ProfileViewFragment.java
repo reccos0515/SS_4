@@ -173,6 +173,18 @@ public class ProfileViewFragment extends Fragment {
                 }
             });
         }
+        //make a report
+        view.findViewById(R.id.report_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create the new edit profile fragment
+                Fragment fragment = new ReportFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area, fragment);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     /**
