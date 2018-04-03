@@ -238,6 +238,7 @@ public class JsonRequest {
                     }
                     SwipeFragment.updateUI(user); //update the UI
                     UserUtil.setUserToView(user); //save this where profile view can access it if needed
+                    UserUtil.setUserToViewIsFriend(false); //user is not friends with this person
                 }
             }
         }, new Response.ErrorListener() {

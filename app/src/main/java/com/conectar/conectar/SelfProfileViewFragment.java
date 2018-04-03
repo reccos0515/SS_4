@@ -106,6 +106,7 @@ public class SelfProfileViewFragment extends Fragment {
         }
         //set this as the user to view
         UserUtil.setUserToView(user);
+        UserUtil.setUserToViewIsFriend(false); //not friends with themself
         //create the new profile view fragment
         Fragment fragment = new ProfileViewFragment();
         FragmentManager fragmentManager = getFragmentManager();

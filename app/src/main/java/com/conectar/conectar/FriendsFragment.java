@@ -166,6 +166,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                         }
                         if(thisUsername.equals(friendsList[i].toString())){ //if the JSONObject matches the person you clicked on
                             UserUtil.setUserToView(friendsJSONObjects[j]); //tell ProfileViewFragment who to show
+                            UserUtil.setUserToViewIsFriend(true); //user is friends with this person
                         }
                     }
 
