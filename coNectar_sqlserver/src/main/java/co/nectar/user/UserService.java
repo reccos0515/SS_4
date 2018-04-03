@@ -678,11 +678,13 @@ public class UserService {
 
 			//if there is no one to discover, send an error that there was no one to discover,
 			//but also reset the list so that they get a wrap around next time.
-			if(send.size() == 0){
+			if(relevant.size() == 0){
 				success = false;
 				error = "User has discovered everyone";
-				been = new ArrayList<User>();
-				user.setBeenDiscovered(been);
+
+				List<User> empty = new ArrayList<User>();
+				user.setBeenDiscovered(empty);
+
 				return new HtmlError(success, error);
 			}
 
@@ -749,7 +751,6 @@ public class UserService {
 	}
 
 	//public List<Integer> scoreList
-
 	public Integer getScore(User o, User t){
 		//Assume user one is the one that wants to know
 		//how good user two is.
@@ -766,12 +767,15 @@ public class UserService {
 		} else {
 			for (int i = 0; i<two.size(); i++){
 				if(one.contains(two.get(i)))	{
+
 					score++;
 				}
 			}
 		}
 
+
 		score = 5 - (one.size() - score); //Basic scoring showing how many interests you share vs how many interests you have. 	
+
 		
 		return score;
 	}
