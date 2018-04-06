@@ -33,11 +33,13 @@ public class User {
 	//variables
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	//private Integer numInterests = 6;
 	private Integer id;
+	private Integer status;
 	private String userName;
-	
-	private String bio;
 	private String interests;
+	//private Integer[numInterests] interests;
+	private String bio;
 
 	
 	
@@ -58,12 +60,23 @@ public class User {
 	private List<User> recievedRequestFrom;
 	
 	
+	//ManyToMany Connecion having trouble with this
+	@ManyToMany
+	@JsonIgnore
+	@JoinTable(name="TBL_DISCOVERED",
+			joinColumns={@JoinColumn(name="userId",referencedColumnName = "id")},
+			inverseJoinColumns={@JoinColumn(name="discoveredId",referencedColumnName = "id")})
+	private List<User> beenDiscovered;
+	
+	
 	
 
 
 
 	public User() {
-		
+		super();
+		this.status = 0;
+		this.interests = "000000000";
 	}
 	public User(int id,String userName, String bio, String interests) {
 		super();
@@ -73,7 +86,10 @@ public class User {
 		this.interests = interests;
 		this.sentRequestTo = new ArrayList<User>();
 		this.recievedRequestFrom = new ArrayList<User>();
+		this.beenDiscovered = new ArrayList<User>();
+		this.status = 0;
 	}
+
 	
 	public User(Integer id, String userName, String bio, List<User> sentRequestTo, List<User> recievedRequestFrom,String interests) {
 		super();
@@ -83,7 +99,14 @@ public class User {
 		this.interests = interests;
 		this.sentRequestTo = sentRequestTo;
 		this.recievedRequestFrom = recievedRequestFrom;
+		this.beenDiscovered = new ArrayList<User>();
+		this.status = 0;
+//		if(status == null)
+//			this.status = 0;
+//		else
+//			this.status = status;
 	}
+
 	
 	
 	
@@ -106,7 +129,12 @@ public class User {
 	public void setBio(String bio) {
 		this.bio = bio;
 	}
-
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 	//friend list methods
 	public List<User> getSentRequestTo() {
 		return sentRequestTo;
@@ -119,6 +147,13 @@ public class User {
 	}
 	public void setRecievedRequestFrom(List<User> recievedRequestFrom) {
 		this.recievedRequestFrom = recievedRequestFrom;
+	}	
+	//discovery
+	public List<User> getBeenDiscovered() {
+		return beenDiscovered;
+	}
+	public void setBeenDiscovered(List<User> beenDiscovered) {
+		this.beenDiscovered = beenDiscovered;
 	}
 	public String getInterests() {
 		return interests;
@@ -126,6 +161,7 @@ public class User {
 	public void setInterests(String interests) {
 		this.interests = interests;
 	}
+
 	/**
 	 * returns whether all required fields for user are complete
 	 * @param user user to be checked
@@ -136,6 +172,8 @@ public class User {
 		boolean valid = true;
 		if(this.id == null && this.userName == null)
 			valid = false;
+		else if (status == null || status < 0 || status > 2)
+			valid = false;
 		else if(this.bio == null || this.bio == "")
 			valid = false;
 		else if(this.userName == null || this.userName== "")
@@ -144,6 +182,7 @@ public class User {
 			valid = false;
 		return valid;
 	}
+
 	
 	
 }
