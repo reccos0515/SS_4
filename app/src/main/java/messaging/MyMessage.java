@@ -27,9 +27,9 @@ public class MyMessage {
     public MyMessage(String s){
         message = s;
         //may need to update this
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
         Date date = new Date();
-        time = dateFormat.format(date);
+        time = formatDateTime(dateFormat.format(date));
         Log.d("time ", time);
     }
 
@@ -53,8 +53,21 @@ public class MyMessage {
         return null;
     }
 
-    public static String formatDateTime(String createdAt){//TODO implement
-        return null;
+    public static String formatDateTime(String createdAt){
+        int hour = (createdAt.charAt(0) - '0') * 10 + createdAt.charAt(1) - '0';
+        hour -= 6;
+        if(hour == 0){
+            return "12:" + createdAt.charAt(2) + createdAt.charAt(3) + createdAt.charAt(4) + " AM";
+        }
+        else if(hour < 12){
+            return hour + "" + createdAt.charAt(2) + createdAt.charAt(3) + createdAt.charAt(4) + " AM";
+        }
+        else if(hour == 12){
+            return hour + "" + createdAt.charAt(2) + createdAt.charAt(3) + createdAt.charAt(4) + " PM";
+        }
+        else{
+            return (hour - 12) + "" + createdAt.charAt(2) + createdAt.charAt(3) + createdAt.charAt(4) + " PM";
+        }
     }
 
     public static String getCreatedAt(){

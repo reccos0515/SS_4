@@ -100,8 +100,6 @@ public class SwipeFragment extends Fragment {
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
 
-
-
         //sends the user to the login page if they aren't logged in
         Boolean isLoggedIn = preferences.getBoolean("ISLOGGEDIN", false);
         Log.d("SwipeFragment", "ISLOGGEDIN: " + isLoggedIn);
