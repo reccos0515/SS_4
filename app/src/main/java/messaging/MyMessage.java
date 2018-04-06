@@ -2,19 +2,39 @@ package messaging;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.ImageView;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * Created by Maggie on 4/5/2018.
  */
 
-public class Message {
+public class MyMessage {
 
     private static Context mContext;
     private static String time;
+    private static String message;
+
+    public MyMessage(){
+        super();
+    }
+
+    public MyMessage(String s){
+        message = s;
+        //may need to update this
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        time = dateFormat.format(date);
+        Log.d("time ", time);
+    }
 
     public static String getMessage(){ //TODO implement
-        return null;
+        return message;
     }
 
 
@@ -29,7 +49,7 @@ public class Message {
         return user;
     }
 
-    public static Message get(int position){//TODO implement (???)
+    public static MyMessage get(int position){//TODO implement (???)
         return null;
     }
 
