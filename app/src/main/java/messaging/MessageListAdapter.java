@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.conectar.conectar.R;
 
+import java.util.List;
+
 /**
  * Created by Maggie on 4/5/2018.
  * Adapter for sending/receiving messages
@@ -19,11 +21,12 @@ import com.conectar.conectar.R;
 public class MessageListAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
+    private static Context context;
 
     private Context mContext;
-    private List<BaseMessage> mMessageList;
+    private List<Message> mMessageList;
 
-    public MessageListAdapter(Context context, List<BaseMessage> messageList) {
+    public MessageListAdapter(Context context, List<Message> messageList) {
         mContext = context;
         mMessageList = messageList;
     }
@@ -34,12 +37,13 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     }
 
     // Determines the appropriate ViewType according to the sender of the message.
+    //must call sendContext(Context context) first
     @Override
     public int getItemViewType(int position) {
         UserMessage message = (UserMessage) mMessageList.get(position);
-        SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+        SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         int thisId = preferences.getInt("ID", 0);
-        if (message.getSender().getUserId().equals(thisId)) {
+        if (message.getSender().getUserId() == thisId) {
             // If the current user is the sender of the message
             return VIEW_TYPE_MESSAGE_SENT;
         } else {
@@ -122,5 +126,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             // Insert the profile image from the URL into the ImageView.
             message.displayRoundImageFromUrl(mContext, message.getSender().getProfileUrl(), profileImage);
         }
+    }
+
+    public void sendContext(Context context){
+        this.context = context;
     }
 }
