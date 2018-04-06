@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -89,10 +90,27 @@ public class ChangeStatusFragment extends Fragment {
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
 
+        final TextView currentStatus = view.findViewById(R.id.current_status); //message to tell user their current status
+        switch (preferences.getInt("STATUS", 0)){
+            case 0 :
+                currentStatus.setText("Status is Red");
+                break;
+            case 1 :
+                currentStatus.setText("Status is Yellow");
+                break;
+            case 2 :
+                currentStatus.setText("Status is Green");
+                break;
+        }
+
+        if(preferences.getInt("Status", 0) == 0){
+
+        }
         view.findViewById(R.id.greenStatusBtn).setOnClickListener(new View.OnClickListener() { //green button clicked
             @Override
             public void onClick(View view) { //set status to green
                 UserUtil.updateStatus(2, getContext()); //call this to update the status
+                currentStatus.setText("Status is Green");
                 Toast.makeText(getActivity(), "Status set to green", Toast.LENGTH_LONG).show(); //toast to tell user it worked
             }
         });
@@ -100,6 +118,7 @@ public class ChangeStatusFragment extends Fragment {
             @Override
             public void onClick(View view){ //set status to yellow
                 UserUtil.updateStatus(1, getContext()); //call this to update the status
+                currentStatus.setText("Status is Yellow");
                 Toast.makeText(getActivity(), "Status set to yellow", Toast.LENGTH_LONG).show(); //toast to tell the user it worked
             }
         });
@@ -107,6 +126,7 @@ public class ChangeStatusFragment extends Fragment {
             @Override
             public void onClick(View view) { //set status to red
                 UserUtil.updateStatus(0, getContext()); //call this to update the status
+                currentStatus.setText("Status is Red");
                 Toast.makeText(getActivity(), "Status set to red", Toast.LENGTH_LONG).show(); //toast to let the user know it worked
             }
         });

@@ -31,6 +31,7 @@ public class UserUtil {
     private static JSONArray jsonArray = new JSONArray();
     private static JSONArray jsonArray2 = new JSONArray();
     private static JSONObject profView = null; //user that can be viewed in profile view next
+    private static boolean friend = false;
 
     public static JSONObject prepareLogin(String username, String password, Context context){
         JSONObject fullJS = new JSONObject();
@@ -283,6 +284,22 @@ public class UserUtil {
         return;
     }
 
+    /**
+     * Method to be used to set if the user is a friend. This can be used in profile view to message vs add friend
+     * @param f
+     */
+    public static void setUserToViewIsFriend(boolean f){
+        friend = f;
+        return;
+    }
+
+    /**
+     * method to be used to see if the user is a friend.  This can be used in profile view to message vs add friend
+     * @return
+     */
+    public static boolean getUserToViewIsFriend(){
+        return friend;
+    }
 
 
 

@@ -146,7 +146,7 @@ public class SwipeFragment extends Fragment {
                         TextView int3 = view.findViewById(R.id.interestThree);
                         TextView int4 = view.findViewById(R.id.interestFour);
                         TextView int5 = view.findViewById(R.id.interestFive);
-                        errorMessage.setText("Sorry, we ran into a problem");//set an error for the user to see
+                        errorMessage.setText("Sorry, we ran into problem 0001");//set an error for the user to see
                         username.setText("");
                         int1.setText("");
                         int2.setText("");
@@ -176,7 +176,7 @@ public class SwipeFragment extends Fragment {
                         UserUtil.setUserToView(user); //save this where profile view can access if needed
                     } catch (JSONException e) {
                         TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
-                        errorMessage.setText("Sorry, we ran into a problem"); //set an error for the user to see
+                        errorMessage.setText("Sorry, we ran into problem 0002"); //set an error for the user to see
 
                         e.printStackTrace();
                     }

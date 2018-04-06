@@ -143,19 +143,36 @@ public class ProfileViewFragment extends Fragment {
         //make the add friend button as long as it is not their own page
         int selfId = preferences.getInt("ID", 0);
         if(id != selfId) {
-            //if it is a different person, when the button is pressed will add friend
-            view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //first id receives, second id sends
-                    try {
-                        Friend.makeFriend(userIDNum, user.getInt("id"), getContext());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+            if(UserUtil.getUserToViewIsFriend()){
+                button.setText("Message");
+                //if it is a different person, when the button is pressed will add friend
+                view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //todo figure out how to set this to be messages with that specific person
+                        //create the new edit profile fragment
+                        Fragment fragment = new MessagesFragment();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.screen_area, fragment);
+                        fragmentTransaction.commit();
                     }
-
-                }
-            });
+                });
+            }
+            else {
+                //if it is a different person, when the button is pressed will add friend
+                view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //first id receives, second id sends
+                        try {
+                            Friend.makeFriend(userIDNum, user.getInt("id"), getContext());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
         }
         else{
             button.setText("Edit");
@@ -173,6 +190,18 @@ public class ProfileViewFragment extends Fragment {
                 }
             });
         }
+        //make a report
+        view.findViewById(R.id.report_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create the new edit profile fragment
+                Fragment fragment = new ReportFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area, fragment);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     /**

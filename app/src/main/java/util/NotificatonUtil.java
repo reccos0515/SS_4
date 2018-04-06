@@ -26,7 +26,7 @@ public class NotificatonUtil {
         notification = new NotificationCompat.Builder(context);
         notification.setAutoCancel(true); //removes the notification after the user clicks on it
         //Build the notification
-        notification.setSmallIcon(R.id.icon_view); //sets the icon for the notification
+//        notification.setSmallIcon(R.id.icon_view); //sets the icon for the notification todo put this back in
         notification.setWhen(System.currentTimeMillis()); //displays the time the notification was sent
         notification.setContentTitle(title); //sets the title for the notification
         notification.setContentText(text);
