@@ -1,4 +1,4 @@
-package util;
+package messaging;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -69,8 +69,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     // Passes the message object to a ViewHolder so that the contents can be bound to UI.
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        UserMessage message = (UserMessage) mMessageList.get(position);
-
+       // UserMessage message = (UserMessage) mMessageList.get(position); //TODO figure out
+        UserMessage message = null;
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
                 ((SentMessageHolder) holder).bind(message);
@@ -94,7 +94,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             messageText.setText(message.getMessage());
 
             // Format the stored timestamp into a readable String using method.
-            timeText.setText(Utils.formatDateTime(message.getCreatedAt()));
+            timeText.setText(message.formatDateTime(message.getCreatedAt()));
         }
     }
 
@@ -115,12 +115,12 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             messageText.setText(message.getMessage());
 
             // Format the stored timestamp into a readable String using method.
-            timeText.setText(Utils.formatDateTime(message.getCreatedAt()));
+            timeText.setText(message.formatDateTime(message.getCreatedAt()));
 
-            nameText.setText(message.getSender().getNickname());
+            nameText.setText(message.getSender().getUsername());
 
             // Insert the profile image from the URL into the ImageView.
-            Utils.displayRoundImageFromUrl(mContext, message.getSender().getProfileUrl(), profileImage);
+            message.displayRoundImageFromUrl(mContext, message.getSender().getProfileUrl(), profileImage);
         }
     }
 }

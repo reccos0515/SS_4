@@ -10,10 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import util.InterestsUtil;
-import util.MessageListAdapter;
+import messaging.MessageListAdapter;
 
 
 /**
@@ -51,9 +49,9 @@ public class MessagesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.fragment_messages);
 
-        RecyclerView mMessageRecycler = (RecyclerView) getView().findViewById(R.id.reyclerview_message_list);
-        MessageListAdapter mMessageAdapter = new MessageListAdapter(this, messageList);
-        mMessageRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+//        RecyclerView mMessageRecycler = (RecyclerView) getView().findViewById(R.id.reyclerview_message_list);
+//        MessageListAdapter mMessageAdapter = new MessageListAdapter(this, messageList);
+//        mMessageRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override
