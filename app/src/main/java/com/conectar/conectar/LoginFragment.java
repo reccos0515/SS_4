@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -124,6 +125,9 @@ public class LoginFragment extends Fragment {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.screen_area, fragment);
                     fragmentTransaction.commit();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Login Unsuccessful", Toast.LENGTH_LONG).show();
                 }
 
 
