@@ -25,6 +25,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ElementCollection;
+import javax.persistence.CollectionTable;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -40,6 +43,7 @@ public class User {
 	private String interests;
 	//private Integer[numInterests] interests;
 	private String bio;
+
 
 	
 	
@@ -67,6 +71,15 @@ public class User {
 			joinColumns={@JoinColumn(name="userId",referencedColumnName = "id")},
 			inverseJoinColumns={@JoinColumn(name="discoveredId",referencedColumnName = "id")})
 	private List<User> beenDiscovered;
+
+	//ManyToMany Connecion having trouble with this
+	@ElementCollection
+	@JsonIgnore
+	@CollectionTable(
+		name = "interests",
+		joinColumns = @JoinColumn(name = "id")
+	)
+	private List<Integer> interestList;
 	
 	
 	
@@ -76,7 +89,7 @@ public class User {
 	public User() {
 		super();
 		this.status = 0;
-		this.interests = "000000000";
+		this.interests = "00000000000";
 	}
 	public User(int id,String userName, String bio, String interests) {
 		super();
@@ -88,6 +101,7 @@ public class User {
 		this.recievedRequestFrom = new ArrayList<User>();
 		this.beenDiscovered = new ArrayList<User>();
 		this.status = 0;
+
 	}
 
 	
@@ -158,8 +172,23 @@ public class User {
 	public String getInterests() {
 		return interests;
 	}
+	public List<Integer> getInterestList(){
+		return interestList;
+	}
+
+	//first 1,3 i = 0
+	//second 3,5 i = 1
+	//third 5,7
+	//four 7,9
+	//five 9,11 or substring(9);
 	public void setInterests(String interests) {
 		this.interests = interests;
+		ArrayList<Integer> send = new ArrayList<Integer>();
+		int num = Integer.parseInt(interests.substring(0,1));
+		for(int i = 0; i<num; i++){
+			send.add(Integer.parseInt(interests.substring(2*i+1, 2*i+3)));
+		}
+		interestList = send;
 	}
 
 	/**

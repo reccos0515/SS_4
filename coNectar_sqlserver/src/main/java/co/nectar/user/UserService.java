@@ -3,10 +3,12 @@ package co.nectar.user;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.UsesJava7;
 import org.springframework.stereotype.Service;
+
 
 import co.nectar.Message.*;;
 
@@ -175,7 +177,6 @@ public class UserService {
 	
 	public boolean userExists(User user) {
 		// check to make sure id or userName are not null
-
 		Integer id = user.getId();
 		String name = user.getUserName();
 		if(id == null && name == null)
@@ -186,6 +187,7 @@ public class UserService {
 			return  userRepo.existsByUserName(name);
 		else
 			return userRepo.existsByUserName(name); 
+		
 	}
 
 	/**
@@ -256,6 +258,19 @@ public class UserService {
 			if(otherUser != null && user.getId() != otherUser.getId()) {
 				return new HtmlError(false, "new username exists already");
 			}
+			User oldUser = userRepo.findOne(user.getId());
+			
+			//keep sentrequest and recieved request for friends
+			user.setSentRequestTo(oldUser.getSentRequestTo());
+			user.setRecievedRequestFrom(oldUser.getRecievedRequestFrom());
+			
+			//keep been discovederd if status is the same
+			//clears otherwise
+			if(user.getStatus() == oldUser.getStatus())
+				user.setBeenDiscovered(oldUser.getBeenDiscovered());
+			else
+				user.setBeenDiscovered(new ArrayList<User>());
+			
 			userRepo.save(user);
 		}
 
@@ -632,6 +647,7 @@ public class UserService {
 		String error = "";
 		List<User> relevant = new ArrayList<User>();
 		HtmlMessage msg = this.getUserById(userId);
+		List<User> send = new ArrayList<User>();
 		
 		//check user 
 		if (!msg.isSuccess()) {
@@ -640,10 +656,14 @@ public class UserService {
 		} else {
 			//get user
 			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			if(user.getStatus() == 0){
+				success = false;
+				error = "User is RED";
+				return new HtmlError(success, error);
+			}
 			
 			//get all users
 			List<User> users = (List<User>) ((HtmlUserList) this.getAllUsers()).getUsers();
-			
 			//getting all outgoing requests
 			List<User> to = user.getSentRequestTo(); //list of users that I sent a request to
 			//getting all users that have been discovered
@@ -655,12 +675,28 @@ public class UserService {
 					relevant.add(user_ele);// add if i have not added the user, and the user is not me.
 			}
 			//now i have a list of everyone that i dont know and have not discovered before (discover). 
-			List<User> send = makeSend(user, relevant);
+
+			//if there is no one to discover, send an error that there was no one to discover,
+			//but also reset the list so that they get a wrap around next time.
+			if(relevant.size() == 0){
+				success = false;
+				error = "User has discovered everyone";
+
+				List<User> empty = new ArrayList<User>();
+				user.setBeenDiscovered(empty);
+
+				return new HtmlError(success, error);
+			}
+
+			send = makeSend(user, relevant);
 			return new HtmlUserList(success, send);
 		}
 
 		return new HtmlError(success, error);
+
+
 	}
+
 	
 	//we are going to need some list to keep track of who has been discovered (nevermind).
 	//this only works if there is ten users in the discover
@@ -668,16 +704,127 @@ public class UserService {
 		//right now im just sending back the first ten, this will be improved soon.
 		List<User> send = new ArrayList<User>();
 		List<User> been = user.getBeenDiscovered();
-		for(int i = 0; i<10; i++){
-			send.add(relevant.get(i));
-			been.add(relevant.get(i));
+		List<Integer> interests = user.getInterestList();
+		int i = 0;
+		int count = 0;
+
+
+		int status = user.getStatus();
+
+		if(status == 2){
+			if(relevant.size() > 9){
+				for(i=0; i<10; i++){
+				send.add(relevant.get(i));
+				been.add(relevant.get(i));
+				}
+			}else{
+				for(i=0; i<relevant.size(); i++){
+				send.add(relevant.get(i));
+				been.add(relevant.get(i));
+				}
+			}
+		}else if(status == 1){
+			count = 0;
+			for(i=0; i<relevant.size(); i++){
+				if (count == 10){
+					user.setBeenDiscovered(been); //changes the users beendiscovered to include that which was just found.
+
+					userRepo.save(user);
+
+					return send;
+				}
+				if(!Collections.disjoint(interests, relevant.get(i).getInterestList())){
+					send.add(relevant.get(i));
+					been.add(relevant.get(i));
+					count ++;
+				}
+			}
+		}else if(status == 0){
+			return send;
 		}
-		user.setBeenDiscovered(been); //changes the users been discovered to include that which was just found.
+		
+		user.setBeenDiscovered(been); //changes the users beendiscovered to include that which was just found.
 		userRepo.save(user);
 		
 		return send;
 		
-	}	
+	}
+
+	//public List<Integer> scoreList
+	public Integer getScore(User o, User t){
+		//Assume user one is the one that wants to know
+		//how good user two is.
+		List<Integer> one = o.getInterestList();
+		List<Integer> two = t.getInterestList();
+		int score = 0;
+
+		if(one.size() > two.size()){
+			for(int i = 0; i < one.size(); i++){
+				if(two.contains(one.get(i))){
+					score++;
+				}
+			}
+		} else {
+			for (int i = 0; i<two.size(); i++){
+				if(one.contains(two.get(i)))	{
+
+					score++;
+				}
+			}
+		}
+
+
+		score = 5 - (one.size() - score); //Basic scoring showing how many interests you share vs how many interests you have. 	
+
+		
+		return score;
+	}
+
+
+	/*
+	//we are going to need some list to keep track of who has been discovered (nevermind).
+	//this only works if there is ten users in the discover
+	public List<User> makeSend(User user, List<User> relevant){
+		//right now im just sending back the first ten, this will be improved soon.
+		List<User> send = new ArrayList<User>();
+		List<User> been = user.getBeenDiscovered();
+
+		int i = 0;
+		String interestOne = user.getInterests().substring(1,3);
+		String interestTwo = user.getInterests().substring(3,5);
+		String interestThree = user.getInterests().substring(5,7);
+		String interestFour = user.getInterests().substring(7,9);
+		String interestFive = user.getInterests().substring(9);
+
+
+		int status = user.getStatus();
+
+		if(status == 2){
+			if(relevant.size() > 9){
+				for(i=0; i<10; i++){
+				send.add(relevant.get(i));
+				been.add(relevant.get(i));
+				}
+			}else{
+				for(i=0; i<relevant.size(); i++){
+				send.add(relevant.get(i));
+				been.add(relevant.get(i));
+				}
+			}
+		}else if(status == 1){
+
+		}else if(status == 0){
+			return send;
+		}
+		
+		user.setBeenDiscovered(been); //changes the users beendiscovered to include that which was just found.
+		userRepo.save(user);
+		
+		return send;
+		
+	}
+
+	*/	
 	
 	//green people will see random green and yellow people. do not take their 
 	//interests into account. the expectation is that they are willing to do
