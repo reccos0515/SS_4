@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.nectar.Message.*;
+import co.nectar.HtmlResponce.*;
 import co.nectar.user.User;
 import co.nectar.user.UserService;
 
@@ -50,16 +50,16 @@ public class LoginService {
 			//save login and user
 			HtmlMessage msg = userService.addUser(login.getUser());
 			if(!msg.isSuccess())
-				return new HtmlError(false, "error: "+((HtmlError) msg).getMessage());
+				return new HtmlErrorResponce(false, "error: "+((HtmlErrorResponce) msg).getMessage());
 			
 			//get added user
-			User added = ((HtmlUserList) msg).getUsers().iterator().next();
+			User added = ((HtmlUserListReponce) msg).getUsers().iterator().next();
 			login.setUser(added);
 			loginRepo.save(login);
 			
 			ArrayList<User> users = new ArrayList<>();
 			users.add(added);
-			return new HtmlUserList(success,users);
+			return new HtmlUserListReponce(success,users);
 		}
 		
 		
@@ -68,7 +68,7 @@ public class LoginService {
 		if(secureMode&&!success) {
 			error = "unable to add login";
 		}
-		HtmlError msg = new HtmlError(success,error);
+		HtmlErrorResponce msg = new HtmlErrorResponce(success,error);
 		return msg;
 	}
 
@@ -92,14 +92,14 @@ public class LoginService {
 		//handle if userId is empty
 		User user = login.getUser();
 		if(!userService.userExists(user))
-			return new HtmlError(false,"could not find user in db");
+			return new HtmlErrorResponce(false,"could not find user in db");
 		
 		//get valid user
 		msg = userService.getUserByObject(user);
 		if(!msg.isSuccess())
-			return new HtmlError(false,"error retrieving user from db: "+((HtmlError)msg).getMessage());
+			return new HtmlErrorResponce(false,"error retrieving user from db: "+((HtmlErrorResponce)msg).getMessage());
 		else
-			user = ((HtmlUserList)msg).getUsers().iterator().next();
+			user = ((HtmlUserListReponce)msg).getUsers().iterator().next();
 		
 		//set full user
 		login.setUser(user);
@@ -123,7 +123,7 @@ public class LoginService {
 		if(secureMode&&!success) {
 			error = "unable to add login";
 		}
-		return new HtmlError(success,error);
+		return new HtmlErrorResponce(success,error);
 		
 	}
 
@@ -154,9 +154,9 @@ public class LoginService {
 			//get valid user
 			HtmlMessage msg = userService.getUserByObject(user);
 			if(!msg.isSuccess())
-				return new HtmlError(false,"error retrieving user from db: "+((HtmlError)msg).getMessage());
+				return new HtmlErrorResponce(false,"error retrieving user from db: "+((HtmlErrorResponce)msg).getMessage());
 			else
-				user = ((HtmlUserList)msg).getUsers().iterator().next();
+				user = ((HtmlUserListReponce)msg).getUsers().iterator().next();
 			
 			//check password
 			String pass = loginRepo.findByUser(user).getPassword();//get password
@@ -166,7 +166,7 @@ public class LoginService {
 			}else {
 				ArrayList<User> users = new ArrayList<User>();
 				users.add(user);
-				return new HtmlUserList(success, users);
+				return new HtmlUserListReponce(success, users);
 			}
 		}
 		
@@ -176,7 +176,7 @@ public class LoginService {
 		if(secureMode) {
 			error = "unable to login";
 		}	
-		HtmlError msg = new HtmlError(success, error);
+		HtmlErrorResponce msg = new HtmlErrorResponce(success, error);
 		return msg;
 	}
 

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.nectar.Message.HtmlError;
-import co.nectar.Message.HtmlMessage;
+import co.nectar.HtmlResponce.HtmlErrorResponce;
+import co.nectar.HtmlResponce.HtmlMessage;
 
 @RestController
 @RequestMapping(path = "/ben")
@@ -82,12 +82,12 @@ public class UserController {
 			error = "error adding both users";
 		}else if(!msg1.isSuccess()) {
 			success = false;
-			error = "error userId adding friendId: " + ((HtmlError) msg1).getMessage();
+			error = "error userId adding friendId: " + ((HtmlErrorResponce) msg1).getMessage();
 		}else if(!msg2.isSuccess()) {
 			success = false;
-			error = "error frindId adding userId: " + ((HtmlError) msg2).getMessage(); 
+			error = "error frindId adding userId: " + ((HtmlErrorResponce) msg2).getMessage(); 
 		}
-		return new HtmlError(success, error);
+		return new HtmlErrorResponce(success, error);
 	}
 
 	// get friends to
@@ -122,12 +122,12 @@ public class UserController {
 			error = "error adding both users";
 		}else if(!msg1.isSuccess()) {
 			success = false;
-			error = "error userId removing friendId: " + ((HtmlError) msg1).getMessage();
+			error = "error userId removing friendId: " + ((HtmlErrorResponce) msg1).getMessage();
 		}else if(!msg2.isSuccess()) {
 			success = false;
-			error = "error frindId removing userId: " + ((HtmlError) msg2).getMessage(); 
+			error = "error frindId removing userId: " + ((HtmlErrorResponce) msg2).getMessage(); 
 		}
-		return new HtmlError(success, error);
+		return new HtmlErrorResponce(success, error);
 		
 	}
 

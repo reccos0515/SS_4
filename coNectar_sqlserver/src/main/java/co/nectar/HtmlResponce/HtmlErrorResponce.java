@@ -1,4 +1,4 @@
-package co.nectar.Message;
+package co.nectar.HtmlResponce;
 
 /**
  * Class to converted to a json to return an error
@@ -8,16 +8,16 @@ package co.nectar.Message;
  * @author Ben
  *
  */
-public class HtmlError implements HtmlMessage{
+public class HtmlErrorResponce implements HtmlMessage{
 	boolean success;
 	String message;
 	
-	public HtmlError() {
+	public HtmlErrorResponce() {
 		this.success = false;
 		this.message = "";
 	}
 	
-	public HtmlError(boolean success, String message) {
+	public HtmlErrorResponce(boolean success, String message) {
 		super();
 		this.success = success;
 		this.message = message;

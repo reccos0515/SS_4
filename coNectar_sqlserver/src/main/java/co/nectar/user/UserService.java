@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.UsesJava7;
 import org.springframework.stereotype.Service;
 
-
-import co.nectar.Message.*;;
+import co.nectar.HtmlResponce.*;;
 
 @Service
 public class UserService {
@@ -23,8 +22,8 @@ public class UserService {
 	 * 
 	 * @return List of all users
 	 */
-	public HtmlUserList getAllUsers() {
-		return new HtmlUserList(true, userRepo.findAll());
+	public HtmlUserListReponce getAllUsers() {
+		return new HtmlUserListReponce(true, userRepo.findAll());
 	}
 		
 
@@ -47,12 +46,12 @@ public class UserService {
 		
 		//check for errors
 		if(userId == null) {
-			return new HtmlError(false, "UserId not given");
+			return new HtmlErrorResponce(false, "UserId not given");
 		}else if(user == null) {
-			return new HtmlError(false, "UserId not found");
+			return new HtmlErrorResponce(false, "UserId not found");
 		}
 		users.add(user);
-		return new HtmlUserList(true, users);
+		return new HtmlUserListReponce(true, users);
 	}
 
 	/**
@@ -74,12 +73,12 @@ public class UserService {
 		
 		//check for errors
 		if(username == null) {
-			return new HtmlError(false, "Username not given");
+			return new HtmlErrorResponce(false, "Username not given");
 		}else if(user == null) {
-			return new HtmlError(false, "Username not found");
+			return new HtmlErrorResponce(false, "Username not found");
 		}
 		users.add(user);
-		return new HtmlUserList(true, users);
+		return new HtmlUserListReponce(true, users);
 	}
 	/**
 	 * Returns a HtmlUserList that has the given user object.
@@ -103,14 +102,14 @@ public class UserService {
 		}else if(user.getId() != null) {
 			user = userRepo.findOne(user.getId());
 		}else {
-			return new HtmlError(false,"neither username or userId not given");
+			return new HtmlErrorResponce(false,"neither username or userId not given");
 		}
 		
 		if(user == null) {
-			return new HtmlError(false, "User not found");
+			return new HtmlErrorResponce(false, "User not found");
 		}
 		users.add(user);
-		return new HtmlUserList(true, users);
+		return new HtmlUserListReponce(true, users);
 	}
 
 	/**
@@ -139,9 +138,9 @@ public class UserService {
 			error = "user is not valid";
 		} else {
 			users.add(userRepo.save(user));
-			return new HtmlUserList(success, users);
+			return new HtmlUserListReponce(success, users);
 		}
-		return new HtmlError(success, error);
+		return new HtmlErrorResponce(success, error);
 	}
 	
 	/**
@@ -155,13 +154,13 @@ public class UserService {
 	public HtmlMessage setStatus(Integer userId, int status) {
 		//error checking
 		if(!userRepo.exists(userId))
-			return new HtmlError(false, "userId not found");
+			return new HtmlErrorResponce(false, "userId not found");
 		else if(status != 0 || status != 1 || status != 2)
-			return new HtmlError(false, "incorrect status value, must be 1,2, or 3");
+			return new HtmlErrorResponce(false, "incorrect status value, must be 1,2, or 3");
 		
 		//set status
 		userRepo.findOne(userId).setStatus(status);
-		return new HtmlError(true, "");
+		return new HtmlErrorResponce(true, "");
 
 	}
 
@@ -189,6 +188,23 @@ public class UserService {
 			return userRepo.existsByUserName(name); 
 		
 	}
+	
+	
+	/**
+	 * returns if specified user's exists in db
+	 * 
+	 * ONLY userId or username needs to be filled in the given user object
+	 *
+	 * @param userId
+	 *            user id to be checked
+	 * @return if user is found or not
+	 */
+	
+	public boolean userExistsById(Integer userId) {
+		// check to make sure id or userName are not null
+		return userId == null || userRepo.exists(userId);
+		
+	}
 
 	/**
 	 * Returns a HtmlMessage of delete success.
@@ -203,7 +219,7 @@ public class UserService {
 	 * 
 	 * @return HtmlError success: false, message: detailed error message 
 	 */
-	public HtmlError deleteUserById(Integer userId) {
+	public HtmlErrorResponce deleteUserById(Integer userId) {
 		boolean success = true;
 		String error = "";
 
@@ -217,7 +233,7 @@ public class UserService {
 			userRepo.delete(userId);
 		}
 
-		return new HtmlError(success, error);
+		return new HtmlErrorResponce(success, error);
 
 	}
 
@@ -237,7 +253,7 @@ public class UserService {
 	 * 
 	 * @return HtmlError success: false, message: detailed error message 
 	 */
-	public HtmlError updateUser(User user) {
+	public HtmlErrorResponce updateUser(User user) {
 		boolean success = true;
 		String error = "";
 		if (user == null) {
@@ -256,7 +272,7 @@ public class UserService {
 			//check if username is duplicated
 			User otherUser = userRepo.findByUserName(user.getUserName());
 			if(otherUser != null && user.getId() != otherUser.getId()) {
-				return new HtmlError(false, "new username exists already");
+				return new HtmlErrorResponce(false, "new username exists already");
 			}
 			User oldUser = userRepo.findOne(user.getId());
 			
@@ -274,7 +290,7 @@ public class UserService {
 			userRepo.save(user);
 		}
 
-		return new HtmlError(success, error);
+		return new HtmlErrorResponce(success, error);
 
 	}
 
@@ -305,10 +321,10 @@ public class UserService {
 			error = "given userId not found";
 		} else {
 			users = userRepo.findOne(userId).getSentRequestTo();
-			return new HtmlUserList(success, users);
+			return new HtmlUserListReponce(success, users);
 		}
 
-		return new HtmlError(success, error);
+		return new HtmlErrorResponce(success, error);
 		
 	}
 
@@ -339,10 +355,10 @@ public class UserService {
 			error = "given userId not found";
 		} else {
 			users = userRepo.findOne(userId).getRecievedRequestFrom();
-			return new HtmlUserList(success, users);
+			return new HtmlUserListReponce(success, users);
 		}
 
-		return new HtmlError(success, error);
+		return new HtmlErrorResponce(success, error);
 	}
 
 	
@@ -370,17 +386,17 @@ public class UserService {
 		
 		if(!msg1.isSuccess() && !msg2.isSuccess()) {
 			success = false;
-			error = "error requesting both users" + ((HtmlError) msg1).getMessage()+((HtmlError) msg2).getMessage();
+			error = "error requesting both users" + ((HtmlErrorResponce) msg1).getMessage()+((HtmlErrorResponce) msg2).getMessage();
 		}else if(!msg1.isSuccess()) {
 			success = false;
-			error = "error userId requesting friendId: " + ((HtmlError) msg1).getMessage();
+			error = "error userId requesting friendId: " + ((HtmlErrorResponce) msg1).getMessage();
 		}else if(!msg2.isSuccess()) {
 			success = false;
-			error = "error frindId requesting userId: " + ((HtmlError) msg2).getMessage(); 
+			error = "error frindId requesting userId: " + ((HtmlErrorResponce) msg2).getMessage(); 
 		}else {
 			//get user and friend from first item in list
-			User user = ((HtmlUserList) msg1).getUsers().iterator().next();
-			User friend = ((HtmlUserList) msg2).getUsers().iterator().next();
+			User user = ((HtmlUserListReponce) msg1).getUsers().iterator().next();
+			User friend = ((HtmlUserListReponce) msg2).getUsers().iterator().next();
 			
 			//add outgoing request to user
 			user.getSentRequestTo().add(friend);
@@ -392,7 +408,7 @@ public class UserService {
 			userRepo.save(friend);
 		}
 		//return error
-		return new HtmlError(success, error);
+		return new HtmlErrorResponce(success, error);
 	}
 
 	/**
@@ -419,17 +435,17 @@ public class UserService {
 
 		if (!msg1.isSuccess() && !msg2.isSuccess()) {
 			success = false;
-			error = "error requesting both users" + ((HtmlError) msg1).getMessage() + ((HtmlError) msg2).getMessage();
+			error = "error requesting both users" + ((HtmlErrorResponce) msg1).getMessage() + ((HtmlErrorResponce) msg2).getMessage();
 		} else if (!msg1.isSuccess()) {
 			success = false;
-			error = "error userId requesting friendId: " + ((HtmlError) msg1).getMessage();
+			error = "error userId requesting friendId: " + ((HtmlErrorResponce) msg1).getMessage();
 		} else if (!msg2.isSuccess()) {
 			success = false;
-			error = "error frindId requesting userId: " + ((HtmlError) msg2).getMessage();
+			error = "error frindId requesting userId: " + ((HtmlErrorResponce) msg2).getMessage();
 		} else {
 			// get user and friend from first item in list
-			User user = ((HtmlUserList) msg1).getUsers().iterator().next();
-			User friend = ((HtmlUserList) msg2).getUsers().iterator().next();
+			User user = ((HtmlUserListReponce) msg1).getUsers().iterator().next();
+			User friend = ((HtmlUserListReponce) msg2).getUsers().iterator().next();
 
 			// remove sent request
 			user.getSentRequestTo().remove(friend);
@@ -442,7 +458,7 @@ public class UserService {
 			userRepo.save(friend);
 		}
 		// return error
-		return new HtmlError(success, error);
+		return new HtmlErrorResponce(success, error);
 	}
 
 	
@@ -470,10 +486,10 @@ public class UserService {
 		//check user 
 		if (!msg.isSuccess()) {
 			success = false;
-			error = "error userId: " + ((HtmlError) msg).getMessage();
+			error = "error userId: " + ((HtmlErrorResponce) msg).getMessage();
 		} else {
 			//get user
-			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			User user = ((HtmlUserListReponce) msg).getUsers().iterator().next();
 			
 			// get to and from friend lists
 			List<User> to = user.getSentRequestTo();
@@ -485,10 +501,10 @@ public class UserService {
 					friends.add(friend);
 			}
 			
-			return new HtmlUserList(success, friends);
+			return new HtmlUserListReponce(success, friends);
 		}
 
-		return new HtmlError(success, error);
+		return new HtmlErrorResponce(success, error);
 	}
 
 	/**
@@ -516,10 +532,10 @@ public class UserService {
 		//check user 
 		if (!msg.isSuccess()) {
 			success = false;
-			error = "error userId: " + ((HtmlError) msg).getMessage();
+			error = "error userId: " + ((HtmlErrorResponce) msg).getMessage();
 		} else {
 			//get user
-			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			User user = ((HtmlUserListReponce) msg).getUsers().iterator().next();
 			
 			// get to and from friend lists
 			List<User> to = user.getSentRequestTo();
@@ -531,10 +547,10 @@ public class UserService {
 					requests.add(friend);// add friend is not in from
 			}
 			
-			return new HtmlUserList(success, requests);
+			return new HtmlUserListReponce(success, requests);
 		}
 
-		return new HtmlError(success, error);
+		return new HtmlErrorResponce(success, error);
 	}
 
 	/**
@@ -562,10 +578,10 @@ public class UserService {
 		//check user 
 		if (!msg.isSuccess()) {
 			success = false;
-			error = "error userId: " + ((HtmlError) msg).getMessage();
+			error = "error userId: " + ((HtmlErrorResponce) msg).getMessage();
 		} else {
 			//get user
-			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			User user = ((HtmlUserListReponce) msg).getUsers().iterator().next();
 			
 			// get to and from friend lists
 			List<User> to = user.getSentRequestTo();
@@ -576,10 +592,10 @@ public class UserService {
 				if (!to.contains(friend))
 					requests.add(friend);// add friend is not in to yet
 			}
-			return new HtmlUserList(success, requests);
+			return new HtmlUserListReponce(success, requests);
 		}
 
-		return new HtmlError(success, error);
+		return new HtmlErrorResponce(success, error);
 	}
 
 	// a discovery get all users that the current user had not friended or requested
@@ -619,13 +635,13 @@ public class UserService {
 		//check user 
 		if (!msg.isSuccess()) {
 			success = false;
-			error = "error userId: " + ((HtmlError) msg).getMessage();
+			error = "error userId: " + ((HtmlErrorResponce) msg).getMessage();
 		} else {
 			//get user
-			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			User user = ((HtmlUserListReponce) msg).getUsers().iterator().next();
 			
 			//get all users
-			List<User> users = (List<User>) ((HtmlUserList) this.getAllUsers()).getUsers();
+			List<User> users = (List<User>) ((HtmlUserListReponce) this.getAllUsers()).getUsers();
 			// get all users sent a requests to from getSentRequestTo
 			List<User> to = user.getSentRequestTo();
 
@@ -634,11 +650,11 @@ public class UserService {
 				if (!to.contains(user_ele) && !user_ele.equals(user))
 					discovery.add(user_ele);// add if in both to and from lists
 			}
-			return new HtmlUserList(success, discovery);
+			return new HtmlUserListReponce(success, discovery);
 
 		}
 
-		return new HtmlError(success, error);
+		return new HtmlErrorResponce(success, error);
 	}
 	
 	//sending ten good people to the client
@@ -652,18 +668,18 @@ public class UserService {
 		//check user 
 		if (!msg.isSuccess()) {
 			success = false;
-			error = "error userId: " + ((HtmlError) msg).getMessage();
+			error = "error userId: " + ((HtmlErrorResponce) msg).getMessage();
 		} else {
 			//get user
-			User user = ((HtmlUserList) msg).getUsers().iterator().next();
+			User user = ((HtmlUserListReponce) msg).getUsers().iterator().next();
 			if(user.getStatus() == 0){
 				success = false;
 				error = "User is RED";
-				return new HtmlError(success, error);
+				return new HtmlErrorResponce(success, error);
 			}
 			
 			//get all users
-			List<User> users = (List<User>) ((HtmlUserList) this.getAllUsers()).getUsers();
+			List<User> users = (List<User>) ((HtmlUserListReponce) this.getAllUsers()).getUsers();
 			//getting all outgoing requests
 			List<User> to = user.getSentRequestTo(); //list of users that I sent a request to
 			//getting all users that have been discovered
@@ -685,14 +701,14 @@ public class UserService {
 				List<User> empty = new ArrayList<User>();
 				user.setBeenDiscovered(empty);
 
-				return new HtmlError(success, error);
+				return new HtmlErrorResponce(success, error);
 			}
 
 			send = makeSend(user, relevant);
-			return new HtmlUserList(success, send);
+			return new HtmlUserListReponce(success, send);
 		}
 
-		return new HtmlError(success, error);
+		return new HtmlErrorResponce(success, error);
 
 
 	}

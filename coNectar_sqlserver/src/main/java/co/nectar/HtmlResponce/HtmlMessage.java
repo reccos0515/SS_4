@@ -1,4 +1,4 @@
-package co.nectar.Message;
+package co.nectar.HtmlResponce;
 
 public interface HtmlMessage {
 	public boolean isSuccess();
