@@ -15,17 +15,17 @@ public class MessageController {
 	@Autowired
 	MessageService msgService;
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/users/{toId}")
+	@RequestMapping(method = RequestMethod.GET, value = "/users/{toId}/messages")
 	public HtmlMessage getMessages(@PathVariable Integer toId) {
 		return msgService.getMessages(toId);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{toId}")
+	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{toId}/messages")
 	public HtmlMessage deleteMessages(@PathVariable Integer toId) {
 		return msgService.deleteMessages(toId);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/users/{toId}")
+	@RequestMapping(method = RequestMethod.POST, value = "/users/{toId}/messages")
 	public HtmlMessage addMessages(@PathVariable Integer toId, @RequestBody Message message) {
 		return msgService.addMessages(toId,message);
 	}

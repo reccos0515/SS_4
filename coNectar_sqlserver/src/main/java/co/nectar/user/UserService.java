@@ -1,12 +1,10 @@
 package co.nectar.user;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.UsesJava7;
 import org.springframework.stereotype.Service;
 
 import co.nectar.HtmlResponce.*;;
@@ -176,6 +174,11 @@ public class UserService {
 	
 	public boolean userExists(User user) {
 		// check to make sure id or userName are not null
+		
+		//inital condition
+		if(user == null) {
+			return false;
+		}
 		Integer id = user.getId();
 		String name = user.getUserName();
 		if(id == null && name == null)
@@ -202,7 +205,7 @@ public class UserService {
 	
 	public boolean userExistsById(Integer userId) {
 		// check to make sure id or userName are not null
-		return userId == null || userRepo.exists(userId);
+		return userId != null && userRepo.exists(userId);
 		
 	}
 

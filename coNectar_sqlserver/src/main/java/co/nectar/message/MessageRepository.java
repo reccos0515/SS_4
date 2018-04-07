@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import co.nectar.user.User;
 
 public interface MessageRepository extends CrudRepository<Message,Integer>{
-	List<Message> findByUser(User user);
+	Message findByUserTo(Integer userId);
 }

@@ -4,10 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import co.nectar.HtmlResponce.HtmlUserListReponce;
 import co.nectar.user.User;
+import co.nectar.user.UserService;
 
 @Entity 
 public class Message {
@@ -16,18 +21,29 @@ public class Message {
 	private Integer id;
 	
 	@JsonIgnore
-	private User to;
-	private User user;
+	private Integer userTo;
+	
+	@JsonIgnore
+	private Integer userFrom;
+	
+	@JsonIgnore
+	@Autowired
+	@Transient//dont store this variable in the db
+	private UserService userService;
+	
+	
 	private String message;
 	private String time;
 	
 	
-	
-	public Message(Integer id, User to, User user, String message, String time) {
+	public Message () {
+		super();
+	}
+	public Message(Integer id, Integer userTo, Integer userFrom, String message, String time) {
 		super();
 		this.id = id;
-		this.to = to;
-		this.user = user;
+		this.userTo = userTo;
+		this.userFrom = userFrom;
 		this.message = message;
 		this.time = time;
 	}
@@ -40,20 +56,47 @@ public class Message {
 		this.id = id;
 	}
 
-	public User getTo() {
-		return to;
-	}
-
-	public void setTo(User to) {
-		this.to = to;
-	}
-
+	/**
+	 * returns user based on from field
+	 * @return user based on from field
+	 */
 	public User getUser() {
-		return user;
+		return ((HtmlUserListReponce) userService.getUserById(userFrom)).getUsers().iterator().next();
+	}
+	
+	/**
+	 * add to from field based on given user
+	 * 
+	 * sets from to null if given username and id null in user
+	 * 
+	 * @param user
+	 */
+	public void setUser(User user) {
+		if(user.getUserName() == null && user.getId() == null) {
+			this.userFrom = null;//keep from null if no id or username given
+			return;
+		}
+		else if(user.getId() == null) {
+			user = ((HtmlUserListReponce) userService.getUserByUserName(user.getUserName())).getUsers().iterator().next();
+		}
+		
+		this.userFrom = user.getId();
+
+	}
+	public Integer getUserTo() {
+		return userTo;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserTo(Integer to) {
+		this.userTo = to;
+	}
+
+	public Integer getUserFrom() {
+		return userFrom;
+	}
+
+	public void setUserFrom(Integer from) {
+		this.userFrom = from;
 	}
 
 	public String getMessage() {
@@ -71,6 +114,19 @@ public class Message {
 	public void setTime(String time) {
 		this.time = time;
 	} 
+	
+	@JsonIgnore
+	boolean isValid() {
+		if(userFrom == null)
+			return false;
+		else if(userTo == null)
+			return false;
+		else if(message == null)
+			return false;
+		else if(time == null)
+			return false;
+		return true;
+	}
 	
 	
 }

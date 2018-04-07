@@ -1,5 +1,6 @@
 package co.nectar.message;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,11 @@ public class MessageService {
 	@Autowired
 	private MessageRepository msgRepo;
 	
+	@Autowired
 	private UserService userService;
 	
 	public HtmlMessage getMessages(Integer toId) {
-		boolean success = false;
+		boolean success = true;
 		String error = "";
 		
 		if(!userService.userExistsById(toId)) {
@@ -28,7 +30,8 @@ public class MessageService {
 			error = "userId not valid";
 		}else {
 			User user =  ((HtmlUserListReponce) userService.getUserById(toId)).getUsers().iterator().next();
-			List<Message> msgs = msgRepo.findByUser(user);
+			List<Message> msgs = new ArrayList<>();
+			msgs.add(msgRepo.findByUserTo(toId));
 			
 			return new HtmlMessageListReponce(success, msgs);
 			
@@ -42,31 +45,22 @@ public class MessageService {
 	}
 
 	public HtmlMessage addMessages(Integer toId, Message msg) {
-		boolean success = false;
+		boolean success = true;
 		String error = "";
 		
-		if(!userService.userExistsById(toId)) {
+		//set to field
+		msg.setUserTo(toId);
+		
+		if(!msg.isValid()) {
+			success = false;
+			error = "message fields not valid";
+		}else if(!userService.userExistsById(msg.getUserFrom())) {
 			success = false;
 			error = "toId not valid";
-		} else if( !userService.userExists(msg.getUser()) ) {
+		} else if( !userService.userExistsById(msg.getUserFrom()) ) {
 			success = false;
 			error = "given user not valid";
-		}else if(msg.getTime() == null) {
-			success = false;
-			error = "time not given";
-		}else if(msg.getMessage() == null) {
-			success = false;
-			error = "message not given";
 		}else {
-			User user = msg.getUser();
-			if(user.getId() != null)
-				user =  ((HtmlUserListReponce) userService.getUserById(user.getId())).getUsers().iterator().next();
-			else
-				user =  ((HtmlUserListReponce) userService.getUserByUserName(user.getUserName())).getUsers().iterator().next();
-			User to =  ((HtmlUserListReponce) userService.getUserById(toId)).getUsers().iterator().next();
-			
-			msg.setTo(to);
-			msg.setUser(user);
 			msgRepo.save(msg);
 		}
 		
