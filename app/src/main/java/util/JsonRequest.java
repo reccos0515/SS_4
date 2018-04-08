@@ -390,4 +390,66 @@ public class JsonRequest {
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
     }
 
+    public static void getMessages(int id, final Context context){
+        String url =  "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id +"/received_messages"; //TODO change if need be
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                JSONObject js; //full object
+                js = response;
+                Log.d("JsonRequest", "getMessages response from GET: " + response);
+                Boolean s = false;
+                JSONArray messages;
+                String successMessage = "";
+                Context context1 = context;
+                final SharedPreferences preferences = context1.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
+                final SharedPreferences.Editor editor = preferences.edit();
+
+                try {
+                    s = js.getBoolean("success");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if(js == null){
+                    Log.d("JsonRequest", "getMessages no response from server");
+                }
+                if(s){ //if the request was successful
+                    try {
+                        messages = js.getJSONArray("messages"); //get JSONArray of all of the messages a user has received
+
+                        Log.d("JsonRequest", "Grabbing messages, looks like: " + messages.toString());
+                        Set<String> messageSet = new HashSet<>();
+                        for(int i = 0; i < messages.length(); i++){ //grab all friends out of the array1
+                            JSONObject thisMessage = messages.getJSONObject(i); //get the user we're talking about
+                            String strMessage = thisMessage.toString();
+                            messageSet.add(strMessage); //add the message to the set for sharedPreferences
+                        }
+                        editor.putStringSet("MESSAGES", messageSet);//shared pref variable for string messages
+                        editor.apply();
+                        Log.d("JsonRequest", "messageSet set: " + preferences.getStringSet("MESSAGES", null));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{ //if the server returns an error, display it in logs
+                    try {
+                        js.getString("message");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("JsonRequest", "getMessages error message: " + successMessage);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+        return;
+    }
+
 }
