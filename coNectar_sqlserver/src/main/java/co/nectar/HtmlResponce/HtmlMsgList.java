@@ -7,11 +7,11 @@ import co.nectar.message.Message;
  * @author Ben
  *
  */
-public class HtmlMessageListReponce implements HtmlMessage{
+public class HtmlMsgList implements HtmlResponce{
 	private boolean success;
 	private Iterable<Message> recieved_messages;
 	
-	public HtmlMessageListReponce(boolean success, Iterable<Message> message) {
+	public HtmlMsgList(boolean success, Iterable<Message> message) {
 		super();
 		this.success = success;
 		this.recieved_messages = message;

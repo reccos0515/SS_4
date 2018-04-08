@@ -13,14 +13,14 @@ import co.nectar.user.User;
  * @author basimon
  *
  */
-public class HtmlUserListReponce implements HtmlMessage{
+public class HtmlUserList implements HtmlResponce{
 
 	private boolean success;
 	private Iterable<User> users;
 	
 
 	//constuctors
-	public HtmlUserListReponce(boolean success, Iterable<User> iterable) {
+	public HtmlUserList(boolean success, Iterable<User> iterable) {
 		super();
 		this.success = success;
 		this.users = iterable;

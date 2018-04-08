@@ -34,7 +34,7 @@ public class LoginService {
 	 * @param login login to be added
 	 * @return htmlmessage indicating sucess or error
 	 */
-	public HtmlMessage addLogin(Login login) {
+	public HtmlResponce addLogin(Login login) {
 		boolean success = true;
 		String error = "";
 		if(login.getPassword().equals("") || login.getPassword() == null) {
@@ -48,18 +48,18 @@ public class LoginService {
 			error = "user is missing requierd fields";			
 		}else {
 			//save login and user
-			HtmlMessage msg = userService.addUser(login.getUser());
+			HtmlResponce msg = userService.addUser(login.getUser());
 			if(!msg.isSuccess())
-				return new HtmlErrorResponce(false, "error: "+((HtmlErrorResponce) msg).getMessage());
+				return new HtmlError(false, "error: "+((HtmlError) msg).getMessage());
 			
 			//get added user
-			User added = ((HtmlUserListReponce) msg).getUsers().iterator().next();
+			User added = ((HtmlUserList) msg).getUsers().iterator().next();
 			login.setUser(added);
 			loginRepo.save(login);
 			
 			ArrayList<User> users = new ArrayList<>();
 			users.add(added);
-			return new HtmlUserListReponce(success,users);
+			return new HtmlUserList(success,users);
 		}
 		
 		
@@ -68,7 +68,7 @@ public class LoginService {
 		if(secureMode&&!success) {
 			error = "unable to add login";
 		}
-		HtmlErrorResponce msg = new HtmlErrorResponce(success,error);
+		HtmlError msg = new HtmlError(success,error);
 		return msg;
 	}
 
@@ -86,20 +86,20 @@ public class LoginService {
 	public Object removeLogin(Login login) {
 		boolean success = true;
 		String error= "";
-		HtmlMessage msg;
+		HtmlResponce msg;
 		
 		//find full user to be removed
 		//handle if userId is empty
 		User user = login.getUser();
 		if(!userService.userExists(user))
-			return new HtmlErrorResponce(false,"could not find user in db");
+			return new HtmlError(false,"could not find user in db");
 		
 		//get valid user
 		msg = userService.getUserByObject(user);
 		if(!msg.isSuccess())
-			return new HtmlErrorResponce(false,"error retrieving user from db: "+((HtmlErrorResponce)msg).getMessage());
+			return new HtmlError(false,"error retrieving user from db: "+((HtmlError)msg).getMessage());
 		else
-			user = ((HtmlUserListReponce)msg).getUsers().iterator().next();
+			user = ((HtmlUserList)msg).getUsers().iterator().next();
 		
 		//set full user
 		login.setUser(user);
@@ -115,7 +115,6 @@ public class LoginService {
 		}else {	
 			login = loginRepo.findByUser(user);
 			loginRepo.delete(login);
-			userService.deleteUserById(user.getId());
 		}
 		
 		//give cryptic message if secure mode is enabled
@@ -123,7 +122,7 @@ public class LoginService {
 		if(secureMode&&!success) {
 			error = "unable to add login";
 		}
-		return new HtmlErrorResponce(success,error);
+		return new HtmlError(success,error);
 		
 	}
 
@@ -152,11 +151,11 @@ public class LoginService {
 		} else {
 			//handle if user id is null or not valid
 			//get valid user
-			HtmlMessage msg = userService.getUserByObject(user);
+			HtmlResponce msg = userService.getUserByObject(user);
 			if(!msg.isSuccess())
-				return new HtmlErrorResponce(false,"error retrieving user from db: "+((HtmlErrorResponce)msg).getMessage());
+				return new HtmlError(false,"error retrieving user from db: "+((HtmlError)msg).getMessage());
 			else
-				user = ((HtmlUserListReponce)msg).getUsers().iterator().next();
+				user = ((HtmlUserList)msg).getUsers().iterator().next();
 			
 			//check password
 			String pass = loginRepo.findByUser(user).getPassword();//get password
@@ -166,7 +165,7 @@ public class LoginService {
 			}else {
 				ArrayList<User> users = new ArrayList<User>();
 				users.add(user);
-				return new HtmlUserListReponce(success, users);
+				return new HtmlUserList(success, users);
 			}
 		}
 		
@@ -176,7 +175,7 @@ public class LoginService {
 		if(secureMode) {
 			error = "unable to login";
 		}	
-		HtmlErrorResponce msg = new HtmlErrorResponce(success, error);
+		HtmlError msg = new HtmlError(success, error);
 		return msg;
 	}
 

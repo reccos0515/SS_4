@@ -8,16 +8,16 @@ package co.nectar.HtmlResponce;
  * @author Ben
  *
  */
-public class HtmlErrorResponce implements HtmlMessage{
+public class HtmlError implements HtmlResponce{
 	boolean success;
 	String message;
 	
-	public HtmlErrorResponce() {
+	public HtmlError() {
 		this.success = false;
 		this.message = "";
 	}
 	
-	public HtmlErrorResponce(boolean success, String message) {
+	public HtmlError(boolean success, String message) {
 		super();
 		this.success = success;
 		this.message = message;

@@ -6,10 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.nectar.HtmlResponce.HtmlErrorResponce;
-import co.nectar.HtmlResponce.HtmlMessage;
-import co.nectar.HtmlResponce.HtmlMessageListReponce;
-import co.nectar.HtmlResponce.HtmlUserListReponce;
+import co.nectar.HtmlResponce.HtmlError;
+import co.nectar.HtmlResponce.HtmlResponce;
+import co.nectar.HtmlResponce.HtmlMsgList;
+import co.nectar.HtmlResponce.HtmlUserList;
 import co.nectar.user.User;
 import co.nectar.user.UserService;
 
@@ -21,50 +21,82 @@ public class MessageService {
 	@Autowired
 	private UserService userService;
 	
-	public HtmlMessage getMessages(Integer toId) {
+	public HtmlResponce getMessages(Integer toId) {
 		boolean success = true;
 		String error = "";
-		
-		if(!userService.userExistsById(toId)) {
-			success = false;
-			error = "userId not valid";
-		}else {
-			User user =  ((HtmlUserListReponce) userService.getUserById(toId)).getUsers().iterator().next();
-			List<Message> msgs = new ArrayList<>();
-			msgs.add(msgRepo.findByUserTo(toId));
-			
-			return new HtmlMessageListReponce(success, msgs);
-			
+		HtmlResponce htmlmsg;
+		User toUser;
+		//check if toId is valid
+		htmlmsg = userService.getUserById(toId);
+		if(!htmlmsg.isSuccess()) {
+			error = ((HtmlError) htmlmsg).getMessage();
+			return new HtmlError(false, "userTo is not valid user: "+error);
 		}
-		return new  HtmlErrorResponce(success, error);
+			
+		//get user object of toId 
+		toUser = ((HtmlUserList) htmlmsg).getUsers().iterator().next();
+		
+		
+		List<Message> msgs = new ArrayList<>();
+		msgs = msgRepo.findByUserTo(toUser);
+		if(msgs.size() == 0)
+			return new HtmlError(false,"no messages");
+		
+		return new HtmlMsgList(success, msgs);
+			
+		
 	}
 
-	public HtmlMessage deleteMessages(Integer toId) {
-		// TODO Auto-generated method stub
-		return null;
+	public HtmlResponce deleteMessages(Integer toId) {
+		HtmlResponce htmlmsg = this.getMessages(toId);
+		
+		//remove all items returned if successful
+		if(htmlmsg.isSuccess()) {
+			Iterable<Message> messages = ((HtmlMsgList) htmlmsg).getMessage();
+			msgRepo.delete(messages);
+		}
+		return htmlmsg;
 	}
 
-	public HtmlMessage addMessages(Integer toId, Message msg) {
+	public HtmlResponce addMessages(Integer toId, Message msg) {
 		boolean success = true;
 		String error = "";
+		HtmlResponce htmlmsg;
+		User toUser,fromUser;
 		
-		//set to field
-		msg.setUserTo(toId);
+		//check if toId is valid
+		htmlmsg = userService.getUserById(toId);
+		if(!htmlmsg.isSuccess()) {
+			error = ((HtmlError) htmlmsg).getMessage();
+			return new HtmlError(false, "userTo is not valid user: "+error);
+		}
+			
+		
+		//get user object of toId and save in message
+		toUser = ((HtmlUserList) htmlmsg).getUsers().iterator().next();
+		msg.setUserTo(toUser);
+		
+		
+		//check if correct user is given
+		htmlmsg = userService.getUserByObject(msg.getUser());
+		if(!htmlmsg.isSuccess()) {
+			error = ((HtmlError) htmlmsg).getMessage();
+			return new HtmlError(false, "user from is not valid user: "+error);
+		}
+		
+		//get full user from object and save in message
+		fromUser = ((HtmlUserList) htmlmsg).getUsers().iterator().next();
+		msg.setUser(fromUser);
+		
 		
 		if(!msg.isValid()) {
 			success = false;
 			error = "message fields not valid";
-		}else if(!userService.userExistsById(msg.getUserFrom())) {
-			success = false;
-			error = "toId not valid";
-		} else if( !userService.userExistsById(msg.getUserFrom()) ) {
-			success = false;
-			error = "given user not valid";
-		}else {
+		} else {
 			msgRepo.save(msg);
 		}
 		
-		return new  HtmlErrorResponce(success, error);
+		return new  HtmlError(success, error);
 	}
 
 }
