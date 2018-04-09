@@ -96,7 +96,7 @@ public class User {
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
-		this.interests = interests;
+		this.setInterests(interests);
 		this.sentRequestTo = new ArrayList<User>();
 		this.recievedRequestFrom = new ArrayList<User>();
 		this.beenDiscovered = new ArrayList<User>();
@@ -110,7 +110,7 @@ public class User {
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
-		this.interests = interests;
+		this.setInterests(interests);
 		this.sentRequestTo = sentRequestTo;
 		this.recievedRequestFrom = recievedRequestFrom;
 		this.beenDiscovered = new ArrayList<User>();
