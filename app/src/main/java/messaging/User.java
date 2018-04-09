@@ -32,15 +32,15 @@ public class User {
         this.id = id;
     }
 
-    public static String getUsername(){
+    public String getUsername(){
         return username;
     }
 
-    public static String getProfileUrl(){
+    public String getProfileUrl(){
         return profileURL;
     }
 
-    public static int getUserId(){
+    public int getUserId(){
         return id;
     }
 }

@@ -1,5 +1,6 @@
 package messaging;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -31,13 +32,13 @@ public class MyMessage {
 
         message = s;
         //may need to update this
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("HH:mm"); //Suppress is so there isn't yellow crap telling us to ask the user for location
         Date date = new Date();
         time = formatDateTime(dateFormat.format(date));
         user = new User(preferences.getString("USERNAME", ""), "", preferences.getInt("ID", 0));
     }
 
-    public static String getMessage(){ //TODO implement
+    public String getMessage(){ //TODO implement
         return message;
     }
 
@@ -46,11 +47,11 @@ public class MyMessage {
      * need to send context first with setContext()
      * @return
      */
-    public static User getSender(){
+    public User getSender(){
         return user;
     }
 
-    public static String formatDateTime(String createdAt){
+    public String formatDateTime(String createdAt){
         int hour = (createdAt.charAt(0) - '0') * 10 + createdAt.charAt(1) - '0';
         hour -= 6;
         if(hour == 0){
@@ -67,12 +68,12 @@ public class MyMessage {
         }
     }
 
-    public static String getCreatedAt(){
+    public String getCreatedAt(){
         return time;
     }
 
 
-    public static void displayRoundImageFromUrl(Context context, String url, ImageView profileImage){
+    public void displayRoundImageFromUrl(Context context, String url, ImageView profileImage){
 
     }
     public static void setContext(Context context){
