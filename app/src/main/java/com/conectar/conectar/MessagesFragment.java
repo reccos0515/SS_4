@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,17 +84,22 @@ public class MessagesFragment extends Fragment {
         String profileUrl = "testUrl";
         int id = 5;
         User user = new User(username, profileUrl, id);
+        Log.d("MessagesFragment", "user: " + user.toString());
         MyMessage fakeMessage = new MyMessage(message, user, time);
         List<MyMessage> mMessageList = new ArrayList<MyMessage>();
+        Log.d("MessagesFragment", "fakeMessage: " + fakeMessage);
         mMessageList.add(fakeMessage);
+        Log.d("MessagesFragment", "mMessageList: " + mMessageList.toString());
 
         //ListView listView = (ListView) view.findViewById(R.id.reyclerview_message_list);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.reyclerview_message_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         RecyclerView.Adapter adapter = new MessageListAdapter(getContext(), mMessageList);
+        recyclerView.setAdapter(adapter);
 
-        MyMessage m = new MyMessage("hello");
+       MyMessage m = new MyMessage("hello");
+       Log.d("MessagesFragment", m.toString());
 
 
         view.findViewById(R.id.button_chatbox_send).setOnClickListener(new View.OnClickListener() {
