@@ -1,6 +1,7 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
@@ -12,8 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import messaging.MessageListAdapter;
 import messaging.MyMessage;
+import util.UserUtil;
 
 
 /**
@@ -67,6 +72,26 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
+
+        String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/";
+        int userIDNum = preferences.getInt("ID", 0);
+        JSONObject user = UserUtil.getUserToView(); //get the user that should be shown
+        int msgUserIDNum;
+        try{
+            msgUserIDNum = user.getInt("id");
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        //todo create full url
+        
+
+
+
+
         MyMessage.setContext(getContext());
         MyMessage m = new MyMessage("hello");
     }
