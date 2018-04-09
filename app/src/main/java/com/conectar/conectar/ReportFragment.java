@@ -1,12 +1,24 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import util.JsonRequest;
+import util.UserUtil;
 
 
 /**
@@ -67,11 +79,30 @@ public class ReportFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_report, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        view.findViewById(R.id.testMessageBtn).setOnClickListener(new View.OnClickListener() { //if test message button pressed
+            @Override
+            public void onClick(View view) {
+                JSONObject js = new JSONObject();
+                JSONObject js2 = new JSONObject();
+                try {
+                    js2.put("userName", "test4");
+                    js.put("message", "test message from app");
+                    js.put("time", "3");
+                    js.put("user", js2);
+                    Log.d("ReportFragment", "Test input for sendMessage" + js.toString());
+                    Toast.makeText(getActivity(), "Button pressed", Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                JsonRequest.sendMessage(2, js, getContext());
+            }
+        });
+
+
     }
 
     @Override

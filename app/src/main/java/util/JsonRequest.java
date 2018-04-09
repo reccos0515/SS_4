@@ -514,4 +514,23 @@ public class JsonRequest {
         return;
     }
 
+    public static void sendMessage(int id, JSONObject js, final Context context){
+        String url =  "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id +"/received_messages"; //TODO change if need be
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, js, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("JsonRequest", "sendMessage response from server: " + response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+        return;
+    }
+
+
+
 }

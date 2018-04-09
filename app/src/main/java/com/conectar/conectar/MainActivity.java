@@ -239,9 +239,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_about) { //TODO fix
             fragment = new AboutFragment();
         } else if (id == R.id.nav_report) {
-            //waiting for xml implementation
+            fragment = new ReportFragment();
         } else if (id == R.id.nav_friends) {
-            //Friend[] friends = Friend.getFriends("0", context);
             fragment = new FriendsFragment();
         }
 
