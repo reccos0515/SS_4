@@ -11,9 +11,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import messaging.MessageListAdapter;
 import messaging.MyMessage;
+import messaging.User;
 
 
 /**
@@ -68,7 +76,32 @@ public class MessagesFragment extends Fragment {
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MyMessage.setContext(getContext());
+
+        String message = "test message";
+        String time = "test time";
+        String username = "testUsername";
+        String profileUrl = "testUrl";
+        int id = 5;
+        User user = new User(username, profileUrl, id);
+        MyMessage fakeMessage = new MyMessage(message, user, time);
+        List<MyMessage> mMessageList = new ArrayList<MyMessage>();
+        mMessageList.add(fakeMessage);
+
+        //ListView listView = (ListView) view.findViewById(R.id.reyclerview_message_list);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.reyclerview_message_list);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        RecyclerView.Adapter adapter = new MessageListAdapter(getContext(), mMessageList);
+
         MyMessage m = new MyMessage("hello");
+
+
+        view.findViewById(R.id.button_chatbox_send).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
