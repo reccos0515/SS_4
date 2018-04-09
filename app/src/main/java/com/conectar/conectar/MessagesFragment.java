@@ -67,6 +67,7 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        MyMessage.setContext(getContext());
         MyMessage m = new MyMessage("hello");
     }
 

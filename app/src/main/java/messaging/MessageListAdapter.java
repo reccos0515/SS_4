@@ -131,4 +131,18 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     public void sendContext(Context context){
         this.context = context;
     }
+
+    public void createTestConversation(){
+
+    }
+
+    public void createTestMessage(){
+        String message = "test message";
+        String time = "test time";
+        String username = "testUsername";
+        String profileUrl = "testUrl";
+        int id = 5;
+        User user = new User(username, profileUrl, id);
+        MyMessage fakeMessage = new MyMessage(message, user, time);
+    }
 }

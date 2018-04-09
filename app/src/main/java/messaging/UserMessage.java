@@ -6,6 +6,7 @@ package messaging;
 
 public class UserMessage extends MyMessage {
 
+
     public MyMessage get(int position){//TODO implement
         return null;
     }

@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 /**
  * Created by Maggie on 4/5/2018.
+ * User objects for use in MessageListAdapter
  */
 
 public class User {

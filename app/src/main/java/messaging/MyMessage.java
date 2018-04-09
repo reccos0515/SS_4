@@ -38,6 +38,13 @@ public class MyMessage {
         user = new User(preferences.getString("USERNAME", ""), "", preferences.getInt("ID", 0));
     }
 
+    public MyMessage(String message, User user, String time){
+        super();
+        MyMessage.time = time;
+        MyMessage.message = message;
+        MyMessage.user = user;
+    }
+
     public String getMessage(){ //TODO implement
         return message;
     }
