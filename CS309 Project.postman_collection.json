@@ -1,8 +1,7 @@
 {
 	"info": {
-		"name": "CS309 Project",
 		"_postman_id": "7d84a41d-412c-bdb4-d72d-a00e64b27a3b",
-		"description": "",
+		"name": "CS309 Project",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -10,36 +9,6 @@
 			"name": "User",
 			"description": "",
 			"item": [
-				{
-					"name": "Add default Users",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\":6,\n    \"userName\": \"maggie\",\n    \"bio\": \"I am maggie\"\n}"
-						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/test",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"test"
-							]
-						},
-						"description": "Add a set number of users to the data base\n"
-					},
-					"response": []
-				},
 				{
 					"name": "Get ALL Users",
 					"request": {
@@ -113,7 +82,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\":1,\n    \"userName\": \"test1\",\n    \"bio\": \"test user\",\n    \"interests\": \"00000000001\"\n}"
+							"raw": "{\n    \"id\": 1,\n    \"status\": 1,\n    \"userName\": \"test1\",\n    \"interests\": \"10100000000\",\n    \"bio\": \"test bio\"\n}"
 						},
 						"url": {
 							"raw": "http://{{url}}:{{port}}/ben/users/",
@@ -147,7 +116,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/2/request_friend/1",
+							"raw": "http://{{url}}:{{port}}/ben/users/4/request_friend/1",
 							"protocol": "http",
 							"host": [
 								"{{url}}"
@@ -156,7 +125,7 @@
 							"path": [
 								"ben",
 								"users",
-								"2",
+								"4",
 								"request_friend",
 								"1"
 							]
@@ -276,7 +245,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/1/friends/3/force",
+							"raw": "http://{{url}}:{{port}}/ben/users/1/friends/2/force",
 							"protocol": "http",
 							"host": [
 								"{{url}}"
@@ -287,7 +256,7 @@
 								"users",
 								"1",
 								"friends",
-								"3",
+								"2",
 								"force"
 							]
 						},
@@ -310,7 +279,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/1/discovery",
+							"raw": "http://{{url}}:{{port}}/ben/users/1/relevant",
 							"protocol": "http",
 							"host": [
 								"{{url}}"
@@ -320,7 +289,39 @@
 								"ben",
 								"users",
 								"1",
-								"discovery"
+								"relevant"
+							]
+						},
+						"description": "List of users who current user has yet to discover\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Relevant New users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users/1/relevant",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users",
+								"1",
+								"relevant"
 							]
 						},
 						"description": "List of users who current user has yet to discover\n\n"
@@ -409,7 +410,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": {\n    \t\"id\" : 0,\n        \"bio\" : \"test user\",\n        \"userName\": \"test3\",\n        \"interests\": \"00000000000\"\n    },\n    \"password\": \"test\"\n}"
+							"raw": "{\n    \"user\": {\n    \t\"id\" : 0,\n        \"bio\" : \"test user\",\n        \"userName\": \"test50\",\n        \"interests\": \"00000000000\"\n    },\n    \"password\": \"test\"\n}"
 						},
 						"url": {
 							"raw": "http://{{url}}:{{port}}/ben/login/add",
@@ -440,7 +441,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": {\n\t\t\"userName\": \"test3\"\n    },\n    \"password\": \"test\"\n}"
+							"raw": "{\n    \"user\": {\n\t\t\"userName\": \"test50\"\n    },\n    \"password\": \"test\"\n}"
 						},
 						"url": {
 							"raw": "http://{{url}}:{{port}}/ben/login",
@@ -470,7 +471,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": {\n\t\t\"userName\": \"test1\"\n    },\n    \"password\": \"test\"\n}"
+							"raw": "{\n    \"user\": {\n\t\t\"userName\": \"test50\"\n    },\n    \"password\": \"test\"\n}"
 						},
 						"url": {
 							"raw": "http://{{url}}:{{port}}/ben/login/",
@@ -486,6 +487,112 @@
 							]
 						},
 						"description": "Get login based on correct password\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Add test login credentials and users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/login/test",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"login",
+								"test"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Messages",
+			"description": null,
+			"item": [
+				{
+					"name": "Get Messages To",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users/2/messages",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users",
+								"2",
+								"messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Message To",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"message\":\"test\",\n\t\"time\":\"1\",\n\t\"user\":\n\t\t{\n\t\t\"userName\":\"test1\"\n\t\t}\n\t\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users/2/messages",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users",
+								"2",
+								"messages"
+							]
+						},
+						"description": "send message toId\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Messages To",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/users/2/messages",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"users",
+								"2",
+								"messages"
+							]
+						}
 					},
 					"response": []
 				}
