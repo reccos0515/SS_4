@@ -49,4 +49,9 @@ public class User {
     public int getUserId(){
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "username: " + username + "   profileURL: " + profileURL + "   id: " + id;
+    }
 }
