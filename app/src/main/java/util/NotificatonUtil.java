@@ -21,6 +21,12 @@ public class NotificatonUtil {
     private NotificationCompat.Builder notification;
     private static final int NOTIFICATION_ID = 96274;
 
+    /**
+     * Creates a new notification to be displayed
+     * @param title the title of the notification
+     * @param text the main body of text to be displayed in the notification
+     * @param context the context from which the notification will be sent
+     */
     public void createNotification(String title, String text, Context context){
         //Base for notifications
         notification = new NotificationCompat.Builder(context);
