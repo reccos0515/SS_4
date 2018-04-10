@@ -212,7 +212,13 @@ public class SwipeFragment extends Fragment {
     }
 
     /**
-     * Helper method to update the ui to the right user
+     * Helper method to update the ui to the right user.
+     * This is called every time the user goes to the next
+     * user to view.  It updates all of the information on the UI
+     * so they are seeing the next user.  The signature is
+     * void updateUI(JSONObject user).  It takes in the user that
+     * is going to be viewed. It does not return anything because
+     * it updates the UI
      * @param user object to be viewed
      */
     public static void updateUI(JSONObject user){
@@ -288,7 +294,13 @@ public class SwipeFragment extends Fragment {
     }
 
     /**
-     * Method to save the received object. Can be accessed after a user presses a button
+     * Method to save the received object. Can be accessed after a user presses a button.
+     * This method saves the Json Object that was received in the volley call to the server.
+     * This json object includes a success value, and either an error message or array of users
+     * to view. This is called the first time a button is pressed in order to access this object
+     * directly in this class to change between users.  The signature is void saveNewObject(JSONObject js)
+     * where JSONObject js is the object received in the volley request and nothing is returned because
+     * this object is saved in the variables in this class.
      * @param js json object found in response
      */
     public static void saveNewObject(JSONObject js){
