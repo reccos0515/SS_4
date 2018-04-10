@@ -9,16 +9,27 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import messaging.MessageListAdapter;
 import messaging.MyMessage;
+
+import messaging.User;
 import util.UserUtil;
+
 
 
 /**
@@ -93,7 +104,37 @@ public class MessagesFragment extends Fragment {
 
 
         MyMessage.setContext(getContext());
-        MyMessage m = new MyMessage("hello");
+
+        String message = "test message";
+        String time = "test time";
+        String username = "testUsername";
+        String profileUrl = "testUrl";
+        int id = 5;
+        User testUser = new User(username, profileUrl, id);
+        Log.d("MessagesFragment", "user: " + testUser.toString());
+        MyMessage fakeMessage = new MyMessage(message, testUser, time);
+        List<MyMessage> mMessageList = new ArrayList<MyMessage>();
+        Log.d("MessagesFragment", "fakeMessage: " + fakeMessage);
+        mMessageList.add(fakeMessage);
+        Log.d("MessagesFragment", "mMessageList: " + mMessageList.toString());
+
+        //ListView listView = (ListView) view.findViewById(R.id.reyclerview_message_list);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.reyclerview_message_list);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        RecyclerView.Adapter adapter = new MessageListAdapter(getContext(), mMessageList);
+        recyclerView.setAdapter(adapter);
+
+       MyMessage m = new MyMessage("hello");
+       Log.d("MessagesFragment", m.toString());
+
+
+        view.findViewById(R.id.button_chatbox_send).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

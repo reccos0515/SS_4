@@ -36,6 +36,7 @@ public class MyMessage {
         Date date = new Date();
         time = formatDateTime(dateFormat.format(date));
         user = new User(preferences.getString("USERNAME", ""), "", preferences.getInt("ID", 0));
+        Log.d("MyMessage", "In MyMessage string constructor");
     }
 
     public MyMessage(String message, User user, String time){
@@ -43,6 +44,7 @@ public class MyMessage {
         MyMessage.time = time;
         MyMessage.message = message;
         MyMessage.user = user;
+        Log.d("MyMessage", "In MyMessage multiple field constructor, time: " + time + "   message: " + message + "   user:" + user.toString());
     }
 
     public String getMessage(){ //TODO implement

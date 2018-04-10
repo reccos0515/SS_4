@@ -1,5 +1,7 @@
 package messaging;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,12 +27,15 @@ public class User {
         }catch (JSONException e){
             e.printStackTrace();
         }
+        Log.d("User", "Used JSONObject constructor");
     }
 
     public User(String username, String profileURL, int id){
         this.username = username;
         this.profileURL = profileURL;
         this.id = id;
+
+        Log.d("User", "username: " + username + "   profileURL: " + profileURL + "   id: " + id);
     }
 
     public String getUsername(){
