@@ -23,10 +23,17 @@ public class MyMessage {
     private static String message;
     private static User user;
 
+    /**
+     * The constructor for a MyMessage
+     */
     public MyMessage(){
         super();
     }
 
+    /**
+     * The constructor for a MyMessage
+     * @param s a string of the full message object
+     */
     public MyMessage(String s){
         final SharedPreferences preferences = mContext.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
 
@@ -39,6 +46,12 @@ public class MyMessage {
         Log.d("MyMessage", "In MyMessage string constructor");
     }
 
+    /**
+     * The constructor for a MyMessage
+     * @param message the message to be displayed
+     * @param user the user who sent the message
+     * @param time the time the message was sent
+     */
     public MyMessage(String message, User user, String time){
         super();
         MyMessage.time = time;
@@ -47,19 +60,29 @@ public class MyMessage {
         Log.d("MyMessage", "In MyMessage multiple field constructor, time: " + time + "   message: " + message + "   user:" + user.toString());
     }
 
+    /**
+     * Gets the message
+     * @return message from a MyMessage object
+     */
     public String getMessage(){ //TODO implement
         return message;
     }
 
 
     /**
+     * Gets who sent a message
      * need to send context first with setContext()
-     * @return
+     * @return the sender of the MyMessage object
      */
     public User getSender(){
         return user;
     }
 
+    /**
+     * Formats the date/time for display within messages
+     * @param createdAt the time the message was created
+     * @return newly formatted date/time
+     */
     public String formatDateTime(String createdAt){
         int hour = (createdAt.charAt(0) - '0') * 10 + createdAt.charAt(1) - '0';
         hour -= 6;
@@ -77,19 +100,26 @@ public class MyMessage {
         }
     }
 
+    /**
+     * Gets when the message was created
+     * @return when the message was created
+     */
     public String getCreatedAt(){
         return time;
     }
 
-
-    public void displayRoundImageFromUrl(Context context, String url, ImageView profileImage){
-
-    }
+    /**
+     * sets the context for a MyMessage object
+     * @param context the context in which the MyMessage object is used
+     */
     public static void setContext(Context context){
         mContext = context;
-        return;
     }
 
+    /**
+     * Returns the time, message, and user of a MyMessage object in string format
+     * @return a formatted string with a MyMessage's time, message, and user
+     */
     @Override
     public String toString() {
         return "time: " + time + "   message: " + message + "   user: {" + user.toString() + "}";
