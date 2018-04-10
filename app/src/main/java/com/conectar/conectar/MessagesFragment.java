@@ -141,7 +141,7 @@ public class MessagesFragment extends Fragment {
         String time = "test time";
         String username = "testUsername";
         String profileUrl = "testUrl";
-        int id = 5;
+        int id = 4;
         User testUser = new User(username, profileUrl, id);
         //Log.d("MessagesFragment", "testUser: " + testUser.toString());
         return new MyMessage(message, testUser, time);

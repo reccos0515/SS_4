@@ -45,6 +45,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         Log.d("MessageListAdapter", "Entered getItemViewType");
         MyMessage message = (MyMessage) mMessageList.get(position);
+        //TODO fix the shared preferences thing, is currently sending nullpointerexceptions at run
         //SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         //int thisId = preferences.getInt("ID", 0);
         int thisId = 4;
@@ -108,7 +109,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
         TextView messageText, timeText, nameText;
-        //ImageView profileImage; //TODO
+        ImageView profileImage;
 
         ReceivedMessageHolder(View itemView) {
             super(itemView);
@@ -116,8 +117,16 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             messageText = (TextView) itemView.findViewById(R.id.text_message_body);
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
             nameText = (TextView) itemView.findViewById(R.id.text_message_name);
-            //TODO add profile ImageView
-            //profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
+
+            //allows us to set what icon is being used for the person chatting, currently an example
+            //TODO change to profile picture options
+            int profileNum = 0;
+            profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
+            if(profileNum == 0){
+                profileImage.setImageResource(R.drawable.ic_action_messages);
+            }else if(profileNum == 1){
+                profileImage.setImageResource(R.drawable.ic_action_settings);
+            }
         }
 
         void bind(MyMessage message) {
