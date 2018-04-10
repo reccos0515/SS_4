@@ -53,7 +53,7 @@ public class MessageService {
 		//remove all items returned if successful
 		if(htmlmsg.isSuccess()) {
 			Iterable<Message> messages = ((HtmlMsgList) htmlmsg).getMessage();
-			msgRepo.delete(messages);
+			msgRepo.deleteAll(messages);
 		}
 		return htmlmsg;
 	}

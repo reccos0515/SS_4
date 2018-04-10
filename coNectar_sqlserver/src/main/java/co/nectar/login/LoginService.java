@@ -114,6 +114,7 @@ public class LoginService {
 			error = "given user not found";
 		}else {	
 			login = loginRepo.findByUser(user);
+			userService.deleteUserById(user.getId());
 			loginRepo.delete(login);
 		}
 		
