@@ -44,9 +44,14 @@ import java.util.Set;
 public class JsonRequest {
 
     /**
-     * Sends a post request to a given url to add a new user
-     * @param js json object to send
+     * Sends a post request to a given url to add a new user.  This is called from NewProfile once the
+     * user has created what they want as a profile, to send the request to the server to add the profile.
+     * The signature is void postNewUserRequest(JSONObject js, String url, final Context context).
+     * The JSONObject js holds the user, the url is the url to send the request to, and context is for
+     * adding the request to the queue
+     * @param js user json object to send
      * @param url url of where this request should be sent
+     * @param context context from the activity
      */
     public static void postNewUserRequest(JSONObject js, String url, final Context context){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  js,
@@ -80,6 +85,9 @@ public class JsonRequest {
     /**
      * Sends the server a post request to verify a user's login information.  If the post is
      * successful, the user's session variables are set and they are "logged in"
+     * The signature for this is void loginPostRequest(JSONObject js, String url, Context context)
+     * where js is the login information for the user, the url is where to send the request, and
+     * context is the context from the activity to be used to add the request to the queue
      * @param js the formatted user object to be posted
      * @param url the url the user object will be posted to
      * @param context the context in which this method is used
@@ -154,8 +162,13 @@ public class JsonRequest {
 
     /**
      * Sends a PUT request for a JSONObject to the server.  Often used for updating a JSONObject.
+     * Signature is void jsonObjectPutRequest(JSONObject js, String url, Context context)
+     * where js is the object that will be sent, url is where to send the request to, and
+     * context is the context of the activity this is called from to be used to add the request
+     * to the queue
      * @param js the JSONObject to be PUT
      * @param url the url that the request will be sent to
+     * @param context context this is called from
      */
     public static void jsonObjectPutRequest(JSONObject js, String url, Context context){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, js, new Response.Listener<JSONObject>() {
@@ -174,8 +187,11 @@ public class JsonRequest {
     }
 
     /**
-     * Method to be used in Swipe Fragment to get the users to view
-     * and to show them on the UI
+     * Method to be used in Swipe Fragment to get the users to view from the server, put the first
+     * user on the UI, and save the users once they have been received.  The signature is
+     * void swipeRequest(final View nView, String url, Context context) where the view is used
+     * to set the UI with the first user, url is the url to send the volley request to, and context
+     * is used to add the request to the queue
      * @param nView view from that page so the UI can be updated
      * @param url url to send the request to
      * @param context context from that page
@@ -254,6 +270,8 @@ public class JsonRequest {
     /**
      * Sends a GET request to the server to obtain a list of friends that a certain user has.  The list
      * of users are stored in session variables to be used elsewhere
+     * The signature is void getFriendsList(int id, final Context context) where the id is the id of the
+     * logged in user and context is used to put the volley request in the queue
      * @param id the id number of the user who's friends we want a list of
      * @param context the context in which this method is used
      */
@@ -327,6 +345,9 @@ public class JsonRequest {
 
     /**
      * method used to delete a user
+     * Signature is void deleteUserRequest(JSONObject js, String url, Context context) where
+     * js is the user to be deleted, url is where the volley request should be sent, and context
+     * is used to add the request to the queue
      * @param js user to be deleted
      * @param url url to send this request to
      * @param context context from the activity where this is called
@@ -390,6 +411,14 @@ public class JsonRequest {
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
     }
 
+    /**
+     * Used to send a request to get all messages to the logged in user
+     * Signature is void getMessage(int id, final Context context) where id
+     * is used to create the url and context is used to add the request to the
+     * queue
+     * @param id of logged in user
+     * @param context of activity where this is being called
+     */
     public static void getMessages(int id, final Context context){
         String url =  "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id +"/messages";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -452,6 +481,13 @@ public class JsonRequest {
         return;
     }
 
+    /**
+     * Method to delete messages for a user. Signature is getMessagesDelete(int id, final Context context)
+     * where id is the id of the logged in user to create the url and context is used to add the request
+     * to the queue
+     * @param id of logged in user
+     * @param context of activity where this is called
+     */
     public static void getMessagesDelete(int id, final Context context){
         String url =  "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id +"/messages";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
@@ -514,6 +550,15 @@ public class JsonRequest {
         return;
     }
 
+    /**
+     * Method to be called to make a volley request to the server when the message is being sent.
+     * Signature is void sendMessage(int id, JSONObject js, final Context context) where id is the
+     * id of the logged in user, js includes the messages that will be deleted, and context is used to
+     * add the request to the queue
+     * @param id of logged in user
+     * @param js messages that will be deleted
+     * @param context of activity this is being called from
+     */
     public static void sendMessage(int id, JSONObject js, final Context context){
         String url =  "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id +"/received_messages"; //TODO change if need be
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, js, new Response.Listener<JSONObject>() {
