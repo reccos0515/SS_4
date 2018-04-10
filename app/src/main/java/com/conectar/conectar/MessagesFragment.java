@@ -87,7 +87,7 @@ public class MessagesFragment extends Fragment {
         }
 
         //todo create full url
-        
+
 
 
 
