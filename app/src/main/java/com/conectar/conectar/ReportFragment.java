@@ -30,14 +30,6 @@ import util.UserUtil;
  * create an instance of this fragment.
  */
 public class ReportFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -48,28 +40,16 @@ public class ReportFragment extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment ReportFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ReportFragment newInstance(String param1, String param2) {
+    public static ReportFragment newInstance() {
         ReportFragment fragment = new ReportFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -82,25 +62,17 @@ public class ReportFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
 
-        view.findViewById(R.id.testMessageBtn).setOnClickListener(new View.OnClickListener() { //if test message button pressed
-            @Override
-            public void onClick(View view) {
-                JSONObject js = new JSONObject();
-                JSONObject js2 = new JSONObject();
-                try {
-                    js2.put("userName", "test4");
-                    js.put("message", "test message from app");
-                    js.put("time", "3");
-                    js.put("user", js2);
-                    Log.d("ReportFragment", "Test input for sendMessage" + js.toString());
-                    Toast.makeText(getActivity(), "Button pressed", Toast.LENGTH_LONG).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                JsonRequest.sendMessage(2, js, getContext());
-            }
-        });
+        int userId = preferences.getInt("ID", 0); //get int of the user reporting
+        JSONObject report = new JSONObject(); //report object to send
+        try{
+            report.put("reported", userId); //put the user sending the report's id in the report
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
 
 
     }
