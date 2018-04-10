@@ -22,8 +22,12 @@ import org.json.JSONObject;
 public class InterestsUtil {
 
     /**
-     * method to return the name of the activity from the id of that activity
-     * @param i two char number indicating the id of the interest
+     * method to return the name of the activity from the id of that activity.  Each activity is assigned a two
+     * char "id" where both chars are numbers.  These are what are stored in the server.  This class is used to
+     * convert those chars into a full string explanation of what the interest is that can be used in the UI to
+     * tell the user what this interest is.  The signature is String getInterest(String i) where the parameter
+     * is the two char 'id' for the interest and the return string is the name of the interest for the user to see.
+     * @param i two char numbers indicating the id of the interest
      * @return string name of interest for user to view
      */
     public static String getInterest(String i){

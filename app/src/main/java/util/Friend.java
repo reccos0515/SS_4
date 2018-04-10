@@ -66,7 +66,9 @@ public class Friend {
     }
 
     /**
-     * Lists all of the information regarding a Friend object
+     * Lists all of the information regarding a Friend object in a String form, in case this is useful
+     * in the UI. The signature is String fullFriendInfo(). It returns all of the information stored in
+     * this Friend object
      * @return string of all Friend object attributes
      */
     public String fullFriendInfo(){
@@ -74,7 +76,11 @@ public class Friend {
     }
 
     /**
-     * Sends a friend request to a specific user using integer ids
+     * Sends a friend request to a specific user using integer ids.
+     * The signature is void makeFriend(int userId, int friendId, Context context)
+     * It takes this information to create the url and calls postRequest in UserUtil
+     * to send the friend request to the server.  Both the ids are used to create the
+     * url and the context is used to send the volley request to the server.
      * @param userId user that the request is coming from
      * @param friendId user that the request is going to
      * @param context context in which this method is used
@@ -84,10 +90,12 @@ public class Friend {
         UserUtil.postRequest(url, context);
     }
 
-
-    //TODO implement functionality to delete a friend
     /**
      * Removes a friend from a user's friends list
+     * Takes the IDs of the current user and their friend to create the url and calls deleteRequest from
+     * UserUtil to send a delete request to the server.
+     * The signature is void removeFriend(int userId, int friendId, Context context)
+     * It takes both IDs to create the url and the context to send the volley request
      * @param userId the user who is deleting the friend
      * @param friendId the friend to be deleted from the user's list
      * @param context the context in which this method is used
@@ -98,6 +106,12 @@ public class Friend {
     }
 
 
+    /**
+     * This method is used to override the toString method. When called on a Friend object,
+     * it returns the username of this person.
+     * The signature is String toString() where the String returned is the username.
+     * @return username
+     */
     @Override
     public String toString(){
         return this.username;
