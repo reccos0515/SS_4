@@ -89,6 +89,7 @@ public class MessagesFragment extends Fragment {
 
         String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/";
         int userIDNum = preferences.getInt("ID", 0);
+        /*
         JSONObject user = UserUtil.getUserToView(); //get the user that should be shown
         int msgUserIDNum;
         try{
@@ -96,7 +97,7 @@ public class MessagesFragment extends Fragment {
         } catch (JSONException e){
             e.printStackTrace();
         }
-
+        */
         //todo create full url
 
 
@@ -105,36 +106,45 @@ public class MessagesFragment extends Fragment {
 
         MyMessage.setContext(getContext());
 
-        String message = "test message";
-        String time = "test time";
-        String username = "testUsername";
-        String profileUrl = "testUrl";
-        int id = 5;
-        User testUser = new User(username, profileUrl, id);
-        Log.d("MessagesFragment", "user: " + testUser.toString());
-        MyMessage fakeMessage = new MyMessage(message, testUser, time);
-        List<MyMessage> mMessageList = new ArrayList<MyMessage>();
-        Log.d("MessagesFragment", "fakeMessage: " + fakeMessage);
+
+        final List<MyMessage> mMessageList = new ArrayList<MyMessage>();
+        //Log.d("MessagesFragment", "fakeMessage: " + fakeMessage);
+        MyMessage fakeMessage = createFakeMessage();
         mMessageList.add(fakeMessage);
         Log.d("MessagesFragment", "mMessageList: " + mMessageList.toString());
 
         //ListView listView = (ListView) view.findViewById(R.id.reyclerview_message_list);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.reyclerview_message_list);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerView.Adapter adapter = new MessageListAdapter(getContext(), mMessageList);
+        final MessageListAdapter adapter = new MessageListAdapter(getContext(), mMessageList);
         recyclerView.setAdapter(adapter);
 
-       MyMessage m = new MyMessage("hello");
-       Log.d("MessagesFragment", m.toString());
+
+
+       //Log.d("MessagesFragment", "m: " + m.toString());
 
 
         view.findViewById(R.id.button_chatbox_send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
+                MyMessage m = new MyMessage("hello");
+                mMessageList.add(m);
+                adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public MyMessage createFakeMessage(){
+        String message = "test message";
+        String time = "test time";
+        String username = "testUsername";
+        String profileUrl = "testUrl";
+        int id = 5;
+        User testUser = new User(username, profileUrl, id);
+        //Log.d("MessagesFragment", "testUser: " + testUser.toString());
+        return new MyMessage(message, testUser, time);
     }
 
     @Override

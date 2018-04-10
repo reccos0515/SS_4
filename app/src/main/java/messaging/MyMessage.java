@@ -90,5 +90,8 @@ public class MyMessage {
         return;
     }
 
-
+    @Override
+    public String toString() {
+        return "time: " + time + "   message: " + message + "   user: {" + user.toString() + "}";
+    }
 }

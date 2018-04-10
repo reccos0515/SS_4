@@ -23,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import messaging.MessageListAdapter;
 import util.Friend;
 
 /**
@@ -111,6 +112,10 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         tx.replace(R.id.screen_area, new SwipeFragment());
         tx.commit();
+
+        //MessageListAdapter messageListAdapter = new MessageListAdapter(getApplicationContext(), getSupportFragmentManager());
+
+        //messageListAdapter.AddFragment
 
 
 
