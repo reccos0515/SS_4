@@ -44,9 +44,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         Log.d("MessageListAdapter", "Entered getItemViewType");
-        UserMessage message = (UserMessage) mMessageList.get(position);
-        SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
-        int thisId = preferences.getInt("ID", 0);
+        MyMessage message = (MyMessage) mMessageList.get(position);
+        //SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+        //int thisId = preferences.getInt("ID", 0);
+        int thisId = 4;
         if (message.getSender().getUserId() == thisId) {
             // If the current user is the sender of the message
             return VIEW_TYPE_MESSAGE_SENT;
@@ -78,7 +79,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Log.d("MessageListAdapter", "Entered onBindViewHolder");
-        UserMessage message = (UserMessage) mMessageList.get(position); //TODO figure out
+        MyMessage message = (MyMessage) mMessageList.get(position); //TODO figure out
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
                 ((SentMessageHolder) holder).bind(message);
@@ -97,7 +98,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
         }
 
-        void bind(UserMessage message) {
+        void bind(MyMessage message) {
             messageText.setText(message.getMessage());
             Log.d("SentMessageHolder", "Entered bind");
             // Format the stored timestamp into a readable String using method.
@@ -119,7 +120,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             //profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
         }
 
-        void bind(UserMessage message) {
+        void bind(MyMessage message) {
             messageText.setText(message.getMessage());
             Log.d("ReceivedMessageHolder", "Entered bind");
 
