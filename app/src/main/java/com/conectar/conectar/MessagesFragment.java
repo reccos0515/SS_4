@@ -136,6 +136,12 @@ public class MessagesFragment extends Fragment {
         });
     }
 
+    /**
+     * this method is used to create a fake message. It is only used for testing.
+     * the signature is myMessage createFakeMessage(), and it takes no parameters
+     * but returns a message
+     * @return the new fake message
+     */
     public MyMessage createFakeMessage(){
         String message = "test message";
         String time = "test time";
