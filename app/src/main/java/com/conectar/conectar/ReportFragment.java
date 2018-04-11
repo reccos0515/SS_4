@@ -34,13 +34,14 @@ import util.UserUtil;
 public class ReportFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    private boolean bio_problem; //1
-    private boolean message_problem; //2
-    private boolean other_problem; //4
-    private JSONObject report;
-    private EditText details;
-    private TextView message;
-    private View mainView;
+    private boolean bio_problem; //whether or not there is a bio problem
+    private boolean message_problem; //whether or not there is a message problem
+    private boolean other_problem; //whether or not there is an other problem
+    private JSONObject report; //the report object
+    private EditText details; //the details from the user
+    private TextView message; //message to the user about how they have set their problem location
+    private View mainView; //view from main
+    //types of problem
     enum problem{
         BIO, MESSAGE, OTHER
     }
@@ -77,7 +78,7 @@ public class ReportFragment extends Fragment {
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
 
-        mainView = view;
+        mainView = view; //save the view in main
         int userId = preferences.getInt("ID", 0); //get int of the user reporting
         report = new JSONObject(); //report object to send
         try{
@@ -85,31 +86,32 @@ public class ReportFragment extends Fragment {
         }catch (JSONException e){
             e.printStackTrace();
         }
-        message = view.findViewById(R.id.problem_message);
+        message = view.findViewById(R.id.problem_message); //text for the message to the user
 
         view.findViewById(R.id.bio_problem).setOnClickListener(new View.OnClickListener() { //red button clicked
             @Override
             public void onClick(View view) {
-                changeProblem(problem.BIO);
+                changeProblem(problem.BIO); //toggle the bio problem
             }
         });
         view.findViewById(R.id.message_problem).setOnClickListener(new View.OnClickListener() { //red button clicked
             @Override
             public void onClick(View view) {
-                changeProblem(problem.MESSAGE);
+                changeProblem(problem.MESSAGE); //toggle the message problem
             }
         });
         view.findViewById(R.id.other_problem).setOnClickListener(new View.OnClickListener() { //red button clicked
             @Override
             public void onClick(View view) {
-                changeProblem(problem.OTHER);
+                changeProblem(problem.OTHER); //toggle the other problem
             }
         });
 
         view.findViewById(R.id.submit_report).setOnClickListener(new View.OnClickListener() { //red button clicked
             @Override
             public void onClick(View view) {
-                int problem = 0;
+                int problem = 0; //create an int to store the problem
+                //add the amount for each type of problem
                 if(bio_problem){
                     problem += 1;
                 }
@@ -119,17 +121,20 @@ public class ReportFragment extends Fragment {
                 if(other_problem){
                     problem += 4;
                 }
+                //if no problem is set, the user needs to set a problem
                 if(problem == 0){
                     Toast.makeText(getActivity(), "Please indicate where the problem is located", Toast.LENGTH_SHORT).show(); //toast to tell the user they need to set a problem location
                 }
                 else {
-                    details = mainView.findViewById(R.id.report_details);
-                    String d = details.getText().toString();
+                    details = mainView.findViewById(R.id.report_details); //details from the user
+                    String d = details.getText().toString(); //string of the details
+                    //if it has not been changed, the user needs to provide details
                     if(d.equals("details here")){
                         Toast.makeText(getActivity(), "Please give details", Toast.LENGTH_SHORT).show(); //toast to tell the user they need to give details
                     }
                     else {
-                        addToReport(problem, d);
+                        addToReport(problem, d); //add the problem and details to the report
+                        //tell the user it was successful
                         Toast.makeText(getActivity(), "Your report has been submitted. You may be contacted for further information", Toast.LENGTH_LONG).show(); //toast to tell the user they need to give details
                         //create the new profile view fragment
                         Fragment fragment = new ProfileViewFragment();
@@ -183,6 +188,7 @@ public class ReportFragment extends Fragment {
      * @param prob enum for problem to toggle
      */
     public void changeProblem(problem prob){
+        //toggle the correct problem
         if(prob == problem.BIO){
             bio_problem = !bio_problem;
         }
@@ -192,6 +198,7 @@ public class ReportFragment extends Fragment {
         else if(prob == problem.OTHER){
             other_problem = !other_problem;
         }
+        //update the UI so the user knows what they have selected
         if(bio_problem){
             if(message_problem){
                 if(other_problem){
@@ -231,12 +238,14 @@ public class ReportFragment extends Fragment {
      * @param details string detailing the report
      */
     public void addToReport(int reason, String details){
+        //add these details to the report
         try{
             report.put("reason", reason);
             report.put("details", details);
         }catch (JSONException e){
             e.printStackTrace();
         }
+        //todo send report
         Log.d("report", report.toString());
         return;
     }
