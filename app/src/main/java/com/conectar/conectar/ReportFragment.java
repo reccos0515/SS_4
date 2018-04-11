@@ -40,6 +40,7 @@ public class ReportFragment extends Fragment {
     private JSONObject report;
     private EditText details;
     private TextView message;
+    private View mainView;
     enum problem{
         BIO, MESSAGE, OTHER
     }
@@ -76,6 +77,7 @@ public class ReportFragment extends Fragment {
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
 
+        mainView = view;
         int userId = preferences.getInt("ID", 0); //get int of the user reporting
         report = new JSONObject(); //report object to send
         try{
@@ -121,9 +123,14 @@ public class ReportFragment extends Fragment {
                     Toast.makeText(getActivity(), "Please indicate where the problem is located", Toast.LENGTH_LONG).show(); //toast to tell the user they need to set a problem location
                 }
                 else {
-                    details = view.findViewById(R.id.report_details);
+                    details = mainView.findViewById(R.id.report_details);
                     String d = details.getText().toString();
-                    addToReport(problem, d);
+                    if(d.equals("details here")){
+                        Toast.makeText(getActivity(), "Please give details", Toast.LENGTH_LONG).show(); //toast to tell the user they need to give details
+                    }
+                    else {
+                        addToReport(problem, d);
+                    }
                 }
             }
         });
@@ -223,6 +230,7 @@ public class ReportFragment extends Fragment {
         }catch (JSONException e){
             e.printStackTrace();
         }
+        Log.d("report", report.toString());
         return;
     }
 
