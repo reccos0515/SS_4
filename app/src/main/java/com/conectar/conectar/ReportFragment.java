@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -38,6 +39,7 @@ public class ReportFragment extends Fragment {
     private boolean other_problem; //4
     private JSONObject report;
     private EditText details;
+    private TextView message;
     enum problem{
         BIO, MESSAGE, OTHER
     }
@@ -81,6 +83,7 @@ public class ReportFragment extends Fragment {
         }catch (JSONException e){
             e.printStackTrace();
         }
+        message = view.findViewById(R.id.problem_message);
 
         view.findViewById(R.id.bio_problem).setOnClickListener(new View.OnClickListener() { //red button clicked
             @Override
@@ -174,6 +177,36 @@ public class ReportFragment extends Fragment {
         }
         else if(prob == problem.OTHER){
             other_problem = !other_problem;
+        }
+        if(bio_problem){
+            if(message_problem){
+                if(other_problem){
+                    message.setText("You have indicated a problem in the bio, messages, and other");
+                }
+                else{
+                    message.setText("You have indicated a problem in the bio and messages");
+                }
+            }
+            else if(other_problem){
+                message.setText("You have indicated a problem in the bio and other");
+            }
+            else{
+                message.setText("You have indicated a problem in the bio");
+            }
+        }
+        else if(message_problem){
+            if(other_problem){
+                message.setText("You have indicated a problem in the messages and other");
+            }
+            else{
+                message.setText("You have indicated a problem in the messages");
+            }
+        }
+        else if(other_problem){
+            message.setText("You have indicated an other problem");
+        }
+        else {
+            message.setText("You have not yet indicated where the problem is");
         }
         return;
     }
