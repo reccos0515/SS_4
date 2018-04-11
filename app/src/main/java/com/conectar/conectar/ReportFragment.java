@@ -120,16 +120,23 @@ public class ReportFragment extends Fragment {
                     problem += 4;
                 }
                 if(problem == 0){
-                    Toast.makeText(getActivity(), "Please indicate where the problem is located", Toast.LENGTH_LONG).show(); //toast to tell the user they need to set a problem location
+                    Toast.makeText(getActivity(), "Please indicate where the problem is located", Toast.LENGTH_SHORT).show(); //toast to tell the user they need to set a problem location
                 }
                 else {
                     details = mainView.findViewById(R.id.report_details);
                     String d = details.getText().toString();
                     if(d.equals("details here")){
-                        Toast.makeText(getActivity(), "Please give details", Toast.LENGTH_LONG).show(); //toast to tell the user they need to give details
+                        Toast.makeText(getActivity(), "Please give details", Toast.LENGTH_SHORT).show(); //toast to tell the user they need to give details
                     }
                     else {
                         addToReport(problem, d);
+                        Toast.makeText(getActivity(), "Your report has been submitted. You may be contacted for further information", Toast.LENGTH_LONG).show(); //toast to tell the user they need to give details
+                        //create the new profile view fragment
+                        Fragment fragment = new ProfileViewFragment();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.screen_area, fragment);
+                        fragmentTransaction.commit();
                     }
                 }
             }

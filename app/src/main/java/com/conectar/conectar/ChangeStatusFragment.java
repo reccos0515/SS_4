@@ -111,7 +111,7 @@ public class ChangeStatusFragment extends Fragment {
             public void onClick(View view) { //set status to green
                 UserUtil.updateStatus(2, getContext()); //call this to update the status
                 currentStatus.setText("Status is Green");
-                Toast.makeText(getActivity(), "Status set to green", Toast.LENGTH_LONG).show(); //toast to tell user it worked
+                Toast.makeText(getActivity(), "Status set to green", Toast.LENGTH_SHORT).show(); //toast to tell user it worked
             }
         });
         view.findViewById(R.id.yellowStatusBtn).setOnClickListener(new View.OnClickListener(){ //yellow button clicked
@@ -119,7 +119,7 @@ public class ChangeStatusFragment extends Fragment {
             public void onClick(View view){ //set status to yellow
                 UserUtil.updateStatus(1, getContext()); //call this to update the status
                 currentStatus.setText("Status is Yellow");
-                Toast.makeText(getActivity(), "Status set to yellow", Toast.LENGTH_LONG).show(); //toast to tell the user it worked
+                Toast.makeText(getActivity(), "Status set to yellow", Toast.LENGTH_SHORT).show(); //toast to tell the user it worked
             }
         });
         view.findViewById(R.id.redStatusBtn).setOnClickListener(new View.OnClickListener() { //red button clicked
@@ -127,7 +127,7 @@ public class ChangeStatusFragment extends Fragment {
             public void onClick(View view) { //set status to red
                 UserUtil.updateStatus(0, getContext()); //call this to update the status
                 currentStatus.setText("Status is Red");
-                Toast.makeText(getActivity(), "Status set to red", Toast.LENGTH_LONG).show(); //toast to let the user know it worked
+                Toast.makeText(getActivity(), "Status set to red", Toast.LENGTH_SHORT).show(); //toast to let the user know it worked
             }
         });
 
