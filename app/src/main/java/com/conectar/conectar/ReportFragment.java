@@ -32,6 +32,12 @@ import util.UserUtil;
 public class ReportFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private boolean bio_problem; //1
+    private boolean message_problem; //2
+    private boolean other_problem; //4
+    enum problem{
+        BIO, MESSAGE, OTHER
+    }
 
     public ReportFragment() {
         // Required empty public constructor
@@ -73,6 +79,44 @@ public class ReportFragment extends Fragment {
             e.printStackTrace();
         }
 
+        view.findViewById(R.id.bio_problem).setOnClickListener(new View.OnClickListener() { //red button clicked
+            @Override
+            public void onClick(View view) {
+                changeProblem(problem.BIO);
+            }
+        });
+        view.findViewById(R.id.message_problem).setOnClickListener(new View.OnClickListener() { //red button clicked
+            @Override
+            public void onClick(View view) {
+                changeProblem(problem.MESSAGE);
+            }
+        });
+        view.findViewById(R.id.other_problem).setOnClickListener(new View.OnClickListener() { //red button clicked
+            @Override
+            public void onClick(View view) {
+                changeProblem(problem.OTHER);
+            }
+        });
+
+        view.findViewById(R.id.submit_report).setOnClickListener(new View.OnClickListener() { //red button clicked
+            @Override
+            public void onClick(View view) {
+                int problem = 0;
+                if(bio_problem){
+                    problem += 1;
+                }
+                if(message_problem){
+                    problem += 2;
+                }
+                if(other_problem){
+                    problem += 4;
+                }
+                if(problem == 0){
+                    Toast.makeText(getActivity(), "Please indicate where the problem is located", Toast.LENGTH_LONG).show(); //toast to tell the user it worked
+                }
+            }
+        });
+
 
 
     }
@@ -108,4 +152,23 @@ public class ReportFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    /**
+     * method used to toggle whether or not the problem is in bio, message, or other
+     * @param prob enum for problem to toggle
+     */
+    public void changeProblem(problem prob){
+        if(prob == problem.BIO){
+            bio_problem = !bio_problem;
+        }
+        else if(prob == problem.MESSAGE){
+            message_problem = !message_problem;
+        }
+        else if(prob == problem.OTHER){
+            other_problem = !other_problem;
+        }
+        return;
+    }
+
+
 }
