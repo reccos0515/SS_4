@@ -136,7 +136,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
         TextView messageText, timeText, nameText;
-        //ImageView profileImage; //TODO
+        ImageView profileImage;
 
         /**
          * The constructor for a ReceivedMessageHolder, grabs the TextViews and ImageView for the list item
@@ -149,7 +149,20 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
             nameText = (TextView) itemView.findViewById(R.id.text_message_name);
             //TODO add profile ImageView
-            //profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
+            profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
+            SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+            int profilePicNum = preferences.getInt("PROFILEPICTURE", 0);
+            if(profilePicNum == 1){ //if their profile picture is the bee
+                profileImage.setImageResource(R.drawable.bee_24); //set picture to bee
+            }
+            else if(profilePicNum == 2){ //if their profile picture is the honey
+                profileImage.setImageResource(R.drawable.honey_24); //set picture to honey
+            }
+
+            //EXAMPLE
+            //ImageView img = new ImageView(this);
+            //img.setImageResource(R.drawable.my_image);
+
         }
 
         /**

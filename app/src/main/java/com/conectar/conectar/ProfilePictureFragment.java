@@ -1,6 +1,7 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -72,16 +73,21 @@ public class ProfilePictureFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
+
         view.findViewById(R.id.beeBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                editor.putInt("PROFILEPICTURE", 1);
+                editor.apply();
             }
         });
         view.findViewById(R.id.honeyBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                editor.putInt("PROFILEPICTURE", 2);
+                editor.apply();
             }
         });
     }
