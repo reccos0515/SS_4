@@ -269,6 +269,17 @@ public class EditProfileFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+
+        view.findViewById(R.id.profilePictureBtn).setOnClickListener(new View.OnClickListener() { //if Profile Picture button is pressed
+            @Override
+            public void onClick(View v) { //change to profile picture fragment
+                Fragment fragment = new ProfilePictureFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area, fragment);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     /**

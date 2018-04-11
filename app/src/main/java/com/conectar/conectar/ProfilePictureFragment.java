@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 /**
@@ -81,6 +82,7 @@ public class ProfilePictureFragment extends Fragment {
             public void onClick(View v) {
                 editor.putInt("PROFILEPICTURE", 1);
                 editor.apply();
+                Toast.makeText(getActivity(), "Bee!", Toast.LENGTH_SHORT).show();
             }
         });
         view.findViewById(R.id.honeyBtn).setOnClickListener(new View.OnClickListener() {
@@ -88,6 +90,7 @@ public class ProfilePictureFragment extends Fragment {
             public void onClick(View v) {
                 editor.putInt("PROFILEPICTURE", 2);
                 editor.apply();
+                Toast.makeText(getActivity(), "Honey!", Toast.LENGTH_SHORT).show();
             }
         });
     }

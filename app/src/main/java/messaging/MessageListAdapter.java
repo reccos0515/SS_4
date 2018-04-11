@@ -148,7 +148,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             messageText = (TextView) itemView.findViewById(R.id.text_message_body);
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
             nameText = (TextView) itemView.findViewById(R.id.text_message_name);
-            //TODO add profile ImageView
             profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
             SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
             int profilePicNum = preferences.getInt("PROFILEPICTURE", 0);
