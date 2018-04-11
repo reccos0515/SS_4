@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -35,6 +36,8 @@ public class ReportFragment extends Fragment {
     private boolean bio_problem; //1
     private boolean message_problem; //2
     private boolean other_problem; //4
+    private JSONObject report;
+    private EditText details;
     enum problem{
         BIO, MESSAGE, OTHER
     }
@@ -72,7 +75,7 @@ public class ReportFragment extends Fragment {
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
 
         int userId = preferences.getInt("ID", 0); //get int of the user reporting
-        JSONObject report = new JSONObject(); //report object to send
+        report = new JSONObject(); //report object to send
         try{
             report.put("reported", userId); //put the user sending the report's id in the report
         }catch (JSONException e){
@@ -112,7 +115,12 @@ public class ReportFragment extends Fragment {
                     problem += 4;
                 }
                 if(problem == 0){
-                    Toast.makeText(getActivity(), "Please indicate where the problem is located", Toast.LENGTH_LONG).show(); //toast to tell the user it worked
+                    Toast.makeText(getActivity(), "Please indicate where the problem is located", Toast.LENGTH_LONG).show(); //toast to tell the user they need to set a problem location
+                }
+                else {
+                    details = view.findViewById(R.id.report_details);
+                    String d = details.getText().toString();
+                    addToReport(problem, d);
                 }
             }
         });
@@ -166,6 +174,21 @@ public class ReportFragment extends Fragment {
         }
         else if(prob == problem.OTHER){
             other_problem = !other_problem;
+        }
+        return;
+    }
+
+    /**
+     * method used to create the button within the listener for submit report
+     * @param reason int indicating the reason for reporting
+     * @param details string detailing the report
+     */
+    public void addToReport(int reason, String details){
+        try{
+            report.put("reason", reason);
+            report.put("details", details);
+        }catch (JSONException e){
+            e.printStackTrace();
         }
         return;
     }
