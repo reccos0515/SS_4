@@ -641,7 +641,12 @@ public class UserService {
 		return new HtmlError(success, error);
 	}
 	
-	//sending ten good people to the client
+	
+	/**
+	 * sending ten good people to the client
+	 * @param userId - userId to get relevant from
+	 * @return HtmlMessage of relevant users
+	 */
 	public HtmlMessage getRelevant(Integer userId) {
 		boolean success = true;
 		String error = "";
@@ -698,8 +703,12 @@ public class UserService {
 	}
 
 	
-	//we are going to need some list to keep track of who has been discovered (nevermind).
-	//this only works if there is ten users in the discover
+	/**
+	 * helper function to create a list of 10 users to return to the clien
+	 * @param user - user getting interests from 
+	 * @param relevant - list of all relevant users
+	 * @return
+	 */
 	public List<User> makeSend(User user, List<User> relevant){
 		//right now im just sending back the first ten, this will be improved soon.
 		List<User> send = new ArrayList<User>();
@@ -750,7 +759,12 @@ public class UserService {
 		
 	}
 
-	//public List<Integer> scoreList
+	/**
+	 * help method to get score of relation between user o and t
+	 * @param o
+	 * @param t
+	 * @return
+	 */
 	public Integer getScore(User o, User t){
 		//Assume user one is the one that wants to know
 		//how good user two is.

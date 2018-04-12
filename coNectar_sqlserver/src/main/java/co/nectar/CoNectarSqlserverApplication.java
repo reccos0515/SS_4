@@ -1,3 +1,6 @@
+/**
+ * Spring boot main application
+ */
 package co.nectar;
 
 import org.springframework.boot.SpringApplication;

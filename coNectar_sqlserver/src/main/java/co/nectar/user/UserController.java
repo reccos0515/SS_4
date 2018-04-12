@@ -51,9 +51,9 @@ public class UserController {
 		return userService.updateUser(user);
 	}
 
-	// get a user
 	/**
-	 * @param userId
+	 * gets a user from a user id
+	 * @param userId id of user to get
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}")
@@ -62,7 +62,12 @@ public class UserController {
 	}
 
 	
-	
+	/**
+	 * adds friend between userId and friendId
+	 * @param userId
+	 * @param friendId
+	 * @return htmlmessage of success
+	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/users/{userId}/request_friend/{friendId}")
 	public HtmlMessage addFriend(@PathVariable int userId, @PathVariable int friendId) {
 		return userService.requestFriendById(userId, friendId);
