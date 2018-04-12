@@ -149,18 +149,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             messageText = (TextView) itemView.findViewById(R.id.text_message_body);
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
             nameText = (TextView) itemView.findViewById(R.id.text_message_name);
-<<<<<<< HEAD
-
-            //allows us to set what icon is being used for the person chatting, currently an example
-            //TODO change to profile picture options
-            int profileNum = 0;
-            profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
-            if(profileNum == 0){
-                profileImage.setImageResource(R.drawable.ic_action_messages);
-            }else if(profileNum == 1){
-                profileImage.setImageResource(R.drawable.ic_action_settings);
-            }
-=======
             profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
             SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
             int profilePicNum = preferences.getInt("PROFILEPICTURE", 0);
@@ -175,7 +163,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             //ImageView img = new ImageView(this);
             //img.setImageResource(R.drawable.my_image);
 
->>>>>>> 98d5dfc88d3529fc1ea91a402a6e07b1ee98fe44
         }
 
         /**

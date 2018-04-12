@@ -100,10 +100,6 @@ public class MessagesFragment extends Fragment {
         */
         //todo create full url
 
-
-
-
-
         MyMessage.setContext(getContext());
 
 
@@ -119,8 +115,6 @@ public class MessagesFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         final MessageListAdapter adapter = new MessageListAdapter(getContext(), mMessageList);
         recyclerView.setAdapter(adapter);
-
-
 
        //Log.d("MessagesFragment", "m: " + m.toString());
 
