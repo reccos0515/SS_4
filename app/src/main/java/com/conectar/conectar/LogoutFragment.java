@@ -109,6 +109,9 @@ public class LogoutFragment extends Fragment {
 
     /**
      * Destroys all session variables for the current session
+     * This is called when the user logs out. Its signature is
+     * void destroySession(SharedPreferences preferences). It takes the preferences and destroys them,
+     * so there is no return.
      * @param preferences the instance of sharedPreferences from which the variables will be destroyed
      */
     public void destroySession(SharedPreferences preferences){

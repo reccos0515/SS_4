@@ -269,10 +269,25 @@ public class EditProfileFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+
+        view.findViewById(R.id.profilePictureBtn).setOnClickListener(new View.OnClickListener() { //if Profile Picture button is pressed
+            @Override
+            public void onClick(View v) { //change to profile picture fragment
+                Fragment fragment = new ProfilePictureFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area, fragment);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     /**
-     * method to update the ui on the buttons after changing the interests
+     * Method to update the ui on the buttons after changing the interests.
+     * This is called directly after updating interests, so the user can see what
+     * their current interests are. The method call is void updateInterestButtons()
+     * with no parameters or return, because it pulls the interests from where they
+     * are saved in the class and updates to the UI.
      */
     public void updateInterestButtons(){
         String cur = interests.charAt(1) + "" + interests.charAt(2) + ""; //first interest chars

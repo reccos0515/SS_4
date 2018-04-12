@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -30,16 +32,19 @@ import util.UserUtil;
  * create an instance of this fragment.
  */
 public class ReportFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private boolean bio_problem; //whether or not there is a bio problem
+    private boolean message_problem; //whether or not there is a message problem
+    private boolean other_problem; //whether or not there is an other problem
+    private JSONObject report; //the report object
+    private EditText details; //the details from the user
+    private TextView message; //message to the user about how they have set their problem location
+    private View mainView; //view from main
+    //types of problem
+    enum problem{
+        BIO, MESSAGE, OTHER
+    }
 
     public ReportFragment() {
         // Required empty public constructor
@@ -48,28 +53,16 @@ public class ReportFragment extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment ReportFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ReportFragment newInstance(String param1, String param2) {
+    public static ReportFragment newInstance() {
         ReportFragment fragment = new ReportFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -82,25 +75,78 @@ public class ReportFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
 
-        view.findViewById(R.id.testMessageBtn).setOnClickListener(new View.OnClickListener() { //if test message button pressed
+        mainView = view; //save the view in main
+        int userId = preferences.getInt("ID", 0); //get int of the user reporting
+        report = new JSONObject(); //report object to send
+        try{
+            report.put("reported", userId); //put the user sending the report's id in the report
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        message = view.findViewById(R.id.problem_message); //text for the message to the user
+
+        view.findViewById(R.id.bio_problem).setOnClickListener(new View.OnClickListener() { //red button clicked
             @Override
             public void onClick(View view) {
-                JSONObject js = new JSONObject();
-                JSONObject js2 = new JSONObject();
-                try {
-                    js2.put("userName", "test4");
-                    js.put("message", "test message from app");
-                    js.put("time", "3");
-                    js.put("user", js2);
-                    Log.d("ReportFragment", "Test input for sendMessage" + js.toString());
-                    Toast.makeText(getActivity(), "Button pressed", Toast.LENGTH_LONG).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                JsonRequest.sendMessage(2, js, getContext());
+                changeProblem(problem.BIO); //toggle the bio problem
             }
         });
+        view.findViewById(R.id.message_problem).setOnClickListener(new View.OnClickListener() { //red button clicked
+            @Override
+            public void onClick(View view) {
+                changeProblem(problem.MESSAGE); //toggle the message problem
+            }
+        });
+        view.findViewById(R.id.other_problem).setOnClickListener(new View.OnClickListener() { //red button clicked
+            @Override
+            public void onClick(View view) {
+                changeProblem(problem.OTHER); //toggle the other problem
+            }
+        });
+
+        view.findViewById(R.id.submit_report).setOnClickListener(new View.OnClickListener() { //red button clicked
+            @Override
+            public void onClick(View view) {
+                int problem = 0; //create an int to store the problem
+                //add the amount for each type of problem
+                if(bio_problem){
+                    problem += 1;
+                }
+                if(message_problem){
+                    problem += 2;
+                }
+                if(other_problem){
+                    problem += 4;
+                }
+                //if no problem is set, the user needs to set a problem
+                if(problem == 0){
+                    Toast.makeText(getActivity(), "Please indicate where the problem is located", Toast.LENGTH_SHORT).show(); //toast to tell the user they need to set a problem location
+                }
+                else {
+                    details = mainView.findViewById(R.id.report_details); //details from the user
+                    String d = details.getText().toString(); //string of the details
+                    //if it has not been changed, the user needs to provide details
+                    if(d.equals("details here")){
+                        Toast.makeText(getActivity(), "Please give details", Toast.LENGTH_SHORT).show(); //toast to tell the user they need to give details
+                    }
+                    else {
+                        addToReport(problem, d); //add the problem and details to the report
+                        //tell the user it was successful
+                        Toast.makeText(getActivity(), "Your report has been submitted. You may be contacted for further information", Toast.LENGTH_LONG).show(); //toast to tell the user they need to give details
+                        //create the new profile view fragment
+                        Fragment fragment = new ProfileViewFragment();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.screen_area, fragment);
+                        fragmentTransaction.commit();
+                    }
+                }
+            }
+        });
+
 
 
     }
@@ -136,4 +182,73 @@ public class ReportFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    /**
+     * method used to toggle whether or not the problem is in bio, message, or other
+     * @param prob enum for problem to toggle
+     */
+    public void changeProblem(problem prob){
+        //toggle the correct problem
+        if(prob == problem.BIO){
+            bio_problem = !bio_problem;
+        }
+        else if(prob == problem.MESSAGE){
+            message_problem = !message_problem;
+        }
+        else if(prob == problem.OTHER){
+            other_problem = !other_problem;
+        }
+        //update the UI so the user knows what they have selected
+        if(bio_problem){
+            if(message_problem){
+                if(other_problem){
+                    message.setText("You have indicated a problem in the bio, messages, and other");
+                }
+                else{
+                    message.setText("You have indicated a problem in the bio and messages");
+                }
+            }
+            else if(other_problem){
+                message.setText("You have indicated a problem in the bio and other");
+            }
+            else{
+                message.setText("You have indicated a problem in the bio");
+            }
+        }
+        else if(message_problem){
+            if(other_problem){
+                message.setText("You have indicated a problem in the messages and other");
+            }
+            else{
+                message.setText("You have indicated a problem in the messages");
+            }
+        }
+        else if(other_problem){
+            message.setText("You have indicated an other problem");
+        }
+        else {
+            message.setText("You have not yet indicated where the problem is");
+        }
+        return;
+    }
+
+    /**
+     * method used to create the button within the listener for submit report
+     * @param reason int indicating the reason for reporting
+     * @param details string detailing the report
+     */
+    public void addToReport(int reason, String details){
+        //add these details to the report
+        try{
+            report.put("reason", reason);
+            report.put("details", details);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        //todo send report
+        Log.d("report", report.toString());
+        return;
+    }
+
+
 }

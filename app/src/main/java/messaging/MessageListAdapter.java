@@ -27,6 +27,11 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<MyMessage> mMessageList;
 
+    /**
+     * Constructor for a MessageListAdapter
+     * @param context context in which this is used
+     * @param messageList a list of messages (a conversation)
+     */
     public MessageListAdapter(Context context, List<MyMessage> messageList) {
         mContext = context;
         mMessageList = messageList;
@@ -39,8 +44,11 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         return mMessageList.size();
     }
 
-    // Determines the appropriate ViewType according to the sender of the message.
-    //must call sendContext(Context context) first
+    /**
+     * Determines the appropriate ViewType based on who sent a message, must call sendContext first
+     * @param position position of the message within the conversation/recyclerview
+     * @return what view type should be used for this specific message
+     */
     @Override
     public int getItemViewType(int position) {
         Log.d("MessageListAdapter", "Entered getItemViewType");
@@ -59,6 +67,13 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     }
 
     // Inflates the appropriate layout according to the ViewType.
+
+    /**
+     * Inflates the appropriate layout according to the ViewType
+     * @param viewGroup
+     * @param viewType whether or not the message should be displayed as sent or received
+     * @return a new message holder based on the ViewType of the message
+     */
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view;
@@ -76,7 +91,11 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         return null;
     }
 
-    // Passes the message object to a ViewHolder so that the contents can be bound to UI.
+    /**
+     * Passes the message object to a ViewHolder so that the contents can be bound to UI
+     * @param holder the holder used for this message
+     * @param position the position of the message within the recyclerview/conversation
+     */
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Log.d("MessageListAdapter", "Entered onBindViewHolder");
@@ -92,6 +111,11 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     private class SentMessageHolder extends RecyclerView.ViewHolder {
         TextView messageText, timeText;
+
+        /**
+         * The constructor for a SentMessageHolder, grabs the TextViews for the list item
+         * @param itemView the item whose views will be grabbed
+         */
         SentMessageHolder(View itemView) {
             super(itemView);
             Log.d("SentMessageHolder", "Entered constructor");
@@ -99,6 +123,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
         }
 
+        /**
+         * Sets the views of a message on the list item to be used in the recyclerview
+         * @param message the message to be bound
+         */
         void bind(MyMessage message) {
             messageText.setText(message.getMessage());
             Log.d("SentMessageHolder", "Entered bind");
@@ -111,12 +139,17 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         TextView messageText, timeText, nameText;
         ImageView profileImage;
 
+        /**
+         * The constructor for a ReceivedMessageHolder, grabs the TextViews and ImageView for the list item
+         * @param itemView the item whose views will be grabbed
+         */
         ReceivedMessageHolder(View itemView) {
             super(itemView);
             Log.d("ReceivedMessageHolder", "Entered constructor");
             messageText = (TextView) itemView.findViewById(R.id.text_message_body);
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
             nameText = (TextView) itemView.findViewById(R.id.text_message_name);
+<<<<<<< HEAD
 
             //allows us to set what icon is being used for the person chatting, currently an example
             //TODO change to profile picture options
@@ -127,8 +160,28 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             }else if(profileNum == 1){
                 profileImage.setImageResource(R.drawable.ic_action_settings);
             }
+=======
+            profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
+            SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+            int profilePicNum = preferences.getInt("PROFILEPICTURE", 0);
+            if(profilePicNum == 1){ //if their profile picture is the bee
+                profileImage.setImageResource(R.drawable.bee_24); //set picture to bee
+            }
+            else if(profilePicNum == 2){ //if their profile picture is the honey
+                profileImage.setImageResource(R.drawable.honey_24); //set picture to honey
+            }
+
+            //EXAMPLE
+            //ImageView img = new ImageView(this);
+            //img.setImageResource(R.drawable.my_image);
+
+>>>>>>> 98d5dfc88d3529fc1ea91a402a6e07b1ee98fe44
         }
 
+        /**
+         * Sets the views of a message on the list item to be used in the recyclerview
+         * @param message the message to be bound
+         */
         void bind(MyMessage message) {
             messageText.setText(message.getMessage());
             Log.d("ReceivedMessageHolder", "Entered bind");
@@ -143,6 +196,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         }
     }
 
+    /**
+     * Sets the context for use by the MessageListAdapter
+     * @param context the context in which this MessageListAdapter is used
+     */
     public void sendContext(Context context){
         this.context = context;
     }
