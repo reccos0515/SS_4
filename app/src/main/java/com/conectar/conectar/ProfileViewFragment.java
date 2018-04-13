@@ -110,9 +110,6 @@ public class ProfileViewFragment extends Fragment {
             e.printStackTrace();
         }
 
-        if(id == userIDNum){ //user looking at own profile
-            view.findViewById(R.id.messagingBtn).setVisibility(View.INVISIBLE);
-        }
 
         numInterests = interests.charAt(0) - '0';
         if(numInterests > 0){
