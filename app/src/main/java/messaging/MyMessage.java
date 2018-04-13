@@ -22,6 +22,7 @@ public class MyMessage {
     private static String time;
     private static String message;
     private static User user;
+    private static String profileUrl;
 
     /**
      * The constructor for a MyMessage
@@ -52,11 +53,12 @@ public class MyMessage {
      * @param user the user who sent the message
      * @param time the time the message was sent
      */
-    public MyMessage(String message, User user, String time){
+    public MyMessage(String message, User user, String time, String profileUrl){
         super();
         MyMessage.time = time;
         MyMessage.message = message;
         MyMessage.user = user;
+        MyMessage.profileUrl = profileUrl;
         Log.d("MyMessage", "In MyMessage multiple field constructor, time: " + time + "   message: " + message + "   user:" + user.toString());
     }
 
@@ -67,6 +69,13 @@ public class MyMessage {
     public String getMessage(){ //TODO implement
         return message;
     }
+
+    /**
+     * Gets the user's profile picture number that corresponds with a picture from
+     * a preselected list of pictures
+     * @return the number of the user's profile picture
+     */
+    public String getProfileUrl(){return profileUrl;}
 
 
     /**

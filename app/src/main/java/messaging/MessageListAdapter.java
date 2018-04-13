@@ -36,11 +36,12 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         mContext = context;
         mMessageList = messageList;
         Log.d("MessageListAdapter", "Entered constructor, mMessageList: " + messageList.toString());
+        Log.d("MessageListAdapter", context.toString());
     }
 
     @Override
     public int getItemCount() {
-        Log.d("MessageListAdapter", "Entered getItemCount, count: " + mMessageList.size());
+        //Log.d("MessageListAdapter", "Entered getItemCount, count: " + mMessageList.size());
         return mMessageList.size();
     }
 
@@ -51,7 +52,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
      */
     @Override
     public int getItemViewType(int position) {
-        Log.d("MessageListAdapter", "Entered getItemViewType");
+        //Log.d("MessageListAdapter", "Entered getItemViewType");
         MyMessage message = (MyMessage) mMessageList.get(position);
         //TODO fix the shared preferences thing, is currently sending nullpointerexceptions at run
         //SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
@@ -77,15 +78,16 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view;
-        Log.d("MessageListAdapter", "Entered onCreateViewHolder");
+        //Log.d("MessageListAdapter", "Entered onCreateViewHolder");
         if (viewType == VIEW_TYPE_MESSAGE_SENT) {
             view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.message_sent_item, viewGroup, false);
             return new SentMessageHolder(view);
         } else if (viewType == VIEW_TYPE_MESSAGE_RECEIVED) {
+            Context thisContext = viewGroup.getContext();
             view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.message_recieved_item, viewGroup, false);
-            return new ReceivedMessageHolder(view);
+            return new ReceivedMessageHolder(view, thisContext);
         }
 
         return null;
@@ -98,8 +100,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
      */
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Log.d("MessageListAdapter", "Entered onBindViewHolder");
-        MyMessage message = (MyMessage) mMessageList.get(position); //TODO figure out
+        //Log.d("MessageListAdapter", "Entered onBindViewHolder");
+        MyMessage message = (MyMessage) mMessageList.get(position);
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
                 ((SentMessageHolder) holder).bind(message);
@@ -118,7 +120,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
          */
         SentMessageHolder(View itemView) {
             super(itemView);
-            Log.d("SentMessageHolder", "Entered constructor");
+            //Log.d("SentMessageHolder", "Entered constructor");
             messageText = (TextView) itemView.findViewById(R.id.text_message_body);
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
         }
@@ -129,7 +131,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
          */
         void bind(MyMessage message) {
             messageText.setText(message.getMessage());
-            Log.d("SentMessageHolder", "Entered bind");
+            //Log.d("SentMessageHolder", "Entered bind");
             // Format the stored timestamp into a readable String using method.
             timeText.setText(message.formatDateTime(message.getCreatedAt()));
         }
@@ -143,26 +145,14 @@ public class MessageListAdapter extends RecyclerView.Adapter {
          * The constructor for a ReceivedMessageHolder, grabs the TextViews and ImageView for the list item
          * @param itemView the item whose views will be grabbed
          */
-        ReceivedMessageHolder(View itemView) {
+        ReceivedMessageHolder(View itemView, Context context) {
             super(itemView);
-            Log.d("ReceivedMessageHolder", "Entered constructor");
+            //Log.d("ReceivedMessageHolder", "Entered constructor");
             messageText = (TextView) itemView.findViewById(R.id.text_message_body);
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
             nameText = (TextView) itemView.findViewById(R.id.text_message_name);
             profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
-            SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
-            int profilePicNum = preferences.getInt("PROFILEPICTURE", 0);
-            if(profilePicNum == 1){ //if their profile picture is the bee
-                profileImage.setImageResource(R.drawable.bee_24); //set picture to bee
-            }
-            else if(profilePicNum == 2){ //if their profile picture is the honey
-                profileImage.setImageResource(R.drawable.honey_24); //set picture to honey
-            }
-
-            //EXAMPLE
-            //ImageView img = new ImageView(this);
-            //img.setImageResource(R.drawable.my_image);
-
+            Log.d("MessageListAdapter", context.toString()); //craps here if context is null
         }
 
         /**
@@ -171,15 +161,21 @@ public class MessageListAdapter extends RecyclerView.Adapter {
          */
         void bind(MyMessage message) {
             messageText.setText(message.getMessage());
-            Log.d("ReceivedMessageHolder", "Entered bind");
+           // Log.d("ReceivedMessageHolder", "Entered bind");
 
             // Format the stored timestamp into a readable String using method.
             timeText.setText(message.formatDateTime(message.getCreatedAt()));
 
             nameText.setText(message.getSender().getUsername());
 
-            // TODO Insert the profile image from the URL into the ImageView.
-            //message.displayRoundImageFromUrl(mContext, message.getSender().getProfileUrl(), profileImage);
+            String profileUrl = message.getProfileUrl();
+            Log.d("MessageListAdapter", "profileUrl: " + profileUrl);
+            if(profileUrl.equals("1")){
+                profileImage.setImageResource(R.drawable.bee_24); //set picture to bee
+            }
+            else if(profileUrl.equals("2")){
+                profileImage.setImageResource(R.drawable.honey_24);
+            }
         }
     }
 

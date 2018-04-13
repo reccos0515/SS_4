@@ -89,6 +89,7 @@ public class MessagesFragment extends Fragment {
 
         String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/";
         int userIDNum = preferences.getInt("ID", 0);
+        Log.d("MessagesFragment", getContext().toString());
         /*
         JSONObject user = UserUtil.getUserToView(); //get the user that should be shown
         int msgUserIDNum;
@@ -140,11 +141,11 @@ public class MessagesFragment extends Fragment {
         String message = "test message";
         String time = "test time";
         String username = "testUsername";
-        String profileUrl = "testUrl";
-        int id = 4;
+        String profileUrl = "1";
+        int id = 1;
         User testUser = new User(username, profileUrl, id);
         //Log.d("MessagesFragment", "testUser: " + testUser.toString());
-        return new MyMessage(message, testUser, time);
+        return new MyMessage(message, testUser, time, profileUrl);
     }
 
     @Override
