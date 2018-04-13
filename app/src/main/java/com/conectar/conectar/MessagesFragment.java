@@ -108,6 +108,8 @@ public class MessagesFragment extends Fragment {
         //Log.d("MessagesFragment", "fakeMessage: " + fakeMessage);
         MyMessage fakeMessage = createFakeMessage();
         mMessageList.add(fakeMessage);
+        MyMessage fakeMessage2 = createFakeMessage2();
+        mMessageList.add(fakeMessage2);
         Log.d("MessagesFragment", "mMessageList: " + mMessageList.toString());
 
         //ListView listView = (ListView) view.findViewById(R.id.reyclerview_message_list);
@@ -138,13 +140,24 @@ public class MessagesFragment extends Fragment {
      * @return the new fake message
      */
     public MyMessage createFakeMessage(){
-        String message = "test message";
+        String message = "I like dogs";
         String time = "test time";
-        String username = "testUsername";
+        String username = "Frank";
         String profileUrl = "1";
-        int id = 1;
+        int id = 3;
         User testUser = new User(username, profileUrl, id);
-        //Log.d("MessagesFragment", "testUser: " + testUser.toString());
+        //Log.d("MessagesFragment", "createFakeMessage: " + testUser.toString());
+        return new MyMessage(message, testUser, time, profileUrl);
+    }
+
+    public MyMessage createFakeMessage2(){
+        String message = "I like cats";
+        String time = "test time";
+        String username = "Renaldo";
+        String profileUrl = "2";
+        int id = 5;
+        User testUser = new User(username, profileUrl, id);
+        //Log.d("MessagesFragment", "createFakeMessage2: " + testUser.toString());
         return new MyMessage(message, testUser, time, profileUrl);
     }
 

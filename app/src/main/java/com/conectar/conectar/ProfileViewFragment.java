@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -97,19 +98,30 @@ public class ProfileViewFragment extends Fragment {
         TextView username = view.findViewById(R.id.viewUsername);
         TextView bio = view.findViewById(R.id.viewBio);
         Button button = view.findViewById(R.id.addFriend);
+        ImageView statusBubble = (ImageView) view.findViewById(R.id.statusBubbleView);
         String interests = "00000000000";
         int numInterests;
         int id = 0;
+        int status = 0;
 
         try {
             username.setText(user.get("userName").toString());
             bio.setText(user.get("bio").toString());
             interests = user.getString("interests");
             id = user.getInt("id");
+            status = user.getInt("status");
         } catch (JSONException e){
             e.printStackTrace();
         }
 
+
+        if(status == 0){
+            statusBubble.setImageResource(R.drawable.ic_status_red);
+        }else if (status == 1){
+            statusBubble.setImageResource(R.drawable.ic_status_yellow);
+        }else if(status == 2){
+            statusBubble.setImageResource(R.drawable.ic_status_green);
+        }
 
         numInterests = interests.charAt(0) - '0';
         if(numInterests > 0){
