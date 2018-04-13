@@ -235,13 +235,9 @@ public class MainActivity extends AppCompatActivity
             fragment = new SettingsFragment();
         } else if (id == R.id.nav_logout) {
             fragment = new LogoutFragment();
-        } else if (id == R.id.nav_login) {
-            fragment = new LoginFragment();
         } else if (id == R.id.nav_swipe) {
             fragment = new SwipeFragment();
-        } else if (id == R.id.nav_newProfile) {
-            fragment = new NewProfileFragment();
-        } else if (id == R.id.nav_about) { //TODO fix
+        } else if (id == R.id.nav_about) {
             fragment = new AboutFragment();
         } else if (id == R.id.nav_report) {
             fragment = new ReportFragment();

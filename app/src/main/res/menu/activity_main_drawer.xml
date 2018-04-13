@@ -28,19 +28,12 @@
             android:id="@+id/nav_editProfile"
             android:icon="@drawable/ic_menu_manage"
             android:title="Profile" />
-        <item
-            android:id="@+id/nav_newProfile"
-            android:icon="@android:drawable/ic_input_add"
-            android:title="New Profile" />
     </group>
 
     <item
         android:id="@+id/account"
         android:title="Manage Account">
         <menu>
-            <item
-                android:id="@+id/nav_login"
-                android:title="Login" />
             <item
                 android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_menu_share"

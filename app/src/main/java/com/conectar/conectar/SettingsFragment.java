@@ -1,11 +1,14 @@
 package com.conectar.conectar;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +17,10 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import util.JsonRequest;
+import util.NotificationUtil;
 import util.UserUtil;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 
 /**
@@ -91,6 +97,21 @@ public class SettingsFragment extends Fragment {
 
                 JSONObject json = UserUtil.prepareLogin(thisUsername, thisPassword, context);
                 JsonRequest.deleteUserRequest(json, url, context);
+            }
+        });
+
+        view.findViewById(R.id.notificationBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String title = "Test Title";
+                String text = "This is a test from the coNECTAR app";
+
+                NotificationUtil notificationUtil = new NotificationUtil();
+                NotificationCompat.Builder notification = notificationUtil.createNotification(title, text, getContext());
+                //Send built notification
+                NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(NOTIFICATION_SERVICE);
+                assert notificationManager != null;
+                notificationManager.notify(notificationUtil.getNotificationId(), notification.build());
             }
         });
 

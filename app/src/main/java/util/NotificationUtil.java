@@ -16,10 +16,14 @@ import static android.content.Context.NOTIFICATION_SERVICE;
  * Methods for the creation and use of notifications
  */
 
-public class NotificatonUtil {
+public class NotificationUtil {
 
     private NotificationCompat.Builder notification;
     private static final int NOTIFICATION_ID = 96274;
+
+    public NotificationUtil(){
+        super();
+    }
 
     /**
      * Creates a new notification to be displayed
@@ -27,12 +31,12 @@ public class NotificatonUtil {
      * @param text the main body of text to be displayed in the notification
      * @param context the context from which the notification will be sent
      */
-    public void createNotification(String title, String text, Context context){
+    public NotificationCompat.Builder createNotification(String title, String text, Context context){
         //Base for notifications
         notification = new NotificationCompat.Builder(context);
         notification.setAutoCancel(true); //removes the notification after the user clicks on it
         //Build the notification
-//        notification.setSmallIcon(R.id.icon_view); //sets the icon for the notification todo put this back in
+        notification.setSmallIcon(R.drawable.ic_action_messages); //sets the icon for the notification todo put this back in
         notification.setWhen(System.currentTimeMillis()); //displays the time the notification was sent
         notification.setContentTitle(title); //sets the title for the notification
         notification.setContentText(text);
@@ -43,9 +47,10 @@ public class NotificatonUtil {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         notification.setContentIntent(pendingIntent);
 
-        //Send built notification
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-        assert notificationManager != null;
-        notificationManager.notify(NOTIFICATION_ID, notification.build());
+        return notification;
+    }
+
+    public int getNotificationId(){
+        return NOTIFICATION_ID;
     }
 }
