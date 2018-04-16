@@ -60,7 +60,6 @@ public class Login {
 	
 	/**
 	 * returns whether all required fields for login are complete
-	 * @param login login to be checked
 	 * @return valid: boolean status if login is valid
 	 */
 	@JsonIgnore

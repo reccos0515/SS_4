@@ -14,17 +14,34 @@ import co.nectar.HtmlResponce.HtmlResponce;
 public class ConversationController {
 	@Autowired
 	ConversationService msgService;
-	
+	/**
+	 * get messages between two users
+	 * @param toId user messages send to
+	 * @param fromId user messages sent from
+	 * @return HtmlReponse denoting success
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/messages/to/{toId}/from/{fromId}")
 	public HtmlResponce getConversation(@PathVariable Integer toId, @PathVariable Integer fromId) {
 		return msgService.getMessagesBetween(toId,fromId);
 	}
 	
+	/**
+	 * Deletes conversation between two users. Note: only deletes one users conversation.
+	 * @param toId user deleting messages
+	 * @param fromId user which toId wishes to delete messages from
+	 * @return HtmlReponse denoting success
+	 */
 	@RequestMapping(method = RequestMethod.DELETE, value = "/messages/to/{toId}/from/{fromId}")
 	public HtmlResponce deleteConversation(@PathVariable Integer toId, @PathVariable Integer fromId) {
 		return msgService.deleteConversation(toId,fromId);
 	}
-	
+	/**
+	 * Add message between toId and fromId. creates new conversation if does not exist 
+	 * @param toId user to send message to
+	 * @param fromId user to send message from
+	 * @param message message to send
+	 * @return HtmlReponse denoting success
+	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/messages/to/{toId}/from/{fromId}")
 	public HtmlResponce addMessage(@PathVariable Integer toId, @PathVariable Integer fromId, @RequestBody Message message) {
 		return msgService.addMessages(toId,fromId,message);

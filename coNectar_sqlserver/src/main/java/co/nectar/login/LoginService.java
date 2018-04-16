@@ -134,7 +134,7 @@ public class LoginService {
 	 * user/login not found
 	 * passwords do not match
 	 * 
-	 * @param login
+	 * @param login partially filled login to get user
 	 * @return user or htmlmessage(on error)
 	 */
 	public Object getUser(Login login) {
