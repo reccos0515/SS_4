@@ -10,7 +10,11 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import co.nectar.user.User;
-
+/**
+ * class relating message information between uesr
+ * @author Ben
+ *
+ */
 @Entity 
 @Table(name="message")
 public class Message {
@@ -29,13 +33,21 @@ public class Message {
 	private String message;
 	private String time;
 	
-	
+	/**
+	 * default constructor
+	 */
 	public Message () {
 		super();
 	}
 	
-	
-	public Message(Integer id, User userTo, User userFrom, String message, String time) {
+	/**
+	 * Constructor to create a message
+	 * @param userTo user receiving message
+	 * @param userFrom user sending message
+	 * @param message message text
+	 * @param time time send
+	 */
+	public Message(User userTo, User userFrom, String message, String time) {
 		super();
 		this.id = id;
 		this.userTo = userTo;
@@ -96,6 +108,10 @@ public class Message {
 
 
 	@JsonIgnore
+	/**
+	 * method to check if nessisary fields are completed
+	 * @return boolean isValid
+	 */
 	boolean isValid() {
 		if(userFrom == null)
 			return false;

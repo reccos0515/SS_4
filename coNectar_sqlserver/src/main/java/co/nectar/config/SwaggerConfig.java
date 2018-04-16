@@ -21,7 +21,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("co.nectar"))
-                .paths(regex("\\/ben\\/(u|l).*"))
+                .paths(regex("\\/ben\\/(u|l|m).*"))
                 .build()
                 .apiInfo(metaInfo());
     }

@@ -144,7 +144,7 @@ public class ConversationService {
 	 * Deletes conversation between two users. Note: only deletes one users conversation.
 	 * @param toId user deleting messages
 	 * @param fromId user which toId wishes to delete messages from
-	 * @return
+	 * @return HtmlReponse denoting success
 	 */
 	public HtmlResponce deleteConversation(Integer toId, Integer fromId) {
 		String error = "";		

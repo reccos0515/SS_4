@@ -39,8 +39,8 @@ public class LoginController {
 	 * existing user name
 	 * missing login fields 
 	 * 
-	 * @param login
-	 * @return
+	 * @param login parially filled login to add
+	 * @return HtmlReponce denoting success or user object
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/login/add")
 	public Object addLogin(@RequestBody Login login) {
@@ -53,7 +53,7 @@ public class LoginController {
 	 * returns error if unable to remove login
 	 * 
 	 * @param login login to be removed
-	 * @return
+	 * @return HtmlResponce denoting success
 	 */
 	@RequestMapping(method = RequestMethod.DELETE, value = "/login")
 	public Object removeLogin(@RequestBody Login login) {
@@ -68,8 +68,8 @@ public class LoginController {
 	 * invalid login information
 	 * login in not found
 	 * 
-	 * @param login
-	 * @return
+	 * @param login partially filled login toi get
+	 * @return HtmlUserList of user or HtmlError denoting failure
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/login")
 	public Object getLogin(@RequestBody Login login) {

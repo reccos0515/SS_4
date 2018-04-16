@@ -14,7 +14,11 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import co.nectar.user.User;
-
+/**
+ * Conversation object that relates messages between users
+ * @author Ben
+ *
+ */
 @Entity
 @Table(name="conversation")
 public class Conversation {
@@ -31,18 +35,26 @@ public class Conversation {
 	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Message> messages;
 	
-	
+	/**
+	 * default constructor
+	 */
 	public Conversation() {
 		super();
 	}
-
+	
+	/**
+	 * constuctor to create intial object
+	 * @param userTo user recieving messages
+	 * @param userFrom user sending messages
+	 * @param messages list of messages between users
+	 */
 	public Conversation(User userTo, User userFrom, List<Message> messages) {
 		super();
 		this.userTo = userTo;
 		this.userFrom = userFrom;
 		this.messages = messages;
 	}
-
+	
 	public Integer getConversationId() {
 		return conversationId;
 	}
