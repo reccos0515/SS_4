@@ -16,15 +16,16 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 public class SwaggerConfig {
 
-	 @Bean
+	@Bean
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("co.nectar"))
-                .paths(regex("/ben.*"))
+                .paths(regex("\\/ben\\/(u|l).*"))
                 .build()
                 .apiInfo(metaInfo());
     }
+	
 
 	 private ApiInfo metaInfo() {
 
