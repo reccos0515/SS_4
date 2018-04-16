@@ -24,14 +24,11 @@ public class MessagesUtil {
      * Formats a message as a JSONObject so it can be posted using Volley
      * @return the formatted JSONObject
      */
-    public static JSONObject prepareSentMessage(int id, String message, String time, JSONObject userFrom, JSONObject userTo){
+    public static JSONObject prepareSentMessage(String message, String time){
         JSONObject js =  new JSONObject();
         try {
-            js.put("id", id);
             js.put("message", message);
             js.put("time", time);
-            js.put("userFrom", userFrom);
-            js.put("userTo", userTo);
         } catch (JSONException e) {
             e.printStackTrace();
         }
