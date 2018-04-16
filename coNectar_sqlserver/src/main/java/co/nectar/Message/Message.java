@@ -5,23 +5,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import co.nectar.user.User;
 
 @Entity 
+@Table(name="message")
 public class Message {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	@JsonIgnore
 	@OneToOne
 	private User userTo;
 	
 	@OneToOne
-	private User user;
+	private User userFrom;
 	
 	
 	
@@ -34,11 +35,11 @@ public class Message {
 	}
 	
 	
-	public Message(Integer id, User userTo, User user, String message, String time) {
+	public Message(Integer id, User userTo, User userFrom, String message, String time) {
 		super();
 		this.id = id;
 		this.userTo = userTo;
-		this.user = user;
+		this.userFrom = userFrom;
 		this.message = message;
 		this.time = time;
 	}
@@ -64,13 +65,13 @@ public class Message {
 	}
 
 
-	public User getUser() {
-		return user;
+	public User getUserFrom() {
+		return userFrom;
 	}
 
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserFrom(User userFrom) {
+		this.userFrom = userFrom;
 	}
 
 
@@ -96,7 +97,7 @@ public class Message {
 
 	@JsonIgnore
 	boolean isValid() {
-		if(user == null)
+		if(userFrom == null)
 			return false;
 		else if(userTo == null)
 			return false;
