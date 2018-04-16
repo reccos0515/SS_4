@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import messaging.MessageListAdapter;
+import messaging.MessagesUtil;
 import messaging.MyMessage;
 
 import messaging.User;
@@ -129,6 +130,12 @@ public class MessagesFragment extends Fragment {
                 MyMessage m = new MyMessage("hello");
                 mMessageList.add(m);
                 adapter.notifyDataSetChanged();
+                JSONObject userFrom = new JSONObject();
+                userFrom = MessagesUtil.prepareUserJSONObject("a bio", "00000000000", "Larry", 2, 1);
+                JSONObject userTo = MessagesUtil.prepareUserJSONObject("another bio", "00000000000", "Mason", 1, 1);
+                JSONObject messageObject = MessagesUtil.prepareSentMessage(1, "A message", "some time", userFrom, userTo);
+                Log.d("MessagesFragment", "message object prepared for sending: " + messageObject.toString());
+                MessagesUtil.sendMessage(2, 1, messageObject, getContext());
             }
         });
     }
