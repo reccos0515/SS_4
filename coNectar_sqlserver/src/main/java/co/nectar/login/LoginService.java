@@ -180,17 +180,4 @@ public class LoginService {
 		return msg;
 	}
 
-	public void addTestUsers() {
-		Login login;
-		User user;
-		for(int i = 1; i < 31;i++) {
-			user = new User(0,("test" + i),"test bio","10100000000");
-			user.setStatus(1); //set all to red
-			login = new Login(user,	"test");
-			this.addLogin(login);
-		}
-		// TODO Auto-generated method stub
-		
-	}
-
 }

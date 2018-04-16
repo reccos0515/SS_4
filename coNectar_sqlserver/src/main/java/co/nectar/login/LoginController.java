@@ -6,9 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.nectar.HtmlResponce.HtmlError;
-import co.nectar.HtmlResponce.HtmlResponce;
-
 
 
 
@@ -25,12 +22,6 @@ public class LoginController {
 		return login;	
 	}
 	
-	//add test users
-	@RequestMapping("/login/test")
-	public HtmlResponce addTestLogins() {
-		loginService.addTestUsers();
-		return new HtmlError(true,"");	
-	}
 	
 	/**
 	 * adds login to login list

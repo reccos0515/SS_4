@@ -390,18 +390,14 @@ public class UserService {
 	 *         success: false, message: detailed error message
 	 */
 	public HtmlResponce requestFriendById(int userId, int friendId) {
-		
 		HtmlResponce msg1 = this.getUserById(userId);
 		HtmlResponce msg2 = this.getUserById(friendId);
 
 		//check for errors
 		boolean success = true;
 		String error = "";
-		if(userId == friendId) {
-			success = false;
-			error = "can not add your self as a friend";
-		}
-		else if(!msg1.isSuccess() && !msg2.isSuccess()) {
+		
+		if(!msg1.isSuccess() && !msg2.isSuccess()) {
 			success = false;
 			error = "error requesting both users" + ((HtmlError) msg1).getMessage()+((HtmlError) msg2).getMessage();
 		}else if(!msg1.isSuccess()) {
@@ -414,9 +410,6 @@ public class UserService {
 			//get user and friend from first item in list
 			User user = ((HtmlUserList) msg1).getUsers().iterator().next();
 			User friend = ((HtmlUserList) msg2).getUsers().iterator().next();
-			
-			if(user.getSentRequestTo().contains(friend))
-				return new HtmlError(false,"already requested that friend");
 			
 			//add outgoing request to user
 			user.getSentRequestTo().add(friend);
