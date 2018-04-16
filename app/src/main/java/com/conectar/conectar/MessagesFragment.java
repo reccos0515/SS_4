@@ -138,11 +138,15 @@ public class MessagesFragment extends Fragment {
                 adapter.notifyDataSetChanged();
 
                 String messageString = newMessage.getText().toString();
-                Date thisDate = new Date(System.currentTimeMillis());
-                Log.d("MessagesFragment", "Typed message from user: " + messageString + "   Time: " + thisDate);
-                JSONObject messageObject = MessagesUtil.prepareSentMessage(messageString, thisDate.toString());
-                Log.d("MessagesFragment", "message object prepared for sending: " + messageObject.toString());
+                //Date thisDate = new Date(System.currentTimeMillis());
+                MyMessage newMessage = new MyMessage(messageString);
+
+                //Log.d("MessagesFragment", "Typed message from user: " + messageString + "   Time: " + newMessage.getCreatedAt());
+                JSONObject messageObject = MessagesUtil.prepareSentMessage(messageString, newMessage.getCreatedAt());
+                //Log.d("MessagesFragment", "message object prepared for sending: " + messageObject.toString());
                 MessagesUtil.sendMessage(2, 1, messageObject, getContext());
+
+                MessagesUtil.getConversation(2, 1, getContext());
             }
         });
     }

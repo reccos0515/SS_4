@@ -2,6 +2,7 @@ package messaging;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.LinearGradient;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -74,7 +75,7 @@ public class MessagesUtil {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d("JsonRequest", "sendMessage response from server: " + response.toString());
+                Log.d("JsonRequest", "getConversation response from server: " + response.toString());
                 Boolean success = false;
                 try {
                     success = response.getBoolean("success");
@@ -93,13 +94,14 @@ public class MessagesUtil {
                             String tempString = temp.toString(); //convert message JSONObject to string
                             conversation.add(tempString); //put in set
                         }
+                        Log.d("MessagesUtil", "conversation: " + conversation);
                         editor.putStringSet("MSGFROM" + idFrom, conversation); //put messages in SharedPreferences
-                        Log.d("MessagesUtil", "MSGFROM" + idFrom + ": " + preferences.getStringSet("MSGFROM" + idFrom, null));
                         editor.apply();
+                        Log.d("MessagesUtil", "MSGFROM" + idFrom + ": " + preferences.getStringSet("MSGFROM" + idFrom, null));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    
+
                 }else {
                     String errorMessage = "";
                     try {
