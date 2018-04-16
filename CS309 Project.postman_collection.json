@@ -82,7 +82,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": 1,\n    \"status\": 1,\n    \"userName\": \"test1\",\n    \"interests\": \"10100000000\",\n    \"bio\": \"test bio\"\n}"
+							"raw": "{\n    \"status\": 1,\n    \"userName\": \"test2\",\n    \"interests\": \"10100000000\",\n    \"bio\": \"test bio\"\n}"
 						},
 						"url": {
 							"raw": "http://{{url}}:{{port}}/ben/users/",
@@ -149,7 +149,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/1/sentrequestto",
+							"raw": "http://{{url}}:{{port}}/ben/users/4/sentrequestto",
 							"protocol": "http",
 							"host": [
 								"{{url}}"
@@ -158,7 +158,7 @@
 							"path": [
 								"ben",
 								"users",
-								"1",
+								"4",
 								"sentrequestto"
 							]
 						},
@@ -343,7 +343,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/1/outgoing_requests",
+							"raw": "http://{{url}}:{{port}}/ben/users/4/outgoing_requests",
 							"protocol": "http",
 							"host": [
 								"{{url}}"
@@ -352,7 +352,7 @@
 							"path": [
 								"ben",
 								"users",
-								"1",
+								"4",
 								"outgoing_requests"
 							]
 						},
@@ -410,7 +410,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": {\n    \t\"id\" : 0,\n        \"bio\" : \"test user\",\n        \"userName\": \"test50\",\n        \"interests\": \"00000000000\"\n    },\n    \"password\": \"test\"\n}"
+							"raw": "{\n    \"user\": {\n    \t\"id\" : 0,\n        \"bio\" : \"test user\",\n        \"userName\": \"test2\",\n        \"interests\": \"00000000000\"\n    },\n    \"password\": \"test\"\n}"
 						},
 						"url": {
 							"raw": "http://{{url}}:{{port}}/ben/login/add",
@@ -441,7 +441,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": {\n\t\t\"userName\": \"test50\"\n    },\n    \"password\": \"test\"\n}"
+							"raw": "{\n    \"user\": {\n\t\t\"userName\": \"test30\"\n    },\n    \"password\": \"test\"\n}"
 						},
 						"url": {
 							"raw": "http://{{url}}:{{port}}/ben/login",
@@ -525,7 +525,7 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/2/messages",
+							"raw": "http://{{url}}:{{port}}/ben/messages/to/1/from/2",
 							"protocol": "http",
 							"host": [
 								"{{url}}"
@@ -533,9 +533,11 @@
 							"port": "{{port}}",
 							"path": [
 								"ben",
-								"users",
-								"2",
-								"messages"
+								"messages",
+								"to",
+								"1",
+								"from",
+								"2"
 							]
 						}
 					},
@@ -553,10 +555,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"message\":\"test\",\n\t\"time\":\"1\",\n\t\"user\":\n\t\t{\n\t\t\"userName\":\"test1\"\n\t\t}\n\t\n}"
+							"raw": "{\n\t\"message\":\"test\",\n\t\"time\":\"1\"\n\t\n}"
 						},
 						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/2/messages",
+							"raw": "http://{{url}}:{{port}}/ben/messages/to/1/from/2",
 							"protocol": "http",
 							"host": [
 								"{{url}}"
@@ -564,9 +566,11 @@
 							"port": "{{port}}",
 							"path": [
 								"ben",
-								"users",
-								"2",
-								"messages"
+								"messages",
+								"to",
+								"1",
+								"from",
+								"2"
 							]
 						},
 						"description": "send message toId\n"
@@ -580,7 +584,7 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/2/messages",
+							"raw": "http://{{url}}:{{port}}/ben/messages/to/1/from/3",
 							"protocol": "http",
 							"host": [
 								"{{url}}"
@@ -588,9 +592,11 @@
 							"port": "{{port}}",
 							"path": [
 								"ben",
-								"users",
-								"2",
-								"messages"
+								"messages",
+								"to",
+								"1",
+								"from",
+								"3"
 							]
 						}
 					},
