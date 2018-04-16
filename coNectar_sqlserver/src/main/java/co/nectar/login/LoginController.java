@@ -22,7 +22,7 @@ public class LoginController {
 	//map all to feedback
 	@RequestMapping("/login/feedback")
 	public Object postFeedback(@RequestBody Login login) {
-		return login;	
+		return login.isValid();	
 	}
 	
 	//add test users

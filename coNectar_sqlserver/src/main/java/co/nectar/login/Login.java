@@ -1,27 +1,25 @@
 package co.nectar.login;
 
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import co.nectar.user.User;
 
-
-
 @Entity
 public class Login {
 
 	//variables
-	@EmbeddedId DependentId id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
 	
-	
-	@OneToOne
-	@MapsId("id")
+	@OneToOne(cascade=CascadeType.REMOVE)
 	private User user;
 	private String password;
 	
@@ -33,7 +31,7 @@ public class Login {
 
 	public Login(User user, String password) {
 		super();
-//		this.id = user.getId();
+		this.id = user.getId();
 		this.user = user;
 		this.password = password;
 	}
@@ -46,7 +44,7 @@ public class Login {
 
 	public void setUser(User user) {
 		this.user = user;
-//		this.id = user.getId();
+		this.id = user.getId();
 	}
 
 

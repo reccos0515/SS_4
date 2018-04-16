@@ -2,7 +2,6 @@ package co.nectar.user;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,16 +40,15 @@ public class UserService {
 	 */
 	public HtmlResponce getUserById(Integer userId) {
 		ArrayList<User> users = new ArrayList<User>();
-		Optional<User> userOpt = userRepo.findById(userId);
-		
+		User user = userRepo.findOne(userId);
 		
 		//check for errors
 		if(userId == null) {
 			return new HtmlError(false, "UserId not given");
-		}else if(!userOpt.isPresent()) {
+		}else if(user == null) {
 			return new HtmlError(false, "UserId not found");
 		}
-		users.add(userOpt.get());
+		users.add(user);
 		return new HtmlUserList(true, users);
 	}
 
@@ -69,15 +67,15 @@ public class UserService {
 	 */
 	public HtmlResponce getUserByUserName(String username) {
 		ArrayList<User> users = new ArrayList<User>();
-		Optional<User> opt = userRepo.findByUserName(username);
+		User user = userRepo.findByUserName(username);
 		
 		//check for errors
 		if(username == null) {
 			return new HtmlError(false, "Username not given");
-		}else if(!opt.isPresent()) {
+		}else if(user == null) {
 			return new HtmlError(false, "Username not found");
 		}
-		users.add(opt.get());
+		users.add(user);
 		return new HtmlUserList(true, users);
 	}
 	/**
@@ -96,20 +94,19 @@ public class UserService {
 	 */
 	public HtmlResponce getUserByObject(User user) {
 		ArrayList<User> users = new ArrayList<User>();
-		Optional<User> opt;
 		
 		if(user == null) {
 			return new HtmlError(false,"no user object is given");
 		}
 		else if(user.getUserName() != null) {
-			opt = userRepo.findByUserName(user.getUserName());
+			user = userRepo.findByUserName(user.getUserName());
 		}else if(user.getId() != null) {
-			opt = userRepo.findById(user.getId());
+			user = userRepo.findOne(user.getId());
 		}else {
 			return new HtmlError(false,"neither username or userId not given");
 		}
 		
-		if(!opt.isPresent()) {
+		if(user == null) {
 			return new HtmlError(false, "User not found");
 		}
 		users.add(user);
@@ -157,16 +154,13 @@ public class UserService {
 	 */
 	public HtmlResponce setStatus(Integer userId, int status) {
 		//error checking
-		Optional<User> opt = userRepo.findById(userId);
-		if(!opt.isPresent())
+		if(!userRepo.exists(userId))
 			return new HtmlError(false, "userId not found");
 		else if(status != 0 || status != 1 || status != 2)
 			return new HtmlError(false, "incorrect status value, must be 1,2, or 3");
 		
 		//set status
-		User user = opt.get();
-		user.setStatus(status);
-		userRepo.save(user);
+		userRepo.findOne(userId).setStatus(status);
 		return new HtmlError(true, "");
 
 	}
@@ -188,13 +182,12 @@ public class UserService {
 		if(user == null) {
 			return false;
 		}
-		
 		Integer id = user.getId();
 		String name = user.getUserName();
 		if(id == null && name == null)
 			return false;
 		else if(id != null && name == null)
-			return userRepo.existsById(id);
+			return userRepo.exists(id);
 		else if(id == null && name != null)
 			return  userRepo.existsByUserName(name);
 		else
@@ -215,7 +208,7 @@ public class UserService {
 	
 	public boolean userExistsById(Integer userId) {
 		// check to make sure id or userName are not null
-		return userId != null && userRepo.existsById(userId);
+		return userId != null && userRepo.exists(userId);
 		
 	}
 
@@ -239,11 +232,11 @@ public class UserService {
 		if (userId == null) {
 			success = false;
 			error = "userId not specified";
-		} else if (userRepo.findById(userId) == null) {
+		} else if (userRepo.findOne(userId) == null) {
 			success = false;
 			error = "given userId not found";
 		} else {
-			userRepo.deleteById(userId);
+			userRepo.delete(userId);
 		}
 
 		return new HtmlError(success, error);
@@ -281,13 +274,13 @@ public class UserService {
 		} else {
 			//set id if not set
 			if(user.getId() == null || user.getId() <= 0)
-				user.setId(userRepo.findByUserName(user.getUserName()).get().getId());
+				user.setId(userRepo.findByUserName(user.getUserName()).getId());
 			//check if username is duplicated
-			User otherUser = userRepo.findByUserName(user.getUserName()).get();
+			User otherUser = userRepo.findByUserName(user.getUserName());
 			if(otherUser != null && user.getId() != otherUser.getId()) {
 				return new HtmlError(false, "new username exists already");
 			}
-			User oldUser = userRepo.findById(user.getId()).get();
+			User oldUser = userRepo.findOne(user.getId());
 			
 			//keep sentrequest and recieved request for friends
 			user.setSentRequestTo(oldUser.getSentRequestTo());
@@ -329,11 +322,11 @@ public class UserService {
 		if (userId == null) {
 			success = false;
 			error = "userId not specified";
-		} else if (userRepo.findById(userId) == null) {
+		} else if (userRepo.findOne(userId) == null) {
 			success = false;
 			error = "given userId not found";
 		} else {
-			users = userRepo.findById(userId).get().getSentRequestTo();
+			users = userRepo.findOne(userId).getSentRequestTo();
 			return new HtmlUserList(success, users);
 		}
 
@@ -363,11 +356,11 @@ public class UserService {
 		if (userId == null) {
 			success = false;
 			error = "userId not specified";
-		} else if (userRepo.findById(userId) == null) {
+		} else if (userRepo.findOne(userId) == null) {
 			success = false;
 			error = "given userId not found";
 		} else {
-			users = userRepo.findById(userId).get().getRecievedRequestFrom();
+			users = userRepo.findOne(userId).getRecievedRequestFrom();
 			return new HtmlUserList(success, users);
 		}
 
