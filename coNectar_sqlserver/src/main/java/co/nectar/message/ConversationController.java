@@ -15,17 +15,17 @@ public class ConversationController {
 	@Autowired
 	ConversationService msgService;
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/messages/{toId}/between/{fromId}")
+	@RequestMapping(method = RequestMethod.GET, value = "/messages/to/{toId}/from/{fromId}")
 	public HtmlResponce getConversation(@PathVariable Integer toId, @PathVariable Integer fromId) {
 		return msgService.getMessagesBetween(toId,fromId);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, value = "/messages/{toId}/between/{fromId}")
+	@RequestMapping(method = RequestMethod.DELETE, value = "/messages/to/{toId}/from/{fromId}")
 	public HtmlResponce deleteConversation(@PathVariable Integer toId, @PathVariable Integer fromId) {
 		return msgService.deleteConversation(toId,fromId);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/messages/{toId}/from/{fromId}")
+	@RequestMapping(method = RequestMethod.POST, value = "/messages/to/{toId}/from/{fromId}")
 	public HtmlResponce addMessage(@PathVariable Integer toId, @PathVariable Integer fromId, @RequestBody Message message) {
 		return msgService.addMessages(toId,fromId,message);
 	}

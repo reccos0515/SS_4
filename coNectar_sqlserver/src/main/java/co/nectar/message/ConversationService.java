@@ -147,8 +147,41 @@ public class ConversationService {
 	 * @return
 	 */
 	public HtmlResponce deleteConversation(Integer toId, Integer fromId) {
-		// TODO Auto-generated method stub
-		return null;
+		String error = "";		
+		HtmlResponce htmlmsg;
+		User userTo,userFrom;
+		Optional<Conversation> opt;
+		//check if toId is valid
+		htmlmsg = userService.getUserById(toId);
+		if(!htmlmsg.isSuccess()) {
+			error = ((HtmlError) htmlmsg).getMessage();
+			return new HtmlError(false, "id to is not valid id: " + error);
+		}
+		//get user object of toId
+		userTo = ((HtmlUserList) htmlmsg).getUsers().iterator().next();
+		
+		
+		//check if fromId is valid
+		htmlmsg = userService.getUserById(fromId);
+		if(!htmlmsg.isSuccess()) {
+			error = ((HtmlError) htmlmsg).getMessage();
+			return new HtmlError(false, "id from is not valid id: " + error);
+		}
+		//get user object of fromId
+		userFrom = ((HtmlUserList) htmlmsg).getUsers().iterator().next();
+
+		//get conversation		
+		opt = convoRepo.findByUserToAndUserFrom(userTo, userFrom);
+		
+		//check if conversation is added
+		if(!opt.isPresent())
+			return new HtmlError(false,"conversation between users not found! can not delete");
+		
+		convoRepo.delete(opt.get());
+		
+		
+		return new HtmlError(true, "deleted");
+		
 	}
 
 }
