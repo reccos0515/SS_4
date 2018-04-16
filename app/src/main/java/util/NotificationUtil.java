@@ -1,5 +1,6 @@
 package util;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -10,6 +11,7 @@ import com.conectar.conectar.MainActivity;
 import com.conectar.conectar.R;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
+import static java.security.AccessController.getContext;
 
 /**
  * Created by Maggie on 4/2/2018.
@@ -36,7 +38,7 @@ public class NotificationUtil {
         notification = new NotificationCompat.Builder(context);
         notification.setAutoCancel(true); //removes the notification after the user clicks on it
         //Build the notification
-        notification.setSmallIcon(R.drawable.ic_action_messages); //sets the icon for the notification todo put this back in
+        notification.setSmallIcon(R.drawable.ic_action_messages); //sets the icon for the notification //TODO change to coNECTAR logo
         notification.setWhen(System.currentTimeMillis()); //displays the time the notification was sent
         notification.setContentTitle(title); //sets the title for the notification
         notification.setContentText(text);
@@ -52,5 +54,23 @@ public class NotificationUtil {
 
     public int getNotificationId(){
         return NOTIFICATION_ID;
+    }
+
+    public void checkFriendRequests(){
+        //send volley request to check for new incoming pending friend requests
+        //craft notification
+        //send notification
+    }
+
+    public void checkMessagesNotification(){
+
+    }
+
+    public void sendNotification(Notification notification, Context context){
+        //Send built notification
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        assert notificationManager != null;
+        //notificationManager.notify(NOTIFICATION_ID, notification.build()); TODO figure out why it doesn't like build
+
     }
 }
