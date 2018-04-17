@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -223,6 +224,7 @@ public class SwipeFragment extends Fragment {
      */
     public static void updateUI(JSONObject user){
 
+        updateProfilePic(user);
         //set up all the textviews
         TextView errorMessage = mainView.findViewById(R.id.swipeMessage);
         TextView firstName = mainView.findViewById(R.id.swipeFirstName);
@@ -321,6 +323,32 @@ public class SwipeFragment extends Fragment {
             }catch (JSONException e){
                 e.printStackTrace();
             }
+        }
+        return;
+    }
+
+    /**
+     * Method to update the profile picture
+     * @param user to be viewed
+     */
+    public static void updateProfilePic(JSONObject user){
+
+        ImageView profPic = mainView.findViewById(R.id.profilePicView);
+        int pic = 0;
+        try{
+            pic = user.getInt("profilePic");
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        if(pic == 1){
+
+        }
+        else if(pic == 2){
+
+        }
+        else{
+
         }
         return;
     }
