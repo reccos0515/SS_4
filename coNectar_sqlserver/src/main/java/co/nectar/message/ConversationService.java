@@ -35,9 +35,9 @@ public class ConversationService {
 		boolean success = true;
 		String error = "";
 		
+		
 		HtmlResponce htmlmsg;
 		User userTo,userFrom;
-		Conversation convo;
 		//check if toId is valid
 		htmlmsg = userService.getUserById(toId);
 		if(!htmlmsg.isSuccess()) {
@@ -66,25 +66,48 @@ public class ConversationService {
 			return new HtmlErrorWithObj(success, error,msg);
 		}
 		
-		//add conversation if not existing otherwise find old conversation
-		Optional<Conversation> opt = convoRepo.findByUserToAndUserFrom(userTo, userFrom);
-		if(!opt.isPresent()) {
-			convo = new Conversation(userTo, userFrom, new ArrayList());
-		}else {
-			convo = opt.get();
-		}
 		
-		//add message
-		convo.getMessages().add(msg);
-		
-		
-		//save conversation
-		convoRepo.save(convo);
-		
-		
+		//add message to both sides of the conversation
+		this.addConvo(userTo, userFrom, msg);
+		this.addConvo(userFrom, userTo, msg);
+	
 		return new  HtmlError(true, "added message");
 	}
 
+	private void addConvo(User userTo, User userFrom, Message msg) {
+		Optional<Conversation> opt;
+		Conversation convoTo, convoFrom;
+		
+		//add to userTo userFrom convo
+		//add conversation if not existing otherwise find old conversation
+		opt = convoRepo.findByUserToAndUserFrom(userTo, userFrom);
+		if(!opt.isPresent()) {
+			convoTo = new Conversation(userTo, userFrom, new ArrayList<Message>());
+		}else {
+			convoTo = opt.get();
+		}
+		
+		//get other convo
+		opt = convoRepo.findByUserToAndUserFrom(userFrom, userTo);
+		if(!opt.isPresent()) {
+			convoFrom = new Conversation(userTo, userFrom, new ArrayList<Message>());
+		}else {
+			convoFrom = opt.get();
+		}
+		
+		//add message
+		msg.setId(0);
+		convoTo.getMessages().add(msg);
+		
+		
+		
+		//save conversation
+		convoRepo.save(convoTo);
+		
+		
+		convoFrom.getMessages().add(msg);
+		convoRepo.save(convoFrom);
+	}
 	/**
 	 * get messages between two users
 	 * @param toId user messages send to
