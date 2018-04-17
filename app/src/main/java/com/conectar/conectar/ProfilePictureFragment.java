@@ -85,12 +85,12 @@ public class ProfilePictureFragment extends Fragment {
                 Toast.makeText(getActivity(), "Bee!", Toast.LENGTH_SHORT).show();
             }
         });
-        view.findViewById(R.id.honeyBtn).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.batBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editor.putInt("PROFILEPICTURE", 2);
                 editor.apply();
-                Toast.makeText(getActivity(), "Honey!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Bat!", Toast.LENGTH_SHORT).show();
             }
         });
     }
