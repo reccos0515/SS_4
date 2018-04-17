@@ -127,9 +127,9 @@ public class ProfileViewFragment extends Fragment {
         }
 
         if(pic == 1){
-            profilePic.setImageResource(R.drawable.bee_128);
+            profilePic.setImageResource(R.drawable.fatbee_128);
         } else if (pic == 2){
-            profilePic.setImageResource(R.drawable.honey_128);
+            profilePic.setImageResource(R.drawable.longbee_128);
         } else {
 
         }

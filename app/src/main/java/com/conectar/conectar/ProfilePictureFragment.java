@@ -92,7 +92,7 @@ public class ProfilePictureFragment extends Fragment {
                 editor.apply();
                 Toast.makeText(getActivity(), "Bat!", Toast.LENGTH_SHORT).show();
             }
-        });
+        });/*
         view.findViewById(R.id.beaverBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +100,7 @@ public class ProfilePictureFragment extends Fragment {
                 editor.apply();
                 Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
         view.findViewById(R.id.beetleBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +140,7 @@ public class ProfilePictureFragment extends Fragment {
                 editor.apply();
                 Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
             }
-        });
+        });/*
         view.findViewById(R.id.beaverBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,7 +180,7 @@ public class ProfilePictureFragment extends Fragment {
                 editor.apply();
                 Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
 
     @Override

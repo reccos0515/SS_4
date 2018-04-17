@@ -171,10 +171,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             String profileUrl = message.getProfileUrl();
             Log.d("MessageListAdapter", "profileUrl: " + profileUrl);
             if(profileUrl.equals("1")){
-                profileImage.setImageResource(R.drawable.fatbee_outlined_64); //set picture to bee
+                profileImage.setImageResource(R.drawable.fatbee_64); //set picture to bee
             }
             else if(profileUrl.equals("2")){
-                profileImage.setImageResource(R.drawable.longbee_outlined_64);
+                profileImage.setImageResource(R.drawable.longbee_64);
             }
         }
     }
