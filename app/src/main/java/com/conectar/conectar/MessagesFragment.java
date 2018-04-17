@@ -15,10 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -42,6 +44,7 @@ import util.UserUtil;
  * create an instance of this fragment.
  */
 public class MessagesFragment extends Fragment {
+    private EditText newMessage;
 
 
     private OnFragmentInteractionListener mListener; //TODO figure out if this is necessary
@@ -88,6 +91,9 @@ public class MessagesFragment extends Fragment {
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
+        newMessage = view.findViewById(R.id.edittext_chatbox); //typed message from user
+
+
         String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/";
         int userIDNum = preferences.getInt("ID", 0);
         Log.d("MessagesFragment", getContext().toString());
@@ -131,9 +137,16 @@ public class MessagesFragment extends Fragment {
                 mMessageList.add(m);
                 adapter.notifyDataSetChanged();
 
-                JSONObject messageObject = MessagesUtil.prepareSentMessage("A message", "some time");
-                Log.d("MessagesFragment", "message object prepared for sending: " + messageObject.toString());
+                String messageString = newMessage.getText().toString();
+                //Date thisDate = new Date(System.currentTimeMillis());
+                MyMessage newMessage = new MyMessage(messageString);
+
+                //Log.d("MessagesFragment", "Typed message from user: " + messageString + "   Time: " + newMessage.getCreatedAt());
+                JSONObject messageObject = MessagesUtil.prepareSentMessage(messageString, newMessage.getCreatedAt());
+                //Log.d("MessagesFragment", "message object prepared for sending: " + messageObject.toString());
                 MessagesUtil.sendMessage(2, 1, messageObject, getContext());
+
+                MessagesUtil.getConversation(2, 1, getContext());
             }
         });
     }
