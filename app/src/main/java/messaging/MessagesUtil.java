@@ -14,7 +14,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import util.Singleton;
@@ -75,7 +78,7 @@ public class MessagesUtil {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d("JsonRequest", "getConversation response from server: " + response.toString());
+                //Log.d("JsonRequest", "getConversation response from server: " + response.toString());
                 Boolean success = false;
                 try {
                     success = response.getBoolean("success");
@@ -94,7 +97,7 @@ public class MessagesUtil {
                             String tempString = temp.toString(); //convert message JSONObject to string
                             conversation.add(tempString); //put in set
                         }
-                        Log.d("MessagesUtil", "conversation: " + conversation);
+                        //Log.d("MessagesUtil", "conversation: " + conversation);
                         editor.putStringSet("MSGFROM" + idFrom, conversation); //put messages in SharedPreferences
                         editor.apply();
                         Log.d("MessagesUtil", "MSGFROM" + idFrom + ": " + preferences.getStringSet("MSGFROM" + idFrom, null));
@@ -137,6 +140,27 @@ public class MessagesUtil {
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
         return;
+    }
+
+
+    public static MyMessage[] convertToMyMessage(Context context, int idFrom){
+        SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
+        Set<String> setConversation = preferences.getStringSet("MSGFROM" + idFrom, null);
+        if(setConversation != null){
+            JSONObject[] jsonConversation = new JSONObject[setConversation.size()];
+            List<String> listConversation = new ArrayList<>(setConversation);
+            for(int i = 0; i < setConversation.size(); i++){
+                JSONObject messageJSONObject = null;
+                try {
+                    messageJSONObject = new JSONObject(listConversation.get(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                jsonConversation[i] = messageJSONObject;
+            }
+            Log.d("MessagesUtil", "jsonConversation: " + Arrays.toString(jsonConversation));
+        }
+        return null;
     }
 
 }

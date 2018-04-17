@@ -133,9 +133,9 @@ public class MessagesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
-                MyMessage m = new MyMessage("hello");
-                mMessageList.add(m);
-                adapter.notifyDataSetChanged();
+                //MyMessage m = new MyMessage("hello");
+                //mMessageList.add(m);
+                //adapter.notifyDataSetChanged();
 
                 String messageString = newMessage.getText().toString();
                 //Date thisDate = new Date(System.currentTimeMillis());
@@ -147,6 +147,7 @@ public class MessagesFragment extends Fragment {
                 MessagesUtil.sendMessage(2, 1, messageObject, getContext());
 
                 MessagesUtil.getConversation(2, 1, getContext());
+                MyMessage[] temp = MessagesUtil.convertToMyMessage(getContext(), 2);
             }
         });
     }
