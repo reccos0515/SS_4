@@ -99,10 +99,12 @@ public class ProfileViewFragment extends Fragment {
         TextView bio = view.findViewById(R.id.viewBio);
         Button button = view.findViewById(R.id.addFriend);
         ImageView statusBubble = (ImageView) view.findViewById(R.id.statusBubbleView);
+        ImageView profilePic = (ImageView) view.findViewById(R.id.profileViewProfilePic);
         String interests = "00000000000";
         int numInterests;
         int id = 0;
         int status = 0;
+        int pic = 0;
 
         try {
             username.setText(user.get("userName").toString());
@@ -110,6 +112,7 @@ public class ProfileViewFragment extends Fragment {
             interests = user.getString("interests");
             id = user.getInt("id");
             status = user.getInt("status");
+            pic = user.getInt("profilePic");
         } catch (JSONException e){
             e.printStackTrace();
         }
@@ -121,6 +124,14 @@ public class ProfileViewFragment extends Fragment {
             statusBubble.setImageResource(R.drawable.ic_status_yellow);
         }else if(status == 2){
             statusBubble.setImageResource(R.drawable.ic_status_green);
+        }
+
+        if(pic == 1){
+            profilePic.setImageResource(R.drawable.bee_128);
+        } else if (pic == 2){
+            profilePic.setImageResource(R.drawable.honey_128);
+        } else {
+
         }
 
         numInterests = interests.charAt(0) - '0';
