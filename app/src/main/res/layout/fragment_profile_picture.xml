@@ -1,4 +1,4 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,83 +6,164 @@
     tools:context="com.conectar.conectar.ProfilePictureFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="1">
+        <ImageButton
+            android:id="@+id/beeBtn"
+            android:src="@drawable/fatbee_64"/>
+        <ImageButton
+            android:id="@+id/batBtn"
+            android:src="@drawable/bat_64"/>
+        <ImageButton
+            android:id="@+id/Btn"
+            android:src="@drawable/beaver_64" />
+        <ImageButton
+            android:id="@+id/beetleBtn"
+            android:src="@drawable/beetle_64" />
+        <ImageButton
+            android:id="@+id/bulldogBtn"
+            android:src="@drawable/bulldog_64" />
+        <ImageButton
+            android:id="@+id/camelBtn"
+            android:src="@drawable/camel_64" />
+        <ImageButton
+            android:id="@+id/canaryBtn"
+            android:src="@drawable/canary_64" />
+        <ImageButton
+            android:id="@+id/catBtn"
+            android:src="@drawable/cat_64" />
+        <ImageButton
+            android:id="@+id/chameleonBtn"
+            android:src="@drawable/chameleon_64" />
+        <ImageButton
+            android:id="@+id/chickenBtn"
+            android:src="@drawable/chicken_64" />
+        <ImageButton
+            android:id="@+id/clownfishBtn"
+            android:src="@drawable/clownfish_64" />
+        <ImageButton
+            android:id="@+id/cobraBtn"
+            android:src="@drawable/cobra_64" />
+        <ImageButton
+            android:id="@+id/cowBtn"
+            android:src="@drawable/cow_64" />
+        <ImageButton
+            android:id="@+id/crabBtn"
+            android:src="@drawable/crab_64" />
+        <ImageButton
+            android:id="@+id/crocodileBtn"
+            android:src="@drawable/crocodile_64" />
+        <ImageButton
+            android:id="@+id/duckBtn"
+            android:src="@drawable/duck_64" />
+        <ImageButton
+            android:id="@+id/elephantBtn"
+            android:src="@drawable/elephant_64" />
+        <ImageButton
+            android:id="@+id/foxBtn"
+            android:src="@drawable/fox_64" />
+        <ImageButton
+            android:id="@+id/frogBtn"
+            android:src="@drawable/frog_64" />
+        <ImageButton
+            android:id="@+id/giraffeBtn"
+            android:src="@drawable/giraffe_64" />
+        <ImageButton
+            android:id="@+id/hippopotamusBtn"
+            android:src="@drawable/hippopotamus_64" />
+        <ImageButton
+            android:id="@+id/hummingbirdBtn"
+            android:src="@drawable/hummingbird_64" />
+        <ImageButton
+            android:id="@+id/kangarooBtn"
+            android:src="@drawable/kangaroo_64" />
+        <ImageButton
+            android:id="@+id/lionBtn"
+            android:src="@drawable/lion_64" />
+        <ImageButton
+            android:id="@+id/llamaBtn"
+            android:src="@drawable/llama_64" />
+        <ImageButton
+            android:id="@+id/macawBtn"
+            android:src="@drawable/macaw_64" />
+        <ImageButton
+            android:id="@+id/monkeyBtn"
+            android:src="@drawable/monkey_64" />
+        <ImageButton
+            android:id="@+id/mooseBtn"
+            android:src="@drawable/moose_64" />
+        <ImageButton
+            android:id="@+id/mouseBtn"
+            android:src="@drawable/mouse_64" />
+        <ImageButton
+            android:id="@+id/octopusBtn"
+            android:src="@drawable/octopus_64" />
+        <ImageButton
+            android:id="@+id/ostrichBtn"
+            android:src="@drawable/ostrich_64" />
+        <ImageButton
+            android:id="@+id/owlBtn"
+            android:src="@drawable/owl_64" />
+        <ImageButton
+            android:id="@+id/pandaBtn"
+            android:src="@drawable/panda_64" />
+        <ImageButton
+            android:id="@+id/pelicanBtn"
+            android:src="@drawable/pelican_64" />
+        <ImageButton
+            android:id="@+id/penguinBtn"
+            android:src="@drawable/penguin_64" />
+        <ImageButton
+            android:id="@+id/pigBtn"
+            android:src="@drawable/pig_64" />
+        <ImageButton
+            android:id="@+id/rabbitBtn"
+            android:src="@drawable/rabbit_64" />
+        <ImageButton
+            android:id="@+id/racoonBtn"
+            android:src="@drawable/racoon_64" />
+        <ImageButton
+            android:id="@+id/rhinocerosBtn"
+            android:src="@drawable/rhinoceros_64" />
+        <ImageButton
+            android:id="@+id/sharkBtn"
+            android:src="@drawable/shark_64" />
+        <ImageButton
+            android:id="@+id/sheepBtn"
+            android:src="@drawable/sheep_64" />
+        <ImageButton
+            android:id="@+id/siberianhuskyBtn"
+            android:src="@drawable/siberianhusky_64" />
+        <ImageButton
+            android:id="@+id/slothBtn"
+            android:src="@drawable/sloth_64" />
+        <ImageButton
+            android:id="@+id/snakeBtn"
+            android:src="@drawable/snake_64" />
+        <ImageButton
+            android:id="@+id/squirrelBtn"
+            android:src="@drawable/squirrel_64" />
+        <ImageButton
+            android:id="@+id/swanBtn"
+            android:src="@drawable/swan_64" />
+        <ImageButton
+            android:id="@+id/tigerBtn"
+            android:src="@drawable/tiger_64" />
+        <ImageButton
+            android:id="@+id/toucanBtn"
+            android:src="@drawable/toucan_64" />
+        <ImageButton
+            android:id="@+id/turtleBtn"
+            android:src="@drawable/turtle_64" />
+        <ImageButton
+            android:id="@+id/whaleBtn"
+            android:src="@drawable/whale_64" />
 
-    <ImageButton
-        android:id="@+id/beeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/fatbee_64"
-        app:layout_constraintBottom_toTopOf="@+id/batBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.027" />
-
-    <ImageButton
-        android:id="@+id/batBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="372dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:src="@drawable/bat_64"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageButton
-        android:id="@+id/beaverBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="252dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/beaver_64"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/batBtn" />
-
-    <ImageButton
-        android:id="@+id/beetleBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="168dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/beetle_64"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/beaverBtn"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ImageButton
-        android:id="@+id/bulldogBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="252dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/bulldog_64"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/beetleBtn"
-        app:layout_constraintVertical_bias="0.0" />
+    </TableLayout>
 
 
 
-</android.support.constraint.ConstraintLayout>
+
+</ScrollView>
