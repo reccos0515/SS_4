@@ -340,12 +340,11 @@ public class SwipeFragment extends Fragment {
         } catch (JSONException e){
             e.printStackTrace();
         }
-
         if(pic == 1){
-
+            profPic.setImageResource(R.drawable.bee_128);
         }
         else if(pic == 2){
-
+            profPic.setImageResource(R.drawable.honey_128);
         }
         else{
 
