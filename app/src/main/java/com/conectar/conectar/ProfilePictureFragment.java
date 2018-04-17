@@ -93,6 +93,94 @@ public class ProfilePictureFragment extends Fragment {
                 Toast.makeText(getActivity(), "Bat!", Toast.LENGTH_SHORT).show();
             }
         });
+        view.findViewById(R.id.beaverBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 3);
+                editor.apply();
+                Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.beetleBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 4);
+                editor.apply();
+                Toast.makeText(getActivity(), "Beetle!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.bulldogBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 5);
+                editor.apply();
+                Toast.makeText(getActivity(), "Bulldog!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.camelBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 6);
+                editor.apply();
+                Toast.makeText(getActivity(), "Camel!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.canaryBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 7);
+                editor.apply();
+                Toast.makeText(getActivity(), "Canary!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.catBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 3);
+                editor.apply();
+                Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.beaverBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 3);
+                editor.apply();
+                Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.beaverBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 3);
+                editor.apply();
+                Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.beaverBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 3);
+                editor.apply();
+                Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.beaverBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 3);
+                editor.apply();
+                Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.beaverBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 3);
+                editor.apply();
+                Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
