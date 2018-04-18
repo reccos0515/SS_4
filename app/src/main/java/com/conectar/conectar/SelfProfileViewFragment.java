@@ -101,7 +101,7 @@ public class SelfProfileViewFragment extends Fragment {
             user.put("status", status);
             user.put("interests", interests);
             user.put("userName", username);
-            user.put("profilePic", pic);
+            user.put("profilePicture", pic);
         }catch (JSONException e){
 
             e.printStackTrace();

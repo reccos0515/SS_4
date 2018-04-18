@@ -112,7 +112,7 @@ public class ProfileViewFragment extends Fragment {
             interests = user.getString("interests");
             id = user.getInt("id");
             status = user.getInt("status");
-            pic = user.getInt("profilePic");
+            pic = user.getInt("profilePicture");
         } catch (JSONException e){
             e.printStackTrace();
         }

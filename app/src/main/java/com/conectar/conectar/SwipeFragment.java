@@ -334,9 +334,9 @@ public class SwipeFragment extends Fragment {
     public static void updateProfilePic(JSONObject user){
 
         ImageView profilePic = mainView.findViewById(R.id.profilePicView);
-        int pic = 2;
+        int pic = 0;
         try{
-            pic = user.getInt("profilePic");
+            pic = user.getInt("profilePicture");
         } catch (JSONException e){
             e.printStackTrace();
         }
