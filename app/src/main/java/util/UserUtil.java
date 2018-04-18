@@ -102,7 +102,8 @@ public class UserUtil {
             Log.d("updateStatus", "wrong status input");
         }
         JsonRequest.jsonObjectPutRequest(js, url, context);
-
+        UserUtil.setUsersArray(null);
+        return;
     }
 
     /**
