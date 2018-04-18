@@ -32,6 +32,7 @@ public class UserUtil {
     private static JSONArray jsonArray2 = new JSONArray();
     private static JSONObject profView = null; //user that can be viewed in profile view next
     private static boolean friend = false;
+    private static int profPic = 0;
 
     public static JSONObject prepareLogin(String username, String password, Context context){
         JSONObject fullJS = new JSONObject();
@@ -161,6 +162,23 @@ public class UserUtil {
      */
     public static void setUserToView(JSONObject user){
         profView = user;
+        return;
+    }
+
+    /**
+     * method to return the temporarily saved profile picture
+     * @return int corresponding to profile picture
+     */
+    public static int getUserProfPic(){
+        return profPic;
+    }
+
+    /**
+     * method to set the temporarily saved profile picture
+     * @param pic int corresponding to the profile picture
+     */
+    public static void setUserProfPic(int pic){
+        profPic = pic;
         return;
     }
 

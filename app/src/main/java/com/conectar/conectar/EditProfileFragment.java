@@ -18,6 +18,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import messaging.User;
 import util.InterestsUtil;
 import util.JsonRequest;
 import util.UserUtil;
@@ -255,7 +256,12 @@ public class EditProfileFragment extends Fragment {
                     js.put("id", id);
                     js.put("userName", username);
                     js.put("status", preferences.getInt("STATUS", 0));
-                    js.put("profilePicture", preferences.getInt("PROFILEPICTURE", 0));
+                    if(UserUtil.getUserProfPic() == 0) {
+                        js.put("profilePicture", preferences.getInt("PROFILEPICTURE", 0));
+                    } else {
+                        js.put("profilePicture", UserUtil.getUserProfPic());
+                        editor.putInt("PROFILEPICTURE", UserUtil.getUserProfPic());
+                    }
                     editor.apply();
                 } catch (JSONException e){
                     e.printStackTrace();
