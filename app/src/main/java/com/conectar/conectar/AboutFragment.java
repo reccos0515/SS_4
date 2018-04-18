@@ -83,7 +83,7 @@ public class AboutFragment extends Fragment {
         view.findViewById(R.id.about_seenAll).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                answer.setText("The creators of coNECTAR believe it's important that you know you've seen everyone in this setting. However, if you'd like to look again at users you've seen before, you can change to a different status and back. Then, you'll be able to see everyone all over again!");
+                answer.setText("The creators of coNECTAR believe it's important that you know you've seen everyone in this setting. If you'd like to look again at users you've seen before, you can change to a different status and back. Then you'll be able to see everyone all over again!");
             }
         });
         view.findViewById(R.id.about_whoMade).setOnClickListener(new View.OnClickListener(){
@@ -102,6 +102,12 @@ public class AboutFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 answer.setText("Statuses let you control who you see and how they see you! If your status is green, you can see any users. If your status is yellow, you'll only see users with at least one matching interest. If your status is red, no one can see you but your friends (but you can't see anyone either)");
+            }
+        });
+        view.findViewById(R.id.about_whatIs).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                answer.setText("coNECTAR is an app designed to bring people together. It aims to pair people who wouldn't have met otherwise and inspire people to try new things.");
             }
         });
     }
