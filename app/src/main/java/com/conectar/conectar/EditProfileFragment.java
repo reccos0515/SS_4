@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -53,6 +54,8 @@ public class EditProfileFragment extends Fragment {
     private final String empty = "(empty)"; //string to set text view to if empty
 
     private OnFragmentInteractionListener mListener;
+
+    private View mainView;
 
     public EditProfileFragment() {
         // Required empty public constructor
@@ -105,6 +108,7 @@ public class EditProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mainView = view;
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
@@ -117,6 +121,7 @@ public class EditProfileFragment extends Fragment {
         int3 = view.findViewById(R.id.interestThree);
         int4 = view.findViewById(R.id.interestFour);
         int5 = view.findViewById(R.id.interestFive);
+        ImageView profilePicView = view.findViewById(R.id.current_profile);
 
         context = getActivity().getApplicationContext(); //get the context
 
@@ -127,6 +132,13 @@ public class EditProfileFragment extends Fragment {
         username = preferences.getString("USERNAME", "none");
         updateInterestButtons(); //update the ui on the buttons
 
+        //set the picture
+        if(UserUtil.getUserProfPic() == 0){
+            updateProfilePicture(preferences.getInt("PROFILEPICTURE", 0), profilePicView);
+        } else {
+            updateProfilePicture(UserUtil.getUserProfPic(), profilePicView);
+        }
+        
         numInterests = interests.charAt(0) - '0'; //set the number of interests
         //create a button to add an interest
         view.findViewById(R.id.submitNewInterest).setOnClickListener(new View.OnClickListener(){
@@ -327,6 +339,114 @@ public class EditProfileFragment extends Fragment {
         }else{
             int5.setText(empty); //if it doesn't exist, set the text to be empty
         }
+    }
+
+    /**
+     * Method to set the profile picture in the edit profile so the user can see what their current option is
+     */
+    public void updateProfilePicture(int pic, ImageView profilePic){
+        if(pic == 2){
+            profilePic.setImageResource(R.drawable.bat_128);
+        } else if (pic == 3){
+            profilePic.setImageResource(R.drawable.beaver_128);
+        }else if (pic == 4){
+            profilePic.setImageResource(R.drawable.beetle_128);
+        }else if (pic == 5){
+            profilePic.setImageResource(R.drawable.bulldog_128);
+        }else if (pic == 6){
+            profilePic.setImageResource(R.drawable.camel_128);
+        }else if (pic == 7){
+            profilePic.setImageResource(R.drawable.canary_128);
+        }else if (pic == 9){
+            profilePic.setImageResource(R.drawable.cat_128);
+        }else if (pic == 10){
+            profilePic.setImageResource(R.drawable.chameleon_128);
+        }else if (pic == 11){
+            profilePic.setImageResource(R.drawable.chicken_128);
+        }else if (pic == 12){
+            profilePic.setImageResource(R.drawable.clownfish_128);
+        }else if (pic == 13){
+            profilePic.setImageResource(R.drawable.cobra_128);
+        }else if (pic == 14){
+            profilePic.setImageResource(R.drawable.cow_128);
+        }else if (pic == 15){
+            profilePic.setImageResource(R.drawable.crab_128);
+        }else if (pic == 16){
+            profilePic.setImageResource(R.drawable.crocodile_128);
+        }else if (pic == 17){
+            profilePic.setImageResource(R.drawable.duck_128);
+        }else if (pic == 18){
+            profilePic.setImageResource(R.drawable.elephant_128);
+        }else if (pic == 19){
+            profilePic.setImageResource(R.drawable.fox_128);
+        }else if (pic == 20){
+            profilePic.setImageResource(R.drawable.frog_128);
+        }else if (pic == 21){
+            profilePic.setImageResource(R.drawable.giraffe_128);
+        }else if (pic == 22){
+            profilePic.setImageResource(R.drawable.hippopotamus_128);
+        }else if (pic == 23){
+            profilePic.setImageResource(R.drawable.hummingbird_128);
+        }else if (pic == 24){
+            profilePic.setImageResource(R.drawable.kangaroo_128);
+        }else if (pic == 25){
+            profilePic.setImageResource(R.drawable.lion_128);
+        }else if (pic == 26){
+            profilePic.setImageResource(R.drawable.llama_128);
+        }else if (pic == 27){
+            profilePic.setImageResource(R.drawable.macaw_128);
+        }else if (pic == 28){
+            profilePic.setImageResource(R.drawable.monkey_128);
+        }else if (pic == 29){
+            profilePic.setImageResource(R.drawable.moose_128);
+        }else if (pic == 30){
+            profilePic.setImageResource(R.drawable.mouse_128);
+        }else if (pic == 31){
+            profilePic.setImageResource(R.drawable.octopus_128);
+        }else if (pic == 32){
+            profilePic.setImageResource(R.drawable.ostrich_128);
+        }else if (pic == 33){
+            profilePic.setImageResource(R.drawable.owl_128);
+        }else if (pic == 34){
+            profilePic.setImageResource(R.drawable.panda_128);
+        }else if (pic == 35){
+            profilePic.setImageResource(R.drawable.pelican_128);
+        }else if (pic == 36){
+            profilePic.setImageResource(R.drawable.penguin_128);
+        }else if (pic == 37){
+            profilePic.setImageResource(R.drawable.pig_128);
+        }else if (pic == 38){
+            profilePic.setImageResource(R.drawable.rabbit_128);
+        }else if (pic == 39){
+            profilePic.setImageResource(R.drawable.racoon_128);
+        }else if (pic == 40){
+            profilePic.setImageResource(R.drawable.rhinoceros_128);
+        }else if (pic == 41){
+            profilePic.setImageResource(R.drawable.shark_128);
+        }else if (pic == 42){
+            profilePic.setImageResource(R.drawable.sheep_128);
+        }else if (pic == 43){
+            profilePic.setImageResource(R.drawable.siberianhusky_128);
+        }else if (pic == 44){
+            profilePic.setImageResource(R.drawable.sloth_128);
+        }else if (pic == 45){
+            profilePic.setImageResource(R.drawable.snake_128);
+        }else if (pic == 46){
+            profilePic.setImageResource(R.drawable.squirrel_128);
+        }else if (pic == 47){
+            profilePic.setImageResource(R.drawable.swan_128);
+        }else if (pic == 48){
+            profilePic.setImageResource(R.drawable.tiger_128);
+        }else if (pic == 49){
+            profilePic.setImageResource(R.drawable.toucan_128);
+        }else if (pic == 50){
+            profilePic.setImageResource(R.drawable.turtle_128);
+        }else if (pic == 51){
+            profilePic.setImageResource(R.drawable.whale_128);
+        } else {
+            profilePic.setImageResource(R.drawable.fatbee_128);
+        }
+        return;
     }
 
 
