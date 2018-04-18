@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -327,7 +328,13 @@ public class ProfileViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //return to the last fragment
-                getFragmentManager().popBackStack();
+                FragmentManager fm = getFragmentManager();
+                if(fm.getBackStackEntryCount() > 0){
+                    Log.d("There was something ", "on the stack");
+                    fm.popBackStackImmediate();
+                } else {
+                    Log.d("There was nothing ", "on the stack");
+                }
             }
         });
     }

@@ -200,6 +200,7 @@ public class SwipeFragment extends Fragment {
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.screen_area, fragment);
+                        fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
                     }
                 } else if(errorMessage.getText().toString().equals("User is RED")){
