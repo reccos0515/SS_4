@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,6 +130,16 @@ public class ChangeStatusFragment extends Fragment {
                 UserUtil.updateStatus(0, getContext()); //call this to update the status
                 currentStatus.setText("Status is Red");
                 Toast.makeText(getActivity(), "Status set to red", Toast.LENGTH_SHORT).show(); //toast to let the user know it worked
+            }
+        });
+        view.findViewById(R.id.changeStatusSwipeBtn).setOnClickListener(new View.OnClickListener() { //red button clicked
+            @Override
+            public void onClick(View view) { //set status to red
+                Fragment fragment = new SwipeFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area, fragment);
+                fragmentTransaction.commit();
             }
         });
 

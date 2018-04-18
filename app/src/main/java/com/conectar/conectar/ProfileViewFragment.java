@@ -322,6 +322,14 @@ public class ProfileViewFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+        //go back
+        view.findViewById(R.id.viewBackBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //return to the last fragment
+                getFragmentManager().popBackStack();
+            }
+        });
     }
 
     /**

@@ -127,7 +127,7 @@ public class NewProfileFragment extends Fragment {
                         js.put("status", 0);
                         editor.putInt("STATUS", 0);
                         js.put("profilePicture", 0);
-                        editor.putInt("PROFILEPICTURE", 0);git
+                        editor.putInt("PROFILEPICTURE", 0);
                         editor.putBoolean("ISLOGGEDIN", true); //also logs the user in
                         Boolean isLoggedIn = preferences.getBoolean("ISLOGGEDIN", false);
                         Log.d("NewProfileFragment", "ISLOGGEDIN: " + isLoggedIn.toString());
