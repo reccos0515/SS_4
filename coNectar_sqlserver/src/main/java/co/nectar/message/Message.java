@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import co.nectar.user.User;
 /**
- * class relating message information between uesr
+ * class relating message information between user
  * @author Ben
  *
  */

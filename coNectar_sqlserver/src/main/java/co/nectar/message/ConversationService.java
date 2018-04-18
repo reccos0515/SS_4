@@ -23,6 +23,8 @@ public class ConversationService {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MessageRepository msgRepo;
 	
 	/**
 	 * Add message between toId and fromId. creates new conversation if does not exist 
@@ -95,8 +97,10 @@ public class ConversationService {
 			convoFrom = opt.get();
 		}
 		
+		//save message and get saved message
+//		msg = msgRepo.save(msg);
+		
 		//add message
-		msg.setId(0);
 		convoTo.getMessages().add(msg);
 		
 		
@@ -104,8 +108,10 @@ public class ConversationService {
 		//save conversation
 		convoRepo.save(convoTo);
 		
-		
+//		msg.setId(0);
+//		msg = msgRepo.save(msg);
 		convoFrom.getMessages().add(msg);
+		
 		convoRepo.save(convoFrom);
 	}
 	/**
