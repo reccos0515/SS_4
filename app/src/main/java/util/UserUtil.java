@@ -220,6 +220,11 @@ public class UserUtil {
         return users;
     }
 
+    /**
+     * Method to set an image to a profile picture, based on the int corresponding to that image
+     * @param pic int corresponding to the image (as saved in the JSONObject and preferences)
+     * @param profilePic ImageView where you want the picture to be placed
+     */
     public static void updateProfilePicture(int pic, ImageView profilePic){
         if(pic == 2){
             profilePic.setImageResource(R.drawable.bat_128);

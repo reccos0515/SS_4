@@ -1,12 +1,21 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -65,6 +74,25 @@ public class AboutFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_about, container, false);
+    }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        final TextView answer = view.findViewById(R.id.about_answer);
+        view.findViewById(R.id.about_seenAll).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                answer.setText("The creators of coNECTAR believe it's important that you know you've seen everyone in this setting. However, if you'd like to look again at users you've seen before, you can change to a different status and back. Then, you'll be able to see everyone all over again!");
+            }
+        });
+        view.findViewById(R.id.about_whoMade).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                answer.setText("Creators of coNECTAR include Tristan Anderson, Jessie Bader, Maggie Dalton, and Ben Simon. The images for coNECTAR were found at (insert citation here). A special thanks goes out to their TA Shruti Sahu and their professor Simanta Mitra");
+            }
+        });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
