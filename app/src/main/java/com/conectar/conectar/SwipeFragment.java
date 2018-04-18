@@ -146,7 +146,7 @@ public class SwipeFragment extends Fragment {
                     userOnDisplayLoc++; //go to next user
                     //if it has reached the end, return to 0
                     if (userOnDisplayLoc >= len) {
-                        userOnDisplayLoc = 0;
+                        JsonRequest.swipeRequest(mainView, url, context); //call this to send the request
                     }
                     try {
                         JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
