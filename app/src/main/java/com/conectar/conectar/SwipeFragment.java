@@ -95,6 +95,7 @@ public class SwipeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mainView = view; //set the view
         Log.d("SwipeFragment", "Entered the swipe fragment");
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
@@ -123,8 +124,18 @@ public class SwipeFragment extends Fragment {
         Log.d("SwipeFragment", "Url posted to: " + url);
 
         context = getActivity().getApplicationContext(); //get the context
-        JsonRequest.swipeRequest(view, url, context); //call this to send the request
-        mainView = view; //set the view
+        //if should get a new list of users
+        if(UserUtil.getUsersArray() == null) {
+            JsonRequest.swipeRequest(view, url, context); //call this to send the request
+        } else {
+            users = UserUtil.getUsersArray();
+            len = users.length();
+            try {
+                updateUI((JSONObject) users.get(userOnDisplayLoc));
+            } catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
 
                         //on click listener for next
         view.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
@@ -238,7 +249,6 @@ public class SwipeFragment extends Fragment {
         String viewInterests; //interests of the current user on display
         try{
             viewInterests = (String) user.get("interests");
-            //TODO display picture
             String s = user.getString("userName"); //get the username
             firstName.setText(s); //set the username
 
@@ -321,6 +331,7 @@ public class SwipeFragment extends Fragment {
             try{
                 users = js.getJSONArray("users");  //set users to this array
                 len = users.length(); //set length of the array
+                UserUtil.setUsersArray(users); //save this array
             }catch (JSONException e){
                 e.printStackTrace();
             }

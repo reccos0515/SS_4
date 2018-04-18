@@ -34,7 +34,6 @@ public class UserUtil {
     private static boolean friend = false;
     private static int profPic = 0;
     private static JSONArray users; //array of users to be viewed in swipe
-    private static boolean getNew = true; //boolean to tell when the user needs to get a new set of users in swipe
 
     public static JSONObject prepareLogin(String username, String password, Context context){
         JSONObject fullJS = new JSONObject();
@@ -218,22 +217,6 @@ public class UserUtil {
         return users;
     }
 
-    /**
-     * method to be used to return a boolean to tell whether the list of new users should be new or to use the old one
-     * true means get a new array, false means use the array already stored by calling getUserArray()
-     * @return true if new user array is needed, false if using old one
-     */
-    public static boolean getGetNewUsers(){
-        return getNew;
-    }
-
-    /**
-     * method to be used to set the boolean of whether or not a new list should be used
-     */
-    public static void setGetNewUsers(boolean nu){
-        getNew = nu;
-        return;
-    }
 
 
 }
