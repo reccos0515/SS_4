@@ -299,6 +299,7 @@ public class ProfileViewFragment extends Fragment {
             view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    UserUtil.setUserProfPic(0); //can clear any previously saved profile pics
                     //create the new edit profile fragment
                     Fragment fragment = new EditProfileFragment();
                     FragmentManager fragmentManager = getFragmentManager();
