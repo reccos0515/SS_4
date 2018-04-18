@@ -1,29 +1,28 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.conectar.conectar.PendingFriendsFragment">
 
     <!-- TODO redo to list multiple pending friend requests from any user -->
 
     <Switch
-        android:id="@+id/friendsViewSwitch"
-        android:layout_width="129dp"
-        android:layout_height="57dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:checked="false"
-        android:switchMinWidth="30sp"
-        android:text="Switch"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.04"
-        tools:checked="false" />
+        android:id="@+id/friendListSwitch"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:text="Pending Friend Requests" />
 
-</android.support.constraint.ConstraintLayout>
+    <ListView
+        android:id="@+id/pendingListView"
+        app:layout_constraintTop_toBottomOf="@id/friendListSwitch"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+
+    </ListView>
+</LinearLayout>
