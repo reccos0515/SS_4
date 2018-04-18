@@ -92,7 +92,18 @@ public class AboutFragment extends Fragment {
                 answer.setText("Creators of coNECTAR include Tristan Anderson, Jessie Bader, Maggie Dalton, and Ben Simon. The images for coNECTAR were found at (insert citation here). A special thanks goes out to their TA Shruti Sahu and their professor Simanta Mitra");
             }
         });
-
+        view.findViewById(R.id.about_redStatus).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                answer.setText("A red status is a great way to stay private--only your friends can see you when you're red! However, it's only fair if you can't see anyone else either");
+            }
+        });
+        view.findViewById(R.id.about_statuses).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                answer.setText("Statuses let you control who you see and how they see you! If your status is green, you can see any users. If your status is yellow, you'll only see users with at least one matching interest. If your status is red, no one can see you but your friends (but you can't see anyone either)");
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
