@@ -12,17 +12,18 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:text="Username"
         android:textSize="24sp"
         app:layout_constraintLeft_toRightOf="@+id/pending_image_message_profile"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintRight_toLeftOf="@id/acceptFriendBtn"
+        app:layout_constraintTop_toTopOf="@+id/pending_image_message_profile" />
 
     <ImageView
         android:id="@+id/pending_image_message_profile"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/bat_64"
+        android:background="@drawable/ic_empty"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -38,6 +39,8 @@
         android:background="@color/colorPrimary"
         android:text="Accept"
         app:layout_constraintLeft_toRightOf="@id/pendingUsernameView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
         tools:layout_editor_absoluteY="8dp" />
 
 </android.support.constraint.ConstraintLayout>

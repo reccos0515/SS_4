@@ -24,7 +24,7 @@
         android:id="@+id/image_message_profile"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/bat_64"
+        android:background="@drawable/ic_empty"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
