@@ -136,51 +136,355 @@ public class ProfilePictureFragment extends Fragment {
         view.findViewById(R.id.catBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor.putInt("PROFILEPICTURE", 3);
-                editor.apply();
-                Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
-            }
-        });/*
-        view.findViewById(R.id.beaverBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editor.putInt("PROFILEPICTURE", 3);
+                editor.putInt("PROFILEPICTURE", 8);
                 editor.apply();
                 Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
             }
         });
-        view.findViewById(R.id.beaverBtn).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.catBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor.putInt("PROFILEPICTURE", 3);
+                editor.putInt("PROFILEPICTURE", 9);
                 editor.apply();
-                Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Cat!", Toast.LENGTH_SHORT).show();
             }
         });
-        view.findViewById(R.id.beaverBtn).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.chameleonBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor.putInt("PROFILEPICTURE", 3);
+                editor.putInt("PROFILEPICTURE", 10);
                 editor.apply();
-                Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Chameleon!", Toast.LENGTH_SHORT).show();
             }
         });
-        view.findViewById(R.id.beaverBtn).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.chickenBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor.putInt("PROFILEPICTURE", 3);
+                editor.putInt("PROFILEPICTURE", 11);
                 editor.apply();
-                Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Chicken!", Toast.LENGTH_SHORT).show();
             }
         });
-        view.findViewById(R.id.beaverBtn).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.clownfishBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor.putInt("PROFILEPICTURE", 3);
+                editor.putInt("PROFILEPICTURE", 12);
                 editor.apply();
-                Toast.makeText(getActivity(), "Beaver!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Clownfish!", Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
+        view.findViewById(R.id.cobraBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 13);
+                editor.apply();
+                Toast.makeText(getActivity(), "Cobra!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.cowBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 14);
+                editor.apply();
+                Toast.makeText(getActivity(), "Cow!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.crabBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 15);
+                editor.apply();
+                Toast.makeText(getActivity(), "Crab!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.crocodileBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 16);
+                editor.apply();
+                Toast.makeText(getActivity(), "Crocodile!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.duckBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 17);
+                editor.apply();
+                Toast.makeText(getActivity(), "Duck!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.elephantBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 18);
+                editor.apply();
+                Toast.makeText(getActivity(), "Elephant!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.foxBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 19);
+                editor.apply();
+                Toast.makeText(getActivity(), "Fox!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.frogBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 20);
+                editor.apply();
+                Toast.makeText(getActivity(), "Frog!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.giraffeBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 21);
+                editor.apply();
+                Toast.makeText(getActivity(), "Giraffe!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.hippopotamusBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 22);
+                editor.apply();
+                Toast.makeText(getActivity(), "Hippopotamus!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.hummingbirdBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 23);
+                editor.apply();
+                Toast.makeText(getActivity(), "Hummingbird!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.kangarooBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 24);
+                editor.apply();
+                Toast.makeText(getActivity(), "Kangaroo!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.lionBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 25);
+                editor.apply();
+                Toast.makeText(getActivity(), "Lion!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.llamaBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 26);
+                editor.apply();
+                Toast.makeText(getActivity(), "Llama!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.macawBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 27);
+                editor.apply();
+                Toast.makeText(getActivity(), "Macaw!", Toast.LENGTH_SHORT).show();
+            }
+        });
+                view.findViewById(R.id.monkeyBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 28);
+                editor.apply();
+                Toast.makeText(getActivity(), "Monkey!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.mooseBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 29);
+                editor.apply();
+                Toast.makeText(getActivity(), "Moose!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.mouseBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 30);
+                editor.apply();
+                Toast.makeText(getActivity(), "Mouse!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.octopusBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 31);
+                editor.apply();
+                Toast.makeText(getActivity(), "Octopus!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.ostrichBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 32);
+                editor.apply();
+                Toast.makeText(getActivity(), "Ostrich!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.owlBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 33);
+                editor.apply();
+                Toast.makeText(getActivity(), "Owl!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.pandaBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 34);
+                editor.apply();
+                Toast.makeText(getActivity(), "Panda!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.pelicanBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 35);
+                editor.apply();
+                Toast.makeText(getActivity(), "Pelican!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.penguinBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 36);
+                editor.apply();
+                Toast.makeText(getActivity(), "Penguin!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.pigBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 37);
+                editor.apply();
+                Toast.makeText(getActivity(), "Pig!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.rabbitBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 38);
+                editor.apply();
+                Toast.makeText(getActivity(), "Rabbit!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.racoonBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 39);
+                editor.apply();
+                Toast.makeText(getActivity(), "Racoon!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.rhinocerosBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 40);
+                editor.apply();
+                Toast.makeText(getActivity(), "Rinocerous!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.sharkBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 41);
+                editor.apply();
+                Toast.makeText(getActivity(), "Shark!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.sheepBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 42);
+                editor.apply();
+                Toast.makeText(getActivity(), "Sheep!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.siberianhuskyBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 43);
+                editor.apply();
+                Toast.makeText(getActivity(), "Siberian Husky!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.slothBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 44);
+                editor.apply();
+                Toast.makeText(getActivity(), "Sloth!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.snakeBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 45);
+                editor.apply();
+                Toast.makeText(getActivity(), "Snake!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.squirrelBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 46);
+                editor.apply();
+                Toast.makeText(getActivity(), "Squirrel!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.swanBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 47);
+                editor.apply();
+                Toast.makeText(getActivity(), "Swan!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.tigerBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 48);
+                editor.apply();
+                Toast.makeText(getActivity(), "Tiger!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.toucanBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 49);
+                editor.apply();
+                Toast.makeText(getActivity(), "Toucan!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.turtleBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 50);
+                editor.apply();
+                Toast.makeText(getActivity(), "Turtle!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.whaleBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt("PROFILEPICTURE", 51);
+                editor.apply();
+                Toast.makeText(getActivity(), "Whale!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
