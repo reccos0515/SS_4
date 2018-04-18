@@ -17,7 +17,7 @@
             android:id="@+id/batBtn"
             android:src="@drawable/bat_64"/>
         <ImageButton
-            android:id="@+id/Btn"
+            android:id="@+id/beaverBtn"
             android:src="@drawable/beaver_64" />
         <ImageButton
             android:id="@+id/beetleBtn"
