@@ -92,6 +92,7 @@ public class SelfProfileViewFragment extends Fragment {
         int status = preferences.getInt("STATUS", 0);
         String username = preferences.getString("USERNAME", "");
         String interests = preferences.getString("INTERESTS", "00000000000");
+        int pic = preferences.getInt("PROFILEPICTURE", 0);
         //put it in a json object
         JSONObject user = new JSONObject();
         try{
@@ -100,6 +101,7 @@ public class SelfProfileViewFragment extends Fragment {
             user.put("status", status);
             user.put("interests", interests);
             user.put("userName", username);
+            user.put("profilePic", pic);
         }catch (JSONException e){
 
             e.printStackTrace();
