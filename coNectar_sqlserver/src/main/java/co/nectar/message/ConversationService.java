@@ -98,7 +98,7 @@ public class ConversationService {
 		}
 		
 		//save message and get saved message
-//		msg = msgRepo.save(msg);
+		msg = msgRepo.save(msg);
 		
 		//add message
 		convoTo.getMessages().add(msg);
@@ -109,7 +109,7 @@ public class ConversationService {
 		convoRepo.save(convoTo);
 		
 //		msg.setId(0);
-//		msg = msgRepo.save(msg);
+		msg = msgRepo.save(msg);
 		convoFrom.getMessages().add(msg);
 		
 		convoRepo.save(convoFrom);
