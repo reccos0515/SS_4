@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -146,6 +147,7 @@ public class SwipeFragment extends Fragment {
                     userOnDisplayLoc++; //go to next user
                     //if it has reached the end, return to 0
                     if (userOnDisplayLoc >= len) {
+                        userOnDisplayLoc = 0;
                         JsonRequest.swipeRequest(mainView, url, context); //call this to send the request
                     }
                     try {
@@ -182,7 +184,8 @@ public class SwipeFragment extends Fragment {
                     userOnDisplayLoc--; //go to previous
                     //if it has passed the beginning, return to the end
                     if (userOnDisplayLoc < 0) {
-                        userOnDisplayLoc = len - 1;
+                        userOnDisplayLoc = 0;
+                        Toast.makeText(getActivity(), "You can't go back right now, try going forward!", Toast.LENGTH_SHORT).show(); //toast to tell the user it worked
                     }
                     try {
                         JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
