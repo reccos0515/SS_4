@@ -149,14 +149,19 @@ public class EditProfileFragment extends Fragment {
                     String interestToAdd = newInterest.getText().toString(); //get the new interest number
                     //if this is a valid interest, it can be added
                     if(InterestsUtil.getInterest(interestToAdd) != null){
-                        char[] interestChars = interests.toCharArray(); //convert interests to a char array
-                        interestChars[(2 * numInterests) + 1] = interestToAdd.charAt(0); //replace the old numbers with the new id
-                        interestChars[(2 * numInterests) + 2] = interestToAdd.charAt(1);
-                        numInterests++; //increment the number of interests
-                        interestChars[0] = (char) (numInterests + '0'); //update numInterests in the string
-                        interests = String.valueOf(interestChars); //turn it back into a string
-                        Toast.makeText(getContext(), "Successfully added " + InterestsUtil.getInterest(interestToAdd), Toast.LENGTH_SHORT); //toast to let the user know it worked
-                        updateInterestButtons(); //update the ui on the buttons to remove interests
+                        if((interestToAdd.charAt(0) == interests.charAt(1) && interestToAdd.charAt(1) == interests.charAt(2)) || (interestToAdd.charAt(0) == interests.charAt(3) && interestToAdd.charAt(1) == interests.charAt(4)) || (interestToAdd.charAt(0) == interests.charAt(5) && interestToAdd.charAt(1) == interests.charAt(6)) || (interestToAdd.charAt(0) == interests.charAt(7) && interestToAdd.charAt(1) == interests.charAt(8)) || (interestToAdd.charAt(0) == interests.charAt(9) && interestToAdd.charAt(1) == interests.charAt(10))) {
+                            Toast.makeText(getContext(), "You already have that interest", Toast.LENGTH_SHORT).show(); //toast to tell the user they already have that interest
+                        }
+                        else {
+                            char[] interestChars = interests.toCharArray(); //convert interests to a char array
+                            interestChars[(2 * numInterests) + 1] = interestToAdd.charAt(0); //replace the old numbers with the new id
+                            interestChars[(2 * numInterests) + 2] = interestToAdd.charAt(1);
+                            numInterests++; //increment the number of interests
+                            interestChars[0] = (char) (numInterests + '0'); //update numInterests in the string
+                            interests = String.valueOf(interestChars); //turn it back into a string
+                            Toast.makeText(getContext(), "Successfully added " + InterestsUtil.getInterest(interestToAdd), Toast.LENGTH_SHORT); //toast to let the user know it worked
+                            updateInterestButtons(); //update the ui on the buttons to remove interests
+                        }
                     }
                     else{
                         Toast.makeText(getContext(), "Please enter a valid interest number", Toast.LENGTH_SHORT).show(); //toast to tell the user the number was not valid
