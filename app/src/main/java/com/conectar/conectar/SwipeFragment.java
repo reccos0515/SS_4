@@ -118,19 +118,19 @@ public class SwipeFragment extends Fragment {
 
 
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
-        int id = preferences.getInt("ID", 0); //set the id todo fix this line
-        String thisId = Integer.toString(id);
-        Log.d("SwipeFragment", "Id of user: " + thisId);
-        url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + thisId + "/relevant"; //set the url
+        int id = preferences.getInt("ID", 0); //set the id
+        Log.d("SwipeFragment", "Id of user: " + id + "");
+        url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id + "" + "/relevant"; //set the url
         Log.d("SwipeFragment", "Url posted to: " + url);
 
         context = getActivity().getApplicationContext(); //get the context
         //if should get a new list of users
         if(UserUtil.getUsersArray() == null) {
             JsonRequest.swipeRequest(view, url, context); //call this to send the request
-        } else {
-            users = UserUtil.getUsersArray();
-            len = users.length();
+        } else { //if continuing to use old user array
+            users = UserUtil.getUsersArray(); //pull the array
+            len = users.length(); //set the length
+            //display the current user
             try {
                 updateUI((JSONObject) users.get(userOnDisplayLoc));
             } catch (JSONException e){
@@ -138,16 +138,16 @@ public class SwipeFragment extends Fragment {
             }
         }
 
-                        //on click listener for next
+        //on click listener for next
         view.findViewById(R.id.swipeNext).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("SwipeFragment", "Clicked swipe next");
                 if(success && users.length() > 0) {
                     userOnDisplayLoc++; //go to next user
-                    //if it has reached the end, return to 0
+                    //if it has reached the end, make a new request
                     if (userOnDisplayLoc >= len) {
-                        userOnDisplayLoc = 0;
+                        userOnDisplayLoc = 0; //return to 0 spot
                         JsonRequest.swipeRequest(mainView, url, context); //call this to send the request
                     }
                     try {
@@ -155,7 +155,8 @@ public class SwipeFragment extends Fragment {
                         updateUI(user); //update the ui with this user
                         UserUtil.setUserToView(user); //save this where profile view can access if needed
                     } catch (JSONException e) {
-                        TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
+                        //set up views to edit UI
+                        TextView errorMessage = view.findViewById(R.id.swipeMessage);
                         TextView username = view.findViewById(R.id.swipeFirstName);
                         TextView int1 = view.findViewById(R.id.interestOne);
                         TextView int2 = view.findViewById(R.id.interestTwo);
@@ -163,7 +164,7 @@ public class SwipeFragment extends Fragment {
                         TextView int4 = view.findViewById(R.id.interestFour);
                         TextView int5 = view.findViewById(R.id.interestFive);
                         errorMessage.setText("Sorry, we ran into problem 0001");//set an error for the user to see
-                        username.setText("");
+                        username.setText(""); //clear the interests
                         int1.setText("");
                         int2.setText("");
                         int3.setText("");
@@ -182,9 +183,9 @@ public class SwipeFragment extends Fragment {
                 Log.d("SwipeFragment", "Clicked swipe previous");
                 if(success && users.length() > 0) {
                     userOnDisplayLoc--; //go to previous
-                    //if it has passed the beginning, return to the end
+                    //if it has passed the beginning, must stop
                     if (userOnDisplayLoc < 0) {
-                        userOnDisplayLoc = 0;
+                        userOnDisplayLoc = 0; //go back to 0
                         Toast.makeText(getActivity(), "You can't go back right now, try going forward!", Toast.LENGTH_SHORT).show(); //toast to tell the user it worked
                     }
                     try {
@@ -194,7 +195,6 @@ public class SwipeFragment extends Fragment {
                     } catch (JSONException e) {
                         TextView errorMessage = view.findViewById(R.id.swipeMessage); //can print error message
                         errorMessage.setText("Sorry, we ran into problem 0002"); //set an error for the user to see
-
                         e.printStackTrace();
                     }
                 }
@@ -205,8 +205,8 @@ public class SwipeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d("SwipeFragment", "Clicked view profile");
-                TextView errorMessage = mainView.findViewById(R.id.swipeMessage);
-                Button button = mainView.findViewById(R.id.swipeView);
+                TextView errorMessage = mainView.findViewById(R.id.swipeMessage); //to check the error message
+                //if it worked and there is something there
                 if(success && users.length() > 0) {
                     //call a profile view fragment with userOnDisplayLoc user
                     Fragment fragment = new ProfileViewFragment();
@@ -217,6 +217,7 @@ public class SwipeFragment extends Fragment {
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
                     }
+                    //if the error is that the user is red, this can be used to change the status
                 } else if(errorMessage.getText().toString().equals("User is RED")){
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -239,14 +240,14 @@ public class SwipeFragment extends Fragment {
      */
     public static void updateUI(JSONObject user){
 
-        ImageView profilePic = mainView.findViewById(R.id.profilePicView);
-        int pic = 0;
+        ImageView profilePic = mainView.findViewById(R.id.profilePicView); //used to edit the profile picture in the UI
+        int pic = 0; //default set it to 0
         try{
-            pic = user.getInt("profilePicture");
+            pic = user.getInt("profilePicture"); //pull the profile picture from the json object
         } catch (JSONException e){
             e.printStackTrace();
         }
-        UserUtil.updateProfilePicture(pic, profilePic);
+        UserUtil.updateProfilePicture(pic, profilePic); //update the UI
         //set up all the textviews
         TextView errorMessage = mainView.findViewById(R.id.swipeMessage);
         TextView firstName = mainView.findViewById(R.id.swipeFirstName);
@@ -263,7 +264,7 @@ public class SwipeFragment extends Fragment {
             firstName.setText(s); //set the username
 
         }catch (JSONException e){
-            errorMessage.setText("Sorry, we ran into a problem"); //set error message to show to user
+            errorMessage.setText("Sorry, we ran into problem 0003"); //set error message to show to user
             e.printStackTrace();
             return;
         }
@@ -276,7 +277,6 @@ public class SwipeFragment extends Fragment {
                     //compare interests
                     if (interests.charAt(2 * i + 1) == viewInterests.charAt(2 * j + 1) && interests.charAt(2 * i + 2) == viewInterests.charAt(2 * j + 2)) {
                         //update the correct interest
-
                         if (currentCommonIntsDisplayed == 0) {
                             interest1.setText(InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
                         } else if (currentCommonIntsDisplayed == 1) {
@@ -288,7 +288,6 @@ public class SwipeFragment extends Fragment {
                         } else if (currentCommonIntsDisplayed == 4) {
                             interest5.setText(InterestsUtil.getInterest(interests.charAt(2 * i + 1) + "" + interests.charAt(2 * i + 2) + "")); //set this to be interests(i)
                         }
-
                         currentCommonIntsDisplayed++; //increment count of how many common interests are being displayed
                     }
                 }
@@ -385,7 +384,6 @@ public class SwipeFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        //Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

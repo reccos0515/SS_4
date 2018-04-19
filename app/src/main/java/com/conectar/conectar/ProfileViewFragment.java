@@ -35,8 +35,6 @@ public class ProfileViewFragment extends Fragment {
 
     private static int userIDNum; //change this to a global variable of the logged in user
     private static JSONObject user; //user to display
-    private Context context;
-    //TODO update this to work with swipe fragment
 
     private OnFragmentInteractionListener mListener;
 
@@ -91,8 +89,10 @@ public class ProfileViewFragment extends Fragment {
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
-        userIDNum = preferences.getInt("ID", 0);
+        userIDNum = preferences.getInt("ID", 0); //get the user's id
         user = UserUtil.getUserToView(); //get the user that should be shown
+
+        //set up the UI interface
         TextView int1 = view.findViewById(R.id.prof_int1);
         TextView int2 = view.findViewById(R.id.prof_int2);
         TextView int3 = view.findViewById(R.id.prof_int3);
@@ -101,14 +101,19 @@ public class ProfileViewFragment extends Fragment {
         TextView username = view.findViewById(R.id.viewUsername);
         TextView bio = view.findViewById(R.id.viewBio);
         Button button = view.findViewById(R.id.addFriend);
-        ImageView statusBubble = (ImageView) view.findViewById(R.id.statusBubbleView);
-        ImageView profilePic = (ImageView) view.findViewById(R.id.profileViewProfilePic);
+        Button report = view.findViewById(R.id.report_button);
+        Button back = view.findViewById(R.id.viewBackBtn);
+        ImageView statusBubble = view.findViewById(R.id.statusBubbleView);
+        ImageView profilePic = view.findViewById(R.id.profileViewProfilePic);
+
+        //set default values to all variables
         String interests = "00000000000";
         int numInterests;
         int id = 0;
         int status = 0;
         int pic = 0;
 
+        //pull all the information from the json object
         try {
             username.setText(user.get("userName").toString());
             bio.setText(user.get("bio").toString());
@@ -120,7 +125,7 @@ public class ProfileViewFragment extends Fragment {
             e.printStackTrace();
         }
 
-
+        //set the status bubble to show the user what status they have
         if(status == 0){
             statusBubble.setImageResource(R.drawable.ic_status_red);
         }else if (status == 1){
@@ -131,7 +136,9 @@ public class ProfileViewFragment extends Fragment {
 
         UserUtil.updateProfilePicture(pic, profilePic); //set the profile picture
 
-        numInterests = interests.charAt(0) - '0';
+        numInterests = interests.charAt(0) - '0'; //get number of interests
+
+        //show all the interests
         if(numInterests > 0){
             int1.setText(InterestsUtil.getInterest(interests.charAt(1) + "" + interests.charAt(2) + ""));
         }
@@ -162,16 +169,16 @@ public class ProfileViewFragment extends Fragment {
         else{
             int5.setText("");
         }
+
         //make the add friend button as long as it is not their own page
-        int selfId = preferences.getInt("ID", 0);
-        if(id != selfId) {
+        if(id != userIDNum) {
+            //find out if this is a friend
             if(UserUtil.getUserToViewIsFriend()){
                 button.setText("Message");
-                //if it is a different person, when the button is pressed will add friend
+                //if it is a friend, will open a messages page
                 view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //todo figure out how to set this to be messages with that specific person
                         //create the new edit profile fragment
                         MessagesUtil.getConversation(2, 1, getContext()); //get the current conversation
                         Fragment fragment = new MessagesFragment();
@@ -196,9 +203,39 @@ public class ProfileViewFragment extends Fragment {
                     }
                 });
             }
+            //make a report
+            view.findViewById(R.id.report_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //create the new edit profile fragment
+                    Fragment fragment = new ReportFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.screen_area, fragment);
+                    fragmentTransaction.commit();
+                }
+            });
+            //go back
+            view.findViewById(R.id.viewBackBtn).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //return to the last fragment
+                    FragmentManager fm = getFragmentManager();
+                    if(fm.getBackStackEntryCount() > 0){
+                        Log.d("There was something ", "on the stack");
+                        fm.popBackStackImmediate();
+                    } else {
+                        Log.d("There was nothing ", "on the stack");
+                    }
+                }
+            });
         }
         else{
-            button.setText("Edit");
+            button.setText("Edit"); //when the user views their own profile, the first botton is edit
+            report.setText("Change Status"); //the second button is change status
+            report.setTextSize(10);
+            back.setText("friends"); //the third button will go to friends list
+
             //if it is the same person, when the button is pressed will pull up edit profile
             view.findViewById(R.id.addFriend).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -213,33 +250,35 @@ public class ProfileViewFragment extends Fragment {
 
                 }
             });
-        }
-        //make a report
-        view.findViewById(R.id.report_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //create the new edit profile fragment
-                Fragment fragment = new ReportFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.screen_area, fragment);
-                fragmentTransaction.commit();
-            }
-        });
-        //go back
-        view.findViewById(R.id.viewBackBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //return to the last fragment
-                FragmentManager fm = getFragmentManager();
-                if(fm.getBackStackEntryCount() > 0){
-                    Log.d("There was something ", "on the stack");
-                    fm.popBackStackImmediate();
-                } else {
-                    Log.d("There was nothing ", "on the stack");
+            //if it is the same person, when the button is pressed will pull up change status
+            view.findViewById(R.id.report_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //create the new edit profile fragment
+                    Fragment fragment = new ChangeStatusFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.screen_area, fragment);
+                    fragmentTransaction.commit();
+
                 }
-            }
-        });
+            });
+            //if it is the same person, when the button is pressed will go to friends list
+            view.findViewById(R.id.viewBackBtn).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //create the new edit profile fragment
+                    Fragment fragment = new FriendsFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.screen_area, fragment);
+                    fragmentTransaction.commit();
+
+                }
+            });
+        }
+
+
     }
 
     /**

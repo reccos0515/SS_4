@@ -108,7 +108,7 @@ public class EditProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mainView = view;
+        mainView = view; //set the view to be used elsewhere to update the UI
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
@@ -149,6 +149,7 @@ public class EditProfileFragment extends Fragment {
                     String interestToAdd = newInterest.getText().toString(); //get the new interest number
                     //if this is a valid interest, it can be added
                     if(InterestsUtil.getInterest(interestToAdd) != null){
+                        //double check the user doesn't already have this interest
                         if((interestToAdd.charAt(0) == interests.charAt(1) && interestToAdd.charAt(1) == interests.charAt(2)) || (interestToAdd.charAt(0) == interests.charAt(3) && interestToAdd.charAt(1) == interests.charAt(4)) || (interestToAdd.charAt(0) == interests.charAt(5) && interestToAdd.charAt(1) == interests.charAt(6)) || (interestToAdd.charAt(0) == interests.charAt(7) && interestToAdd.charAt(1) == interests.charAt(8)) || (interestToAdd.charAt(0) == interests.charAt(9) && interestToAdd.charAt(1) == interests.charAt(10))) {
                             Toast.makeText(getContext(), "You already have that interest", Toast.LENGTH_SHORT).show(); //toast to tell the user they already have that interest
                         }

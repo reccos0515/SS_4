@@ -98,6 +98,7 @@ public class NewProfileFragment extends Fragment {
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
+        //create the views to edit the UI
         firstName = view.findViewById(R.id.firstName);
         lastName = view.findViewById(R.id.lastName);
         email = view.findViewById(R.id.email);
@@ -113,11 +114,11 @@ public class NewProfileFragment extends Fragment {
                 CharSequence text;
                 int duration = Toast.LENGTH_SHORT;
                 if(password.getText().toString().equals(confirmPassword.getText().toString())){
-                    JSONObject js = new JSONObject();
-                    JSONObject toSend = new JSONObject();
+                    JSONObject js = new JSONObject(); //the user object
+                    JSONObject toSend = new JSONObject(); //the object to send as a post request
+                    //save all the information in a json object and in preferences
                     try {
                         js.put("id", 0);
-                        //TODO add this
                         js.put("userName", username.getText().toString());
                         editor.putString("USERNAME", username.getText().toString());
                         js.put("bio", username.getText().toString() +" has not added a bio yet");

@@ -93,6 +93,7 @@ public class ChangeStatusFragment extends Fragment {
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
 
         final TextView currentStatus = view.findViewById(R.id.current_status); //message to tell user their current status
+        //set the user a message to tell them what their current status is
         switch (preferences.getInt("STATUS", 0)){
             case 0 :
                 currentStatus.setText("Status is Red");
@@ -105,48 +106,48 @@ public class ChangeStatusFragment extends Fragment {
                 break;
         }
 
-        if(preferences.getInt("Status", 0) == 0){
-
-        }
         view.findViewById(R.id.greenStatusBtn).setOnClickListener(new View.OnClickListener() { //green button clicked
             @Override
             public void onClick(View view) { //set status to green
+                //can set it as long as it was not already green
                 if(preferences.getInt("STATUS", 0) != 2) {
                     UserUtil.updateStatus(2, getContext()); //call this to update the status
                     currentStatus.setText("Status is Green");
                     Toast.makeText(getActivity(), "Status set to green", Toast.LENGTH_SHORT).show(); //toast to tell user it worked
                 } else {
-                    Toast.makeText(getActivity(), "Your status was already green, silly", Toast.LENGTH_SHORT).show(); //toast to tell user it worked
+                    Toast.makeText(getActivity(), "Your status was already green, silly", Toast.LENGTH_SHORT).show(); //toast to tell user they were already green
                 }
             }
         });
         view.findViewById(R.id.yellowStatusBtn).setOnClickListener(new View.OnClickListener(){ //yellow button clicked
             @Override
             public void onClick(View view){ //set status to yellow
+                //can set it as long as it was not already yellow
                 if(preferences.getInt("STATUS", 0) != 1) {
                     UserUtil.updateStatus(1, getContext()); //call this to update the status
                     currentStatus.setText("Status is Yellow");
                     Toast.makeText(getActivity(), "Status set to yellow", Toast.LENGTH_SHORT).show(); //toast to tell the user it worked
                 } else {
-                    Toast.makeText(getActivity(), "Your status was already yellow, silly", Toast.LENGTH_SHORT).show(); //toast to tell user it worked
+                    Toast.makeText(getActivity(), "Your status was already yellow, silly", Toast.LENGTH_SHORT).show(); //toast to tell user they were already yellow
                 }
             }
         });
         view.findViewById(R.id.redStatusBtn).setOnClickListener(new View.OnClickListener() { //red button clicked
             @Override
             public void onClick(View view) { //set status to red
+                //can set it as long as it was not already red
                 if(preferences.getInt("STATUS", 0) != 0) {
                     UserUtil.updateStatus(0, getContext()); //call this to update the status
                     currentStatus.setText("Status is Red");
                     Toast.makeText(getActivity(), "Status set to red", Toast.LENGTH_SHORT).show(); //toast to let the user know it worked
                 } else {
-                    Toast.makeText(getActivity(), "Your status was already red, silly", Toast.LENGTH_SHORT).show(); //toast to tell user it worked
+                    Toast.makeText(getActivity(), "Your status was already red, silly", Toast.LENGTH_SHORT).show(); //toast to tell user they were already red
                 }
             }
         });
         view.findViewById(R.id.changeStatusSwipeBtn).setOnClickListener(new View.OnClickListener() { //red button clicked
             @Override
-            public void onClick(View view) { //set status to red
+            public void onClick(View view) { //return to swipe
                 Fragment fragment = new SwipeFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
