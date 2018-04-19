@@ -148,20 +148,17 @@ public class MessagesUtil {
         Set<String> setConversation = preferences.getStringSet("MSGFROM" + idFrom, null);
         MyMessage[] myMessageConversation = new MyMessage[setConversation.size()];
         if(!setConversation.isEmpty()){
-            JSONObject[] jsonConversation = new JSONObject[setConversation.size()];
             List<String> listConversation = new ArrayList<>(setConversation);
             for(int i = 0; i < setConversation.size(); i++){
                 JSONObject messageJSONObject = null;
                 try {
                     messageJSONObject = new JSONObject(listConversation.get(i));
+                    myMessageConversation[i] = new MyMessage(messageJSONObject);
+                    Log.d("MessagesUtil", "myMessageConversation[" + i +"]: " + myMessageConversation[i]);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                jsonConversation[i] = messageJSONObject;
-                myMessageConversation[i] = new MyMessage(messageJSONObject);
-                Log.d("MessagesUtil", "myMessageConversation[" + i +"]: " + myMessageConversation[i]);
             }
-            Log.d("MessagesUtil", "jsonConversation: " + Arrays.toString(jsonConversation));
             Log.d("MessagesUtil", "myMessageConversation: " + Arrays.toString(myMessageConversation));
         }
         return myMessageConversation;

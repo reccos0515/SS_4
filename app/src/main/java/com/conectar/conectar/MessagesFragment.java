@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -134,12 +135,19 @@ public class MessagesFragment extends Fragment {
         view.findViewById(R.id.button_chatbox_send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
+
                 //MyMessage m = new MyMessage("hello");
                 //mMessageList.add(m);
                 //adapter.notifyDataSetChanged();
 
-                //String messageString = newMessage.getText().toString();
+                String messageString = newMessage.getText().toString();
+                if(!messageString.equals("")){
+                    MyMessage[] temp = MessagesUtil.convertToMyMessage(getContext(), 2);
+                    mMessageList.addAll(Arrays.asList(temp));
+                    Log.d("MessagesFragment", "mMessageList before setting adapter: " + mMessageList.toString());
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
+                }
                 //Date thisDate = new Date(System.currentTimeMillis());
                 //MyMessage newMessage = new MyMessage(messageString);
 
@@ -150,11 +158,7 @@ public class MessagesFragment extends Fragment {
 
                 //MessagesUtil.getConversation(2, 1, getContext());
 
-                MyMessage[] temp = MessagesUtil.convertToMyMessage(getContext(), 2);
-                for(int i = 0; i < temp.length; i++){
-                    mMessageList.add(temp[i]);
-                }
-                adapter.notifyDataSetChanged();
+
 
             }
         });

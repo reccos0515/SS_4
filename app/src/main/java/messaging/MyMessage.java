@@ -84,7 +84,7 @@ public class MyMessage {
             userFromId = userFrom.getInt("id");
             //userFromProfileUrl = userFrom.getString("profileUrl"); //TODO modify for profile stuff for server
             user = new User(userFromUsername, "1", userFromId);
-            Log.d("MyMessage", "user: " + user.toString());
+            //Log.d("MyMessage", "user: " + user.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

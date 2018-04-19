@@ -34,7 +34,7 @@ public class User {
         }catch (JSONException e){
             e.printStackTrace();
         }
-        Log.d("User", "Used JSONObject constructor");
+        //Log.d("User", "Used JSONObject constructor");
     }
 
     /**
@@ -48,7 +48,7 @@ public class User {
         this.profileURL = profileURL;
         this.id = id;
 
-        Log.d("User", "username: " + username + "   profileURL: " + profileURL + "   id: " + id);
+        //Log.d("User", "username: " + username + "   profileURL: " + profileURL + "   id: " + id);
     }
 
     /**
