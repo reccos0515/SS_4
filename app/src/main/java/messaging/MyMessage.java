@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.ImageView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -60,6 +63,31 @@ public class MyMessage {
         MyMessage.user = user;
         MyMessage.profileUrl = profileUrl;
         Log.d("MyMessage", "In MyMessage multiple field constructor, time: " + time + "   message: " + message + "   user:" + user.toString());
+    }
+
+    public MyMessage(JSONObject js){
+        JSONObject userTo = new JSONObject();
+        JSONObject userFrom = new JSONObject();
+        String userFromUsername = "";
+        int userFromId = 0;
+        String userFromProfileUrl = "";
+
+        try {
+            userTo = js.getJSONObject("userTo"); //TODO figure out if necessary here
+            userFrom = js.getJSONObject("userFrom");
+            message = js.getString("message");
+            //time = js.getString("time");
+            @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("HH:mm"); //Suppress is so there isn't yellow crap telling us to ask the user for location
+            Date date = new Date();
+            time = formatDateTime(dateFormat.format(date));
+            userFromUsername = userFrom.getString("userName");
+            userFromId = userFrom.getInt("id");
+            //userFromProfileUrl = userFrom.getString("profileUrl"); //TODO modify for profile stuff for server
+            user = new User(userFromUsername, "1", userFromId);
+            Log.d("MyMessage", "user: " + user.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

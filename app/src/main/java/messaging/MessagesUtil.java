@@ -146,7 +146,8 @@ public class MessagesUtil {
     public static MyMessage[] convertToMyMessage(Context context, int idFrom){
         SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
         Set<String> setConversation = preferences.getStringSet("MSGFROM" + idFrom, null);
-        if(setConversation != null){
+        MyMessage[] myMessageConversation = new MyMessage[setConversation.size()];
+        if(!setConversation.isEmpty()){
             JSONObject[] jsonConversation = new JSONObject[setConversation.size()];
             List<String> listConversation = new ArrayList<>(setConversation);
             for(int i = 0; i < setConversation.size(); i++){
@@ -157,10 +158,13 @@ public class MessagesUtil {
                     e.printStackTrace();
                 }
                 jsonConversation[i] = messageJSONObject;
+                myMessageConversation[i] = new MyMessage(messageJSONObject);
+                Log.d("MessagesUtil", "myMessageConversation[" + i +"]: " + myMessageConversation[i]);
             }
             Log.d("MessagesUtil", "jsonConversation: " + Arrays.toString(jsonConversation));
+            Log.d("MessagesUtil", "myMessageConversation: " + Arrays.toString(myMessageConversation));
         }
-        return null;
+        return myMessageConversation;
     }
 
 }

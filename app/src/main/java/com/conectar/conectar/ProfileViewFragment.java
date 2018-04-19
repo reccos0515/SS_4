@@ -19,6 +19,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import messaging.MessagesUtil;
 import messaging.User;
 import util.Friend;
 import util.InterestsUtil;
@@ -172,6 +173,7 @@ public class ProfileViewFragment extends Fragment {
                     public void onClick(View view) {
                         //todo figure out how to set this to be messages with that specific person
                         //create the new edit profile fragment
+                        MessagesUtil.getConversation(2, 1, getContext()); //get the current conversation
                         Fragment fragment = new MessagesFragment();
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

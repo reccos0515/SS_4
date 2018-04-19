@@ -113,11 +113,13 @@ public class MessagesFragment extends Fragment {
 
         final List<MyMessage> mMessageList = new ArrayList<MyMessage>();
         //Log.d("MessagesFragment", "fakeMessage: " + fakeMessage);
+        /*
         MyMessage fakeMessage = createFakeMessage();
         mMessageList.add(fakeMessage);
         MyMessage fakeMessage2 = createFakeMessage2();
         mMessageList.add(fakeMessage2);
         Log.d("MessagesFragment", "mMessageList: " + mMessageList.toString());
+        */
 
         //ListView listView = (ListView) view.findViewById(R.id.reyclerview_message_list);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.reyclerview_message_list);
@@ -137,17 +139,23 @@ public class MessagesFragment extends Fragment {
                 //mMessageList.add(m);
                 //adapter.notifyDataSetChanged();
 
-                String messageString = newMessage.getText().toString();
+                //String messageString = newMessage.getText().toString();
                 //Date thisDate = new Date(System.currentTimeMillis());
-                MyMessage newMessage = new MyMessage(messageString);
+                //MyMessage newMessage = new MyMessage(messageString);
 
                 //Log.d("MessagesFragment", "Typed message from user: " + messageString + "   Time: " + newMessage.getCreatedAt());
-                JSONObject messageObject = MessagesUtil.prepareSentMessage(messageString, newMessage.getCreatedAt());
+                //JSONObject messageObject = MessagesUtil.prepareSentMessage(messageString, newMessage.getCreatedAt());
                 //Log.d("MessagesFragment", "message object prepared for sending: " + messageObject.toString());
-                MessagesUtil.sendMessage(2, 1, messageObject, getContext());
+                //MessagesUtil.sendMessage(2, 1, messageObject, getContext());
 
-                MessagesUtil.getConversation(2, 1, getContext());
+                //MessagesUtil.getConversation(2, 1, getContext());
+
                 MyMessage[] temp = MessagesUtil.convertToMyMessage(getContext(), 2);
+                for(int i = 0; i < temp.length; i++){
+                    mMessageList.add(temp[i]);
+                }
+                adapter.notifyDataSetChanged();
+
             }
         });
     }
@@ -174,7 +182,7 @@ public class MessagesFragment extends Fragment {
         String time = "test time";
         String username = "Renaldo";
         String profileUrl = "2";
-        int id = 5;
+        int id = 4;
         User testUser = new User(username, profileUrl, id);
         //Log.d("MessagesFragment", "createFakeMessage2: " + testUser.toString());
         return new MyMessage(message, testUser, time, profileUrl);
