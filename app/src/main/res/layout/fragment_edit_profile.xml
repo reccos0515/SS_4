@@ -25,6 +25,7 @@
 
     <EditText
         android:id="@+id/bio"
+        android:maxLength="55"
         android:layout_width="278dp"
         android:layout_height="45dp"
         android:layout_margin="30dp"
