@@ -34,7 +34,7 @@ public class Conversation {
 	private User userFrom;
 	
 	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
-	@JoinColumn(name="conversation_id", referencedColumnName="id")
+//	@JoinColumn(name="conversation_id", referencedColumnName="id")
 	private List<Message> messages;
 	
 	/**
