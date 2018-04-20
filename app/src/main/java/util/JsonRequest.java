@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.conectar.conectar.ErrorFragment;
 import com.conectar.conectar.ProfileViewFragment;
 import com.conectar.conectar.R;
 import com.conectar.conectar.SwipeFragment;
@@ -211,6 +213,7 @@ public class JsonRequest {
                 TextView interest4 = nView.findViewById(R.id.swipeInterest4);
                 TextView interest5 = nView.findViewById(R.id.swipeInterest5);
                 Button button = nView.findViewById(R.id.swipeView);
+                ImageView image = nView.findViewById(R.id.profilePicView);
 
 
                 //check for success
@@ -236,6 +239,8 @@ public class JsonRequest {
                     interest3.setText("");
                     interest4.setText("");
                     interest5.setText("");
+                    //set the image as blank
+                    image.setImageResource(android.R.color.transparent);
                     //if the problem is the user is red, the button will be used to change the status
                     if(errorMessage.getText().toString().equals("User is RED") || errorMessage.getText().toString().equals("User has discovered everyone")){
                         button.setText("Change status");
@@ -264,6 +269,11 @@ public class JsonRequest {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+//                android.support.v4.app.FragmentManager fragmentManager = context.getFragmentManager();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area, new ErrorFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
