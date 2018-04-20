@@ -71,7 +71,7 @@ public class ConversationService {
 		
 		//add message to both sides of the conversation
 		this.addConvo(userTo, userFrom, msg);
-		this.addConvo(userFrom, userTo, msg);
+//		this.addConvo(userFrom, userTo, msg);
 	
 		return new  HtmlError(true, "added message");
 	}
@@ -92,7 +92,7 @@ public class ConversationService {
 		//get other convo
 		opt = convoRepo.findByUserToAndUserFrom(userFrom, userTo);
 		if(!opt.isPresent()) {
-			convoFrom = new Conversation(userTo, userFrom, new ArrayList<Message>());
+			convoFrom = new Conversation(userFrom, userTo, new ArrayList<Message>());
 		}else {
 			convoFrom = opt.get();
 		}
@@ -205,6 +205,9 @@ public class ConversationService {
 		//check if conversation is added
 		if(!opt.isPresent())
 			return new HtmlError(false,"conversation between users not found! can not delete");
+		
+		
+		
 		
 		convoRepo.delete(opt.get());
 		
