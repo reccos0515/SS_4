@@ -70,7 +70,7 @@ public class AboutFragment extends Fragment {
         view.findViewById(R.id.about_whoMade).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                answer.setText("Creators of coNECTAR include Tristan Anderson, Jessie Bader, Maggie Dalton, and Ben Simon. The images for coNECTAR were found at (insert citation here). A special thanks goes out to their TA Shruti Sahu and their professor Simanta Mitra");
+                answer.setText("Creators of coNECTAR include Tristan Anderson, Jessie Bader, Maggie Dalton, and Ben Simon. The images for coNECTAR were found at www.freepik.com. Icons made by Freepik. Freepik is licenced by Creative Commons BY 3.0. A special thanks goes out to their TA Shruti Sahu and their professor Simanta Mitra");
             }
         });
         view.findViewById(R.id.about_redStatus).setOnClickListener(new View.OnClickListener(){
