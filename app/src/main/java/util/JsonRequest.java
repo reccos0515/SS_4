@@ -1,5 +1,6 @@
 package util;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -198,7 +199,7 @@ public class JsonRequest {
      * @param url url to send the request to
      * @param context context from that page
      */
-    public static void swipeRequest(final View nView, String url, Context context){
+    public static void swipeRequest(final View nView, String url, final Context context){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -269,11 +270,7 @@ public class JsonRequest {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-//                android.support.v4.app.FragmentManager fragmentManager = context.getFragmentManager();
-                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.screen_area, new ErrorFragment());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                SwipeFragment.newErrorPage();
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue

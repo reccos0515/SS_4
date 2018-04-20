@@ -347,6 +347,14 @@ public class SwipeFragment extends Fragment {
         return;
     }
 
+    public static void newErrorPage(){
+//        Fragment fragment = new ErrorFragment();
+//        FragmentManager fragmentManager = getFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.screen_area, fragment);
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
+    }
 
     /**
      * method to attach fragment
