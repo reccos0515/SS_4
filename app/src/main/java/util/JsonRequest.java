@@ -237,7 +237,7 @@ public class JsonRequest {
                     interest4.setText("");
                     interest5.setText("");
                     //if the problem is the user is red, the button will be used to change the status
-                    if(errorMessage.getText().toString().equals("User is RED")){
+                    if(errorMessage.getText().toString().equals("User is RED") || errorMessage.getText().toString().equals("User has discovered everyone")){
                         button.setText("Change status");
                     }
                 }

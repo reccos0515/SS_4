@@ -116,7 +116,6 @@ public class SwipeFragment extends Fragment {
 
         interests = preferences.getString("INTERESTS", "empty"); //set logged in user's interests from session variables
 
-
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
         int id = preferences.getInt("ID", 0); //set the id
         Log.d("SwipeFragment", "Id of user: " + id + "");
@@ -218,7 +217,7 @@ public class SwipeFragment extends Fragment {
                         fragmentTransaction.commit();
                     }
                     //if the error is that the user is red, this can be used to change the status
-                } else if(errorMessage.getText().toString().equals("User is RED")){
+                } else if(errorMessage.getText().toString().equals("User is RED") || errorMessage.getText().toString().equals("User has discovered everyone")){
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.screen_area, new ChangeStatusFragment());
