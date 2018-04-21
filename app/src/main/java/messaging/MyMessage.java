@@ -24,8 +24,7 @@ public class MyMessage {
     private static Context mContext;
     private String time;
     private String message;
-    private User user;
-    private int profile;
+    private User user; //user needs id, username, and profile pic
 
     /**
      * The constructor for a MyMessage
@@ -36,6 +35,7 @@ public class MyMessage {
 
     /**
      * The constructor for a MyMessage
+     * This constructor is used to create a new message that the current user has created
      * @param s a string of the full message object
      */
     public MyMessage(String s){
@@ -46,28 +46,35 @@ public class MyMessage {
         @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("HH:mm"); //Suppress is so there isn't yellow crap telling us to ask the user for location
         Date date = new Date();
         time = formatDateTime(dateFormat.format(date));
-        user = new User(preferences.getString("USERNAME", ""), "", preferences.getInt("ID", 0));
+        user = new User(preferences.getString("USERNAME", ""), preferences.getInt("PROFILEPICTURE", 0), preferences.getInt("ID", 0));
         Log.d("MyMessage", "In MyMessage string constructor");
     }
 
 
+    /**
+     * This constructor is used to create a MyMessage object from a json object that has been
+     * created from another user
+     *
+     * @param js must include message, time, and userFrom. userFrom must include id, userName, and profilePicture
+     */
     public MyMessage(JSONObject js){
         JSONObject userFrom;
         String userFromUsername;
         int userFromId;
+        int profile;
 
         try {
-            userFrom = js.getJSONObject("userFrom");
+            userFrom = js.getJSONObject("userFrom"); //pull the user
+
+            //set message and time
             message = js.getString("message");
-            //time = js.getString("time");
-            @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("HH:mm"); //Suppress is so there isn't yellow crap telling us to ask the user for location
-            Date date = new Date();
-            time = formatDateTime(dateFormat.format(date));
+            time = js.getString("time");
+
+            //create the user
             userFromUsername = userFrom.getString("userName");
             userFromId = userFrom.getInt("id");
-            //userFromProfileUrl = userFrom.getString("profileUrl"); //TODO modify for profile stuff for server
-            user = new User(userFromUsername, "1", userFromId);
-            //Log.d("MyMessage", "user: " + user.toString());
+            profile = userFrom.getInt("profilePicture");
+            user = new User(userFromUsername, profile, userFromId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -80,13 +87,6 @@ public class MyMessage {
     public String getMessage(){ //TODO implement
         return message;
     }
-
-    /**
-     * Gets the user's profile picture number that corresponds with a picture from
-     * a preselected list of pictures
-     * @return the number of the user's profile picture
-     */
-    public int getProfile(){return profile;}
 
 
     /**
@@ -127,6 +127,7 @@ public class MyMessage {
     public String getCreatedAt(){
         return time;
     }
+
 
     /**
      * sets the context for a MyMessage object
