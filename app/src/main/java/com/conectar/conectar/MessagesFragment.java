@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -142,8 +143,29 @@ public class MessagesFragment extends Fragment {
 
                 String messageString = newMessage.getText().toString();
                 if(!messageString.equals("")){
-                    MyMessage[] temp = MessagesUtil.convertToMyMessage(getContext(), 2);
-                    mMessageList.addAll(Arrays.asList(temp));
+                    //MyMessage[] temp = MessagesUtil.convertToMyMessage(getContext(), 2);
+                    Set<String> setConversation = preferences.getStringSet("MSGFROM" + 2, null);
+                    MyMessage[] temp = new MyMessage[setConversation.size()];
+                    if(!setConversation.isEmpty()) {
+                        List<String> listConversation = new ArrayList<>(setConversation);
+                        JSONObject messageJSONObject = null;
+                        for (int i = 0; i < setConversation.size(); i++) {
+                            try {
+                                messageJSONObject = new JSONObject(listConversation.get(i));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            if (messageJSONObject != null) {
+                                //temp[i] = new MyMessage(messageJSONObject);
+                                Log.d("MessaqesFragment", "messageJSONObject before adding: " + messageJSONObject.toString());
+                                mMessageList.add(new MyMessage(messageJSONObject));
+                                //Log.d("MessagesFragment", "temp[" + i + "] within if in for loop: " + temp[i]);
+                            }
+                            //Log.d("MessagesFragment", "temp[" + i + "] within for loop, but not if: " + temp[i]);
+                        }
+                        //Log.d("MessagesFragment", "temp outside of for loop:" + Arrays.toString(temp));
+                    }
+                    //mMessageList.addAll(Arrays.asList(temp));
                     Log.d("MessagesFragment", "mMessageList before setting adapter: " + mMessageList.toString());
                     adapter.notifyDataSetChanged();
                     Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
@@ -164,33 +186,6 @@ public class MessagesFragment extends Fragment {
         });
     }
 
-    /**
-     * this method is used to create a fake message. It is only used for testing.
-     * the signature is myMessage createFakeMessage(), and it takes no parameters
-     * but returns a message
-     * @return the new fake message
-     */
-    public MyMessage createFakeMessage(){
-        String message = "I like dogs";
-        String time = "test time";
-        String username = "Frank";
-        String profileUrl = "1";
-        int id = 3;
-        User testUser = new User(username, profileUrl, id);
-        //Log.d("MessagesFragment", "createFakeMessage: " + testUser.toString());
-        return new MyMessage(message, testUser, time, profileUrl);
-    }
-
-    public MyMessage createFakeMessage2(){
-        String message = "I like cats";
-        String time = "test time";
-        String username = "Renaldo";
-        String profileUrl = "2";
-        int id = 4;
-        User testUser = new User(username, profileUrl, id);
-        //Log.d("MessagesFragment", "createFakeMessage2: " + testUser.toString());
-        return new MyMessage(message, testUser, time, profileUrl);
-    }
 
     @Override
     public void onAttach(Context context) {

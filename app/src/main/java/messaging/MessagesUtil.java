@@ -149,14 +149,20 @@ public class MessagesUtil {
         MyMessage[] myMessageConversation = new MyMessage[setConversation.size()];
         if(!setConversation.isEmpty()){
             List<String> listConversation = new ArrayList<>(setConversation);
+            JSONObject messageJSONObject = null;
             for(int i = 0; i < setConversation.size(); i++){
-                JSONObject messageJSONObject = null;
                 try {
                     messageJSONObject = new JSONObject(listConversation.get(i));
-                    myMessageConversation[i] = new MyMessage(messageJSONObject);
-                    Log.d("MessagesUtil", "myMessageConversation[" + i +"]: " + myMessageConversation[i]);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }
+                if(messageJSONObject != null){
+                    myMessageConversation[i] = new MyMessage(messageJSONObject);
+                    Log.d("MessagesUtil", "myMessageConversation[" + i +"]: " + myMessageConversation[i]);
+                }
+                if(i == setConversation.size() -1){
+                    return myMessageConversation;
                 }
             }
             Log.d("MessagesUtil", "myMessageConversation: " + Arrays.toString(myMessageConversation));
