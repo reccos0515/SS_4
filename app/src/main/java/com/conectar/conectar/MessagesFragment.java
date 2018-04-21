@@ -150,8 +150,10 @@ public class MessagesFragment extends Fragment {
                         List<String> listConversation = new ArrayList<>(setConversation);
                         List<MyMessage> myMessageArrList = new ArrayList<>();
                         JSONObject messageJSONObject = null;
+
                         for (int i = 0; i < setConversation.size(); i++) {
                             try {
+                                MyMessage temp2 = null;
                                 messageJSONObject = new JSONObject(listConversation.get(i));
                                     temp[i] = new MyMessage(messageJSONObject);
                                     myMessageArrList.add(new MyMessage(messageJSONObject));

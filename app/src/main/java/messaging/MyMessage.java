@@ -22,10 +22,10 @@ import java.util.Date;
 public class MyMessage {
 
     private static Context mContext;
-    private static String time;
-    private static String message;
-    private static User user;
-    private static String profileUrl;
+    private String time;
+    private String message;
+    private User user;
+    private String profileUrl;
 
     /**
      * The constructor for a MyMessage
@@ -50,30 +50,13 @@ public class MyMessage {
         Log.d("MyMessage", "In MyMessage string constructor");
     }
 
-    /**
-     * The constructor for a MyMessage
-     * @param message the message to be displayed
-     * @param user the user who sent the message
-     * @param time the time the message was sent
-     */
-    public MyMessage(String message, User user, String time, String profileUrl){
-        super();
-        MyMessage.time = time;
-        MyMessage.message = message;
-        MyMessage.user = user;
-        MyMessage.profileUrl = profileUrl;
-        Log.d("MyMessage", "In MyMessage multiple field constructor, time: " + time + "   message: " + message + "   user:" + user.toString());
-    }
 
     public MyMessage(JSONObject js){
-        JSONObject userTo = new JSONObject();
-        JSONObject userFrom = new JSONObject();
-        String userFromUsername = "";
-        int userFromId = 0;
-        String userFromProfileUrl = "";
+        JSONObject userFrom;
+        String userFromUsername;
+        int userFromId;
 
         try {
-            userTo = js.getJSONObject("userTo"); //TODO figure out if necessary here
             userFrom = js.getJSONObject("userFrom");
             message = js.getString("message");
             //time = js.getString("time");
@@ -122,7 +105,7 @@ public class MyMessage {
      */
     public String formatDateTime(String createdAt){
         int hour = (createdAt.charAt(0) - '0') * 10 + createdAt.charAt(1) - '0';
-        hour -= 6;
+        hour -= 5;
         if(hour == 0){
             return "12:" + createdAt.charAt(2) + createdAt.charAt(3) + createdAt.charAt(4) + " AM";
         }
