@@ -1,6 +1,5 @@
 package co.nectar.message;
 
-import java.awt.image.ConvolveOp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
