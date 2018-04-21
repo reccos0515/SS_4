@@ -172,7 +172,9 @@ public class SwipeFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-
+                else{
+                    JsonRequest.swipeRequest(mainView, url, context); //call this to send the request
+                }
             }
         });
         //on click listener for prev
