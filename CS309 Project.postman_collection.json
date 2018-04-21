@@ -82,7 +82,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"status\": 1,\n    \"userName\": \"test2\",\n    \"interests\": \"10100000000\",\n    \"bio\": \"test bio\"\n}"
+							"raw": "{\n    \"status\": 1,\n    \"userName\": \"test2\",\n    \"interests\": \"10200000000\",\n    \"bio\": \"test bio\"\n}"
 						},
 						"url": {
 							"raw": "http://{{url}}:{{port}}/ben/users/",
@@ -116,7 +116,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/4/request_friend/1",
+							"raw": "http://{{url}}:{{port}}/ben/users/1/request_friend/2",
 							"protocol": "http",
 							"host": [
 								"{{url}}"
@@ -125,9 +125,9 @@
 							"path": [
 								"ben",
 								"users",
-								"4",
+								"1",
 								"request_friend",
-								"1"
+								"2"
 							]
 						},
 						"description": "get all users on the data base\n\n"
@@ -410,7 +410,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": {\n    \t\"id\" : 0,\n        \"bio\" : \"test user\",\n        \"userName\": \"test2\",\n        \"interests\": \"00000000000\"\n    },\n    \"password\": \"test\"\n}"
+							"raw": "{\n    \"user\": {\n    \t\"id\" : 0,\n        \"bio\" : \"test user\",\n        \"userName\": \"test2\",\n        \"interests\": \"00000000000\",\n        \"profilePicture\": 0\n    },\n    \"password\": \"test\"\n}"
 						},
 						"url": {
 							"raw": "http://{{url}}:{{port}}/ben/login/add",
@@ -525,7 +525,7 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/messages/to/1/from/2",
+							"raw": "http://{{url}}:{{port}}/ben/messages/to/2/from/1",
 							"protocol": "http",
 							"host": [
 								"{{url}}"
@@ -535,9 +535,9 @@
 								"ben",
 								"messages",
 								"to",
-								"1",
+								"2",
 								"from",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -555,8 +555,34 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"message\":\"test\",\n\t\"time\":\"1\"\n\t\n}"
+							"raw": "{\n\t\"message\":\"testother\",\n\t\"time\":\"1\"\n\t\n}"
 						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/ben/messages/to/2/from/1",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"ben",
+								"messages",
+								"to",
+								"2",
+								"from",
+								"1"
+							]
+						},
+						"description": "send message toId\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Messages To",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
 						"url": {
 							"raw": "http://{{url}}:{{port}}/ben/messages/to/1/from/2",
 							"protocol": "http",
@@ -571,32 +597,6 @@
 								"1",
 								"from",
 								"2"
-							]
-						},
-						"description": "send message toId\n"
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Messages To",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/messages/to/1/from/3",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"messages",
-								"to",
-								"1",
-								"from",
-								"3"
 							]
 						}
 					},
