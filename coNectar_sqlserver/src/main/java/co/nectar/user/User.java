@@ -44,7 +44,7 @@ public class User {
 	//private Integer[numInterests] interests;
 	private String bio;
 
-
+	private int profilePicture;
 	
 	
 	//ManyToMany Connecion having trouble with this
@@ -86,6 +86,12 @@ public class User {
 
 
 
+	public int getProfilePicture() {
+		return profilePicture;
+	}
+	public void setProfilePicture(int profilePicture) {
+		this.profilePicture = profilePicture;
+	}
 	public User() {
 		super();
 		this.status = 0;

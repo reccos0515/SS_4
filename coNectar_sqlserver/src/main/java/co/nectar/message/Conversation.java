@@ -7,9 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -32,7 +36,12 @@ public class Conversation {
 	@OneToOne
 	private User userFrom;
 	
-	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(
+			name="Conversation_Messages",
+			joinColumns=@JoinColumn(name="Conversation_ID",referencedColumnName="conversationId"),
+			inverseJoinColumns=@JoinColumn(name="Message_ID",referencedColumnName="id"))
+//	@JoinColumn(name="conversation_id", referencedColumnName="id")
 	private List<Message> messages;
 	
 	/**
