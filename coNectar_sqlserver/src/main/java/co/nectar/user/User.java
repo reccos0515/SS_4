@@ -44,7 +44,7 @@ public class User {
 	//private Integer[numInterests] interests;
 	private String bio;
 
-
+	private int profilePicture;
 	
 	
 	//ManyToMany Connecion having trouble with this
@@ -86,6 +86,12 @@ public class User {
 
 
 
+	public int getProfilePicture() {
+		return profilePicture;
+	}
+	public void setProfilePicture(int profilePicture) {
+		this.profilePicture = profilePicture;
+	}
 	public User() {
 		super();
 		this.status = 0;
@@ -96,7 +102,7 @@ public class User {
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
-		this.interests = interests;
+		this.setInterests(interests);
 		this.sentRequestTo = new ArrayList<User>();
 		this.recievedRequestFrom = new ArrayList<User>();
 		this.beenDiscovered = new ArrayList<User>();
@@ -110,7 +116,7 @@ public class User {
 		this.id = id;
 		this.userName = userName;
 		this.bio = bio;
-		this.interests = interests;
+		this.setInterests(interests);
 		this.sentRequestTo = sentRequestTo;
 		this.recievedRequestFrom = recievedRequestFrom;
 		this.beenDiscovered = new ArrayList<User>();

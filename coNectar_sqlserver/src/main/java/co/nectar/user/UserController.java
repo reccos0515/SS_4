@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.nectar.Message.HtmlError;
-import co.nectar.Message.HtmlMessage;
+import co.nectar.HtmlResponce.HtmlError;
+import co.nectar.HtmlResponce.HtmlResponce;
 
 @RestController
 @RequestMapping(path = "/ben")
@@ -36,7 +36,7 @@ public class UserController {
 	 * @return Calls function in userService to return.
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/users")
-	public HtmlMessage getAllUsers() {
+	public HtmlResponce getAllUsers() {
 		return userService.getAllUsers();
 	}
 
@@ -47,7 +47,7 @@ public class UserController {
 	 * @param user
 	 */
 	@RequestMapping(method = RequestMethod.PUT, value = "/users")
-	public HtmlMessage updateUser(@RequestBody User user) {
+	public HtmlResponce updateUser(@RequestBody User user) {
 		return userService.updateUser(user);
 	}
 
@@ -57,22 +57,22 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}")
-	public HtmlMessage getUser(@PathVariable int userId) {
+	public HtmlResponce getUser(@PathVariable int userId) {
 		return userService.getUserById(userId);
 	}
 
 	
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/users/{userId}/request_friend/{friendId}")
-	public HtmlMessage addFriend(@PathVariable int userId, @PathVariable int friendId) {
+	public HtmlResponce addFriend(@PathVariable int userId, @PathVariable int friendId) {
 		return userService.requestFriendById(userId, friendId);
 	}
 
 	// Force add a friend. Maybe delete this later?
 	@RequestMapping(method = RequestMethod.POST, value = "/users/{userId}/friends/{friendId}/force")
-	public HtmlMessage addFriendWeird(@PathVariable int userId, @PathVariable int friendId) {
-		HtmlMessage msg1 = userService.requestFriendById(userId, friendId);
-		HtmlMessage msg2 = userService.requestFriendById(friendId, userId);
+	public HtmlResponce addFriendWeird(@PathVariable int userId, @PathVariable int friendId) {
+		HtmlResponce msg1 = userService.requestFriendById(userId, friendId);
+		HtmlResponce msg2 = userService.requestFriendById(friendId, userId);
 		
 		boolean success = true;
 		String error = "";
@@ -92,27 +92,27 @@ public class UserController {
 
 	// get friends to
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/sentrequestto")
-	public HtmlMessage getFriendsTo(@PathVariable int userId) {
+	public HtmlResponce getFriendsTo(@PathVariable int userId) {
 		return userService.getSentRequestTo(userId);
 	}
 
 	// get friends of
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/recievedrequestfrom")
-	public HtmlMessage getFriendsOf(@PathVariable int userId) {
+	public HtmlResponce getFriendsOf(@PathVariable int userId) {
 		return userService.getRecievedRequestFrom(userId);
 	}
 
 	// remove friend
 	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}/friends/{friendId}")
-	public HtmlMessage deleteFriend(@PathVariable int userId, @PathVariable int friendId) {
+	public HtmlResponce deleteFriend(@PathVariable int userId, @PathVariable int friendId) {
 		return userService.removeFriendById(userId, friendId);
 	}
 
 	// Force Remove Friend. Maybe delete this later.
 	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}/friends/{friendId}/force")
-	public HtmlMessage deleteFriendWeird(@PathVariable int userId, @PathVariable int friendId) {
-		HtmlMessage msg1 = userService.removeFriendById(userId, friendId);
-		HtmlMessage msg2 = userService.removeFriendById(friendId, userId);
+	public HtmlResponce deleteFriendWeird(@PathVariable int userId, @PathVariable int friendId) {
+		HtmlResponce msg1 = userService.removeFriendById(userId, friendId);
+		HtmlResponce msg2 = userService.removeFriendById(friendId, userId);
 		
 		boolean success = true;
 		String error = "";
@@ -133,37 +133,37 @@ public class UserController {
 
 	// get friends
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/friends")
-	public HtmlMessage getFriends(@PathVariable int userId) {
+	public HtmlResponce getFriends(@PathVariable int userId) {
 		return userService.getFriends(userId);
 	}
 
 	// get friend requests to me
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/incoming_requests")
-	public HtmlMessage getRequests(@PathVariable int userId) {
+	public HtmlResponce getRequests(@PathVariable int userId) {
 		return userService.getIncomingRequests(userId);
 	}
 
 	// get pending friend request to others
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/outgoing_requests")
-	public HtmlMessage getPending(@PathVariable int userId) {
+	public HtmlResponce getPending(@PathVariable int userId) {
 		return userService.getOutgoingRequests(userId);
 	}
 
 	// get undiscovered people around me
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/discovery")
-	public HtmlMessage getDiscovery(@PathVariable int userId) {
+	public HtmlResponce getDiscovery(@PathVariable int userId) {
 		return userService.getDiscovery(userId);
 	}
 	
 	// get relevant people around me
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}/relevant")
-	public HtmlMessage getRelevant(@PathVariable int userId) {
+	public HtmlResponce getRelevant(@PathVariable int userId) {
 		return userService.getRelevant(userId);
 	}
 	
 	// edit user status
 	@RequestMapping(method = RequestMethod.PUT, value = "/users/{userId}/status/{status}")
-	public HtmlMessage setStatus(@PathVariable int userId, @PathVariable int status) {
+	public HtmlResponce setStatus(@PathVariable int userId, @PathVariable int status) {
 		return userService.setStatus(userId, status);
 	}
 }

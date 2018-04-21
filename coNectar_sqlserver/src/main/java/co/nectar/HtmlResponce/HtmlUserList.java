@@ -1,4 +1,4 @@
-package co.nectar.Message;
+package co.nectar.HtmlResponce;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import co.nectar.user.User;
  * @author basimon
  *
  */
-public class HtmlUserList implements HtmlMessage{
+public class HtmlUserList implements HtmlResponce{
 
 	private boolean success;
 	private Iterable<User> users;

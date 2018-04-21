@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.nectar.Message.*;
+import co.nectar.HtmlResponce.*;
 import co.nectar.user.User;
 import co.nectar.user.UserService;
 
@@ -34,7 +34,7 @@ public class LoginService {
 	 * @param login login to be added
 	 * @return htmlmessage indicating sucess or error
 	 */
-	public HtmlMessage addLogin(Login login) {
+	public HtmlResponce addLogin(Login login) {
 		boolean success = true;
 		String error = "";
 		if(login.getPassword().equals("") || login.getPassword() == null) {
@@ -48,7 +48,7 @@ public class LoginService {
 			error = "user is missing requierd fields";			
 		}else {
 			//save login and user
-			HtmlMessage msg = userService.addUser(login.getUser());
+			HtmlResponce msg = userService.addUser(login.getUser());
 			if(!msg.isSuccess())
 				return new HtmlError(false, "error: "+((HtmlError) msg).getMessage());
 			
@@ -86,7 +86,7 @@ public class LoginService {
 	public Object removeLogin(Login login) {
 		boolean success = true;
 		String error= "";
-		HtmlMessage msg;
+		HtmlResponce msg;
 		
 		//find full user to be removed
 		//handle if userId is empty
@@ -115,7 +115,6 @@ public class LoginService {
 		}else {	
 			login = loginRepo.findByUser(user);
 			loginRepo.delete(login);
-			userService.deleteUserById(user.getId());
 		}
 		
 		//give cryptic message if secure mode is enabled
@@ -135,7 +134,7 @@ public class LoginService {
 	 * user/login not found
 	 * passwords do not match
 	 * 
-	 * @param login
+	 * @param login partially filled login to get user
 	 * @return user or htmlmessage(on error)
 	 */
 	public Object getUser(Login login) {
@@ -152,7 +151,7 @@ public class LoginService {
 		} else {
 			//handle if user id is null or not valid
 			//get valid user
-			HtmlMessage msg = userService.getUserByObject(user);
+			HtmlResponce msg = userService.getUserByObject(user);
 			if(!msg.isSuccess())
 				return new HtmlError(false,"error retrieving user from db: "+((HtmlError)msg).getMessage());
 			else
@@ -178,6 +177,19 @@ public class LoginService {
 		}	
 		HtmlError msg = new HtmlError(success, error);
 		return msg;
+	}
+
+	public void addTestUsers() {
+		Login login;
+		User user;
+		for(int i = 1; i < 31;i++) {
+			user = new User(0,("test" + i),"test bio","10100000000");
+			user.setStatus(1); //set all to red
+			login = new Login(user,	"test");
+			this.addLogin(login);
+		}
+		// TODO Auto-generated method stub
+		
 	}
 
 }

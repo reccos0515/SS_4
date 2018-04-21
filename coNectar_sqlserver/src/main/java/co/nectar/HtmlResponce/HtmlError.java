@@ -1,4 +1,4 @@
-package co.nectar.Message;
+package co.nectar.HtmlResponce;
 
 /**
  * Class to converted to a json to return an error
@@ -8,7 +8,7 @@ package co.nectar.Message;
  * @author Ben
  *
  */
-public class HtmlError implements HtmlMessage{
+public class HtmlError implements HtmlResponce{
 	boolean success;
 	String message;
 	

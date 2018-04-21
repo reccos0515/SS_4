@@ -1,5 +1,6 @@
 package co.nectar.login;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +19,7 @@ public class Login {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.REMOVE)
 	private User user;
 	private String password;
 	
@@ -59,7 +60,6 @@ public class Login {
 	
 	/**
 	 * returns whether all required fields for login are complete
-	 * @param login login to be checked
 	 * @return valid: boolean status if login is valid
 	 */
 	@JsonIgnore
