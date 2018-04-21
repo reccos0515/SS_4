@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import util.UserUtil;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -94,6 +96,8 @@ public class LogoutFragment extends Fragment {
                 Log.d("LogoutFragment", "User was logged in, proof prior to destruction of session: " + preferences.getString("USERNAME", "empty"));
                 destroySession(preferences); //remove sharedPreferences session variables
                 Log.d("LogoutFragment", "User logged out, proof: " + preferences.getString("USERNAME", "empty"));
+
+                UserUtil.setUsersArray(null); //reset this so it will make a new call for the next user
 
                 //Send user to the login screen
                 Fragment fragment = new LoginFragment();

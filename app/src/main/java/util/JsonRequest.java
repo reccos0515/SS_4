@@ -74,7 +74,6 @@ public class JsonRequest {
                         }catch (JSONException e){
                             e.printStackTrace();
                         }
-                        //todo make swipe page
                     }
                 }, new Response.ErrorListener() {
             @Override
