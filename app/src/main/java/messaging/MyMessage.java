@@ -25,7 +25,7 @@ public class MyMessage {
     private String time;
     private String message;
     private User user;
-    private String profileUrl;
+    private int profile;
 
     /**
      * The constructor for a MyMessage
@@ -86,7 +86,7 @@ public class MyMessage {
      * a preselected list of pictures
      * @return the number of the user's profile picture
      */
-    public String getProfileUrl(){return profileUrl;}
+    public int getProfile(){return profile;}
 
 
     /**
