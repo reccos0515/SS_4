@@ -148,26 +148,35 @@ public class MessagesFragment extends Fragment {
                     MyMessage[] temp = new MyMessage[setConversation.size()];
                     if(!setConversation.isEmpty()) {
                         List<String> listConversation = new ArrayList<>(setConversation);
+                        List<MyMessage> myMessageArrList = new ArrayList<>();
                         JSONObject messageJSONObject = null;
                         for (int i = 0; i < setConversation.size(); i++) {
                             try {
                                 messageJSONObject = new JSONObject(listConversation.get(i));
+                                    temp[i] = new MyMessage(messageJSONObject);
+                                    myMessageArrList.add(new MyMessage(messageJSONObject));
+                                    Log.d("MessaqesFragment", "messageJSONObject before adding: " + messageJSONObject.toString());
+                                    //Log.d("MessagesFragment", "mMessageList at " + i + " in for loop: " + mMessageList.toString());
+                                    //Log.d("MessagesFragment", "temp[" + i + "] within if in for loop: " + temp[i]);
+                                    Log.d("MessagesFragment", "temp: " + Arrays.toString(temp));
+                                    Log.d("MessagesFragment", "myMessageArrList: " + myMessageArrList.toString());
+                                    if(i == listConversation.size() - 1){
+                                        Log.d("MessagesFragment", "temp before adding to mMessageList: " + Arrays.toString(temp));
+                                        mMessageList.clear();
+                                        mMessageList.addAll(Arrays.asList(temp));
+                                        adapter.notifyDataSetChanged();
+                                    }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            if (messageJSONObject != null) {
-                                //temp[i] = new MyMessage(messageJSONObject);
-                                Log.d("MessaqesFragment", "messageJSONObject before adding: " + messageJSONObject.toString());
-                                mMessageList.add(new MyMessage(messageJSONObject));
-                                //Log.d("MessagesFragment", "temp[" + i + "] within if in for loop: " + temp[i]);
-                            }
+
                             //Log.d("MessagesFragment", "temp[" + i + "] within for loop, but not if: " + temp[i]);
                         }
                         //Log.d("MessagesFragment", "temp outside of for loop:" + Arrays.toString(temp));
                     }
-                    //mMessageList.addAll(Arrays.asList(temp));
-                    Log.d("MessagesFragment", "mMessageList before setting adapter: " + mMessageList.toString());
-                    adapter.notifyDataSetChanged();
+
+                    //Log.d("MessagesFragment", "mMessageList before setting adapter: " + mMessageList.toString());
+
                     Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
                 }
                 //Date thisDate = new Date(System.currentTimeMillis());
