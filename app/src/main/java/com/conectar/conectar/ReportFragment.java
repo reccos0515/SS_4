@@ -41,6 +41,10 @@ public class ReportFragment extends Fragment {
     private EditText details; //the details from the user
     private TextView message; //message to the user about how they have set their problem location
     private View mainView; //view from main
+    private String baseUrl = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/report";
+    private int userId;
+    private int reportedId;
+    private Context context;
     //types of problem
     enum problem{
         BIO, MESSAGE, OTHER
@@ -79,10 +83,15 @@ public class ReportFragment extends Fragment {
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
 
         mainView = view; //save the view in main
-        int userId = preferences.getInt("ID", 0); //get int of the user reporting
+        context = getContext();
+        userId = preferences.getInt("ID", 0); //get int of the user reporting
+        reportedId = 0;
         report = new JSONObject(); //report object to send
+        JSONObject reported = UserUtil.getUserToView();
         try{
-            report.put("reported", userId); //put the user sending the report's id in the report
+            reportedId = reported.getInt("id");
+            report.put("reporter", userId); //put the user sending the report's id in the report
+            report.put("reported", reportedId);
         }catch (JSONException e){
             e.printStackTrace();
         }
@@ -134,6 +143,11 @@ public class ReportFragment extends Fragment {
                     }
                     else {
                         addToReport(problem, d); //add the problem and details to the report
+
+                        //create the url and send the report
+                        baseUrl += getRepId() + "/from/" + getid();
+                        UserUtil.postRequest(baseUrl, context);
+
                         //tell the user it was successful
                         Toast.makeText(getActivity(), "Your report has been submitted. You may be contacted for further information", Toast.LENGTH_LONG).show(); //toast to tell the user they need to give details
                         //create the new profile view fragment
@@ -149,6 +163,22 @@ public class ReportFragment extends Fragment {
 
 
 
+    }
+
+    /**
+     * method to return the id of the reported user
+     * @return reported user id
+     */
+    private String getRepId(){
+        return reportedId + "";
+    }
+
+    /**
+     * method to return the id of the current user
+     * @return reporter user id
+     */
+    private String getid(){
+        return userId + "";
     }
 
     @Override
@@ -244,7 +274,6 @@ public class ReportFragment extends Fragment {
         }catch (JSONException e){
             e.printStackTrace();
         }
-        //todo send report
         Log.d("report", report.toString());
         return;
     }
