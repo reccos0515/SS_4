@@ -14,6 +14,8 @@ import com.conectar.conectar.R;
 
 import java.util.List;
 
+import util.UserUtil;
+
 /**
  * Created by Maggie on 4/5/2018.
  * Adapter for sending/receiving messages
@@ -151,7 +153,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             messageText = (TextView) itemView.findViewById(R.id.text_message_body);
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
             nameText = (TextView) itemView.findViewById(R.id.text_message_name);
-            profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
+            profileImage = (ImageView) itemView.findViewById(R.id.profilePic);
             //Log.d("MessageListAdapter", context.toString()); //craps here if context is null
         }
 
@@ -169,18 +171,13 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
             nameText.setText(message.getSender().getUsername());
 
-            //String profileUrl = message.getProfileUrl();
+            int profile = message.getSender().getProfile(); //gets the profile picture of the sender
             Log.d("MessageListAdapter", "message: " + message.toString());
-            //Log.d("MessageListAdapter", "profileUrl: " + profileUrl);
-            /*
-            if(profileUrl.equals("1")){
-                profileImage.setImageResource(R.drawable.fatbee_64); //set picture to bee
-            }
-            else if(profileUrl.equals("2")){
-                profileImage.setImageResource(R.drawable.longbee_64);
-            }
-            */
-            profileImage.setImageResource(R.drawable.shark_64);
+            Log.d("MessageListAdapter", "profileUrl: " + profile);
+
+            UserUtil.updateProfilePicture(profile, profileImage);
+
+            //profileImage.setImageResource(R.drawable.shark_64);
         }
     }
 
