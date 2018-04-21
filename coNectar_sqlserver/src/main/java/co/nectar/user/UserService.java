@@ -713,7 +713,7 @@ public class UserService {
 
 				List<User> empty = new ArrayList<User>();
 				user.setBeenDiscovered(empty);
-
+				userRepo.save(user);
 				return new HtmlError(success, error);
 			}
 
