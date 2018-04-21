@@ -148,7 +148,7 @@ public class MessagesFragment extends Fragment {
                     MyMessage[] temp = new MyMessage[setConversation.size()];
                     if(!setConversation.isEmpty()) {
                         List<String> listConversation = new ArrayList<>(setConversation);
-                        List<MyMessage> myMessageArrList = new ArrayList<>();
+                        //List<MyMessage> myMessageArrList = new ArrayList<>();
                         JSONObject messageJSONObject = null;
 
                         for (int i = 0; i < setConversation.size(); i++) {
@@ -156,12 +156,12 @@ public class MessagesFragment extends Fragment {
                                 MyMessage temp2 = null;
                                 messageJSONObject = new JSONObject(listConversation.get(i));
                                     temp[i] = new MyMessage(messageJSONObject);
-                                    myMessageArrList.add(new MyMessage(messageJSONObject));
+                                    //myMessageArrList.add(new MyMessage(messageJSONObject));
                                     Log.d("MessaqesFragment", "messageJSONObject before adding: " + messageJSONObject.toString());
                                     //Log.d("MessagesFragment", "mMessageList at " + i + " in for loop: " + mMessageList.toString());
                                     //Log.d("MessagesFragment", "temp[" + i + "] within if in for loop: " + temp[i]);
                                     Log.d("MessagesFragment", "temp: " + Arrays.toString(temp));
-                                    Log.d("MessagesFragment", "myMessageArrList: " + myMessageArrList.toString());
+                                    //Log.d("MessagesFragment", "myMessageArrList: " + myMessageArrList.toString());
                                     if(i == listConversation.size() - 1){
                                         Log.d("MessagesFragment", "temp before adding to mMessageList: " + Arrays.toString(temp));
                                         mMessageList.clear();

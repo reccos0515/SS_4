@@ -11,9 +11,9 @@ import org.json.JSONObject;
  */
 
 public class User {
-    private static String username;
-    private static int profile;
-    private static int id;
+    private String username;
+    private int profile;
+    private int id;
 
     /**
      * Constructor for a User object

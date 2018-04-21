@@ -152,7 +152,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
             nameText = (TextView) itemView.findViewById(R.id.text_message_name);
             profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
-            Log.d("MessageListAdapter", context.toString()); //craps here if context is null
+            //Log.d("MessageListAdapter", context.toString()); //craps here if context is null
         }
 
         /**
@@ -164,13 +164,14 @@ public class MessageListAdapter extends RecyclerView.Adapter {
            // Log.d("ReceivedMessageHolder", "Entered bind");
 
             // Format the stored timestamp into a readable String using method.
-            timeText.setText(message.formatDateTime(message.getCreatedAt()));
+            //timeText.setText(message.formatDateTime(message.getCreatedAt()));
+            timeText.setText(message.getCreatedAt());
 
             nameText.setText(message.getSender().getUsername());
 
-            String profileUrl = message.getProfileUrl();
+            //String profileUrl = message.getProfileUrl();
             Log.d("MessageListAdapter", "message: " + message.toString());
-            Log.d("MessageListAdapter", "profileUrl: " + profileUrl);
+            //Log.d("MessageListAdapter", "profileUrl: " + profileUrl);
             /*
             if(profileUrl.equals("1")){
                 profileImage.setImageResource(R.drawable.fatbee_64); //set picture to bee

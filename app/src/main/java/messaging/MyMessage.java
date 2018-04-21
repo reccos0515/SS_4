@@ -65,7 +65,7 @@ public class MyMessage {
 
         try {
             userFrom = js.getJSONObject("userFrom"); //pull the user
-
+            Log.d("MyMessage", "userFrom: " + userFrom.toString());
             //set message and time
             message = js.getString("message");
             time = js.getString("time");
