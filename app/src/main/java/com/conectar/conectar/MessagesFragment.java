@@ -114,11 +114,12 @@ public class MessagesFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.reyclerview_message_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        /*
-        temp = MessagesUtil.updateMessagesShown(msgUserIDNum, userIDNum, getContext());
-        mMessageList.clear();
-        mMessageList.addAll(Arrays.asList(temp));
-        */
+        Boolean initialConversation = preferences.getBoolean("MSGWITH" + msgUserIDNum, false);
+        if(initialConversation){
+            temp = MessagesUtil.updateMessagesShown(msgUserIDNum, userIDNum, getContext());
+            mMessageList.clear();
+            mMessageList.addAll(Arrays.asList(temp));
+        }
         final MessageListAdapter adapter = new MessageListAdapter(getContext(), mMessageList);
         recyclerView.setAdapter(adapter);
 
@@ -126,11 +127,17 @@ public class MessagesFragment extends Fragment {
         view.findViewById(R.id.button_refresh).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Refreshed!", Toast.LENGTH_SHORT).show();
-                temp = MessagesUtil.updateMessagesShown(msgUserIDNum, userIDNum, getContext());
-                mMessageList.clear();
-                mMessageList.addAll(Arrays.asList(temp));
-                adapter.notifyDataSetChanged();
+                Boolean hasConversation = preferences.getBoolean("MSGWITH" + msgUserIDNum, false);
+                if(hasConversation){
+                    Toast.makeText(getContext(), "Refreshed!", Toast.LENGTH_SHORT).show();
+                    temp = MessagesUtil.updateMessagesShown(msgUserIDNum, userIDNum, getContext());
+                    mMessageList.clear();
+                    mMessageList.addAll(Arrays.asList(temp));
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getActivity(), "Send some messages!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

@@ -98,6 +98,7 @@ public class MessagesUtil {
                         }
                         //Log.d("MessagesUtil", "conversation: " + conversation);
                         editor.putStringSet("MSGFROM" + idFrom, conversation); //put messages in SharedPreferences
+                        editor.putBoolean("MSGWITH" + idFrom, true);
                         editor.apply();
                         Log.d("MessagesUtil", "MSGFROM" + idFrom + ": " + preferences.getStringSet("MSGFROM" + idFrom, null));
                     } catch (JSONException e) {
@@ -109,6 +110,12 @@ public class MessagesUtil {
                     try {
                         errorMessage = response.getString("message");
                         Log.d("MessagesUtil", "Error message from server for getConversation: " + errorMessage);
+                        if(errorMessage.equals("conversation between users not found! try adding a message first")){
+                            final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
+                            final SharedPreferences.Editor editor = preferences.edit();
+                            editor.putBoolean("MSGWITH" + idFrom, false);
+                            editor.apply();
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
