@@ -41,7 +41,7 @@ public class ReportFragment extends Fragment {
     private EditText details; //the details from the user
     private TextView message; //message to the user about how they have set their problem location
     private View mainView; //view from main
-    private String baseUrl = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/report";
+    private String baseUrl = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/report/";
     private int userId;
     private int reportedId;
     private Context context;
@@ -90,8 +90,18 @@ public class ReportFragment extends Fragment {
         JSONObject reported = UserUtil.getUserToView();
         try{
             reportedId = reported.getInt("id");
-            report.put("reporter", userId); //put the user sending the report's id in the report
-            report.put("reported", reportedId);
+
+            //make reporter object
+            JSONObject reporter = new JSONObject();
+            reporter.put("userName", preferences.getString("USERNAME", ""));
+            reporter.put("bio", preferences.getString("BIO", ""));
+            reporter.put("id", preferences.getInt("ID", 0));
+            reporter.put("status", preferences.getInt("STATUS", 0));
+            reporter.put("interests", preferences.getString("INTERESTS", "00000000000"));
+            reporter.put("profilePicture", preferences.getInt("PROFILEPICTURE", 0));
+
+            report.put("reporter", reporter); //put the user sending the report's id in the report
+            report.put("reported", reported);
         }catch (JSONException e){
             e.printStackTrace();
         }
@@ -146,7 +156,7 @@ public class ReportFragment extends Fragment {
 
                         //create the url and send the report
                         baseUrl += getRepId() + "/from/" + getid();
-                        UserUtil.postRequest(baseUrl, context);
+                        UserUtil.postReportRequest(baseUrl, context, report);
 
                         //tell the user it was successful
                         Toast.makeText(getActivity(), "Your report has been submitted. You may be contacted for further information", Toast.LENGTH_LONG).show(); //toast to tell the user they need to give details

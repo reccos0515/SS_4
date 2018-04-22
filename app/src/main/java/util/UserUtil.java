@@ -330,4 +330,27 @@ public class UserUtil {
         return;
     }
 
+
+    /**
+     * sends a post request to the server to send a report
+     * @param url to send the post request to
+     * @param context of the activity the is being called from
+     * @param report JSONObject of the report to be made
+     */
+    public static void postReportRequest(String url, Context context, JSONObject report){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, report,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+    }
+
 }

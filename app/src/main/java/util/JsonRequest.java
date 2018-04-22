@@ -242,11 +242,14 @@ public class JsonRequest {
                     //set the image as blank
                     image.setImageResource(android.R.color.transparent);
                     //if the problem is the user is red, the button will be used to change the status
-                    if(errorMessage.getText().toString().equals("User is RED") || errorMessage.getText().toString().equals("User has discovered everyone")){
+                    if(errorMessage.getText().toString().equals("User is RED")){
                         button.setText("Change status");
                         if(errorMessage.getText().toString().equals("User has discovered everyone")){
                             UserUtil.setUsersArray(null);
                         }
+                    }
+                    else if(errorMessage.getText().toString().equals("User has discovered everyone")){
+                        UserUtil.setUsersArray(null);
                     }
                 }
                 else{
