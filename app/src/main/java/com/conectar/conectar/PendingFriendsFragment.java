@@ -1,6 +1,7 @@
 package com.conectar.conectar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +11,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import util.JsonRequest;
 
 
 /**
@@ -71,6 +75,14 @@ public class PendingFriendsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Context context = getContext();
+        final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
+        int id = preferences.getInt("ID", 0); //get the logged in user's id
+
+        ListView listView = (ListView) view.findViewById(R.id.pendingListView); //grabs the listview from the xml layout
+        JsonRequest.getPendingFriends(id, context); //get a list of friends and store in sharedpreferences
+        JsonRequest.getFriendsList(id, context); //get friends too so we can check who from pending is already accepted
 
         view.findViewById(R.id.friendsListBtn).setOnClickListener(new View.OnClickListener() {
             @Override
