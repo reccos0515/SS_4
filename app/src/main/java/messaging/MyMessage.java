@@ -46,6 +46,7 @@ public class MyMessage {
         @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("HH:mm"); //Suppress is so there isn't yellow crap telling us to ask the user for location
         Date date = new Date();
         time = formatDateTime(dateFormat.format(date));
+        Log.d("MyMessage", "time after formatDateTime: " + time);
         user = new User(preferences.getString("USERNAME", ""), preferences.getInt("PROFILEPICTURE", 0), preferences.getInt("ID", 0));
         Log.d("MyMessage", "In MyMessage string constructor");
     }
@@ -65,7 +66,6 @@ public class MyMessage {
 
         try {
             userFrom = js.getJSONObject("userFrom"); //pull the user
-            Log.d("MyMessage", "userFrom: " + userFrom.toString());
             //set message and time
             message = js.getString("message");
             time = js.getString("time");
@@ -105,7 +105,7 @@ public class MyMessage {
      */
     public String formatDateTime(String createdAt){
         int hour = (createdAt.charAt(0) - '0') * 10 + createdAt.charAt(1) - '0';
-        hour -= 5;
+        //hour -= 5;
         if(hour == 0){
             return "12:" + createdAt.charAt(2) + createdAt.charAt(3) + createdAt.charAt(4) + " AM";
         }

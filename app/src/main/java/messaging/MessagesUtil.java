@@ -41,7 +41,6 @@ public class MessagesUtil {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("MessagesUtil", "Prepared message JSONObject: "+ js.toString());
         return js;
     }
 

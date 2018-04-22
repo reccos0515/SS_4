@@ -183,7 +183,6 @@ public class MessagesFragment extends Fragment {
 
                     Log.d("MessagesFragment", "Typed message from user: " + messageString + "   Time: " + newMessage.getCreatedAt());
                     JSONObject messageObject = MessagesUtil.prepareSentMessage(messageString, newMessage.getCreatedAt());
-                    Log.d("MessagesFragment", "message object prepared for sending: " + messageObject.toString());
                     MessagesUtil.sendMessage(userIDNum, msgUserIDNum, messageObject, getContext());
 
                     MessagesUtil.getConversation(userIDNum, msgUserIDNum, getContext());
@@ -215,6 +214,7 @@ public class MessagesFragment extends Fragment {
                                 }
                             }
                         }
+                    MessagesUtil.getConversation(userIDNum, msgUserIDNum, getContext());
                 }
             }
         });
