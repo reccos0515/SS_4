@@ -150,6 +150,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 if(temp2 != empty){ //if there are users sent back and not the garbage initialized user
                     try {
                         UserUtil.setUserToView(new JSONObject(friendsObjects.get(i)));
+                        UserUtil.setUserToViewIsFriend(true);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
