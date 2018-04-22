@@ -116,36 +116,40 @@ public class MessagesFragment extends Fragment {
         final MessageListAdapter adapter = new MessageListAdapter(getContext(), mMessageList);
         recyclerView.setAdapter(adapter);
 
-        if(newMessagesFragment) {
-            Log.d("MessagesFragment", "Entered first setup of messages");
-            newMessagesFragment = false;
-            Set<String> setConversation = preferences.getStringSet("MSGFROM" + msgUserIDNum, null); //grab conversation from Volley request
-            if (setConversation != null) {
 
-                MyMessage[] temp = new MyMessage[setConversation.size()];
-                if (!setConversation.isEmpty()) {
-                    List<String> listConversation = new ArrayList<>(setConversation);
-                    JSONObject messageJSONObject = null;
+        view.findViewById(R.id.button_refresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("MessagesFragment", "Entered blank click of the send button");
+                Set<String> setConversation = preferences.getStringSet("MSGFROM" + msgUserIDNum, null); //grab conversation from Volley request
+                Log.d("MessagesFragment", "msgUserIDNum: " + msgUserIDNum);
+                if(setConversation != null) {
+                    Log.d("MessagesFragment", "setConversation: " + setConversation.toString());
+                    MyMessage[] temp = new MyMessage[setConversation.size()];
+                    if (!setConversation.isEmpty()) {
+                        List<String> listConversation = new ArrayList<>(setConversation);
+                        JSONObject messageJSONObject = null;
 
-                    for (int i = 0; i < setConversation.size(); i++) {
-                        try {
-                            MyMessage temp2 = null;
-                            messageJSONObject = new JSONObject(listConversation.get(i));
-                            temp[i] = new MyMessage(messageJSONObject);
-                            if (i == listConversation.size() - 1) {
-                                Log.d("MessagesFragment", "temp before adding to mMessageList: " + Arrays.toString(temp));
-                                mMessageList.clear();
-                                mMessageList.addAll(Arrays.asList(temp));
-                                adapter.notifyDataSetChanged();
+                        for (int i = 0; i < setConversation.size(); i++) {
+                            try {
+                                MyMessage temp2 = null;
+                                messageJSONObject = new JSONObject(listConversation.get(i));
+                                temp[i] = new MyMessage(messageJSONObject);
+                                if (i == listConversation.size() - 1) {
+                                    Log.d("MessagesFragment", "temp before adding to mMessageList on blank send click: " + Arrays.toString(temp));
+                                    mMessageList.clear();
+                                    mMessageList.addAll(Arrays.asList(temp));
+                                    adapter.notifyDataSetChanged();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
                     }
                 }
+                MessagesUtil.getConversation(msgUserIDNum, userIDNum, getContext());
             }
-        }
-
+        });
 
         view.findViewById(R.id.button_chatbox_send).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,31 +157,6 @@ public class MessagesFragment extends Fragment {
 
                 String messageString = newMessage.getText().toString(); //the message that the user typed
                 if(!messageString.equals("")){ //if it isn't empty
-                    Set<String> setConversation = preferences.getStringSet("MSGFROM" + msgUserIDNum, null); //grab conversation from Volley request
-                    if(setConversation != null) {
-
-                        MyMessage[] temp = new MyMessage[setConversation.size()];
-                        if (!setConversation.isEmpty()) {
-                            List<String> listConversation = new ArrayList<>(setConversation);
-                            JSONObject messageJSONObject = null;
-
-                            for (int i = 0; i < setConversation.size(); i++) {
-                                try {
-                                    MyMessage temp2 = null;
-                                    messageJSONObject = new JSONObject(listConversation.get(i));
-                                    temp[i] = new MyMessage(messageJSONObject);
-                                    if (i == listConversation.size() - 1) {
-                                        Log.d("MessagesFragment", "temp before adding to mMessageList: " + Arrays.toString(temp));
-                                        mMessageList.clear();
-                                        mMessageList.addAll(Arrays.asList(temp));
-                                        adapter.notifyDataSetChanged();
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    }
                     Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
                     MyMessage newMessage = new MyMessage(messageString);
 
@@ -185,36 +164,7 @@ public class MessagesFragment extends Fragment {
                     JSONObject messageObject = MessagesUtil.prepareSentMessage(messageString, newMessage.getCreatedAt());
                     MessagesUtil.sendMessage(userIDNum, msgUserIDNum, messageObject, getContext());
 
-                    MessagesUtil.getConversation(userIDNum, msgUserIDNum, getContext());
-                }else {
-                    Log.d("MessagesFragment", "Entered blank click of the send button");
-                        Set<String> setConversation = preferences.getStringSet("MSGFROM" + msgUserIDNum, null); //grab conversation from Volley request
-                        Log.d("MessagesFragment", "msgUserIDNum: " + msgUserIDNum);
-                        if(setConversation != null) {
-                            Log.d("MessagesFragment", "setConversation: " + setConversation.toString());
-                            MyMessage[] temp = new MyMessage[setConversation.size()];
-                            if (!setConversation.isEmpty()) {
-                                List<String> listConversation = new ArrayList<>(setConversation);
-                                JSONObject messageJSONObject = null;
-
-                                for (int i = 0; i < setConversation.size(); i++) {
-                                    try {
-                                        MyMessage temp2 = null;
-                                        messageJSONObject = new JSONObject(listConversation.get(i));
-                                        temp[i] = new MyMessage(messageJSONObject);
-                                        if (i == listConversation.size() - 1) {
-                                            Log.d("MessagesFragment", "temp before adding to mMessageList on blank send click: " + Arrays.toString(temp));
-                                            mMessageList.clear();
-                                            mMessageList.addAll(Arrays.asList(temp));
-                                            adapter.notifyDataSetChanged();
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        }
-                    MessagesUtil.getConversation(userIDNum, msgUserIDNum, getContext());
+                    MessagesUtil.getConversation(msgUserIDNum, userIDNum, getContext());
                 }
             }
         });

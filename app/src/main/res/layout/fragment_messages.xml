@@ -61,6 +61,17 @@
             android:gravity="center"
             android:layout_gravity="bottom" />
 
+        <Button
+            android:layout_width="90dp"
+            android:layout_height="48dp"
+            android:clickable="true"
+            android:gravity="center"
+            android:id="@+id/button_refresh"
+            android:text="REFRESH"
+            android:textSize="14dp"
+            android:background="@color/colorDarkLiver"
+            android:layout_gravity="bottom"/>
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
