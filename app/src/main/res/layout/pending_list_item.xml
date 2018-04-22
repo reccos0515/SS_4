@@ -15,12 +15,12 @@
         android:layout_marginTop="8dp"
         android:text="Username"
         android:textSize="24sp"
-        app:layout_constraintLeft_toRightOf="@+id/pending_image_message_profile"
+        app:layout_constraintLeft_toRightOf="@+id/profilePic"
         app:layout_constraintRight_toLeftOf="@id/acceptFriendBtn"
-        app:layout_constraintTop_toTopOf="@+id/pending_image_message_profile" />
+        app:layout_constraintTop_toTopOf="@+id/profilePic" />
 
     <ImageView
-        android:id="@+id/pending_image_message_profile"
+        android:id="@+id/profilePic"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/ic_empty"
