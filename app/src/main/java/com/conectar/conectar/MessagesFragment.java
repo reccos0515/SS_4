@@ -51,6 +51,7 @@ public class MessagesFragment extends Fragment {
     int userIDNum = 0; //id of the user who is logged in
     List<MyMessage> mMessageList = new ArrayList<MyMessage>();
     boolean newMessagesFragment = true;
+    MyMessage[] temp;
 
 
     private OnFragmentInteractionListener mListener; //TODO figure out if this is necessary
@@ -113,6 +114,9 @@ public class MessagesFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.reyclerview_message_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+        temp = MessagesUtil.updateMessagesShown(msgUserIDNum, userIDNum, getContext());
+        mMessageList.clear();
+        mMessageList.addAll(Arrays.asList(temp));
         final MessageListAdapter adapter = new MessageListAdapter(getContext(), mMessageList);
         recyclerView.setAdapter(adapter);
 
@@ -121,7 +125,7 @@ public class MessagesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "Refreshed!", Toast.LENGTH_SHORT).show();
-                MyMessage[] temp = MessagesUtil.updateMessagesShown(msgUserIDNum, userIDNum, getContext());
+                temp = MessagesUtil.updateMessagesShown(msgUserIDNum, userIDNum, getContext());
                 mMessageList.clear();
                 mMessageList.addAll(Arrays.asList(temp));
                 adapter.notifyDataSetChanged();
