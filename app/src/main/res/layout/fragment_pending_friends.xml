@@ -8,17 +8,16 @@
 
     <!-- TODO redo to list multiple pending friend requests from any user -->
 
-    <Switch
-        android:id="@+id/friendListSwitch"
-        android:layout_width="fill_parent"
+    <Button
+        android:id="@+id/friendsListBtn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_weight="1"
-        android:text="Pending Friend Requests" />
+        android:text="List of Friends"
+        android:background="@color/colorDarkLiver"
+        />
 
     <ListView
         android:id="@+id/pendingListView"
-        app:layout_constraintTop_toBottomOf="@id/friendListSwitch"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 

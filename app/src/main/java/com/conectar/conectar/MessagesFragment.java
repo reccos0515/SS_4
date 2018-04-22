@@ -76,11 +76,7 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.fragment_messages);
 
-//        RecyclerView mMessageRecycler = (RecyclerView) getView().findViewById(R.id.reyclerview_message_list);
-//        MessageListAdapter mMessageAdapter = new MessageListAdapter(this, messageList);
-//        mMessageRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override

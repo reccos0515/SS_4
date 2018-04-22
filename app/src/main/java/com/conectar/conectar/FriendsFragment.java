@@ -120,18 +120,14 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         String[] fake = new String[]{"empty"};
         final Set<String> empty = new HashSet<>(Arrays.asList(fake));
         final Set<String> temp2 = preferences.getStringSet("FRIENDJSON", empty);
-        Log.d("FriendsFragment", "temp2: " + temp2.toString());
         final List<String> friendsObjects = new ArrayList<String>(temp2); //convert the list of JSONObjects of users to an arraylist
 
 
         if(temp2 != empty){
             friendsList = new Friend[temp2.size()];
-            Log.d("FriendsFragment", "friendsObjects: " + friendsObjects.toString());
-            Log.d("FriendsFragment", "size of temp2: " + temp2.size());
             for(int i = 0; i < temp2.size(); i++){
                 try {
                     JSONObject user = new JSONObject(friendsObjects.get(i));
-                    Log.d("FriendsFragment", i + "th user: " + user.toString());
                     friendsList[i] = new Friend(user);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -167,6 +163,18 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     Toast.makeText(getActivity(), "Error", Toast.LENGTH_LONG).show();
                 }
 
+            }
+        });
+
+        view.findViewById(R.id.pendingFriendBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //pull up the list of pending friends
+                Fragment fragment = new PendingFriendsFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.screen_area, fragment);
+                fragmentTransaction.commit();
             }
         });
 
