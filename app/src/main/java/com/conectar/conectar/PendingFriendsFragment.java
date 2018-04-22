@@ -8,11 +8,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
+import friends.Friend;
+import friends.FriendsUtil;
 import util.JsonRequest;
 
 
@@ -81,8 +86,10 @@ public class PendingFriendsFragment extends Fragment {
         int id = preferences.getInt("ID", 0); //get the logged in user's id
 
         ListView listView = (ListView) view.findViewById(R.id.pendingListView); //grabs the listview from the xml layout
-        JsonRequest.getPendingFriends(id, context); //get a list of friends and store in sharedpreferences
-        JsonRequest.getFriendsList(id, context); //get friends too so we can check who from pending is already accepted
+
+
+        ArrayList<Friend> pendingList = FriendsUtil.removeAcceptedFriends(getContext());
+        Log.d("PendingFriendsFragment", "pendingList: " + pendingList.toString());
 
         view.findViewById(R.id.friendsListBtn).setOnClickListener(new View.OnClickListener() {
             @Override

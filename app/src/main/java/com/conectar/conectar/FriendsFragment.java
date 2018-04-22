@@ -46,6 +46,7 @@ import util.UserUtil;
 public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     Friend[] friendsList = {new Friend("empty")}; //put a default value to be grabbed in case user doesn't have friends
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    int id;
 
     private OnFragmentInteractionListener mListener;
 
@@ -106,10 +107,11 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         //TODO try to make code more modular/readable
         Context context = getContext();
         final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
-        int id = preferences.getInt("ID", 0); //get the logged in user's id
+        id = preferences.getInt("ID", 0); //get the logged in user's id
 
         ListView listView = (ListView) view.findViewById(R.id.friendsListView); //grabs the listview from the xml layout
         JsonRequest.getFriendsList(id, context); //get a list of friends and store in sharedpreferences
+        JsonRequest.getPendingFriends(id, context);
 
 
         JSONObject initial = new JSONObject();
@@ -169,6 +171,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         view.findViewById(R.id.pendingFriendBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 //pull up the list of pending friends
                 Fragment fragment = new PendingFriendsFragment();
                 FragmentManager fragmentManager = getFragmentManager();

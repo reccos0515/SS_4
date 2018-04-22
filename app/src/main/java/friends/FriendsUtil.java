@@ -2,6 +2,7 @@ package friends;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +25,8 @@ public class FriendsUtil {
         Friend[] friendsFriends = convertToFriend(friendsJSONSet);
         Friend[] pendingFriends = convertToFriend(pendingJSONSet);
         ArrayList<Friend> finalPending = new ArrayList<>();
+        Log.d("FriendsUtil", "friendsFriends: " + Arrays.toString(friendsFriends));
+        Log.d("FriendsUtil", "pendingFriends: " + Arrays.toString(pendingFriends));
 
         for(int i = 0; i < pendingFriends.length; i++){
             if(!Arrays.asList(friendsFriends).contains(pendingFriends[i])) {
