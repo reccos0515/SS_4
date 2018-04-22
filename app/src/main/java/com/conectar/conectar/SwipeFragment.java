@@ -219,7 +219,7 @@ public class SwipeFragment extends Fragment {
                         fragmentTransaction.commit();
                     }
                     //if the error is that the user is red, this can be used to change the status
-                } else if(errorMessage.getText().toString().equals("User is RED") || errorMessage.getText().toString().equals("User has discovered everyone")){
+                } else if(errorMessage.getText().toString().equals("User is RED")){
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.screen_area, new ChangeStatusFragment());
