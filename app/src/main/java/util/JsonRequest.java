@@ -349,6 +349,72 @@ public class JsonRequest {
         return;
     }
 
+    public static void getPendingFriends(int id, final Context context){
+        String url =  "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id +"/recievedrequestfrom";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                JSONObject js;
+                js = response;
+                Boolean s = false;
+                JSONArray users;
+                String message = "";
+                Context context1 = context;
+                final SharedPreferences preferences = context1.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
+                final SharedPreferences.Editor editor = preferences.edit();
+
+                try {
+                    s = js.getBoolean("success");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if(js == null){
+                    Log.d("JsonRequest", "getPendingFriends no response from server");
+                }
+                if(s){ //if the request was successful
+                    try {
+                        users = js.getJSONArray("users"); //get JSONArray of all users the user is friends with
+
+                        Log.d("JsonRequest", "Grabbing pending friends, looks like: " + users.toString());
+                        Set<String> pendingList = new HashSet<>();
+                        Set<String> pendingJSON = new HashSet<>();
+                        for(int i = 0; i < users.length(); i++){ //grab all friends out of the array
+                            JSONObject thisFriend = users.getJSONObject(i); //get the user we're talking about
+                            String thisUser = thisFriend.toString(); //convert it to a string for FRIENDSLISTJSONOBJECTS
+                            String thisUsername = thisFriend.getString("userName"); //get the username
+                            pendingList.add(thisUsername);
+                            pendingJSON.add(thisUser);
+
+                        }
+                        editor.putStringSet("PENDINGFRIENDSUSERNAMES", pendingList);//shared pref variable for string usernames
+                        editor.putStringSet("PENDINGJSON", pendingJSON); //sharedpref variable for string versions of all user objects for friends
+                        Log.d("JsonRequest", "List of pending friends: " + pendingJSON);
+                        editor.apply();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{ //if the server returns an error, display it in logs
+                    try {
+                        js.getString("message");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("JsonRequest", "getPendingFriends error message: " + message);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
+        return;
+    }
+
     /**
      * method used to delete a user
      * Signature is void deleteUserRequest(JSONObject js, String url, Context context) where
