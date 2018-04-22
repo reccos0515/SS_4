@@ -38,7 +38,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         mContext = context;
         mMessageList = messageList;
         Log.d("MessageListAdapter", "Entered constructor, mMessageList: " + messageList.toString());
-        Log.d("MessageListAdapter", context.toString());
+        Log.d("MessageListAdapter", "Context in MessageListAdpater constructor: " + mContext.toString());
     }
 
     @Override
@@ -57,9 +57,11 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         //Log.d("MessageListAdapter", "Entered getItemViewType");
         MyMessage message = (MyMessage) mMessageList.get(position);
         //TODO fix the shared preferences thing, is currently sending nullpointerexceptions at run
-        //SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
-        //int thisId = preferences.getInt("ID", 0);
-        int thisId = 4;
+        //Log.d("MessageListAdapter", "Context in getItemViewType: " + mContext.toString());
+        SharedPreferences preferences = mContext.getSharedPreferences("coNECTAR", mContext.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+        //preferences.
+        int thisId = preferences.getInt("ID", 0);
+        //int thisId = 4;
         if (message.getSender().getUserId() == thisId) {
             // If the current user is the sender of the message
             return VIEW_TYPE_MESSAGE_SENT;
@@ -135,7 +137,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             messageText.setText(message.getMessage());
             //Log.d("SentMessageHolder", "Entered bind");
             // Format the stored timestamp into a readable String using method.
-            timeText.setText(message.formatDateTime(message.getCreatedAt()));
+            //timeText.setText(message.formatDateTime(message.getCreatedAt()));
+            timeText.setText(message.getCreatedAt());
         }
     }
 
@@ -172,8 +175,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             nameText.setText(message.getSender().getUsername());
 
             int profile = message.getSender().getProfile(); //gets the profile picture of the sender
-            Log.d("MessageListAdapter", "message: " + message.toString());
-            Log.d("MessageListAdapter", "profileUrl: " + profile);
+            //Log.d("MessageListAdapter", "message: " + message.toString());
+            //Log.d("MessageListAdapter", "profileUrl: " + profile);
 
             UserUtil.updateProfilePicture(profile, profileImage);
 
