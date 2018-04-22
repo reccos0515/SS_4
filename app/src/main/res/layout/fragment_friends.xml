@@ -3,21 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.conectar.conectar.FriendsFragment">
 
-    <!-- TODO redo to list multiple friends from any user -->
-
-
-
+        <Button
+            android:id="@+id/pendingFriendBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pending Friend Requests"
+            android:background="@color/colorDarkLiver"
+            />
         <ListView
             android:id="@+id/friendsListView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
-
-
         </ListView>
-
-
 
 </LinearLayout>

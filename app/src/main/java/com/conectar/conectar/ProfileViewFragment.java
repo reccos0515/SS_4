@@ -20,8 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import messaging.MessagesUtil;
-import messaging.User;
-import util.Friend;
+import friends.Friend;
 import util.InterestsUtil;
 import util.UserUtil;
 

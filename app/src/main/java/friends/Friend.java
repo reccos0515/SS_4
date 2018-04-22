@@ -1,4 +1,4 @@
-package util;
+package friends;
 
 import android.content.Context;
 import android.util.Log;
@@ -14,6 +14,8 @@ import com.conectar.conectar.SwipeFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import util.UserUtil;
 
 /**
  * Created by Maggie on 3/23/2018.
