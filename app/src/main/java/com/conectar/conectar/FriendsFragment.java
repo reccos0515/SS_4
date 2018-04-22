@@ -120,7 +120,6 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         final Set<String> empty = new HashSet<>(Arrays.asList(fake));
         final Set<String> temp2 = preferences.getStringSet("FRIENDJSON", empty);
         final JSONObject[] friendsJSONObjects = new JSONObject[temp2.size()];
-        //Log.d("FriendsFragment", "FRIENDSLISTJSONOBJECTS: " + temp2.toString());
 
         if(temp != null){ //gets cranky trying to typecast null
             List<String> friends = new ArrayList<String>(temp); //convert the set of usernames to a list for easier manipulation
@@ -135,18 +134,14 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
             for(int i = 0; i < temp2.size(); i++){
                 try {
                     JSONObject user = new JSONObject(friendsObjects.get(i));
-                    //Log.d("FriendsFragment", "User conversion: " + user);
                     friendsJSONObjects[i] = user; //TODO figure out if this is necessary
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-            //Log.d("FriendsFragment", "friendsJSONObjects: "+ friendsJSONObjects.toString());
         }
 
 
-
-        //Log.d("FriendsFragment", "Friendslist: " + friendsList.toString());
 
         ArrayAdapter<Friend> adapter = new ArrayAdapter<Friend>(getActivity(), android.R.layout.simple_list_item_1, friendsList); //tell the xml to use friendsList for items on they layout
 
@@ -155,7 +150,6 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if(temp2 != empty){ //if there are users sent back and not the garbage initialized user
                     Toast.makeText(getActivity(), ((TextView) view).getText(), Toast.LENGTH_LONG).show(); //who was clicked on
-                    Log.d("FriendsFragment", "friendsJSONObjects prior to setting user to view" + friendsJSONObjects[i] + "Person clicked on: " + friendsList[i]);
                     String thisUsername = "";
 
                     for(int j = 0; j < friendsList.length; j++){

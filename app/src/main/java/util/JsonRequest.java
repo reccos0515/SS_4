@@ -291,7 +291,6 @@ public class JsonRequest {
             public void onResponse(JSONObject response) {
                 JSONObject js;
                 js = response;
-                Log.d("Friend", "getFriends response from GET: " + response);
                 Boolean s = false;
                 JSONArray users;
                 String message = "";
@@ -327,8 +326,6 @@ public class JsonRequest {
                         editor.putStringSet("FRIENDSLISTUSERNAMES", friendsList);//shared pref variable for string usernames
                         editor.putStringSet("FRIENDJSON", friendsJSON); //sharedpref variable for string versions of all user objects for friends
                         editor.apply();
-                        Log.d("JsonRequest", "Friendslistusernames set: " + preferences.getStringSet("FRIENDSLISTUSERNAMES", null));
-                        Log.d("JsonRequest", "FRIENDSLISTJSONOBJECTS: " + preferences.getStringSet("FRIENDJSON", null));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

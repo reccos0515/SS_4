@@ -37,8 +37,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     public MessageListAdapter(Context context, List<MyMessage> messageList) {
         mContext = context;
         mMessageList = messageList;
-        Log.d("MessageListAdapter", "Entered constructor, mMessageList: " + messageList.toString());
-        Log.d("MessageListAdapter", "Context in MessageListAdpater constructor: " + mContext.toString());
     }
 
     @Override
@@ -54,14 +52,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
      */
     @Override
     public int getItemViewType(int position) {
-        //Log.d("MessageListAdapter", "Entered getItemViewType");
         MyMessage message = (MyMessage) mMessageList.get(position);
-        //TODO fix the shared preferences thing, is currently sending nullpointerexceptions at run
-        //Log.d("MessageListAdapter", "Context in getItemViewType: " + mContext.toString());
         SharedPreferences preferences = mContext.getSharedPreferences("coNECTAR", mContext.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
-        //preferences.
         int thisId = preferences.getInt("ID", 0);
-        //int thisId = 4;
         if (message.getSender().getUserId() == thisId) {
             // If the current user is the sender of the message
             return VIEW_TYPE_MESSAGE_SENT;
@@ -82,7 +75,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view;
-        //Log.d("MessageListAdapter", "Entered onCreateViewHolder");
         if (viewType == VIEW_TYPE_MESSAGE_SENT) {
             view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.message_sent_item, viewGroup, false);
@@ -175,12 +167,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             nameText.setText(message.getSender().getUsername());
 
             int profile = message.getSender().getProfile(); //gets the profile picture of the sender
-            //Log.d("MessageListAdapter", "message: " + message.toString());
-            //Log.d("MessageListAdapter", "profileUrl: " + profile);
 
             UserUtil.updateProfilePicture(profile, profileImage);
-
-            //profileImage.setImageResource(R.drawable.shark_64);
         }
     }
 

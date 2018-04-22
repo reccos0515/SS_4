@@ -180,7 +180,14 @@ public class ProfileViewFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         //create the new edit profile fragment
-                        MessagesUtil.getConversation(2, 1, getContext()); //get the current conversation
+                        JSONObject temp = UserUtil.getUserToView();
+                        int userToViewId = 0; //TODO modularize
+                        try {
+                            userToViewId = temp.getInt("id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        MessagesUtil.getConversation(userToViewId, userIDNum, getContext()); //get the current conversation
                         Fragment fragment = new MessagesFragment();
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
