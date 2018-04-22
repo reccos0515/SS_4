@@ -169,9 +169,37 @@ public class MessagesUtil {
         return myMessageConversation;
     }
 
-    public static ArrayList sortByTime(){ //TODO implement so messages don't appear out of order
+    public static JSONObject[] convertToJSONObjectArr(ArrayList<String> listConversation){
+        JSONObject[] JSONObjectArr = new JSONObject[listConversation.size()];
+        for(int i = 0; i < JSONObjectArr.length; i++){
+            try {
+                JSONObjectArr[i] = new JSONObject(listConversation.get(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        Log.d("MessagesUtil", "convertToJSONObjectArr: " + Arrays.toString(JSONObjectArr));
+        return JSONObjectArr;
+    }
 
-        return null;
+    public static ArrayList<JSONObject> sortByTime(JSONObject[] JSONObjectArr){ //TODO implement so messages don't appear out of order
+        ArrayList<JSONObject> sortedConversation = new ArrayList<JSONObject>();
+        int j = 0;
+        int timeSent = 0;
+        for(int i = 0; j < JSONObjectArr.length; i++){
+            Log.d("MessagesUtil", "JSONObject inside sortByTime: " + JSONObjectArr[i]);
+            try {
+                timeSent = JSONObjectArr[i].getInt("id"); //number for the order of a message
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if(timeSent == i){
+                sortedConversation.add(JSONObjectArr[i]);
+                j++;
+            }
+        }
+        Log.d("MessagesUtil", "sortByTime: " + sortedConversation.toString());
+        return sortedConversation;
     }
 
 }

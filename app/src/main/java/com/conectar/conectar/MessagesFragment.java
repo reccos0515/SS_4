@@ -126,7 +126,10 @@ public class MessagesFragment extends Fragment {
                     Log.d("MessagesFragment", "setConversation: " + setConversation.toString());
                     MyMessage[] temp = new MyMessage[setConversation.size()];
                     if (!setConversation.isEmpty()) {
-                        List<String> listConversation = new ArrayList<>(setConversation);
+                        ArrayList<String> listConversation = new ArrayList<>(setConversation);
+                        JSONObject[] tempArr = MessagesUtil.convertToJSONObjectArr(listConversation);
+                        ArrayList<JSONObject> tempArr2 = MessagesUtil.sortByTime(tempArr);
+                        Log.d("MessagesFragment", "tempArr2 after sortByTime: " + tempArr2.toString());
                         JSONObject messageJSONObject = null;
 
                         for (int i = 0; i < setConversation.size(); i++) {
