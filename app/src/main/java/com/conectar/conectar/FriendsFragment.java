@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,22 +120,18 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         String[] fake = new String[]{"empty"};
         final Set<String> empty = new HashSet<>(Arrays.asList(fake));
         final Set<String> temp2 = preferences.getStringSet("FRIENDJSON", empty);
-        final JSONObject[] friendsJSONObjects = new JSONObject[temp2.size()];
+        Log.d("FriendsFragment", "temp2: " + temp2.toString());
 
-        if(temp != null){ //gets cranky trying to typecast null
-            List<String> friends = new ArrayList<String>(temp); //convert the set of usernames to a list for easier manipulation
-            friendsList = new Friend[friends.size()];
-            for(int i = 0; i < friends.size(); i++){ //TODO figure out if this is necessary
-                Friend newFriend = new Friend(friends.get(i));
-                friendsList[i] = newFriend;
-            }
-        }
         if(temp2 != empty){
+            friendsList = new Friend[temp2.size()];
             List<String> friendsObjects = new ArrayList<String>(temp2); //convert the list of JSONObjects of users to an arraylist
+            Log.d("FriendsFragment", "friendsObjects: " + friendsObjects.toString());
+            Log.d("FriendsFragment", "size of temp2: " + temp2.size());
             for(int i = 0; i < temp2.size(); i++){
                 try {
                     JSONObject user = new JSONObject(friendsObjects.get(i));
-                    friendsJSONObjects[i] = user; //TODO figure out if this is necessary
+                    Log.d("FriendsFragment", i + "th user: " + user.toString());
+                    friendsList[i] = new Friend(user);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -143,34 +140,23 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
 
-        ArrayAdapter<Friend> adapter = new ArrayAdapter<Friend>(getActivity(), android.R.layout.simple_list_item_1, friendsList); //tell the xml to use friendsList for items on they layout
-        FriendsListAdapter adapter1 = new FriendsListAdapter(friendsList, getContext());
+
+        FriendsListAdapter adapter = new FriendsListAdapter(friendsList, getContext());
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //if a person in the list is clicked
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if(temp2 != empty){ //if there are users sent back and not the garbage initialized user
-                    Toast.makeText(getActivity(), ((TextView) view).getText(), Toast.LENGTH_LONG).show(); //who was clicked on
-                    String thisUsername = "";
+                    Toast.makeText(getActivity(), "item " + i + " was clicked on", Toast.LENGTH_LONG).show(); //who was clicked on
 
-                    for(int j = 0; j < friendsList.length; j++){
-                        try {
-                            thisUsername = friendsJSONObjects[j].getString("userName");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        if(thisUsername.equals(friendsList[i].toString())){ //if the JSONObject matches the person you clicked on
-                            UserUtil.setUserToView(friendsJSONObjects[j]); //tell ProfileViewFragment who to show
-                            UserUtil.setUserToViewIsFriend(true); //user is friends with this person
-                        }
-                    }
-
+                    /*
                     //pull up the profile of the friend that's clicked on
                     Fragment fragment = new ProfileViewFragment();
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.screen_area, fragment);
                     fragmentTransaction.commit();
+                    */
                 }
                 else{
                     Toast.makeText(getActivity(), "Error", Toast.LENGTH_LONG).show();
@@ -179,7 +165,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
             }
         });
 
-        listView.setAdapter(adapter1);
+        listView.setAdapter(adapter);
 
 
     }
