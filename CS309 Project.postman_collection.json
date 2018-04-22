@@ -1,8 +1,10 @@
 {
+	"variables": [],
 	"info": {
-		"_postman_id": "7d84a41d-412c-bdb4-d72d-a00e64b27a3b",
 		"name": "CS309 Project",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "b9cfbdf8-ad44-2f9f-6006-c7337e2cc38a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
@@ -12,6 +14,7 @@
 				{
 					"name": "Get ALL Users",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/users",
 						"method": "GET",
 						"header": [
 							{
@@ -22,18 +25,6 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"id\":6,\n    \"userName\": \"maggie\",\n    \"bio\": \"I am maggie\"\n}"
-						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"users"
-							]
 						},
 						"description": "get all users on the data base\n\n"
 					},
@@ -42,6 +33,7 @@
 				{
 					"name": "Get Single User",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/users/1",
 						"method": "GET",
 						"header": [
 							{
@@ -53,19 +45,6 @@
 							"mode": "raw",
 							"raw": "{\n    \"id\":6,\n    \"userName\": \"maggie\",\n    \"bio\": \"I am maggie\"\n}"
 						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/1",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"users",
-								"1"
-							]
-						},
 						"description": "get single users on the data base\n\n"
 					},
 					"response": []
@@ -73,6 +52,7 @@
 				{
 					"name": "Update A User",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/users/",
 						"method": "PUT",
 						"header": [
 							{
@@ -84,19 +64,6 @@
 							"mode": "raw",
 							"raw": "{\n    \"status\": 1,\n    \"userName\": \"test2\",\n    \"interests\": \"10200000000\",\n    \"bio\": \"test bio\"\n}"
 						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"users",
-								""
-							]
-						},
 						"description": "update a user from the db\n\n"
 					},
 					"response": []
@@ -104,6 +71,7 @@
 				{
 					"name": "Request Friend",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/users/1/request_friend/2",
 						"method": "POST",
 						"header": [
 							{
@@ -114,21 +82,6 @@
 						"body": {
 							"mode": "raw",
 							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/1/request_friend/2",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"users",
-								"1",
-								"request_friend",
-								"2"
-							]
 						},
 						"description": "get all users on the data base\n\n"
 					},
@@ -137,6 +90,7 @@
 				{
 					"name": "List of ALL Outgoing Friend Requests",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/users/4/sentrequestto",
 						"method": "GET",
 						"header": [
 							{
@@ -147,20 +101,6 @@
 						"body": {
 							"mode": "raw",
 							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/4/sentrequestto",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"users",
-								"4",
-								"sentrequestto"
-							]
 						},
 						"description": "List of users requested to be freinds by a referenced user.\nOther user has not requested by the referenced user\n\n"
 					},
@@ -169,6 +109,7 @@
 				{
 					"name": "List of ALL Incoming Friend Requests",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/users/1/recievedrequestfrom",
 						"method": "GET",
 						"header": [
 							{
@@ -179,20 +120,6 @@
 						"body": {
 							"mode": "raw",
 							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/1/recievedrequestfrom",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"users",
-								"1",
-								"recievedrequestfrom"
-							]
 						},
 						"description": "List of users requested to be freinds by a referenced user.\nOther user has not requested by the referenced user\n\n"
 					},
@@ -201,6 +128,7 @@
 				{
 					"name": "List of Friends",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/users/1/friends",
 						"method": "GET",
 						"header": [
 							{
@@ -212,20 +140,6 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/1/friends",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"users",
-								"1",
-								"friends"
-							]
-						},
 						"description": "List of users who have requested current user, and current user has requested back\n\n"
 					},
 					"response": []
@@ -233,6 +147,7 @@
 				{
 					"name": "Force Friend Request",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/users/1/friends/2/force",
 						"method": "POST",
 						"header": [
 							{
@@ -244,22 +159,6 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/1/friends/2/force",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"users",
-								"1",
-								"friends",
-								"2",
-								"force"
-							]
-						},
 						"description": "both refrenced users become friends\n\n"
 					},
 					"response": []
@@ -267,6 +166,7 @@
 				{
 					"name": "Discover New users",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/users/1/relevant",
 						"method": "GET",
 						"header": [
 							{
@@ -277,20 +177,6 @@
 						"body": {
 							"mode": "raw",
 							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/1/relevant",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"users",
-								"1",
-								"relevant"
-							]
 						},
 						"description": "List of users who current user has yet to discover\n\n"
 					},
@@ -299,6 +185,7 @@
 				{
 					"name": "Relevant New users",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/users/1/relevant",
 						"method": "GET",
 						"header": [
 							{
@@ -309,20 +196,6 @@
 						"body": {
 							"mode": "raw",
 							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/1/relevant",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"users",
-								"1",
-								"relevant"
-							]
 						},
 						"description": "List of users who current user has yet to discover\n\n"
 					},
@@ -331,6 +204,7 @@
 				{
 					"name": "List of CURRENT Outgoing Friend Requests",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/users/4/outgoing_requests",
 						"method": "GET",
 						"header": [
 							{
@@ -341,20 +215,6 @@
 						"body": {
 							"mode": "raw",
 							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/4/outgoing_requests",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"users",
-								"4",
-								"outgoing_requests"
-							]
 						},
 						"description": "List of users requested to be freinds by a referenced user.\nOther user has not requested by the referenced user\n\n"
 					},
@@ -363,6 +223,7 @@
 				{
 					"name": "List of CURRENT Incoming Friend Requests",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/users/1/incoming_requests",
 						"method": "GET",
 						"header": [
 							{
@@ -373,20 +234,6 @@
 						"body": {
 							"mode": "raw",
 							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/users/1/incoming_requests",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"users",
-								"1",
-								"incoming_requests"
-							]
 						},
 						"description": "List of users requested to be freinds by a referenced user.\nOther user has not requested by the referenced user\n\n"
 					},
@@ -401,6 +248,7 @@
 				{
 					"name": "Add a User and Login",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/login/add",
 						"method": "POST",
 						"header": [
 							{
@@ -412,19 +260,6 @@
 							"mode": "raw",
 							"raw": "{\n    \"user\": {\n    \t\"id\" : 0,\n        \"bio\" : \"test user\",\n        \"userName\": \"test2\",\n        \"interests\": \"00000000000\",\n        \"profilePicture\": 0\n    },\n    \"password\": \"test\"\n}"
 						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/login/add",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"login",
-								"add"
-							]
-						},
 						"description": "Add a login and a user to the database\n\n"
 					},
 					"response": []
@@ -432,6 +267,7 @@
 				{
 					"name": "Remove User and Login",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/login",
 						"method": "DELETE",
 						"header": [
 							{
@@ -443,18 +279,6 @@
 							"mode": "raw",
 							"raw": "{\n    \"user\": {\n\t\t\"userName\": \"test30\"\n    },\n    \"password\": \"test\"\n}"
 						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/login",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"login"
-							]
-						},
 						"description": "Remove a login and a user from the database\n\n"
 					},
 					"response": []
@@ -462,6 +286,7 @@
 				{
 					"name": "Request Login",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/login/",
 						"method": "POST",
 						"header": [
 							{
@@ -473,19 +298,6 @@
 							"mode": "raw",
 							"raw": "{\n    \"user\": {\n\t\t\"userName\": \"test50\"\n    },\n    \"password\": \"test\"\n}"
 						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/login/",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"login",
-								""
-							]
-						},
 						"description": "Get login based on correct password\n\n"
 					},
 					"response": []
@@ -493,22 +305,14 @@
 				{
 					"name": "Add test login credentials and users",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/login/test",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/login/test",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"login",
-								"test"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				}
@@ -516,36 +320,26 @@
 		},
 		{
 			"name": "Messages",
-			"description": null,
+			"description": "",
 			"item": [
 				{
 					"name": "Get Messages To",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/messages/to/2/from/1",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/messages/to/2/from/1",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"messages",
-								"to",
-								"2",
-								"from",
-								"1"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Send Message To",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/messages/to/2/from/1",
 						"method": "POST",
 						"header": [
 							{
@@ -557,22 +351,6 @@
 							"mode": "raw",
 							"raw": "{\n\t\"message\":\"testother\",\n\t\"time\":\"1\"\n\t\n}"
 						},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/messages/to/2/from/1",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"messages",
-								"to",
-								"2",
-								"from",
-								"1"
-							]
-						},
 						"description": "send message toId\n"
 					},
 					"response": []
@@ -580,51 +358,77 @@
 				{
 					"name": "Delete Messages To",
 					"request": {
+						"url": "http://{{url}}:{{port}}/ben/messages/to/1/from/2",
 						"method": "DELETE",
 						"header": [],
-						"body": {},
-						"url": {
-							"raw": "http://{{url}}:{{port}}/ben/messages/to/1/from/2",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"ben",
-								"messages",
-								"to",
-								"1",
-								"from",
-								"2"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				}
 			]
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"id": "6a4c1218-9e06-48f8-abb6-ee28ee3fe04d",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
 		},
 		{
-			"listen": "test",
-			"script": {
-				"id": "ed1f7069-1453-4c2d-8692-cd1ed81f7fe2",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
+			"name": "Report",
+			"description": "",
+			"item": [
+				{
+					"name": "Get List of Reports",
+					"request": {
+						"url": "http://{{url}}:{{port}}/ben/report",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Returns HtmlReportList of all reports on system\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get reports to and id",
+					"request": {
+						"url": "http://{{url}}:{{port}}/ben/report/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete reports between a user",
+					"request": {
+						"url": "http://{{url}}:{{port}}/ben/report/1/from/2",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Add report between a user",
+					"request": {
+						"url": "http://{{url}}:{{port}}/ben/report/1/from/3",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"details\":\"test\",\n\t\"reason\":0\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
