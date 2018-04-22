@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Set;
 
 import friends.Friend;
+import friends.FriendsListAdapter;
 import util.JsonRequest;
 import util.UserUtil;
 
@@ -143,6 +144,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
         ArrayAdapter<Friend> adapter = new ArrayAdapter<Friend>(getActivity(), android.R.layout.simple_list_item_1, friendsList); //tell the xml to use friendsList for items on they layout
+        FriendsListAdapter adapter1 = new FriendsListAdapter(friendsList, getContext());
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //if a person in the list is clicked
             @Override
@@ -177,7 +179,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
             }
         });
 
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapter1);
 
 
     }
