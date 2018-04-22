@@ -121,45 +121,22 @@ public class MessagesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "Refreshed!", Toast.LENGTH_SHORT).show();
-                Set<String> setConversation = preferences.getStringSet("MSGFROM" + msgUserIDNum, null); //grab conversation from Volley request
-                if(setConversation != null) {
-                    MyMessage[] temp = new MyMessage[setConversation.size()];
-                    if (!setConversation.isEmpty()) {
-                        ArrayList<String> listConversation = new ArrayList<>(setConversation);
-                        JSONObject[] tempArr = MessagesUtil.convertToJSONObjectArr(listConversation);
-                        JSONObject[] sortedJSONObjectMessages = MessagesUtil.sortByTime(tempArr);
-                        Log.d("MessagesFragment", "tempArr2 after sortByTime: " + Arrays.toString(sortedJSONObjectMessages));
-                        JSONObject messageJSONObject = null;
-                        for (int i = 0; i < sortedJSONObjectMessages.length; i++) {
-                                //MyMessage temp2 = null;
-                                //messageJSONObject = new JSONObject(listConversation.get(i));
-                                temp[i] = new MyMessage(sortedJSONObjectMessages[i]);
-                                if (i == listConversation.size() - 1) {
-                                    Log.d("MessagesFragment", "temp before adding to mMessageList on blank send click: " + Arrays.toString(temp));
-                                    mMessageList.clear();
-                                    mMessageList.addAll(Arrays.asList(temp));
-                                    adapter.notifyDataSetChanged();
-                                }
-                        }
-                    }
-                }
-                MessagesUtil.getConversation(msgUserIDNum, userIDNum, getContext());
+                MyMessage[] temp = MessagesUtil.updateMessagesShown(msgUserIDNum, userIDNum, getContext());
+                mMessageList.clear();
+                mMessageList.addAll(Arrays.asList(temp));
+                adapter.notifyDataSetChanged();
             }
         });
 
         view.findViewById(R.id.button_chatbox_send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String messageString = newMessage.getText().toString(); //the message that the user typed
                 if(!messageString.equals("")){ //if it isn't empty
                     Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
                     MyMessage newMessage = new MyMessage(messageString);
-
-                    Log.d("MessagesFragment", "Typed message from user: " + messageString + "   Time: " + newMessage.getCreatedAt());
                     JSONObject messageObject = MessagesUtil.prepareSentMessage(messageString, newMessage.getCreatedAt());
                     MessagesUtil.sendMessage(userIDNum, msgUserIDNum, messageObject, getContext());
-
                     MessagesUtil.getConversation(msgUserIDNum, userIDNum, getContext());
                 }
             }

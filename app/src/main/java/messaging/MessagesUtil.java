@@ -142,31 +142,24 @@ public class MessagesUtil {
     }
 
 
-    public static MyMessage[] convertToMyMessage(Context context, int idFrom){
-        SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
-        Set<String> setConversation = preferences.getStringSet("MSGFROM" + idFrom, null);
-        MyMessage[] myMessageConversation = new MyMessage[setConversation.size()];
-        if(!setConversation.isEmpty()){
-            List<String> listConversation = new ArrayList<>(setConversation);
-            JSONObject messageJSONObject = null;
-            for(int i = 0; i < setConversation.size(); i++){
-                try {
-                    messageJSONObject = new JSONObject(listConversation.get(i));
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if(messageJSONObject != null){
-                    myMessageConversation[i] = new MyMessage(messageJSONObject);
-                    Log.d("MessagesUtil", "myMessageConversation[" + i +"]: " + myMessageConversation[i]);
-                }
-                if(i == setConversation.size() -1){
-                    return myMessageConversation;
+    public static MyMessage[] updateMessagesShown(int msgUserIDNum, int userIDNum, Context context){
+        MyMessage[] myMessageArr = null;
+        SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
+        Set<String> setConversation = preferences.getStringSet("MSGFROM" + msgUserIDNum, null); //grab conversation from Volley request
+        if(setConversation != null) {
+            myMessageArr = new MyMessage[setConversation.size()];
+            if (!setConversation.isEmpty()) {
+                ArrayList<String> listConversation = new ArrayList<>(setConversation);
+                JSONObject[] tempArr = MessagesUtil.convertToJSONObjectArr(listConversation);
+                JSONObject[] sortedJSONObjectMessages = MessagesUtil.sortByTime(tempArr);
+                Log.d("MessagesFragment", "tempArr2 after sortByTime: " + Arrays.toString(sortedJSONObjectMessages));
+                for (int i = 0; i < sortedJSONObjectMessages.length; i++) {
+                    myMessageArr[i] = new MyMessage(sortedJSONObjectMessages[i]);
                 }
             }
-            Log.d("MessagesUtil", "myMessageConversation: " + Arrays.toString(myMessageConversation));
         }
-        return myMessageConversation;
+        MessagesUtil.getConversation(msgUserIDNum, userIDNum, context); //grab conversation for next refresh
+        return myMessageArr;
     }
 
     /**
