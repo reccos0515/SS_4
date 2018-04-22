@@ -169,4 +169,9 @@ public class MessagesUtil {
         return myMessageConversation;
     }
 
+    public static ArrayList sortByTime(){ //TODO implement so messages don't appear out of order
+
+        return null;
+    }
+
 }

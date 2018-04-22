@@ -120,9 +120,8 @@ public class MessagesFragment extends Fragment {
         view.findViewById(R.id.button_refresh).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("MessagesFragment", "Entered blank click of the send button");
+                Toast.makeText(getContext(), "Refreshed!", Toast.LENGTH_SHORT).show();
                 Set<String> setConversation = preferences.getStringSet("MSGFROM" + msgUserIDNum, null); //grab conversation from Volley request
-                Log.d("MessagesFragment", "msgUserIDNum: " + msgUserIDNum);
                 if(setConversation != null) {
                     Log.d("MessagesFragment", "setConversation: " + setConversation.toString());
                     MyMessage[] temp = new MyMessage[setConversation.size()];
