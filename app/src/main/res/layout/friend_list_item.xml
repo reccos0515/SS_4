@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Username"
         android:textSize="24sp"
-        app:layout_constraintLeft_toRightOf="@+id/image_message_profile"
+        app:layout_constraintLeft_toRightOf="@+id/profilePic"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="4dp"
@@ -21,7 +21,7 @@
          />
 
     <ImageView
-        android:id="@+id/image_message_profile"
+        android:id="@+id/profilePic"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/ic_empty"
@@ -40,7 +40,7 @@
         android:layout_marginTop="2dp"
         android:lines="1"
         android:text="This is a sample bio full of bio things.  It's long to test bio view things for the friends view things.  Hopefully this looks pretty."
-        app:layout_constraintLeft_toRightOf="@+id/image_message_profile"
+        app:layout_constraintLeft_toRightOf="@+id/profilePic"
         app:layout_constraintTop_toBottomOf="@id/usernameView" />
 
 </android.support.constraint.ConstraintLayout>

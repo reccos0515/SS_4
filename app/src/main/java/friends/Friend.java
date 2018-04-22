@@ -29,6 +29,7 @@ public class Friend {
     private String username;
     private String bio;
     private String interests;
+    private int profilePicNum;
     private static String urlBase = "http://proj-309-ss-4.cs.iastate.edu:9001/ben"; //base for all urls
 
     /**
@@ -49,6 +50,7 @@ public class Friend {
         this.bio = "empty";
         this.id = "emtpy";
         this.interests = "empty";
+        this.profilePicNum = 0;
     }
 
     /**
@@ -62,9 +64,26 @@ public class Friend {
             this.id = js.getString("id");
             this.username = js.getString("userName");
             this.interests = js.getString("interests");
+            this.profilePicNum = js.getInt("profilePicture");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getUsername(){
+        return username;
+    }
+
+    public String getId(){
+        return id;
+    }
+
+    public String getBio(){
+        return bio;
+    }
+
+    public int getProfilePicture(){
+        return profilePicNum;
     }
 
     /**
@@ -102,7 +121,7 @@ public class Friend {
      * @param friendId the friend to be deleted from the user's list
      * @param context the context in which this method is used
      */
-    public static void removeFriend(int userId, int friendId, Context context){
+    public static void removeFriend(int userId, int friendId, Context context){ //TODO implement
         String url = urlBase + "/users/" + userId + "/friends/" + friendId + ""; //TODO review url
         UserUtil.deleteRequest(url, context);
     }

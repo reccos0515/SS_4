@@ -1,12 +1,13 @@
 package friends;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 public class PendingFriendsAdapter extends BaseAdapter{
 
-    public PendingFriendsAdapter(){
+    public PendingFriendsAdapter(Context context){
 
     }
 

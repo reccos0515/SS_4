@@ -40,7 +40,7 @@ public class UserUtil {
     public static JSONObject prepareLogin(String username, String password, Context context){
         JSONObject fullJS = new JSONObject();
 
-        try { //TODO modify for how Ben wants info
+        try {
             userJSONObject.put("userName", username);
             fullJS.put("user", userJSONObject);
             fullJS.put("password", password);

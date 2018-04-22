@@ -1,14 +1,26 @@
 package friends;
 
-import android.support.v7.widget.RecyclerView;
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.conectar.conectar.R;
+
+import util.UserUtil;
 
 public class FriendsListAdapter extends BaseAdapter {
+    Context context;
+    Friend[] friends;
+    private static LayoutInflater inflater = null;
 
-    public FriendsListAdapter(){
-
+    public FriendsListAdapter(Friend[] friends, Context context){
+        this.context = context;
+        this.friends = friends;
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -18,16 +30,29 @@ public class FriendsListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return friends.length;
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public Object getItem(int position) {
+        return friends[position];
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        return null;
+        View newView = view;
+        if(newView == null){
+            newView = inflater.inflate(R.layout.friend_list_item, null);
+            TextView username = (TextView) newView.findViewById(R.id.usernameView);
+            TextView bio = (TextView) newView.findViewById(R.id.bioView);
+            ImageView profilePicture = (ImageView) newView.findViewById(R.id.profilePic);
+
+            Friend thisFriend = friends[i];
+            username.setText(thisFriend.getUsername());
+            bio.setText(thisFriend.getBio());
+            int profilePicNum = thisFriend.getProfilePicture();
+            UserUtil.updateProfilePicture(profilePicNum, profilePicture);
+        }
+        return newView;
     }
 }
