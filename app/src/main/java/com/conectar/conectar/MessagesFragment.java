@@ -114,9 +114,11 @@ public class MessagesFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.reyclerview_message_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+        /*
         temp = MessagesUtil.updateMessagesShown(msgUserIDNum, userIDNum, getContext());
         mMessageList.clear();
         mMessageList.addAll(Arrays.asList(temp));
+        */
         final MessageListAdapter adapter = new MessageListAdapter(getContext(), mMessageList);
         recyclerView.setAdapter(adapter);
 

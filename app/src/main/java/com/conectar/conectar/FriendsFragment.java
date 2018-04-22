@@ -121,10 +121,11 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         final Set<String> empty = new HashSet<>(Arrays.asList(fake));
         final Set<String> temp2 = preferences.getStringSet("FRIENDJSON", empty);
         Log.d("FriendsFragment", "temp2: " + temp2.toString());
+        final List<String> friendsObjects = new ArrayList<String>(temp2); //convert the list of JSONObjects of users to an arraylist
+
 
         if(temp2 != empty){
             friendsList = new Friend[temp2.size()];
-            List<String> friendsObjects = new ArrayList<String>(temp2); //convert the list of JSONObjects of users to an arraylist
             Log.d("FriendsFragment", "friendsObjects: " + friendsObjects.toString());
             Log.d("FriendsFragment", "size of temp2: " + temp2.size());
             for(int i = 0; i < temp2.size(); i++){
@@ -147,16 +148,20 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if(temp2 != empty){ //if there are users sent back and not the garbage initialized user
-                    Toast.makeText(getActivity(), "item " + i + " was clicked on", Toast.LENGTH_LONG).show(); //who was clicked on
+                    try {
+                        UserUtil.setUserToView(new JSONObject(friendsObjects.get(i)));
+                        UserUtil.setUserToViewIsFriend(true);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                    /*
                     //pull up the profile of the friend that's clicked on
                     Fragment fragment = new ProfileViewFragment();
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.screen_area, fragment);
                     fragmentTransaction.commit();
-                    */
+
                 }
                 else{
                     Toast.makeText(getActivity(), "Error", Toast.LENGTH_LONG).show();
