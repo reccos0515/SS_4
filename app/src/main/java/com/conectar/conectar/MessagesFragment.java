@@ -123,29 +123,23 @@ public class MessagesFragment extends Fragment {
                 Toast.makeText(getContext(), "Refreshed!", Toast.LENGTH_SHORT).show();
                 Set<String> setConversation = preferences.getStringSet("MSGFROM" + msgUserIDNum, null); //grab conversation from Volley request
                 if(setConversation != null) {
-                    Log.d("MessagesFragment", "setConversation: " + setConversation.toString());
                     MyMessage[] temp = new MyMessage[setConversation.size()];
                     if (!setConversation.isEmpty()) {
                         ArrayList<String> listConversation = new ArrayList<>(setConversation);
                         JSONObject[] tempArr = MessagesUtil.convertToJSONObjectArr(listConversation);
-                        JSONObject[] tempArr2 = MessagesUtil.sortByTime(tempArr);
-                        Log.d("MessagesFragment", "tempArr2 after sortByTime: " + Arrays.toString(tempArr2));
+                        JSONObject[] sortedJSONObjectMessages = MessagesUtil.sortByTime(tempArr);
+                        Log.d("MessagesFragment", "tempArr2 after sortByTime: " + Arrays.toString(sortedJSONObjectMessages));
                         JSONObject messageJSONObject = null;
-
-                        for (int i = 0; i < setConversation.size(); i++) {
-                            try {
-                                MyMessage temp2 = null;
-                                messageJSONObject = new JSONObject(listConversation.get(i));
-                                temp[i] = new MyMessage(messageJSONObject);
+                        for (int i = 0; i < sortedJSONObjectMessages.length; i++) {
+                                //MyMessage temp2 = null;
+                                //messageJSONObject = new JSONObject(listConversation.get(i));
+                                temp[i] = new MyMessage(sortedJSONObjectMessages[i]);
                                 if (i == listConversation.size() - 1) {
                                     Log.d("MessagesFragment", "temp before adding to mMessageList on blank send click: " + Arrays.toString(temp));
                                     mMessageList.clear();
                                     mMessageList.addAll(Arrays.asList(temp));
                                     adapter.notifyDataSetChanged();
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
                         }
                     }
                 }

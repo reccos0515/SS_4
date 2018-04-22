@@ -169,11 +169,17 @@ public class MessagesUtil {
         return myMessageConversation;
     }
 
-    public static JSONObject[] convertToJSONObjectArr(ArrayList<String> listConversation){
-        JSONObject[] JSONObjectArr = new JSONObject[listConversation.size()];
+    /**
+     * Converts an ArrayList of string JSONObjects to a JSONObject array, can also be used outside of
+     * messaging
+     * @param stringJSONObjects an ArrayList of strings
+     * @return an array of JSONObjects
+     */
+    public static JSONObject[] convertToJSONObjectArr(ArrayList<String> stringJSONObjects){
+        JSONObject[] JSONObjectArr = new JSONObject[stringJSONObjects.size()];
         for(int i = 0; i < JSONObjectArr.length; i++){
             try {
-                JSONObjectArr[i] = new JSONObject(listConversation.get(i));
+                JSONObjectArr[i] = new JSONObject(stringJSONObjects.get(i));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -182,7 +188,12 @@ public class MessagesUtil {
         return JSONObjectArr;
     }
 
-    public static JSONObject[] sortByTime(JSONObject[] JSONObjectArr){ //TODO implement so messages don't appear out of order
+    /**
+     * Sorts a JSONObject array of messages based on the order in which they were created using bubble sort
+     * @param JSONObjectArr an array of messages to be sorted
+     * @return a sorted array of messages
+     */
+    public static JSONObject[] sortByTime(JSONObject[] JSONObjectArr){
         int thisId = 0;
         int nextId = 0;
         for(int i = 0; i < JSONObjectArr.length - 1; i++){
