@@ -119,6 +119,12 @@ public class MessagesFragment extends Fragment {
         final MessageListAdapter adapter = new MessageListAdapter(getContext(), mMessageList);
         recyclerView.setAdapter(adapter);
 
+        Boolean hasConversation = preferences.getBoolean("MSGWITH" + msgUserIDNum, false);
+        if(hasConversation){
+            update();
+            adapter.notifyDataSetChanged();
+        }
+
 
         view.findViewById(R.id.button_refresh).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,9 +132,7 @@ public class MessagesFragment extends Fragment {
                 Boolean hasConversation = preferences.getBoolean("MSGWITH" + msgUserIDNum, false);
                 if(hasConversation){
                     Toast.makeText(getContext(), "Refreshed!", Toast.LENGTH_SHORT).show();
-                    temp = MessagesUtil.updateMessagesShown(msgUserIDNum, userIDNum, getContext());
-                    mMessageList.clear();
-                    mMessageList.addAll(Arrays.asList(temp));
+                    update();
                     adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getActivity(), "Send some messages!", Toast.LENGTH_SHORT).show();
@@ -150,6 +154,13 @@ public class MessagesFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void update(){
+        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
+        temp = MessagesUtil.updateMessagesShown(msgUserIDNum, userIDNum, getContext());
+        mMessageList.clear();
+        mMessageList.addAll(Arrays.asList(temp));
     }
 
 
