@@ -80,6 +80,7 @@ public class JsonRequest {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                SwipeFragment.newErrorPage(fm);
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue

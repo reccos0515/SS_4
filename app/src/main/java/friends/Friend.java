@@ -106,9 +106,9 @@ public class Friend {
      * @param friendId user that the request is going to
      * @param context context in which this method is used
      */
-    public static void makeFriend(int userId, int friendId, Context context){
+    public static void makeFriend(int userId, int friendId, Context context, final android.support.v4.app.FragmentManager fm){
         String url = urlBase + "/users/" + userId + "" + "/request_friend/" + friendId + "";
-        UserUtil.postRequest(url, context);
+        UserUtil.postRequest(url, context, fm);
     }
 
     /**

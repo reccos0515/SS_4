@@ -114,7 +114,7 @@ public class UserUtil {
      * @param url to send the post request to
      * @param context of the activity the is being called from
      */
-    public static void postRequest(String url, Context context){
+    public static void postRequest(String url, Context context, final android.support.v4.app.FragmentManager fm){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -125,6 +125,7 @@ public class UserUtil {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                SwipeFragment.newErrorPage(fm);
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue

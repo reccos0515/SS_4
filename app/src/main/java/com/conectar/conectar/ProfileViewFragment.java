@@ -202,7 +202,7 @@ public class ProfileViewFragment extends Fragment {
                     public void onClick(View view) {
                         //first id receives, second id sends
                         try {
-                            Friend.makeFriend(userIDNum, user.getInt("id"), getContext());
+                            Friend.makeFriend(userIDNum, user.getInt("id"), getContext(), getFragmentManager());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
