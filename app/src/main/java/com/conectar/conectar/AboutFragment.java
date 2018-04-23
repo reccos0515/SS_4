@@ -64,7 +64,7 @@ public class AboutFragment extends Fragment {
         view.findViewById(R.id.about_seenAll).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                answer.setText("The creators of coNECTAR believe it's important that you know you've seen everyone in this setting. If you'd like to look again at users you've seen before, you can change to a different status and back. Then you'll be able to see everyone all over again!");
+                answer.setText("The creators of coNECTAR believe it's important that you know you've seen everyone in this setting. If you'd like to look again at users you've seen before, you can press 'next' or you can change to a different status and back. Then you'll be able to see everyone all over again!");
             }
         });
         view.findViewById(R.id.about_whoMade).setOnClickListener(new View.OnClickListener(){
