@@ -139,7 +139,7 @@ public class NewProfileFragment extends Fragment {
                         e.printStackTrace();
                     }
                     //make the post request
-                    JsonRequest.postNewUserRequest(toSend, url, getContext());
+                    JsonRequest.postNewUserRequest(toSend, url, getContext(), getFragmentManager());
                     //if confirmPassword and password are the same, submit
                     text = "Successfully submitted";
 

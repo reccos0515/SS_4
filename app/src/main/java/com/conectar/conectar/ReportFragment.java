@@ -156,7 +156,7 @@ public class ReportFragment extends Fragment {
 
                         //create the url and send the report
                         baseUrl += getRepId() + "/from/" + getid();
-                        UserUtil.postReportRequest(baseUrl, context, report);
+                        UserUtil.postReportRequest(baseUrl, context, report, getFragmentManager());
 
                         //tell the user it was successful
                         Toast.makeText(getActivity(), "Your report has been submitted. You may be contacted for further information", Toast.LENGTH_LONG).show(); //toast to tell the user they need to give details

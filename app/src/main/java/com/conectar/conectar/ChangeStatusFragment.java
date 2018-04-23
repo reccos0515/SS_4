@@ -111,7 +111,7 @@ public class ChangeStatusFragment extends Fragment {
             public void onClick(View view) { //set status to green
                 //can set it as long as it was not already green
                 if(preferences.getInt("STATUS", 0) != 2) {
-                    UserUtil.updateStatus(2, getContext()); //call this to update the status
+                    UserUtil.updateStatus(2, getContext(), getFragmentManager()); //call this to update the status
                     currentStatus.setText("Status is Green");
                     Toast.makeText(getActivity(), "Status set to green", Toast.LENGTH_SHORT).show(); //toast to tell user it worked
                 } else {
@@ -124,7 +124,7 @@ public class ChangeStatusFragment extends Fragment {
             public void onClick(View view){ //set status to yellow
                 //can set it as long as it was not already yellow
                 if(preferences.getInt("STATUS", 0) != 1) {
-                    UserUtil.updateStatus(1, getContext()); //call this to update the status
+                    UserUtil.updateStatus(1, getContext(), getFragmentManager()); //call this to update the status
                     currentStatus.setText("Status is Yellow");
                     Toast.makeText(getActivity(), "Status set to yellow", Toast.LENGTH_SHORT).show(); //toast to tell the user it worked
                 } else {
@@ -137,7 +137,7 @@ public class ChangeStatusFragment extends Fragment {
             public void onClick(View view) { //set status to red
                 //can set it as long as it was not already red
                 if(preferences.getInt("STATUS", 0) != 0) {
-                    UserUtil.updateStatus(0, getContext()); //call this to update the status
+                    UserUtil.updateStatus(0, getContext(), getFragmentManager()); //call this to update the status
                     currentStatus.setText("Status is Red");
                     Toast.makeText(getActivity(), "Status set to red", Toast.LENGTH_SHORT).show(); //toast to let the user know it worked
                 } else {

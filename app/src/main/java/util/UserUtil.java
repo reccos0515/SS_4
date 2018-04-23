@@ -12,6 +12,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.conectar.conectar.R;
+import com.conectar.conectar.SwipeFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,7 +58,7 @@ public class UserUtil {
      * @param status the new status the user wishes to switch to
      * @param context the context in which this method is used
      */
-    public static void updateStatus(int status, Context context){
+    public static void updateStatus(int status, Context context, final android.support.v4.app.FragmentManager fm){
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
@@ -103,7 +104,7 @@ public class UserUtil {
         else{
             Log.d("updateStatus", "wrong status input");
         }
-        JsonRequest.jsonObjectPutRequest(js, url, context);
+        JsonRequest.jsonObjectPutRequest(js, url, context, fm);
         UserUtil.setUsersArray(null);
         return;
     }
@@ -337,7 +338,7 @@ public class UserUtil {
      * @param context of the activity the is being called from
      * @param report JSONObject of the report to be made
      */
-    public static void postReportRequest(String url, Context context, JSONObject report){
+    public static void postReportRequest(String url, Context context, JSONObject report, final android.support.v4.app.FragmentManager fm){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, report,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -348,6 +349,7 @@ public class UserUtil {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                SwipeFragment.newErrorPage(fm);
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue

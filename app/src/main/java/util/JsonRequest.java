@@ -56,7 +56,7 @@ public class JsonRequest {
      * @param url url of where this request should be sent
      * @param context context from the activity
      */
-    public static void postNewUserRequest(JSONObject js, String url, final Context context){
+    public static void postNewUserRequest(JSONObject js, String url, final Context context, final android.support.v4.app.FragmentManager fm){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  js,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -73,6 +73,7 @@ public class JsonRequest {
                             editor.apply(); //apply this change
                         }catch (JSONException e){
                             e.printStackTrace();
+                            SwipeFragment.newErrorPage(fm);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -172,7 +173,7 @@ public class JsonRequest {
      * @param url the url that the request will be sent to
      * @param context context this is called from
      */
-    public static void jsonObjectPutRequest(JSONObject js, String url, Context context){
+    public static void jsonObjectPutRequest(JSONObject js, String url, Context context, final android.support.v4.app.FragmentManager fm){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, js, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -183,6 +184,7 @@ public class JsonRequest {
             public void onErrorResponse(VolleyError error) {
                 Log.d("Object Put Status", "error");
                 error.printStackTrace();
+                SwipeFragment.newErrorPage(fm);
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest);

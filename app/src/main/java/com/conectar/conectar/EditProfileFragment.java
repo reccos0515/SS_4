@@ -284,7 +284,7 @@ public class EditProfileFragment extends Fragment {
                 } catch (JSONException e){
                     e.printStackTrace();
                 }
-                JsonRequest.jsonObjectPutRequest(js, "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users", context); //send the new put request
+                JsonRequest.jsonObjectPutRequest(js, "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users", context, getFragmentManager()); //send the new put request
                 UserUtil.setUserToView(js); //update what the user will see
                 //create the new profile view fragment
                 Fragment fragment = new ProfileViewFragment();
