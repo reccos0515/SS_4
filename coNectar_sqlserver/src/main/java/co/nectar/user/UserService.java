@@ -717,7 +717,19 @@ public class UserService {
 				return new HtmlError(success, error);
 			}
 
+
 			send = makeSend(user, relevant);
+			if(send.size() == 0){
+				success = false;
+				error = "User has discovered everyone";
+
+				List<User> empty = new ArrayList<User>();
+				user.setBeenDiscovered(empty);
+				userRepo.save(user);
+				return HtmlError(success, error);
+			}else{
+				return new HtmlUserList(success, send);
+			}
 			return new HtmlUserList(success, send);
 		}
 
