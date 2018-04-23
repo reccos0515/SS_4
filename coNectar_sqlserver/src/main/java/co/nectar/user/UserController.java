@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import co.nectar.HtmlResponce.HtmlError;
 import co.nectar.HtmlResponce.HtmlResponce;
@@ -56,6 +57,7 @@ public class UserController {
 	 * @param userId
 	 * @return
 	 */
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}")
 	public HtmlResponce getUser(@PathVariable int userId) {
 		return userService.getUserById(userId);

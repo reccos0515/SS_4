@@ -5,11 +5,8 @@
 
 	<groupId>co.nectar</groupId>
 	<artifactId>NectarServer</artifactId>
-<<<<<<< HEAD
 	<version>1.3.0-SNAPSHOT</version>
-=======
-	<version>1.4.0-SNAPSHOT</version>
->>>>>>> ef60cf39099b8e04b7e8fe5369ec0e9697600bcc
+
 	<packaging>jar</packaging>
 
 	<name>NectarServer</name>

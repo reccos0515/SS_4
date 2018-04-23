@@ -726,11 +726,11 @@ public class UserService {
 				List<User> empty = new ArrayList<User>();
 				user.setBeenDiscovered(empty);
 				userRepo.save(user);
-				return HtmlError(success, error);
+				return new HtmlError(success, error);
 			}else{
 				return new HtmlUserList(success, send);
 			}
-			return new HtmlUserList(success, send);
+			
 		}
 
 		return new HtmlError(success, error);
