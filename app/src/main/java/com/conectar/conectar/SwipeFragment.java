@@ -125,7 +125,7 @@ public class SwipeFragment extends Fragment {
         context = getActivity().getApplicationContext(); //get the context
         //if should get a new list of users
         if(UserUtil.getUsersArray() == null) {
-            JsonRequest.swipeRequest(view, url, context); //call this to send the request
+            JsonRequest.swipeRequest(view, url, context, getFragmentManager()); //call this to send the request
         } else { //if continuing to use old user array
             users = UserUtil.getUsersArray(); //pull the array
             len = users.length(); //set the length
@@ -147,7 +147,7 @@ public class SwipeFragment extends Fragment {
                     //if it has reached the end, make a new request
                     if (userOnDisplayLoc >= len) {
                         userOnDisplayLoc = 0; //return to 0 spot
-                        JsonRequest.swipeRequest(mainView, url, context); //call this to send the request
+                        JsonRequest.swipeRequest(mainView, url, context, getFragmentManager()); //call this to send the request
                     }
                     try {
                         JSONObject user = users.getJSONObject(userOnDisplayLoc); //pull this user
@@ -173,7 +173,7 @@ public class SwipeFragment extends Fragment {
                     }
                 }
                 else{
-                    JsonRequest.swipeRequest(mainView, url, context); //call this to send the request
+                    JsonRequest.swipeRequest(mainView, url, context, getFragmentManager()); //call this to send the request
                 }
             }
         });
@@ -349,13 +349,16 @@ public class SwipeFragment extends Fragment {
         return;
     }
 
-    public static void newErrorPage(){
-//        Fragment fragment = new ErrorFragment();
-//        FragmentManager fragmentManager = getFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.replace(R.id.screen_area, fragment);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
+    /**
+     * method to create an error page if the volley request does not receive a response
+     */
+    public static void newErrorPage(FragmentManager fm){
+        Fragment fragment = new ErrorFragment();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.screen_area, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        return;
     }
 
     /**

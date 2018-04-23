@@ -198,7 +198,7 @@ public class JsonRequest {
      * @param url url to send the request to
      * @param context context from that page
      */
-    public static void swipeRequest(final View nView, String url, final Context context){
+    public static void swipeRequest(final View nView, String url, final Context context, final android.support.v4.app.FragmentManager fm){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -272,7 +272,8 @@ public class JsonRequest {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                SwipeFragment.newErrorPage();
+                SwipeFragment.newErrorPage(fm);
+                return;
             }
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue

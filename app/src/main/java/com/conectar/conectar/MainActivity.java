@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity
             SwipeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener,
             ProfileViewFragment.OnFragmentInteractionListener, SelfProfileViewFragment.OnFragmentInteractionListener,
             AboutFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener,
-            ReportFragment.OnFragmentInteractionListener, ProfilePictureFragment.OnFragmentInteractionListener, PendingFriendsFragment.OnFragmentInteractionListener{
+            ReportFragment.OnFragmentInteractionListener, ProfilePictureFragment.OnFragmentInteractionListener,
+            PendingFriendsFragment.OnFragmentInteractionListener, ErrorFragment.OnFragmentInteractionListener{
     /*Added Logout, Edit Profile, Change Status, Friends, Messages, New Profile, Search, Swipe Screen/Home, Login
     to drawer navigation */
 
