@@ -1,17 +1,18 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Moderator Reports</title>
+		<title>Moderator Ban</title>
 		<link rel="stylesheet" type="text/css" href="../nectar.css">
 		<script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
 		<script type="text/javascript" src="Moderator.js"></script>
 	</head>
-	<body onload="javascript: loadReports();">
+	<body>
+		<p class="center"><input type="text" value="" id="UserID"></p>
 		<p></p>
 		<div class="center" id="div1"></div>
 		<p></p>
 		<div class="center" id="but1">
-			<button class="button type="button" onclick="javascript: loadReports();">Next Page</button>
+			<button class="button type="button" onclick="javascript: banUser();">Ban User</button>
 		</div>
 		<p></p>
 		<div class="center" id="but2">

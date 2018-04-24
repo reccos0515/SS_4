@@ -2,6 +2,7 @@ var i = 0;
 var j = 0;
 var url1 = "http://localhost:9001";
 var url2 = "http://proj-309-ss-4.cs.iastate.edu:9001";
+url = url1;
 
 function loadUsers (){
 	var http = new XMLHttpRequest();
