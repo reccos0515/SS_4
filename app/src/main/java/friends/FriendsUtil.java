@@ -28,12 +28,28 @@ public class FriendsUtil {
         Log.d("FriendsUtil", "friendsFriends: " + Arrays.toString(friendsFriends));
         Log.d("FriendsUtil", "pendingFriends: " + Arrays.toString(pendingFriends));
 
+//        for(int i = 0; i < pendingFriends.length; i++){
+//            if(!Arrays.asList(friendsFriends).contains(pendingFriends[i])) {
+//                Log.d("FriendsUtil", "Adding to list: " + pendingFriends[i]);
+//                finalPending.add(pendingFriends[i]);
+//            }
+//        }
         for(int i = 0; i < pendingFriends.length; i++){
-            if(!Arrays.asList(friendsFriends).contains(pendingFriends[i])) {
+            boolean isFriend = false;
+            for(int j = 0; j < friendsFriends.length; j++){
+                int temp1 = friendsFriends[j].getId();
+                int temp2 = pendingFriends[i].getId();
+                Log.d("FriendsUtil", "temp1: " + temp1 + "   temp2: " + temp2);
+                if(temp1 == temp2){
+                    isFriend = true;
+                    Log.d("FriendsUtil", "Found friend");
+                }
+            }
+            if(!isFriend){
                 finalPending.add(pendingFriends[i]);
             }
         }
-
+        Log.d("FriendsUtil", "finalPending: " + finalPending.toString());
         return finalPending;
     }
 

@@ -357,7 +357,7 @@ public class JsonRequest {
     }
 
     public static void getPendingFriends(int id, final Context context){
-        String url =  "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id +"/recievedrequestfrom";
+        String url =  "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id +"/incoming_requests";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

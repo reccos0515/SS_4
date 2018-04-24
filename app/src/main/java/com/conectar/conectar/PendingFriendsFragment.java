@@ -14,10 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import friends.Friend;
 import friends.FriendsUtil;
+import friends.PendingFriendsAdapter;
 import util.JsonRequest;
 
 
@@ -31,6 +39,7 @@ import util.JsonRequest;
  * This class is to view pending friend requests to the logged in user
  */
 public class PendingFriendsFragment extends Fragment {
+    Friend[] pendingList = {new Friend("empty")}; //put a default value to be grabbed in case user doesn't have friends
 
     private OnFragmentInteractionListener mListener;
 
@@ -87,9 +96,24 @@ public class PendingFriendsFragment extends Fragment {
 
         ListView listView = (ListView) view.findViewById(R.id.pendingListView); //grabs the listview from the xml layout
 
+        String[] fake = new String[]{"empty"};
+        final Set<String> empty = new HashSet<>(Arrays.asList(fake));
+        final Set<String> temp2 = preferences.getStringSet("PENDINGJSON", empty);
+        final List<String> pendingObjects = new ArrayList<String>(temp2);
 
-        ArrayList<Friend> pendingList = FriendsUtil.removeAcceptedFriends(getContext());
-        Log.d("PendingFriendsFragment", "pendingList: " + pendingList.toString());
+        if(temp2 != empty){
+            pendingList = new Friend[temp2.size()];
+            for(int i = 0; i < temp2.size(); i++){
+                try {
+                    JSONObject user = new JSONObject(pendingObjects.get(i));
+                    pendingList[i] = new Friend(user);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        PendingFriendsAdapter adapter = new PendingFriendsAdapter(pendingList, getContext());
 
         view.findViewById(R.id.friendsListBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +125,8 @@ public class PendingFriendsFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+
+        listView.setAdapter(adapter);
 
     }
 

@@ -25,7 +25,7 @@ import util.UserUtil;
  */
 
 public class Friend {
-    private String id;
+    private int id;
     private String username;
     private String bio;
     private String interests;
@@ -48,7 +48,7 @@ public class Friend {
         super();
         this.username = username;
         this.bio = "empty";
-        this.id = "emtpy";
+        this.id = 0;
         this.interests = "empty";
         this.profilePicNum = 0;
     }
@@ -61,7 +61,7 @@ public class Friend {
         super();
         try {
             this.bio = js.getString("bio");
-            this.id = js.getString("id");
+            this.id = js.getInt("id");
             this.username = js.getString("userName");
             this.interests = js.getString("interests");
             this.profilePicNum = js.getInt("profilePicture");
@@ -74,7 +74,7 @@ public class Friend {
         return username;
     }
 
-    public String getId(){
+    public int getId(){
         return id;
     }
 
