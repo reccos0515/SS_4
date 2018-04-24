@@ -121,6 +121,8 @@ public class SwipeFragment extends Fragment {
         Log.d("SwipeFragment", "Id of user: " + id + "");
         url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/users/" + id + "" + "/relevant"; //set the url
         Log.d("SwipeFragment", "Url posted to: " + url);
+        JsonRequest.getFriendsList(preferences.getInt("ID", 0), getContext()); //hopefully prevents empty from showing up in empty list, called here so request finishes by time user goes to friends list
+
 
         context = getActivity().getApplicationContext(); //get the context
         //if should get a new list of users
