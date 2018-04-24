@@ -1,6 +1,7 @@
 var i = 0;
 var j = 0;
-var url = "http://localhost:9001";
+var url1 = "http://localhost:9001";
+var url2 = "http://proj-309-ss-4.cs.iastate.edu:9001";
 
 function loadUsers (){
 	var http = new XMLHttpRequest();
@@ -31,7 +32,7 @@ function loadUsers (){
 			}
 		}
 	}
-	http.open("GET", url + "/ben/users", true);
+	http.open("GET", url2 + "/ben/users", true);
 	http.send();
 }
 
@@ -66,7 +67,7 @@ function getSpecificUser() {
 	}
     var x, y, text;
     id = document.getElementById("UserID").value;
-    var request = url + "/ben/users/" + id;
+    var request = url2 + "/ben/users/" + id;
    
     http.open("GET", request, true);
 	http.send();
