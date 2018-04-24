@@ -43,7 +43,8 @@ public class User {
 	private String interests;
 	//private Integer[numInterests] interests;
 	private String bio;
-
+	@JsonIgnore
+	private boolean blocked;
 	private int profilePicture;
 	
 	
@@ -86,6 +87,12 @@ public class User {
 
 
 
+	public boolean isBlocked() {
+		return blocked;
+	}
+	public void setBlocked(boolean blocked) {
+		this.blocked = blocked;
+	}
 	public int getProfilePicture() {
 		return profilePicture;
 	}
