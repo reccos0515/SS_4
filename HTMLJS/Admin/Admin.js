@@ -43,6 +43,10 @@ function goAdminUser() {
 	window.location="AdminUser.html";
 }
 
+function goModerator() {
+	window.location="../Moderator/ModeratorHome.html";
+}
+
 function goLogin() {
 	window.location="../Login.html";
 }
