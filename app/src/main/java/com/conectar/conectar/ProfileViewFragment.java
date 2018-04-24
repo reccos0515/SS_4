@@ -86,7 +86,6 @@ public class ProfileViewFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
-        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
         userIDNum = preferences.getInt("ID", 0); //get the user's id
         user = UserUtil.getUserToView(); //get the user that should be shown
@@ -180,7 +179,7 @@ public class ProfileViewFragment extends Fragment {
                     public void onClick(View view) {
                         //create the new edit profile fragment
                         JSONObject temp = UserUtil.getUserToView();
-                        int userToViewId = 0; //TODO modularize
+                        int userToViewId = 0;
                         try {
                             userToViewId = temp.getInt("id");
                         } catch (JSONException e) {

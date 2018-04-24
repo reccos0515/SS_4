@@ -13,13 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import util.UserUtil;
-
-//import org.omg.CORBA.Current;
 
 
 /**

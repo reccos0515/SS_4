@@ -9,14 +9,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -45,7 +42,6 @@ import util.UserUtil;
  */
 public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     Friend[] friendsList = {new Friend("empty")}; //put a default value to be grabbed in case user doesn't have friends
-    private SwipeRefreshLayout mSwipeRefreshLayout;
     int id;
 
     private OnFragmentInteractionListener mListener;
@@ -109,14 +105,9 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
         id = preferences.getInt("ID", 0); //get the logged in user's id
 
-        ListView listView = (ListView) view.findViewById(R.id.friendsListView); //grabs the listview from the xml layout
+        ListView listView = view.findViewById(R.id.friendsListView); //grabs the listview from the xml layout
         JsonRequest.getFriendsList(id, context); //get a list of friends and store in sharedpreferences
         JsonRequest.getPendingFriends(id, context);
-
-
-        JSONObject initial = new JSONObject();
-
-        Set<String> temp = preferences.getStringSet("FRIENDSLISTUSERNAMES", null); //get the list of usernames from shared preferences
 
         //a bunch of garbage to initialize temp2 so friendsObjects doesn't bug out
         String[] fake = new String[]{"empty"};

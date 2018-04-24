@@ -2,7 +2,6 @@ package messaging;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.LinearGradient;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -17,7 +16,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import util.Singleton;
@@ -77,7 +75,6 @@ public class MessagesUtil {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                //Log.d("JsonRequest", "getConversation response from server: " + response.toString());
                 Boolean success = false;
                 try {
                     success = response.getBoolean("success");
@@ -87,7 +84,7 @@ public class MessagesUtil {
                 if (success){ //if server said request was successful
                     final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
                     final SharedPreferences.Editor editor = preferences.edit();
-                    JSONArray message = new JSONArray();
+                    JSONArray message;
                     try {
                         message = response.getJSONArray("message"); //get all the messages
                         Set<String> conversation = new HashSet<>();
@@ -96,7 +93,6 @@ public class MessagesUtil {
                             String tempString = temp.toString(); //convert message JSONObject to string
                             conversation.add(tempString); //put in set
                         }
-                        //Log.d("MessagesUtil", "conversation: " + conversation);
                         editor.putStringSet("MSGFROM" + idFrom, conversation); //put messages in SharedPreferences
                         editor.putBoolean("MSGWITH" + idFrom, true);
                         editor.apply();
@@ -106,7 +102,7 @@ public class MessagesUtil {
                     }
 
                 }else {
-                    String errorMessage = "";
+                    String errorMessage;
                     try {
                         errorMessage = response.getString("message");
                         Log.d("MessagesUtil", "Error message from server for getConversation: " + errorMessage);
@@ -120,23 +116,6 @@ public class MessagesUtil {
                         e.printStackTrace();
                     }
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
-        return;
-    }
-
-    public static void getConversationDelete(int idFrom, int idTo, final Context context){
-        String url =  "http://proj-309-ss-4.cs.iastate.edu:9001/ben/messages/to/" + idTo + "/from/" + idFrom;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d("JsonRequest", "sendMessage response from server: " + response.toString());
             }
         }, new Response.ErrorListener() {
             @Override

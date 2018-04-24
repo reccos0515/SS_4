@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.conectar.conectar.FriendsFragment;
 import com.conectar.conectar.R;
 
 import util.UserUtil;
@@ -52,9 +51,9 @@ public class PendingFriendsAdapter extends BaseAdapter{
         final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
         if(newView == null){
             newView = inflater.inflate(R.layout.pending_list_item, null);
-            final TextView username = (TextView) newView.findViewById(R.id.pendingUsernameView);
-            ImageView profilePicture = (ImageView) newView.findViewById(R.id.profilePic);
-            Button addFriend = (Button) newView.findViewById(R.id.acceptFriendBtn);
+            final TextView username = newView.findViewById(R.id.pendingUsernameView);
+            ImageView profilePicture = newView.findViewById(R.id.profilePic);
+            Button addFriend = newView.findViewById(R.id.acceptFriendBtn);
 
             final Friend thisPending = pendingFriends[i];
             username.setText(thisPending.getUsername());

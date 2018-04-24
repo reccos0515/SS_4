@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.conectar.conectar.R;
@@ -17,8 +16,6 @@ import com.conectar.conectar.SwipeFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Iterator;
 
 /**
  * Created by Maggie on 3/5/2018.
@@ -31,8 +28,6 @@ public class UserUtil {
 
     private static String url = "http://proj-309-ss-4.iastate.edu:9001/ben"; //base url for server
     private static JSONObject userJSONObject = new JSONObject();
-    private static JSONArray jsonArray = new JSONArray();
-    private static JSONArray jsonArray2 = new JSONArray();
     private static JSONObject profView = null; //user that can be viewed in profile view next
     private static boolean friend = false;
     private static int profPic = 0;
@@ -109,28 +104,6 @@ public class UserUtil {
         return;
     }
 
-    /**
-     * sends a post request to the server. Used for activities such as make friend
-     * @param url to send the post request to
-     * @param context of the activity the is being called from
-     */
-    public static void postRequest(String url, Context context, final android.support.v4.app.FragmentManager fm){
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("Post Request Status", ("successful, response:" + response.toString()));
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                SwipeFragment.newErrorPage(fm);
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
-    }
-
     public static void postRequestNoFM(String url, Context context){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,  null,
                 new Response.Listener<JSONObject>() {
@@ -146,27 +119,7 @@ public class UserUtil {
         });
         Singleton.getmInstance(context).addToRequestQueue(jsonObjectRequest); //add json to queue
     }
-
-    /**
-     * Request to delete, used for activities such as deleting a user or friend
-     * @param url to send the request to
-     * @param context of the activity this is being called from
-     */
-    public static void deleteRequest(String url, Context context){
-        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("Delete Request Status", "Success");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Delete Request Status", "Error");
-                error.printStackTrace();
-            }
-        });
-        Singleton.getmInstance(context).addToRequestQueue(stringRequest);
-    }
+    
 
     /**
      * method to get a user to be viewed in profile view, called from profile view

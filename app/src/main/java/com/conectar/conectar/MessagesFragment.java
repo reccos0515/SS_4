@@ -4,26 +4,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +25,6 @@ import messaging.MessageListAdapter;
 import messaging.MessagesUtil;
 import messaging.MyMessage;
 
-import messaging.User;
 import util.UserUtil;
 
 
@@ -54,7 +46,7 @@ public class MessagesFragment extends Fragment {
     MyMessage[] temp;
 
 
-    private OnFragmentInteractionListener mListener; //TODO figure out if this is necessary
+    private OnFragmentInteractionListener mListener;
 
 
     public MessagesFragment() {
@@ -107,7 +99,7 @@ public class MessagesFragment extends Fragment {
 
         //set up the recyclerview to display messages
         MyMessage.setContext(getContext());
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.reyclerview_message_list);
+        RecyclerView recyclerView = view.findViewById(R.id.reyclerview_message_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         Boolean initialConversation = preferences.getBoolean("MSGWITH" + msgUserIDNum, false);

@@ -43,9 +43,9 @@ public class FriendsListAdapter extends BaseAdapter {
         View newView = view;
         if(newView == null){
             newView = inflater.inflate(R.layout.friend_list_item, null);
-            TextView username = (TextView) newView.findViewById(R.id.usernameView);
-            TextView bio = (TextView) newView.findViewById(R.id.bioView);
-            ImageView profilePicture = (ImageView) newView.findViewById(R.id.profilePic);
+            TextView username = newView.findViewById(R.id.usernameView);
+            TextView bio = newView.findViewById(R.id.bioView);
+            ImageView profilePicture = newView.findViewById(R.id.profilePic);
 
             Friend thisFriend = friends[i];
             username.setText(thisFriend.getUsername());

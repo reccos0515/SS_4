@@ -16,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import util.JsonRequest;
 
 /**
  * this class is used to set up the drawer in order to navigate between fragments as well as
@@ -32,8 +31,6 @@ public class MainActivity extends AppCompatActivity
             AboutFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener,
             ReportFragment.OnFragmentInteractionListener, ProfilePictureFragment.OnFragmentInteractionListener,
             PendingFriendsFragment.OnFragmentInteractionListener, ErrorFragment.OnFragmentInteractionListener{
-    /*Added Logout, Edit Profile, Change Status, Friends, Messages, New Profile, Search, Swipe Screen/Home, Login
-    to drawer navigation */
 
     String currentUsername, currentId, currentBio;
     String prefUsername, prefId, prefBio; //temp variable that is set based on whether or not there are stored preferences
@@ -58,10 +55,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO figure out what of this is actually necessary
         //grabs the variables stored from the app killing itself
         if(savedInstanceState != null){
-           //currentUsername = savedInstanceState.getString("USERNAME");
            currentUsername = savedInstanceState.getString("USERNAME");
            currentId = savedInstanceState.getString("ID");
            currentBio = savedInstanceState.getString("BIO");
@@ -87,18 +82,18 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         //creates and sets the toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //creates and sets the navigation drawer to toggle on the toolbar
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         //sets up the drawer as a navigation menu
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         //sets default page to the profile view page
@@ -132,17 +127,10 @@ public class MainActivity extends AppCompatActivity
      * Saves any information that needs to be kept when a user kills the application (maybe when they change fragments too?)
      */
     private void saveInfo(){
-        SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-
         SharedPreferences.Editor preferencesEditor = getPreferences(Context.MODE_PRIVATE).edit();
-        /*
-        preferencesEditor.putString("USERNAME", currentUsername);
-        preferencesEditor.putString("BIO", currentBio);
-        preferencesEditor.putString("ID", currentId);
-        */
+
         preferencesEditor.putString("USERNAME", "Andrew");
 
-        //sharedEditor.commit();
         //commit writes to storage immediately and apply does it in the background, otherwise the same
         preferencesEditor.apply();
     }
@@ -161,7 +149,7 @@ public class MainActivity extends AppCompatActivity
      */
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -211,8 +199,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         Fragment fragment = null;
-        Context context = getApplicationContext();
-        final SharedPreferences preferences = getSharedPreferences("coNECTAR", MODE_PRIVATE);
         int id = item.getItemId();
 
         //if nav______ is clicked, switch to its corresponding fragment page
@@ -243,7 +229,7 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

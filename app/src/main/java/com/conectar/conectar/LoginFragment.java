@@ -51,7 +51,6 @@ public class LoginFragment extends Fragment {
      */
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
-        Bundle args = new Bundle();
         return fragment;
     }
 
@@ -105,8 +104,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String loginPassword = "";
-                String loginUsername = "";
+                String loginPassword;
+                String loginUsername;
 
                 loginPassword = editPassword.getText().toString();
                 loginUsername = editUsername.getText().toString();
@@ -129,11 +128,6 @@ public class LoginFragment extends Fragment {
                 } else if(isBanned){
                     Toast.makeText(getActivity(), "You have been banned", Toast.LENGTH_LONG).show();
                 }
-//                else{
-//                    Toast.makeText(getActivity(), "Login Unsuccessful", Toast.LENGTH_LONG).show();
-//                }
-
-
             }
         });
         view.findViewById(R.id.createAccountBtn).setOnClickListener(new View.OnClickListener() {

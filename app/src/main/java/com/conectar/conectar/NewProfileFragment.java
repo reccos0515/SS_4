@@ -34,9 +34,7 @@ import util.JsonRequest;
  */
 public class NewProfileFragment extends Fragment {
 
-    private EditText firstName;
-    private EditText lastName;
-    private EditText email;
+
     private EditText username;
     private EditText password;
     private EditText confirmPassword;
@@ -99,9 +97,6 @@ public class NewProfileFragment extends Fragment {
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
         //create the views to edit the UI
-        firstName = view.findViewById(R.id.firstName);
-        lastName = view.findViewById(R.id.lastName);
-        email = view.findViewById(R.id.email);
         username = view.findViewById(R.id.username);
         password = view.findViewById(R.id.password);
         confirmPassword = view.findViewById(R.id.confirmPassword);

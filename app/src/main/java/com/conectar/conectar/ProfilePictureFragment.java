@@ -37,7 +37,7 @@ public class ProfilePictureFragment extends Fragment {
      *
      * @return A new instance of fragment ProfilePictureFragment.
      */
-    public static ProfilePictureFragment newInstance(String param1, String param2) {
+    public static ProfilePictureFragment newInstance() {
         ProfilePictureFragment fragment = new ProfilePictureFragment();
         return fragment;
     }
@@ -57,9 +57,6 @@ public class ProfilePictureFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        //initialize preferences
-        final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
 
         //to submit, go back to the edit profile page
         view.findViewById(R.id.profPic_submit).setOnClickListener(new View.OnClickListener() {

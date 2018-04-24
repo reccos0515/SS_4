@@ -19,7 +19,6 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import messaging.User;
 import util.InterestsUtil;
 import util.JsonRequest;
 import util.UserUtil;

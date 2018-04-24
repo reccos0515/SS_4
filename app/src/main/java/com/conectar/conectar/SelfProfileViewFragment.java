@@ -84,7 +84,6 @@ public class SelfProfileViewFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
-        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
 
         //pull all of the user's information
         int id = preferences.getInt("ID", 0);
@@ -93,6 +92,7 @@ public class SelfProfileViewFragment extends Fragment {
         String username = preferences.getString("USERNAME", "");
         String interests = preferences.getString("INTERESTS", "00000000000");
         int pic = preferences.getInt("PROFILEPICTURE", 0);
+
         //put it in a json object
         JSONObject user = new JSONObject();
         try{
@@ -106,9 +106,11 @@ public class SelfProfileViewFragment extends Fragment {
 
             e.printStackTrace();
         }
+
         //set this as the user to view
         UserUtil.setUserToView(user);
         UserUtil.setUserToViewIsFriend(false); //not friends with themself
+
         //create the new profile view fragment
         Fragment fragment = new ProfileViewFragment();
         FragmentManager fragmentManager = getFragmentManager();

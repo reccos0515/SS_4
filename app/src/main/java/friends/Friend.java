@@ -1,17 +1,6 @@
 package friends;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.TextView;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.conectar.conectar.R;
-import com.conectar.conectar.SwipeFragment;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,13 +20,6 @@ public class Friend {
     private String interests;
     private int profilePicNum;
     private static String urlBase = "http://proj-309-ss-4.cs.iastate.edu:9001/ben"; //base for all urls
-
-    /**
-     * Constructor for a friend
-     */
-    public Friend(){
-        super();
-    }
 
 
     /**
@@ -86,15 +68,6 @@ public class Friend {
         return profilePicNum;
     }
 
-    /**
-     * Lists all of the information regarding a Friend object in a String form, in case this is useful
-     * in the UI. The signature is String fullFriendInfo(). It returns all of the information stored in
-     * this Friend object
-     * @return string of all Friend object attributes
-     */
-    public String fullFriendInfo(){
-        return "Id: " + this.id + "   Username: " + this.username + "   Bio: " + this.bio + "   Interests: " + this.interests;
-    }
 
     /**
      * Sends a friend request to a specific user using integer ids.
@@ -109,21 +82,6 @@ public class Friend {
     public static void makeFriend(int userId, int friendId, Context context){
         String url = urlBase + "/users/" + userId + "" + "/request_friend/" + friendId + "";
         UserUtil.postRequestNoFM(url, context);
-    }
-
-    /**
-     * Removes a friend from a user's friends list
-     * Takes the IDs of the current user and their friend to create the url and calls deleteRequest from
-     * UserUtil to send a delete request to the server.
-     * The signature is void removeFriend(int userId, int friendId, Context context)
-     * It takes both IDs to create the url and the context to send the volley request
-     * @param userId the user who is deleting the friend
-     * @param friendId the friend to be deleted from the user's list
-     * @param context the context in which this method is used
-     */
-    public static void removeFriend(int userId, int friendId, Context context){ //TODO implement
-        String url = urlBase + "/users/" + userId + "/friends/" + friendId + ""; //TODO review url
-        UserUtil.deleteRequest(url, context);
     }
 
 

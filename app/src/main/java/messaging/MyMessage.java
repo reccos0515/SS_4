@@ -26,13 +26,6 @@ public class MyMessage {
 
     /**
      * The constructor for a MyMessage
-     */
-    public MyMessage(){
-        super();
-    }
-
-    /**
-     * The constructor for a MyMessage
      * This constructor is used to create a new message that the current user has created
      * @param s a string of the full message object
      */

@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 import friends.Friend;
-import friends.FriendsUtil;
 import friends.PendingFriendsAdapter;
-import util.JsonRequest;
 
 
 /**
@@ -51,15 +48,11 @@ public class PendingFriendsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment PendingFriendsFragment.
      */
 
-    public static PendingFriendsFragment newInstance(String param1, String param2) {
+    public static PendingFriendsFragment newInstance() {
         PendingFriendsFragment fragment = new PendingFriendsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -92,9 +85,8 @@ public class PendingFriendsFragment extends Fragment {
 
         Context context = getContext();
         final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
-        int id = preferences.getInt("ID", 0); //get the logged in user's id
 
-        ListView listView = (ListView) view.findViewById(R.id.pendingListView); //grabs the listview from the xml layout
+        ListView listView = view.findViewById(R.id.pendingListView); //grabs the listview from the xml layout
 
         String[] fake = new String[]{"empty"};
         final Set<String> empty = new HashSet<>(Arrays.asList(fake));

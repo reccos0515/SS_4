@@ -1,31 +1,20 @@
 package util;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.conectar.conectar.ErrorFragment;
-import com.conectar.conectar.ProfileViewFragment;
 import com.conectar.conectar.R;
 import com.conectar.conectar.SwipeFragment;
 
@@ -480,14 +469,9 @@ public class JsonRequest {
                     try {
                         String res = new String(response.data,
                                 HttpHeaderParser.parseCharset(response.headers));
-                        // Now you can use any deserializer to make sense of data
-                        JSONObject obj = new JSONObject(res);
                     } catch (UnsupportedEncodingException e1) {
                         // Couldn't properly decode data to string
                         e1.printStackTrace();
-                    } catch (JSONException e2) {
-                        // returned data is not JSONObject?
-                        e2.printStackTrace();
                     }
                 }
             }

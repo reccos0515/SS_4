@@ -11,7 +11,6 @@ import com.conectar.conectar.MainActivity;
 import com.conectar.conectar.R;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
-import static java.security.AccessController.getContext;
 
 /**
  * Created by Maggie on 4/2/2018.
@@ -56,15 +55,6 @@ public class NotificationUtil {
         return NOTIFICATION_ID;
     }
 
-    public void checkFriendRequests(){
-        //send volley request to check for new incoming pending friend requests
-        //craft notification
-        //send notification
-    }
-
-    public void checkMessagesNotification(){
-
-    }
 
     public void sendNotification(Notification notification, Context context){
         //Send built notification

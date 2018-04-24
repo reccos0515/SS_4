@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -98,6 +96,7 @@ public class SwipeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mainView = view; //set the view
         Log.d("SwipeFragment", "Entered the swipe fragment");
+
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
         final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
@@ -115,7 +114,6 @@ public class SwipeFragment extends Fragment {
         }
 
         interests = preferences.getString("INTERESTS", "empty"); //set logged in user's interests from session variables
-
         numInterests = interests.charAt(0) - '0'; //get the number of interests the logged in user has
         int id = preferences.getInt("ID", 0); //set the id
         Log.d("SwipeFragment", "Id of user: " + id + "");
@@ -123,8 +121,8 @@ public class SwipeFragment extends Fragment {
         Log.d("SwipeFragment", "Url posted to: " + url);
         JsonRequest.getFriendsList(preferences.getInt("ID", 0), getContext()); //hopefully prevents empty from showing up in empty list, called here so request finishes by time user goes to friends list
 
-
         context = getActivity().getApplicationContext(); //get the context
+
         //if should get a new list of users
         if(UserUtil.getUsersArray() == null) {
             JsonRequest.swipeRequest(view, url, context, getFragmentManager()); //call this to send the request
@@ -209,6 +207,7 @@ public class SwipeFragment extends Fragment {
             public void onClick(View view) {
                 Log.d("SwipeFragment", "Clicked view profile");
                 TextView errorMessage = mainView.findViewById(R.id.swipeMessage); //to check the error message
+
                 //if it worked and there is something there
                 if(success && users.length() > 0) {
                     //call a profile view fragment with userOnDisplayLoc user
@@ -251,6 +250,7 @@ public class SwipeFragment extends Fragment {
             e.printStackTrace();
         }
         UserUtil.updateProfilePicture(pic, profilePic); //update the UI
+
         //set up all the textviews
         TextView errorMessage = mainView.findViewById(R.id.swipeMessage);
         TextView firstName = mainView.findViewById(R.id.swipeFirstName);
@@ -273,6 +273,7 @@ public class SwipeFragment extends Fragment {
         }
         int currentCommonIntsDisplayed = 0; //how many common interests are being displayed
         int viewNumInterests = viewInterests.charAt(0) - '0'; //the first char in this String is the number
+
         //as long as they both have at least 1 interest, compare interests
         if(numInterests > 0 && viewNumInterests > 0) {
             for (int i = 0; i < numInterests; i++) {
@@ -296,8 +297,8 @@ public class SwipeFragment extends Fragment {
                 }
             }
         }
-        //set all non-common interests to ""
 
+        //set all non-common interests to ""
         if(currentCommonIntsDisplayed == 0){
             interest1.setText("No common interests found"); //if there are no common interests, tell the user this
         }
@@ -313,7 +314,6 @@ public class SwipeFragment extends Fragment {
         if(currentCommonIntsDisplayed < 5){
             interest5.setText("");
         }
-
         errorMessage.setText(""); //set no error
         return;
     }
