@@ -218,8 +218,6 @@ public class MainActivity extends AppCompatActivity
         //if nav______ is clicked, switch to its corresponding fragment page
         if (id == R.id.nav_search) {
             fragment = new SearchFragment();
-        } else if (id == R.id.nav_messages) {
-            fragment = new MessagesFragment();
         } else if (id == R.id.nav_changeStatus) {
             fragment = new ChangeStatusFragment();
         } else if (id == R.id.nav_editProfile) {
