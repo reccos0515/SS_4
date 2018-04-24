@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Admin and Moderator Login</h2>
+
+<p>Input credentials</p>
+
+<p><input value="Username" id="User"></p>
+<p><input value="Password" id="Pass"></p>
+
+<button type="button" onclick="myFunction()">Submit</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+    var x, y, text;
+
+    // Get the value of the input field with id="numb"
+    x = document.getElementById("User").value;
+    y = document.getElementById("Pass").value;
+
+    // If x is Not a Number or less than one or greater than 10
+    if (x==="conectarmod" && y==="modpass") {
+        text = "Moderator";
+    } else if (x==="conectardmin" && y==="adminpass"){
+        text = "Admin";
+    } else if(x==="conectaradmin" || x==="conectarmod") {
+        text = "Password incorrect";
+    } else{
+        text = "Username incorrect";
+    }
+    document.getElementById("demo").innerHTML = text;
+}
+</script>
+
+</body>
+</html> 

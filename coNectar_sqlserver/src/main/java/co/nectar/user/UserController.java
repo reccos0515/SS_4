@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import co.nectar.HtmlResponce.HtmlError;
 import co.nectar.HtmlResponce.HtmlResponce;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/ben")
 public class UserController {
@@ -29,6 +30,8 @@ public class UserController {
 //		userService.addUser(test3);
 //		return userService.getAllUsers();
 //	}
+
+	
 
 	/**
 	 * Returns all users
@@ -57,7 +60,7 @@ public class UserController {
 	 * @param userId
 	 * @return
 	 */
-	@CrossOrigin
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{userId}")
 	public HtmlResponce getUser(@PathVariable int userId) {
 		return userService.getUserById(userId);
