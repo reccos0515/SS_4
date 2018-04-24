@@ -100,13 +100,12 @@ public class SwipeFragment extends Fragment {
         Log.d("SwipeFragment", "Entered the swipe fragment");
         //Set up shared preferences, has to be done within onViewCreated otherwise it will throw all sorts of null pointer exceptions
         final SharedPreferences preferences = getActivity().getSharedPreferences("coNECTAR", Context.MODE_PRIVATE); //grabs the sharedpreferences for our session (labeled coNECTAR)
-        final SharedPreferences.Editor editor = preferences.edit(); //creates editor so we can put/get things from different keys
-
 
         //sends the user to the login page if they aren't logged in
         Boolean isLoggedIn = preferences.getBoolean("ISLOGGEDIN", false);
+        Boolean isBanned = preferences.getBoolean("ISBANNED", false);
         Log.d("SwipeFragment", "ISLOGGEDIN: " + isLoggedIn);
-        if(!isLoggedIn){ //if user isn't already logged in
+        if(!isLoggedIn | isBanned){ //if user isn't already logged in
             Fragment fragment = new LoginFragment();
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

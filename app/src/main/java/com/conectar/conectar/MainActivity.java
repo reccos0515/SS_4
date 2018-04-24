@@ -16,7 +16,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.json.JSONObject;
+
 import util.JsonRequest;
+import util.UserUtil;
 
 /**
  * this class is used to set up the drawer in order to navigate between fragments as well as
@@ -214,6 +217,12 @@ public class MainActivity extends AppCompatActivity
         Context context = getApplicationContext();
         final SharedPreferences preferences = getSharedPreferences("coNECTAR", MODE_PRIVATE);
         int id = item.getItemId();
+        String username = preferences.getString("USERNAME", null);
+        String password = "test";
+        String url = "http://proj-309-ss-4.cs.iastate.edu:9001/ben/login";
+
+        JSONObject js = UserUtil.prepareLogin(username, password, context);
+        JsonRequest.loginPostRequest(js, url, context);
 
         //if nav______ is clicked, switch to its corresponding fragment page
         if (id == R.id.nav_search) {
