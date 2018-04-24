@@ -182,9 +182,41 @@ public class LoginService {
 	public void addTestUsers() {
 		Login login;
 		User user;
-		for(int i = 1; i < 31;i++) {
-			user = new User(0,("test" + i),"test bio","10100000000");
-			user.setStatus(1); //set all to red
+		Integer profilePictures[]= {
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9
+		};
+		String usernames[] = {
+				"Ben",
+				"Tristan",
+				"Maggie",
+				"Jessie",
+				"Adam",
+				"Seth",
+				"Megan",
+				"Sam",
+				"Emily"};
+		String intrests[] = {
+				"30102030000",
+				"20205000000",
+				"40103151800",
+				"20208000000",
+				"30102030000",
+				"10400000000",
+				"50809101112",
+				"00000000000",
+				"00000000000"
+		};
+		String bio = "anything";
+		for(int i=0;i<9;i++) {
+			user = new User(0,usernames[i],bio,intrests[i],2,profilePictures[i]);
 			login = new Login(user,	"test");
 			this.addLogin(login);
 		}
