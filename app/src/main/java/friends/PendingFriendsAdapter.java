@@ -1,6 +1,10 @@
 package friends;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.conectar.conectar.FriendsFragment;
 import com.conectar.conectar.R;
 
 import util.UserUtil;
@@ -44,6 +49,7 @@ public class PendingFriendsAdapter extends BaseAdapter{
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         View newView = view;
+        final SharedPreferences preferences = context.getSharedPreferences("coNECTAR", Context.MODE_PRIVATE);
         if(newView == null){
             newView = inflater.inflate(R.layout.pending_list_item, null);
             final TextView username = (TextView) newView.findViewById(R.id.pendingUsernameView);
@@ -58,7 +64,8 @@ public class PendingFriendsAdapter extends BaseAdapter{
             addFriend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "Added " + thisPending.getUsername() + "!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Added " + thisPending.getUsername() + "!  Please Refresh!", Toast.LENGTH_SHORT).show();
+                    Friend.makeFriend(preferences.getInt("ID", 0), thisPending.getId(), context);
                 }
             });
         }
