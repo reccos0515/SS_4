@@ -2,6 +2,43 @@ body {
     background-color: #4B4237;
 }
 
+.table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-color: yellow;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+tr:nth-child(even){
+	background-color: black;
+	font-color: #CCAF0E;
+}
+tr:nth-child(even){
+	background-color: #EDE7D9;
+	font-color: #CCAF0E;
+}
+
+tr:hover {background-color: #ddd;}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #CCAF0E;
+    color: #EDE7D9;
+}
+
+/*
 table {
     border-collapse: collapse;
     width: 50%;
@@ -12,6 +49,7 @@ th, td {
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
+*/
 
 h1 {
     color: #CCAF0E;

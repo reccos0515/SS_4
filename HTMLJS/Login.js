@@ -1,3 +1,4 @@
+var checked = 0;
 
 function checkCred() {
     var x, y, text;
@@ -14,6 +15,7 @@ function checkCred() {
     } else if (x==="conectaradmin" && y==="adminpass") {
        //text = "Admin";
         window.location="AdminHome.html";
+        checked = 1;
     } else if(x==="conectaradmin" || x==="conectarmod") {
         document.getElementById("demo").innerHTML = "Password incorrect";
 
@@ -21,3 +23,13 @@ function checkCred() {
         document.getElementById("demo").innerHTML = "Username incorrect";
     }
 };
+
+function reCheck() {
+    if(checked == 0){
+        window.location="Login.html";
+    }
+}
+
+function logOut() {
+    checked = 0;
+}
