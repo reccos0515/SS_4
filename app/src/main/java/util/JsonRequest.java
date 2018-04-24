@@ -153,7 +153,7 @@ public class JsonRequest {
                             }
 
                             Log.d("loginPostRequest", "Error message from server: " + message);
-                            if(message.equals("user banned")){
+                            if(message.equals("user blocked")){
                                 editor.putBoolean("ISBANNED", true);
                                 editor.apply();
                             }
