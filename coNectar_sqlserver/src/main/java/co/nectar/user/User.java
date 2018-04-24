@@ -97,7 +97,7 @@ public class User {
 		this.status = 0;
 		this.interests = "00000000000";
 	}
-	public User(int id,String userName, String bio, String interests) {
+	public User(int id,String userName, String bio, String interests,Integer status, int profilePicture) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -106,7 +106,8 @@ public class User {
 		this.sentRequestTo = new ArrayList<User>();
 		this.recievedRequestFrom = new ArrayList<User>();
 		this.beenDiscovered = new ArrayList<User>();
-		this.status = 0;
+		this.status = status;
+		this.profilePicture = profilePicture;
 
 	}
 
