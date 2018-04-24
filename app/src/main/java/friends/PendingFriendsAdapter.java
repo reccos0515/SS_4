@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.conectar.conectar.R;
 
@@ -44,13 +46,21 @@ public class PendingFriendsAdapter extends BaseAdapter{
         View newView = view;
         if(newView == null){
             newView = inflater.inflate(R.layout.pending_list_item, null);
-            TextView username = (TextView) newView.findViewById(R.id.pendingUsernameView);
+            final TextView username = (TextView) newView.findViewById(R.id.pendingUsernameView);
             ImageView profilePicture = (ImageView) newView.findViewById(R.id.profilePic);
+            Button addFriend = (Button) newView.findViewById(R.id.acceptFriendBtn);
 
-            Friend thisPending = pendingFriends[i];
+            final Friend thisPending = pendingFriends[i];
             username.setText(thisPending.getUsername());
             int profilePicNum = thisPending.getProfilePicture();
             UserUtil.updateProfilePicture(profilePicNum, profilePicture);
+
+            addFriend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(context, "Added " + thisPending.getUsername() + "!", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         return newView;
