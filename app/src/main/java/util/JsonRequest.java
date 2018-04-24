@@ -151,7 +151,12 @@ public class JsonRequest {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
                             Log.d("loginPostRequest", "Error message from server: " + message);
+                            if(message.equals("user banned")){
+                                editor.putBoolean("ISBANNED", true);
+                                editor.apply();
+                            }
                         }
 
                     }

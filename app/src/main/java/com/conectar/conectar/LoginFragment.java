@@ -118,6 +118,7 @@ public class LoginFragment extends Fragment {
 
 
                 Boolean isLoggedIn = preferences.getBoolean("ISLOGGEDIN", false);
+                Boolean isBanned = preferences.getBoolean("ISBANNED", false);
                 Log.d("LoginFragment", "ISLOGGEDIN: " + isLoggedIn);
                 if(isLoggedIn){
                     Fragment fragment = new SwipeFragment();
@@ -125,10 +126,12 @@ public class LoginFragment extends Fragment {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.screen_area, fragment);
                     fragmentTransaction.commit();
+                } else if(isBanned){
+                    Toast.makeText(getActivity(), "You have been banned", Toast.LENGTH_LONG).show();
                 }
-                else{
-                    Toast.makeText(getActivity(), "Login Unsuccessful", Toast.LENGTH_LONG).show();
-                }
+//                else{
+//                    Toast.makeText(getActivity(), "Login Unsuccessful", Toast.LENGTH_LONG).show();
+//                }
 
 
             }
