@@ -4,10 +4,10 @@ function loadXML (){
 
 	http.onreadystatechange = function(){
 		if(http.readyState == 4){
-			console.log(http.response);
-			document.getElementById("demo").innerHTML=http.response;
+			var response = JSON.stringify(http.responseText);
+			document.getElementById("demo").innerHTML=response;
 		}
 	}
-	http.open("GET", "http://localhost:8081/ben/report", true);
+	http.open("GET", "http://localhost:8081/ben/users", true);
 	http.send();
 };
