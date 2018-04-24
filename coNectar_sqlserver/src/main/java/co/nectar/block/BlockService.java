@@ -36,4 +36,13 @@ public class BlockService {
 			return new HtmlError(false,"userId not valid");
 	}
 
+	/**
+	 * gets all blocked user
+	 * @return HTMLUserList of blocked users
+	 */
+	public HtmlResponce getBlocked() {
+		// TODO Auto-generated method stub
+		return userService.getBlocked();
+	}
+
 }

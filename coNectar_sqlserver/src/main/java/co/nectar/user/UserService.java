@@ -859,6 +859,10 @@ public class UserService {
 		return score;
 	}
 
+	public HtmlResponce getBlocked() {
+		return new HtmlUserList(true,userRepo.findAllByBlocked(true));
+	}
+
 
 	/*
 	//we are going to need some list to keep track of who has been discovered (nevermind).

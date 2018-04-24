@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.nectar.HtmlResponce.HtmlResponce;
+import co.nectar.HtmlResponce.*;
 @CrossOrigin
 @RestController
 @RequestMapping(path="/ben")
@@ -33,6 +33,12 @@ public class BlockController {
 	public HtmlResponce unblockUser(@PathVariable Integer userId) {
 		return blockService.unblockUser(userId);
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/block")
+	public HtmlResponce unblockUser() {
+		return blockService.getBlocked();
+	}
+	
 	
 	
 }
