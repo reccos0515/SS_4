@@ -157,6 +157,10 @@ public class LoginService {
 			else
 				user = ((HtmlUserList)msg).getUsers().iterator().next();
 			
+			//check if blocked
+			if(user.isBlocked())
+				return new HtmlError(false, "user blocked");
+			
 			//check password
 			String pass = loginRepo.findByUser(user).getPassword();//get password
 			if(!pass.equals(login.getPassword())) {

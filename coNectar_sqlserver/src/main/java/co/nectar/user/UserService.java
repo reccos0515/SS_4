@@ -2,6 +2,7 @@ package co.nectar.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,43 @@ public class UserService {
 		return new HtmlUserList(true, userRepo.findAll());
 	}
 		
+	/**
+	 * block user
+	 * @param userId user to block
+	 * @return boolean noting success
+	 */
+	public boolean blockUser(Integer userId){
+		HtmlResponce msg;
+		msg = this.getUserById(userId);
+		if(!msg.isSuccess())
+			return false;
+		User user = ((HtmlUserList)msg).getUsers().iterator().next();
+		user.setBlocked(true);
+		
+		//save user
+		userRepo.save(user);
+		return true;
+		
+	}
+	/**
+	 * unblock a user
+	 * @param userId user to unblock
+	 * @return boolean noting success
+	 */
+	public boolean unblockUser(Integer userId){
+		HtmlResponce msg;
+		msg = this.getUserById(userId);
+		if(!msg.isSuccess())
+			return false;
+		User user = ((HtmlUserList)msg).getUsers().iterator().next();
+		user.setBlocked(false);//unblock user
+		
+		//save user
+		userRepo.save(user);
+		return true;
+		
+	}
+	
 
 	/**
 	 * Returns a HtmlUserList that has the given userId.
